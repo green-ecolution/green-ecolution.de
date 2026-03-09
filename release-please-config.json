@@ -34,7 +34,7 @@
   ],
   "packages": {
     ".": {
-      "component": "project-website",
+      "component": "green-ecolution.de",
       "changelog-path": "CHANGELOG.md"
     }
   }

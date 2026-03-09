@@ -2,7 +2,7 @@ fullnameOverride: ""
 nameOverride: ""
 
 image:
-  repository: ghcr.io/green-ecolution/project-website
+  repository: ghcr.io/green-ecolution/green-ecolution.de
   tag: ""
   pullPolicy: IfNotPresent
 
