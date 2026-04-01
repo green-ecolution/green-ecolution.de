@@ -1,11 +1,16 @@
+import { useState } from 'react'
 import Lottie from 'lottie-react'
 import treeLightGreenAnimation from '../../../json/treeLightGreenAnimation.json'
 import treeMiddleGreenAnimation from '../../../json/treeMiddleGreenAnimation.json'
 import treeDarkGreenAnimation from '../../../json/treeDarkGreenAnimation.json'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
+import AdoptTreeModal from './AdoptTreeModal'
+import { generateAdoptionData } from './adoptTreeData'
+import type { AdoptionData } from './adoptTreeData'
 
 function HomepageHeroTrees() {
   const reducedMotion = useReducedMotion()
+  const [adoption, setAdoption] = useState<AdoptionData | null>(null)
 
   return (
     <div>
@@ -34,6 +39,7 @@ function HomepageHeroTrees() {
         </svg>
       </figure>
 
+      {/* Visual tree layers at original negative z-indices */}
       <figure
         aria-hidden="true"
         className="absolute bottom-10 right-[5%] -z-20 xs:bottom-16 md:right-96 lg:right-[28rem] xl:bottom-32 2xl:right-[40rem] 3xl:right-[40%] md:landscape:bottom-0 lg:landscape:bottom-16"
@@ -69,6 +75,30 @@ function HomepageHeroTrees() {
           autoplay={!reducedMotion}
         />
       </figure>
+
+      {/* Invisible click targets above content */}
+      <button
+        type="button"
+        aria-label="Baum adoptieren"
+        className="absolute bottom-10 right-[5%] z-[5] xs:bottom-16 md:right-96 lg:right-[28rem] xl:bottom-32 2xl:right-[40rem] 3xl:right-[40%] md:landscape:bottom-0 lg:landscape:bottom-16 h-[65vh] max-h-[30rem] md:max-h-none md:min-h-96 md:h-[60vh] w-40 cursor-pointer"
+        onClick={() => setAdoption(generateAdoptionData('light'))}
+      />
+
+      <button
+        type="button"
+        aria-label="Baum adoptieren"
+        className="hidden absolute right-64 z-[5] bottom-28 lg:block xl:bottom-48 2xl:right-[30rem] 2xl:bottom-28 3xl:right-[30%] landscape:hidden lg:landscape:block h-[40vh] md:min-h-96 w-32 cursor-pointer"
+        onClick={() => setAdoption(generateAdoptionData('middle'))}
+      />
+
+      <button
+        type="button"
+        aria-label="Baum adoptieren"
+        className="hidden absolute -right-20 z-[5] bottom-16 md:block lg:bottom-32 xl:bottom-48 2xl:right-52 2xl:bottom-32 3xl:right-[12%] landscape:bottom-4 lg:landscape:bottom-32 h-[55vh] md:h-[60vh] md:min-h-96 w-40 cursor-pointer"
+        onClick={() => setAdoption(generateAdoptionData('dark'))}
+      />
+
+      <AdoptTreeModal data={adoption} onClose={() => setAdoption(null)} />
     </div>
   )
 }
