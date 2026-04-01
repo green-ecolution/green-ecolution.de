@@ -39,6 +39,12 @@ const links = [
       'Auch die Stadt Flensburg berichtete über Green Ecolution und die Bedeutung des Projekts für ein nachhaltiges Stadtmanagement.',
     url: 'https://www.presse-service.de/data.aspx/static/1200128.html',
   },
+  {
+    label: 'Live Demo',
+    subLabel:
+      'Die öffentlich zugängliche Demo-Instanz zeigt den aktuellen Funktionsumfang: Kartenansicht mit Ampelsystem, Dashboard mit Sensordaten und automatisierte Routenberechnung.',
+    url: 'https://demo.green-ecolution.de/',
+  },
 ]
 
 function useIntersectionObserver(threshold = 0.1) {

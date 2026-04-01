@@ -40,7 +40,7 @@ function HomepageHeroTrees() {
       >
         <Lottie
           aria-hidden="true"
-          className="h-[65vh] max-h-[30rem] md:max-h-none md:min-h-96 md:h-[60vh]"
+          className="h-[40vh] max-h-[20rem] md:max-h-none md:min-h-96 md:h-[60vh]"
           animationData={treeLightGreenAnimation}
           autoplay={!reducedMotion}
         />

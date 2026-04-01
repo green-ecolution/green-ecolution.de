@@ -6,6 +6,9 @@ import Hero from '../components/sections/Hero'
 import Contact from '../components/sections/Contact'
 import FurtherLinks from '../components/sections/FurhterLinks'
 import Process from '../components/sections/Process'
+import OpenSourceGovernance from '../components/sections/OpenSourceGovernance'
+
+import VisionRoadmap from '../components/sections/VisionRoadmap'
 import BreadcrumbSchema from '../components/BreadcrumbSchema'
 
 function ProjectPage() {
@@ -23,11 +26,11 @@ function ProjectPage() {
     }
   }, [])
 
-  const heroHeadline = 'Smartes Grünflächenmanagement für Kommunen'
+  const heroHeadline = 'Smartes Grünflächenmanagement für lebenswerte Städte'
   const heroDescription =
     'Green Ecolution ist eine Open-Source-Lösung für die effiziente Bewässerung urbaner Bäume. \
   Unsere Software kombiniert Sensordaten mit intelligenter Routenoptimierung und ermöglicht so eine gezielte, \
-  ressourcenschonende Einsatzplanung. Entwickelt in Zusammenarbeit mit der Stadt Flensburg – bald auch verfügbar für Ihre Kommune.'
+  ressourcenschonende Einsatzplanung. Entwickelt in Zusammenarbeit mit der Stadt Flensburg – bald auch verfügbar für deine Kommune.'
 
   return (
     <main
@@ -44,7 +47,10 @@ function ProjectPage() {
       <DashboardPreview />
       <Process />
       <Architecture />
+      <OpenSourceGovernance />
       <Advantages />
+
+      <VisionRoadmap />
       <FurtherLinks />
       <Contact />
     </main>

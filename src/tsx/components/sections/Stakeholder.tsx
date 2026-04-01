@@ -40,6 +40,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
   const stakeholder = [
     {
       label: 'PROGEEK GmbH',
+      role: 'Technischer Partner',
       url: 'https://progeek.de/',
       image: '/assets/images/logo/progeek.svg',
       description:
@@ -47,6 +48,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
     },
     {
       label: 'Smarte Grenzregion',
+      role: 'Projektkoordinator',
       url: 'https://smarte-grenzregion.de/',
       image: '/assets/images/logo/smarte-grenzregion.png',
       description:
@@ -54,6 +56,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
     },
     {
       label: 'Hochschule Flensburg',
+      role: 'Initiator',
       url: 'https://hs-flensburg.de/',
       image: '/assets/images/logo/hochschule-flensburg.png',
       description:
@@ -61,6 +64,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
     },
     {
       label: 'TBZ Flensburg',
+      role: 'Anwendungspartner',
       url: 'https://www.tbz-flensburg.de/',
       image: '/assets/images/logo/tbz.png',
       description:
@@ -149,6 +153,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
             <SplideSlide key={company.label} className="pb-10 px-4 md:px-6">
               <StakeholderCard
                 label={company.label}
+                role={company.role}
                 url={company.url}
                 image={company.image}
                 hasDesktopList={hasDesktopList}
