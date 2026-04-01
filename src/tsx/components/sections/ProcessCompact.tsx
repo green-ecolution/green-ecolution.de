@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from '@tanstack/react-router'
-import { steps } from '../../../data/processSteps'
+import { workflowSteps } from '../../../data/workflowSteps'
 import Arrow from '../../icons/Arrow'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
@@ -28,12 +28,6 @@ function useIntersectionObserver(threshold = 0.1) {
   return { ref, isVisible }
 }
 
-const iconBgClasses = {
-  'green-light': 'bg-green-light-900 text-white',
-  'green-dark': 'bg-green-dark-900 text-white',
-  'green-middle': 'bg-green-middle-900 text-white',
-}
-
 function ProcessCompact() {
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
@@ -43,139 +37,89 @@ function ProcessCompact() {
       ref={ref}
       className="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
     >
-      <article className="mb-8 lg:mb-12 lg:text-center">
-        {/* Section Label */}
-        <div
-          className={`
-            mb-6 lg:mb-8 lg:flex lg:justify-center
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-        >
-          <div className="inline-block">
+      {/* Header */}
+      <div className="flex items-end justify-between mb-8 lg:mb-12">
+        <div>
+          <div
+            className={`inline-block mb-4 ${reducedMotion ? '' : 'transition-all duration-700'} ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-              Prozess
+              Lösung
             </span>
-            <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 lg:mx-auto" />
+            <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
+
+          <h2
+            className={`font-lato font-bold text-2xl text-grey-900 lg:text-3xl xl:text-4xl ${reducedMotion ? '' : 'transition-all duration-700'} ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+            style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
+          >
+            Der durchgängige Workflow
+          </h2>
         </div>
 
-        <h2
-          className={`
-            font-lato font-bold text-2xl mb-3 text-grey-900 lg:text-3xl
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-        >
-          So funktioniert Green Ecolution
-        </h2>
-        <p
-          className={`
-            text-grey-900/70 max-w-2xl mx-auto leading-relaxed
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
+        <Link
+          to="/project"
+          hash="process"
+          aria-label="Mehr über den Prozess erfahren"
+          className={`hidden lg:flex group items-center gap-x-2 font-semibold text-green-dark-900 hover:text-green-light-900 transition-colors duration-300 whitespace-nowrap ${reducedMotion ? '' : 'transition-all duration-700'} ${
+            isVisible ? 'opacity-100' : 'opacity-0'
+          }`}
           style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
         >
-          In fünf Schritten zur datenbasierten Bewässerung – von der Sensorinstallation bis zur
-          optimierten Tour.
-        </p>
-      </article>
+          Mehr erfahren
+          <Arrow classes="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+        </Link>
+      </div>
 
-      {/* Desktop Timeline (horizontal) */}
+      {/* 3-Column Workflow */}
       <div
-        className={`
-          hidden md:block
-          ${reducedMotion ? '' : 'transition-all duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        `}
-        style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
+        className={`bg-green-light-100/40 rounded-2xl lg:rounded-3xl p-6 md:p-8 lg:p-10 xl:p-12 ${reducedMotion ? '' : 'transition-all duration-700'} ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+        }`}
+        style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
       >
-        <div className="relative">
-          {/* Connection line */}
-          <div className="absolute top-6 left-[10%] right-[10%] h-0.5 bg-green-dark-900/30" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0">
+          {workflowSteps.map((step, index) => {
+            const Icon = step.icon
+            const isLast = index === workflowSteps.length - 1
 
-          {/* Steps */}
-          <div className="relative flex justify-between">
-            {steps.map((step, index) => {
-              const Icon = step.icon
-              return (
-                <div
-                  key={step.label}
-                  className={`
-                    flex flex-col items-center w-1/5
-                    ${reducedMotion ? '' : 'transition-all duration-500'}
-                    ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-                  `}
-                  style={{ transitionDelay: reducedMotion ? '0ms' : `${400 + index * 100}ms` }}
-                >
-                  <div
-                    className={`
-                      w-12 h-12 rounded-full flex items-center justify-center z-10
-                      shadow-lg transition-all duration-300 hover:scale-110
-                      ${iconBgClasses[step.color]}
-                    `}
-                  >
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-lato font-semibold text-sm text-center mt-4 px-1 text-grey-900">
-                    {step.label}
-                  </h3>
-                </div>
-              )
-            })}
-          </div>
+            return (
+              <article
+                key={step.title}
+                className={`${!isLast ? 'md:border-r md:border-green-dark-900/10 md:pr-8 lg:pr-10' : ''} ${index > 0 ? 'md:pl-8 lg:pl-10' : ''} ${index > 0 ? 'border-t border-green-dark-900/10 pt-8 md:border-t-0 md:pt-0' : ''} ${reducedMotion ? '' : 'transition-all duration-700'} ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
+                style={{
+                  transitionDelay: reducedMotion ? '0ms' : `${300 + index * 150}ms`,
+                }}
+              >
+                <Icon className="w-8 h-8 text-green-dark-900/40 mb-5 lg:w-10 lg:h-10" />
+
+                <span className="text-xs font-semibold tracking-widest uppercase text-green-dark-900/60 block mb-2">
+                  {step.number} · {step.category}
+                </span>
+
+                <h3 className="font-lato font-bold text-xl text-grey-900 mb-3 lg:text-2xl">
+                  {step.title}
+                </h3>
+
+                <p className="text-grey-600 text-sm leading-relaxed">{step.description}</p>
+              </article>
+            )
+          })}
         </div>
       </div>
 
-      {/* Mobile Timeline (vertical) */}
+      {/* Mobile CTA */}
       <div
-        className={`
-          md:hidden
-          ${reducedMotion ? '' : 'transition-all duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        `}
-        style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-      >
-        <div className="relative pl-12">
-          {/* Vertical line */}
-          <div className="absolute left-[18px] top-0 bottom-0 w-0.5 bg-green-dark-900/30" />
-
-          {/* Steps */}
-          <div className="space-y-10">
-            {steps.map((step, index) => {
-              const Icon = step.icon
-              return (
-                <div
-                  key={step.label}
-                  className={`
-                    relative flex items-center gap-4
-                    ${reducedMotion ? '' : 'transition-all duration-500'}
-                    ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}
-                  `}
-                  style={{ transitionDelay: reducedMotion ? '0ms' : `${400 + index * 100}ms` }}
-                >
-                  <div
-                    className={`absolute -left-12 w-10 h-10 rounded-full flex items-center justify-center z-10 shadow-md ${iconBgClasses[step.color]}`}
-                  >
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-lato font-semibold text-base text-grey-900">{step.label}</h3>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
-
-      <div
-        className={`
-          flex justify-center mt-8 lg:mt-10
-          ${reducedMotion ? '' : 'transition-all duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        `}
-        style={{ transitionDelay: reducedMotion ? '0ms' : '900ms' }}
+        className={`flex justify-center mt-8 lg:hidden ${reducedMotion ? '' : 'transition-all duration-700'} ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`}
+        style={{ transitionDelay: reducedMotion ? '0ms' : '800ms' }}
       >
         <Link
           to="/project"
