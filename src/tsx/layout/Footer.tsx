@@ -102,7 +102,7 @@ function Footer() {
             </ul>
           </nav>
           <p className="text-xs text-center mt-3 text-white/60 sm:text-left md:text-right">
-            © {new Date().getFullYear()} PROGEEK GmbH & Hochschule Flensburg
+            © {new Date().getFullYear()} Green Ecolution
             <span className="hidden sm:inline"> · </span>
             <br className="sm:hidden" />
             <span className="text-white/40">
