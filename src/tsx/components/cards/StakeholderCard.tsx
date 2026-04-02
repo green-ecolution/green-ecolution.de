@@ -3,6 +3,7 @@ import { ExternalLink } from 'lucide-react'
 
 interface StakeholderCardProps {
   label: string
+  role?: string
   url: string
   image: string
   children: ReactNode
@@ -14,6 +15,7 @@ interface StakeholderCardProps {
 
 const StakeholderCard: React.FC<StakeholderCardProps> = ({
   label,
+  role,
   url,
   image,
   children,
@@ -60,6 +62,11 @@ const StakeholderCard: React.FC<StakeholderCardProps> = ({
 
         <figcaption className="mt-8 md:mt-0">
           <h3 className="font-lato font-bold text-lg text-grey-900 md:text-xl">{label}</h3>
+          {role && (
+            <span className="inline-block mt-1 text-xs font-semibold tracking-wider uppercase text-green-light-900">
+              {role}
+            </span>
+          )}
 
           {children}
 

@@ -146,6 +146,18 @@ function HomepageHero() {
               von Grünflächen!
             </h1>
 
+            {/* Motto tagline */}
+            <p
+              className={`
+                mb-4 font-lato text-sm tracking-widest uppercase text-green-middle-900 lg:text-base
+                ${reducedMotion ? '' : 'transition-all duration-700'}
+                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+              `}
+              style={{ transitionDelay: reducedMotion ? '0ms' : '250ms' }}
+            >
+              Messen. Verstehen. Handeln.
+            </p>
+
             {/* Description with stagger */}
             <p
               className={`
@@ -153,7 +165,7 @@ function HomepageHero() {
                 ${reducedMotion ? '' : 'transition-all duration-700'}
                 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
               `}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
+              style={{ transitionDelay: reducedMotion ? '0ms' : '350ms' }}
             >
               Mittels sensorgestützter Überwachung von Grünflächen werden Daten über das
               LoRaWan-Netz übermittelt und ausgewertet, sodass Handlungsempfehlungen für die
@@ -166,7 +178,7 @@ function HomepageHero() {
                 ${reducedMotion ? '' : 'transition-all duration-700'}
                 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
               `}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '450ms' }}
+              style={{ transitionDelay: reducedMotion ? '0ms' : '500ms' }}
             >
               <button
                 type="button"

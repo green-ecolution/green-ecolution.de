@@ -71,7 +71,7 @@ function Introduction() {
   return (
     <section
       ref={ref}
-      className="max-w-208 mx-auto mt-36 md:mt-40 lg:mt-16 lg:max-w-screen-lg lg:grid lg:grid-cols-[1fr_1.5fr] lg:gap-x-10 lg:items-center xl:grid-cols-2 xl:max-w-screen-xl"
+      className="max-w-208 mx-auto mt-36 mb-20 md:mt-40 lg:mt-16 lg:mb-0 lg:max-w-screen-lg lg:grid lg:grid-cols-[1fr_1.5fr] lg:gap-x-10 lg:items-center xl:grid-cols-2 xl:max-w-screen-xl"
     >
       <article className="px-4 mb-8 md:px-6 lg:mb-14">
         {/* Section Label */}
