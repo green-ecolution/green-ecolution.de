@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.5.3...v1.6.0) (2026-04-13)
+
+
+### Features
+
+* add new sections to homepage and project page ([#349](https://github.com/green-ecolution/green-ecolution.de/issues/349)) ([88ece82](https://github.com/green-ecolution/green-ecolution.de/commit/88ece82a04c06b1d887fd9fd30dff33623e1c2c7))
+* redesign Process sections ([43f618d](https://github.com/green-ecolution/green-ecolution.de/commit/43f618db167aa57c247f7c476065bb1973fc6a56))
+* refine roadmap with additional item and polish interactions ([f443e51](https://github.com/green-ecolution/green-ecolution.de/commit/f443e51113f2bff0155c2ce8059b9dfbecf849ed))
+
+
+### Bug Fixes
+
+* update copyright to Green Ecolution ([53eae99](https://github.com/green-ecolution/green-ecolution.de/commit/53eae9901b03f7798973f4725ddf7da03f265c19))
+
 ## [1.5.3](https://github.com/green-ecolution/project-website/compare/v1.5.2...v1.5.3) (2026-02-03)
 
 
