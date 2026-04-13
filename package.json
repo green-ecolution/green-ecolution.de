@@ -19,7 +19,7 @@
     "@splidejs/react-splide": "^0.7.12",
     "@tanstack/react-router": "^1.168.19",
     "lottie-react": "^2.4.1",
-    "lucide-react": "^0.577.0",
+    "lucide-react": "^1.8.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-markdown": "^10.1.0",
