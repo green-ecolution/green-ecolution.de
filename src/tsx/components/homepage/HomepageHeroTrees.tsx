@@ -1,11 +1,16 @@
+import { useState } from 'react'
 import Lottie from 'lottie-react'
 import treeLightGreenAnimation from '../../../json/treeLightGreenAnimation.json'
 import treeMiddleGreenAnimation from '../../../json/treeMiddleGreenAnimation.json'
 import treeDarkGreenAnimation from '../../../json/treeDarkGreenAnimation.json'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
+import AdoptTreeModal from './AdoptTreeModal'
+import { generateAdoptionData } from './adoptTreeData'
+import type { AdoptionData } from './adoptTreeData'
 
 function HomepageHeroTrees() {
   const reducedMotion = useReducedMotion()
+  const [adoption, setAdoption] = useState<AdoptionData | null>(null)
 
   return (
     <div>
@@ -34,41 +39,66 @@ function HomepageHeroTrees() {
         </svg>
       </figure>
 
+      {/* Tree layers — the negative z-index lives on the Lottie itself (so the
+          tree sits behind the ground hill) while the figure stays in the
+          default stacking context. That lets the click overlay inside the
+          figure match the tree's bounding box exactly AND still receive
+          pointer events above foreground content. */}
       <figure
         aria-hidden="true"
-        className="absolute bottom-10 right-[5%] -z-20 xs:bottom-16 md:right-96 lg:right-[28rem] xl:bottom-32 2xl:right-[40rem] 3xl:right-[40%] md:landscape:bottom-0 lg:landscape:bottom-16"
+        className="absolute bottom-10 right-[5%] xs:bottom-16 md:right-96 lg:right-[28rem] xl:bottom-32 2xl:right-[40rem] 3xl:right-[40%] md:landscape:bottom-0 lg:landscape:bottom-16"
       >
         <Lottie
           aria-hidden="true"
-          className="h-[40vh] max-h-[20rem] md:max-h-none md:min-h-96 md:h-[60vh]"
+          className="relative -z-20 h-[40vh] max-h-[20rem] md:max-h-none md:min-h-96 md:h-[60vh]"
           animationData={treeLightGreenAnimation}
           autoplay={!reducedMotion}
         />
+        <button
+          type="button"
+          aria-label="Baum adoptieren"
+          className="pointer-events-auto absolute inset-0 cursor-pointer"
+          onClick={() => setAdoption(generateAdoptionData('light'))}
+        />
       </figure>
 
       <figure
         aria-hidden="true"
-        className="hidden absolute right-64 -z-10 bottom-28 lg:block xl:bottom-48 2xl:right-[30rem] 2xl:bottom-28 3xl:right-[30%] landscape:hidden lg:landscape:block"
+        className="hidden absolute right-64 bottom-28 lg:block xl:bottom-48 2xl:right-[30rem] 2xl:bottom-28 3xl:right-[30%] landscape:hidden lg:landscape:block"
       >
         <Lottie
           aria-hidden="true"
-          className="h-[40vh] md:min-h-96"
+          className="relative -z-10 h-[40vh] md:min-h-96"
           animationData={treeMiddleGreenAnimation}
           autoplay={!reducedMotion}
         />
+        <button
+          type="button"
+          aria-label="Baum adoptieren"
+          className="pointer-events-auto absolute inset-0 cursor-pointer"
+          onClick={() => setAdoption(generateAdoptionData('middle'))}
+        />
       </figure>
 
       <figure
         aria-hidden="true"
-        className="hidden absolute -right-20 -z-30 bottom-16 md:block lg:bottom-32 xl:bottom-48 2xl:right-52 2xl:bottom-32 3xl:right-[12%] landscape:bottom-4 lg:landscape:bottom-32"
+        className="hidden absolute -right-20 bottom-16 md:block lg:bottom-32 xl:bottom-48 2xl:right-52 2xl:bottom-32 3xl:right-[12%] landscape:bottom-4 lg:landscape:bottom-32"
       >
         <Lottie
           aria-hidden="true"
-          className="h-[55vh] md:h-[60vh] md:min-h-96"
+          className="relative -z-30 h-[55vh] md:h-[60vh] md:min-h-96"
           animationData={treeDarkGreenAnimation}
           autoplay={!reducedMotion}
         />
+        <button
+          type="button"
+          aria-label="Baum adoptieren"
+          className="pointer-events-auto absolute inset-0 cursor-pointer"
+          onClick={() => setAdoption(generateAdoptionData('dark'))}
+        />
       </figure>
+
+      <AdoptTreeModal data={adoption} onClose={() => setAdoption(null)} />
     </div>
   )
 }
