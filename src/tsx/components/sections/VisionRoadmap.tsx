@@ -113,7 +113,6 @@ function VisionRoadmap() {
             <div className="space-y-0">
               {roadmapItems.map((item, index) => {
                 const config = statusConfig[item.status]
-                const isLast = index === roadmapItems.length - 1
 
                 return (
                   <div
@@ -132,13 +131,11 @@ function VisionRoadmap() {
                           reducedMotion && item.status === 'in-progress' ? '!animate-none' : ''
                         }`}
                       />
-                      {!isLast && (
-                        <div className="w-0.5 flex-1 bg-gradient-to-b from-green-light-900/30 to-grey-900/10 my-1" />
-                      )}
+                      <div className="w-0.5 flex-1 bg-gradient-to-b from-green-light-900/30 to-grey-900/10 my-1" />
                     </div>
 
                     {/* Content */}
-                    <div className={`pb-6 ${isLast ? 'pb-0' : ''}`}>
+                    <div className="pb-6">
                       <div className="flex items-center gap-2 mb-1">
                         <h4 className="font-lato font-semibold text-grey-900 group-hover:text-green-dark-900 transition-colors">
                           {item.title}
@@ -154,6 +151,42 @@ function VisionRoadmap() {
                   </div>
                 )
               })}
+
+              {/* Timeline dissolving into the future */}
+              <div
+                className={`relative flex gap-4 transition-all ${reducedMotion ? '' : 'duration-700'} ${
+                  isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+                }`}
+                style={{
+                  transitionDelay: reducedMotion ? '0ms' : `${350 + roadmapItems.length * 120}ms`,
+                }}
+                aria-label="Weitere Ideen in Planung"
+              >
+                {/* Diminishing dots along a fading timeline — continuation metaphor */}
+                <div
+                  className="flex flex-col items-center"
+                  style={{ width: '0.875rem' }}
+                  aria-hidden="true"
+                >
+                  <div className="w-2 h-2 rounded-full bg-green-light-900/35 mt-1" />
+                  <div className="w-px h-2.5 bg-gradient-to-b from-green-light-900/25 to-green-light-900/10" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-light-900/20" />
+                  <div className="w-px h-2 bg-gradient-to-b from-green-light-900/15 to-transparent" />
+                  <div
+                    className={`w-1 h-1 rounded-full bg-green-light-900/15 ${
+                      reducedMotion ? '' : 'animate-pulse'
+                    }`}
+                  />
+                </div>
+
+                {/* Whisper-soft label with refined spacing */}
+                <p className="font-lato italic text-[13px] text-grey-600/60 leading-relaxed tracking-wide pt-0.5 self-center">
+                  <span className="mr-1 text-green-light-900/50 not-italic tracking-widest">
+                    ···
+                  </span>
+                  und vieles mehr in Planung
+                </p>
+              </div>
             </div>
           </div>
         </div>

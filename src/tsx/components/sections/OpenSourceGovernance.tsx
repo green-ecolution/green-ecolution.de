@@ -101,11 +101,13 @@ function OpenSourceGovernance() {
             return (
               <article
                 key={pillar.category}
-                className={`group p-6 lg:p-8 transition-all hover:bg-white/[0.03] ${reducedMotion ? '' : 'duration-700'} ${
+                className={`group p-6 lg:p-8 hover:bg-white/[0.03] ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 } ${borderClasses}`}
                 style={{
-                  transitionDelay: reducedMotion ? '0ms' : `${300 + index * 100}ms`,
+                  transition: reducedMotion
+                    ? 'background-color 300ms'
+                    : `opacity 700ms ${300 + index * 100}ms, transform 700ms ${300 + index * 100}ms, background-color 300ms`,
                 }}
               >
                 <div className="mb-4 w-10 h-10 rounded-lg bg-green-dark-900/60 flex items-center justify-center transition-colors group-hover:bg-green-dark-900">
