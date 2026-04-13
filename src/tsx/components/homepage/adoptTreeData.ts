@@ -35,13 +35,12 @@ const treeNames: TreeIdentity[] = [
 const funFacts: string[] = [
   'Ein großer Stadtbaum kann bis zu 400 Liter Wasser am Tag verdunsten und so die Umgebung um bis zu 3°C kühlen.',
   'Eine einzige Buche produziert genug Sauerstoff für 10 Menschen pro Jahr.',
-  'Stadtbäume filtern bis zu 70% des Feinstaubs aus der Luft in ihrer unmittelbaren Umgebung.',
-  'Die Wurzeln eines Straßenbaums erstrecken sich oft über das Dreifache der Kronenfläche.',
+  'Stadtbäume filtern einen relevanten Anteil des Feinstaubs aus der Luft in ihrer unmittelbaren Umgebung.',
+  'Die Wurzeln eines Straßenbaums erstrecken sich oft über das Anderthalbfache der Kronenfläche.',
   'Ein 100-jähriger Baum hat in seinem Leben etwa 5 Tonnen CO₂ gebunden.',
-  'Bäume kommunizieren über unterirdische Pilznetzwerke — das sogenannte „Wood Wide Web".',
-  'Straßenbäume leben im Durchschnitt nur 60 Jahre — auf dem Land werden sie dreimal so alt.',
-  'Ein einzelner Baum kann den Lärmpegel um bis zu 10 Dezibel senken.',
-  'Flensburg hat über 30.000 Stadtbäume, die alle regelmäßig gepflegt werden müssen.',
+  'Bäume kommunizieren über unterirdische Pilznetzwerke - das sogenannte „Wood Wide Web".',
+  'Straßenbäume leben im Durchschnitt nur 60 Jahre - auf dem Land werden sie dreimal so alt.',
+  'Ein dichter Baumbestand kann den Lärmpegel um bis zu 10 Dezibel senken.',
   'In heißen Sommern braucht ein Stadtbaum bis zu 200 Liter Wasser pro Woche zusätzlich.',
 ]
 
@@ -58,7 +57,7 @@ export function generateAdoptionData(treeVariant: TreeVariant): AdoptionData {
     tree: pickRandom(treeNames),
     fact: pickRandom(funFacts),
     certNumber: `GE-${prefix}-${num}`,
-    plantedYear: 1970 + Math.floor(Math.random() * 50),
+    plantedYear: 2010 + Math.floor(Math.random() * 16),
     treeVariant,
   }
 }
