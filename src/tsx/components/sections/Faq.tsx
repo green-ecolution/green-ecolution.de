@@ -50,7 +50,7 @@ const faqData = [
   {
     question: 'Wie ist der aktuelle Fortschritt des Projekts?',
     answer:
-      'Das Forschungsprojekt „Green Ecolution" wurde im Rahmen des Masterstudiengangs „Angewandte Informatik" an der Hochschule Flensburg erfolgreich abgeschlossen. Im Oktober 2025 erhielt das Projekt im Rahmen des DigitalHub Call for Concepts eine Förderung. Aktuell arbeiten PROGEEK, die Stadt Flensburg und die Smarte Grenzregion gemeinsam an der Weiterentwicklung.',
+      'Das Forschungsprojekt „Green Ecolution" wurde im Rahmen des Masterstudiengangs „Angewandte Informatik" an der Hochschule Flensburg erfolgreich abgeschlossen. Im Oktober 2025 erhielt das Projekt im Rahmen des DigitalHub Call for Concepts eine Finanzierung. Aktuell arbeiten PROGEEK, die Stadt Flensburg und die Smarte Grenzregion gemeinsam an der Weiterentwicklung.',
   },
 ]
 
@@ -290,8 +290,8 @@ function Faq() {
               Im Oktober 2025 erhielt das Projekt im Rahmen des&nbsp;
               <strong>DigitalHub Call for Concepts</strong>&nbsp;des Landesprogramms&nbsp;
               <strong>„Offene Innovation – Open Source made in Schleswig-Holstein“</strong>
-              &nbsp;eine Förderung. Dadurch kann das System weiter ausgebaut und praxisnah erprobt
-              werden.
+              &nbsp;eine Finanzierung. Dadurch kann das System weiter ausgebaut und praxisnah
+              erprobt werden.
             </p>
             <p className="mt-4">
               Aktuell arbeiten&nbsp;
