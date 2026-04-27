@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1](https://github.com/green-ecolution/green-ecolution.de/compare/v1.6.0...v1.6.1) (2026-04-27)
+
+
+### Bug Fixes
+
+* **content:** replace Förderung with Finanzierung in FAQ ([ead87a6](https://github.com/green-ecolution/green-ecolution.de/commit/ead87a6721ee40be0bace82c9e56ff3733810d02))
+
 ## [1.6.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.5.3...v1.6.0) (2026-04-13)
 
 
