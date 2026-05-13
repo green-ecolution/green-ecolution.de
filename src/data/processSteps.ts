@@ -11,42 +11,37 @@ interface ProcessStep {
 
 export const steps: ProcessStep[] = [
   {
-    label: 'Sensoren installieren',
-    shortName: 'Installation',
-    description:
-      'Bodenfeuchtesensoren werden an ausgewählten Bäumen angebracht – schnell, unkompliziert und wartungsarm.',
+    label: 'data.processSteps.installSensors.label',
+    shortName: 'data.processSteps.installSensors.shortName',
+    description: 'data.processSteps.installSensors.description',
     icon: Radio,
     color: 'green-dark',
   },
   {
-    label: 'Echtzeitdaten erfassen',
-    shortName: 'Daten',
-    description:
-      'Die Sensoren messen kontinuierlich die Bodenfeuchtigkeit und übertragen die Werte automatisch ins System.',
+    label: 'data.processSteps.collectRealtimeData.label',
+    shortName: 'data.processSteps.collectRealtimeData.shortName',
+    description: 'data.processSteps.collectRealtimeData.description',
     icon: Activity,
     color: 'green-light',
   },
   {
-    label: 'Bewässerungsbedarf erkennen',
-    shortName: 'Analyse',
-    description:
-      'Das Dashboard zeigt dir auf einen Blick, welche Bäume Wasser brauchen – priorisiert nach Dringlichkeit.',
+    label: 'data.processSteps.detectWateringNeed.label',
+    shortName: 'data.processSteps.detectWateringNeed.shortName',
+    description: 'data.processSteps.detectWateringNeed.description',
     icon: LayoutDashboard,
     color: 'green-middle',
   },
   {
-    label: 'Optimierte Routen planen',
-    shortName: 'Planung',
-    description:
-      'Green Ecolution berechnet die effizienteste Tour für dein Team – weniger Fahrzeit, mehr Bewässerung.',
+    label: 'data.processSteps.planOptimizedRoutes.label',
+    shortName: 'data.processSteps.planOptimizedRoutes.shortName',
+    description: 'data.processSteps.planOptimizedRoutes.description',
     icon: Route,
     color: 'green-light',
   },
   {
-    label: 'Bewässern und auswerten',
-    shortName: 'Umsetzung',
-    description:
-      'Dein Team fährt die optimierte Route. Danach siehst du genau, wie viel Wasser wo eingesetzt wurde.',
+    label: 'data.processSteps.waterAndEvaluate.label',
+    shortName: 'data.processSteps.waterAndEvaluate.shortName',
+    description: 'data.processSteps.waterAndEvaluate.description',
     icon: Droplets,
     color: 'green-dark',
   },
