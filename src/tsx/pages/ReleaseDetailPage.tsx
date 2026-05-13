@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, redirect } from '@tanstack/react-router'
 import Markdown from 'react-markdown'
 import { getReleaseBySlug, getAdjacentReleases, getAllReleases } from '../../content/releases'
@@ -43,6 +44,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function ReleaseDetailPage() {
+  const { t } = useTranslation()
   const { slug } = Route.useParams()
   const release = getReleaseBySlug(slug)
   const { prev, next } = getAdjacentReleases(slug)
@@ -54,9 +56,12 @@ function ReleaseDetailPage() {
 
   useEffect(() => {
     if (release) {
-      document.title = `v${release.frontmatter.version} - ${release.frontmatter.title} | Green Ecolution`
+      document.title = t('pages.releaseDetail.documentTitle', {
+        version: release.frontmatter.version,
+        title: release.frontmatter.title,
+      })
     }
-  }, [release])
+  }, [release, t])
 
   if (!release) {
     throw redirect({ to: '/releases' })
@@ -240,7 +245,7 @@ function ReleaseDetailPage() {
         {/* Back Link */}
         <Link
           to="/releases"
-          aria-label="Zurück zu allen Releases"
+          aria-label={t('pages.releaseDetail.backAriaLabel')}
           className="group inline-flex items-center gap-2 text-green-dark-900 font-semibold hover:gap-3 transition-all mb-8"
         >
           <span
@@ -249,7 +254,7 @@ function ReleaseDetailPage() {
           >
             ←
           </span>
-          <span className="group-hover:underline">Alle Releases</span>
+          <span className="group-hover:underline">{t('pages.releaseDetail.backLabel')}</span>
         </Link>
 
         {/* Header */}
@@ -262,7 +267,7 @@ function ReleaseDetailPage() {
           {/* Section Label */}
           <div className="inline-block mb-4">
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-              Release Notes
+              {t('pages.releaseDetail.label')}
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
@@ -281,7 +286,7 @@ function ReleaseDetailPage() {
               {isLatest && (
                 <span className="inline-flex items-center gap-1.5 bg-green-light-900 text-white px-4 py-1.5 rounded-full text-sm font-lato font-bold shadow-xs">
                   <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                  Aktuell
+                  {t('pages.releaseDetail.currentLabel')}
                 </span>
               )}
               <time dateTime={frontmatter.date} className="text-grey-900/60 text-sm">
@@ -299,7 +304,7 @@ function ReleaseDetailPage() {
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                 </svg>
-                Release
+                {t('pages.releaseDetail.releaseLinkLabel')}
               </a>
               <a
                 href={`${frontmatter.repository ?? DEFAULT_REPOSITORY}/tree/v${frontmatter.version}`}
@@ -315,7 +320,7 @@ function ReleaseDetailPage() {
                     d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
                   />
                 </svg>
-                Source
+                {t('pages.releaseDetail.sourceLinkLabel')}
               </a>
             </div>
           </div>
@@ -468,7 +473,7 @@ function ReleaseDetailPage() {
               {/* Terminal Content */}
               <div className="p-3 lg:p-4 font-mono text-xs lg:text-sm">
                 <div className="text-grey-100/40 mb-4 hidden lg:block">
-                  # Changelog for v{frontmatter.version}
+                  {t('pages.releaseDetail.changelogTitle', { version: frontmatter.version })}
                 </div>
 
                 {frontmatter.changelog.map((entry) => {
@@ -542,7 +547,7 @@ function ReleaseDetailPage() {
         {/* Prev/Next Navigation */}
         <nav
           ref={navRef}
-          aria-label="Release Navigation"
+          aria-label={t('pages.releaseDetail.navigationAriaLabel')}
           className={`mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4 transition-all ${reducedMotion ? '' : 'duration-700'} ${
             navVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
@@ -556,7 +561,7 @@ function ReleaseDetailPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-green-light-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative">
                 <span className="text-xs text-grey-500 uppercase tracking-wide font-semibold">
-                  Neuere Version
+                  {t('pages.releaseDetail.newerVersionLabel')}
                 </span>
                 <div className="flex items-center gap-3 mt-2">
                   <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-grey-100 text-grey-400 group-hover:bg-green-dark-900 group-hover:text-white transition-all">
@@ -583,7 +588,7 @@ function ReleaseDetailPage() {
               <div className="absolute inset-0 bg-gradient-to-bl from-green-light-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative">
                 <span className="text-xs text-grey-500 uppercase tracking-wide font-semibold">
-                  Ältere Version
+                  {t('pages.releaseDetail.olderVersionLabel')}
                 </span>
                 <div className="flex items-center gap-3 mt-2 sm:justify-end">
                   <div>
@@ -606,14 +611,14 @@ function ReleaseDetailPage() {
         {/* Footer */}
         <div className="mt-10 pt-6 border-t border-grey-100 text-center">
           <p className="text-grey-900/60 text-sm">
-            Fehler gefunden oder Feedback zu diesem Release?{' '}
+            {t('pages.releaseDetail.feedbackText')}{' '}
             <a
               href={`${frontmatter.repository ?? DEFAULT_REPOSITORY}/issues/new`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-green-dark-900 hover:underline font-medium"
             >
-              Issue erstellen →
+              {t('pages.releaseDetail.issueLabel')}
             </a>
           </p>
         </div>
