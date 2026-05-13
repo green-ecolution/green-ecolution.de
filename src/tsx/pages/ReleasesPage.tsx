@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from '@tanstack/react-router'
 import { getAllReleases } from '../../content/releases'
 import ReleaseTimeline from '../components/releases/ReleaseTimeline'
@@ -30,6 +31,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function ReleasesPage() {
+  const { t } = useTranslation()
   const releases = getAllReleases()
   const latestRelease = releases[0]
   const olderReleases = releases.slice(1)
@@ -37,8 +39,8 @@ function ReleasesPage() {
   const { ref, isVisible } = useIntersectionObserver()
 
   useEffect(() => {
-    document.title = 'Releases | Green Ecolution | Smartes Grünflächenmanagement'
-  }, [])
+    document.title = t('pages.releases.documentTitle')
+  }, [t])
 
   const formattedDate = latestRelease ? formatReleaseDate(latestRelease.frontmatter.date) : ''
 
@@ -59,7 +61,7 @@ function ReleasesPage() {
             }`}
           >
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-              Releases
+              {t('pages.releases.label')}
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
@@ -70,7 +72,7 @@ function ReleasesPage() {
             }`}
             style={{ transitionDelay: reducedMotion ? '0ms' : '150ms' }}
           >
-            Release Notes
+            {t('pages.releases.title')}
           </h1>
 
           <p
@@ -79,8 +81,7 @@ function ReleasesPage() {
             }`}
             style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
           >
-            Entdecke die neuesten Funktionen, Verbesserungen und Bugfixes – wir arbeiten
-            kontinuierlich daran, Green Ecolution noch besser zu machen.
+            {t('pages.releases.description')}
           </p>
         </header>
 
@@ -94,11 +95,11 @@ function ReleasesPage() {
           >
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-bold uppercase tracking-wider text-green-dark-900">
-                Aktuelles Release
+                {t('pages.releases.latestLabel')}
               </span>
               <span className="inline-flex items-center gap-1.5 bg-green-light-900/20 text-green-light-900 px-2.5 py-0.5 rounded-full text-xs font-semibold">
                 <span className="w-1.5 h-1.5 bg-green-light-900 rounded-full animate-pulse" />
-                Neu
+                {t('pages.releases.newLabel')}
               </span>
             </div>
 
@@ -168,7 +169,9 @@ function ReleasesPage() {
                     )}
 
                   <div className="flex items-center gap-3 text-white/80 group-hover:text-white transition-colors">
-                    <span className="text-sm font-semibold">Details ansehen</span>
+                    <span className="text-sm font-semibold">
+                      {t('pages.releases.detailsLabel')}
+                    </span>
                     <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/10 group-hover:bg-white/20 transition-all duration-300 group-hover:translate-x-1">
                       <svg
                         className="w-4 h-4"
@@ -201,7 +204,7 @@ function ReleasesPage() {
           >
             <div className="flex items-center gap-4 mb-6">
               <span className="text-xs font-bold uppercase tracking-wider text-grey-900/50">
-                Ältere Releases
+                {t('pages.releases.olderLabel')}
               </span>
               <div className="flex-1 h-px bg-gradient-to-r from-grey-900/10 to-transparent" />
             </div>

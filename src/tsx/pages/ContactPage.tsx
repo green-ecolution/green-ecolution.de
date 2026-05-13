@@ -1,17 +1,19 @@
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import ContactHeroContent from '../components/hero/ContactHeroContent'
 import Hero from '../components/sections/Hero'
 import Stakeholder from '../components/sections/Stakeholder'
 import BreadcrumbSchema from '../components/BreadcrumbSchema'
 
 function ContactPage() {
-  useEffect(() => {
-    document.title = 'Kontakt | Green Ecolution | Smartes Grünflächenmanagement'
-  }, [])
+  const { t } = useTranslation()
 
-  const heroHeadline = 'Lass uns in Kontakt treten'
-  const heroDescription =
-    'Du hast Fragen zum Projekt, möchtest deine Kommune anbinden oder zur Entwicklung beitragen? Wir freuen uns über jede Nachricht und melden uns zeitnah bei dir.'
+  useEffect(() => {
+    document.title = t('pages.contact.documentTitle')
+  }, [t])
+
+  const heroHeadline = t('pages.contact.hero.headline')
+  const heroDescription = t('pages.contact.hero.description')
 
   return (
     <main
@@ -20,11 +22,11 @@ function ContactPage() {
     >
       <BreadcrumbSchema
         items={[
-          { name: 'Startseite', path: '/' },
-          { name: 'Kontakt', path: '/contact' },
+          { name: t('pages.breadcrumbs.home'), path: '/' },
+          { name: t('pages.breadcrumbs.contact'), path: '/contact' },
         ]}
       />
-      <Hero headline={heroHeadline} description={heroDescription} label="Kontakt">
+      <Hero headline={heroHeadline} description={heroDescription} label={t('pages.contact.label')}>
         <ContactHeroContent />
       </Hero>
       <Stakeholder hasDesktopList />
