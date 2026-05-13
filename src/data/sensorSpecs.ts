@@ -13,25 +13,25 @@ interface SensorFeature {
 }
 
 export const sensorSpecs: SensorSpec[] = [
-  { value: '3', label: 'Messtiefen' },
-  { value: 'LoRaWAN', label: 'Funknetz' },
-  { value: '3+', label: 'Jahre Batterie' },
+  { value: '3', label: 'data.sensorSpecs.specs.depths' },
+  { value: 'LoRaWAN', label: 'data.sensorSpecs.specs.network' },
+  { value: '3+', label: 'data.sensorSpecs.specs.battery' },
 ]
 
 export const sensorFeatures: SensorFeature[] = [
   {
-    label: 'Bodenfeuchte',
-    description: 'Volumetrische Messung der Bodenfeuchtigkeit in mehreren Tiefen',
+    label: 'data.sensorSpecs.features.soilMoisture.label',
+    description: 'data.sensorSpecs.features.soilMoisture.description',
     icon: Droplets,
   },
   {
-    label: 'Temperatur',
-    description: 'Erfassung der Bodentemperatur für präzise Bewässerungsempfehlungen',
+    label: 'data.sensorSpecs.features.temperature.label',
+    description: 'data.sensorSpecs.features.temperature.description',
     icon: Thermometer,
   },
   {
-    label: 'Bodenwasserspannung',
-    description: 'Messung der Saugspannung zur Bestimmung der Wasserverfügbarkeit',
+    label: 'data.sensorSpecs.features.waterTension.label',
+    description: 'data.sensorSpecs.features.waterTension.description',
     icon: Gauge,
   },
 ]

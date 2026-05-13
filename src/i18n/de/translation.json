@@ -147,6 +147,162 @@
       "slideLabel": "%s von %s"
     }
   },
+  "data": {
+    "processSteps": {
+      "installSensors": {
+        "label": "Sensoren installieren",
+        "shortName": "Installation",
+        "description": "Bodenfeuchtesensoren werden an ausgewählten Bäumen angebracht – schnell, unkompliziert und wartungsarm."
+      },
+      "collectRealtimeData": {
+        "label": "Echtzeitdaten erfassen",
+        "shortName": "Daten",
+        "description": "Die Sensoren messen kontinuierlich die Bodenfeuchtigkeit und übertragen die Werte automatisch ins System."
+      },
+      "detectWateringNeed": {
+        "label": "Bewässerungsbedarf erkennen",
+        "shortName": "Analyse",
+        "description": "Das Dashboard zeigt dir auf einen Blick, welche Bäume Wasser brauchen – priorisiert nach Dringlichkeit."
+      },
+      "planOptimizedRoutes": {
+        "label": "Optimierte Routen planen",
+        "shortName": "Planung",
+        "description": "Green Ecolution berechnet die effizienteste Tour für dein Team – weniger Fahrzeit, mehr Bewässerung."
+      },
+      "waterAndEvaluate": {
+        "label": "Bewässern und auswerten",
+        "shortName": "Umsetzung",
+        "description": "Dein Team fährt die optimierte Route. Danach siehst du genau, wie viel Wasser wo eingesetzt wurde."
+      }
+    },
+    "governancePillars": {
+      "license": {
+        "category": "Lizenz",
+        "title": "AGPL-3.0-only",
+        "description": "Lizenziert unter der AGPL. Finanziert im Rahmen des Landesprogramms „Offene Innovation\" des DigitalHub.SH Schleswig-Holstein."
+      },
+      "sovereignty": {
+        "category": "Souveränität",
+        "title": "Digitale Souveränität",
+        "description": "Keine Abhängigkeit von proprietären Plattformen. Kommunen behalten die Kontrolle über ihre Daten und Infrastruktur. Kein Vendor-Lock-in."
+      },
+      "modularity": {
+        "category": "Modularität",
+        "title": "Plugin-System",
+        "description": "Modulare Erweiterungen für kommunenspezifische Anpassungen ohne Änderung der Kernsoftware. Import-Plugins für Baumkataster, CSV, Datenbanken."
+      },
+      "integration": {
+        "category": "Integration",
+        "title": "API-first",
+        "description": "Offene Schnittstellen für Integration in kommunale IT-Landschaften. Anbindung an IoT-Hubs und Open-Data-Portale."
+      },
+      "community": {
+        "category": "Community",
+        "title": "Nachnutzung & Community",
+        "description": "Quellcode und Dokumentation öffentlich auf GitHub. Andere Kommunen können die Lösung nachnutzen und anpassen."
+      },
+      "efficiency": {
+        "category": "Wirtschaftlichkeit",
+        "title": "Kosteneffizienz",
+        "description": "Keine Lizenzkosten. Geschäftsmodell basiert auf Dienstleistungen: Hosting, Anpassung, Sensorvertrieb. Regionale Wertschöpfung in SH."
+      }
+    },
+    "challengeFigures": {
+      "water": {
+        "value": "50.000",
+        "unit": "Liter / Jahr",
+        "description": "Wasser werden pro mittelgroße Kommune jährlich ausgebracht, ohne Datengrundlage, ohne bedarfsgerechte Steuerung."
+      },
+      "tree": {
+        "value": "1.700 €",
+        "unit": "pro Baum",
+        "description": "kostet ein einzelner Straßenbaum. Ein vermeidbarer Totalverlust durch fehlende bedarfsgerechte Bewässerung finanziert Jahre Sensorbetrieb."
+      },
+      "bed": {
+        "value": "bis 60.000 €",
+        "unit": "pro Beet",
+        "description": "kann ein komplettes Straßenbeet kosten, inklusive Tiefbau, Substrat und Infrastruktur."
+      }
+    },
+    "architectureSteps": {
+      "sensor": {
+        "label": "Sensor",
+        "description": "Misst Bodenfeuchte am Baum"
+      },
+      "gateway": {
+        "label": "Gateway",
+        "description": "LoRaWAN Übertragung"
+      },
+      "backend": {
+        "label": "Backend",
+        "description": "Datenverarbeitung & Analyse"
+      },
+      "dashboard": {
+        "label": "Dashboard",
+        "description": "Visualisierung & Tourenplanung"
+      }
+    },
+    "sensorSpecs": {
+      "specs": {
+        "depths": "Messtiefen",
+        "network": "Funknetz",
+        "battery": "Jahre Batterie"
+      },
+      "features": {
+        "soilMoisture": {
+          "label": "Bodenfeuchte",
+          "description": "Volumetrische Messung der Bodenfeuchtigkeit in mehreren Tiefen"
+        },
+        "temperature": {
+          "label": "Temperatur",
+          "description": "Erfassung der Bodentemperatur für präzise Bewässerungsempfehlungen"
+        },
+        "waterTension": {
+          "label": "Bodenwasserspannung",
+          "description": "Messung der Saugspannung zur Bestimmung der Wasserverfügbarkeit"
+        }
+      }
+    },
+    "roadmapItems": {
+      "mobileApp": {
+        "title": "Mobile App mit QR-Scan",
+        "description": "Sensor-Setup per QR-Code und GPS direkt vor Ort am Baum"
+      },
+      "sensorFirmware": {
+        "title": "Eigene Sensor-Firmware",
+        "description": "Vollständig selbst entwickelte Firmware für maximale Kontrolle und Anpassbarkeit"
+      },
+      "roles": {
+        "title": "Benutzer- und Rollenkonzept",
+        "description": "Feingranulare Rechteverwaltung für Mitarbeitende, Dienstleister und Partnerkommunen"
+      },
+      "openData": {
+        "title": "Open-Data-Export",
+        "description": "Anbindung an das Open-Data-Portal des Landes Schleswig-Holstein"
+      },
+      "greenSpaceTypes": {
+        "title": "Weitere Grünflächentypen",
+        "description": "Erweiterung auf Beete, Stauden und Parks über Bäume hinaus"
+      }
+    },
+    "workflowSteps": {
+      "measure": {
+        "category": "Erfassen",
+        "title": "Messen",
+        "description": "Bodenfeuchtesensoren erfassen Parameter wie Bodenfeuchte, Temperatur und Bodenwasserspannung in mehreren Tiefen (30/60/90 cm). Die Daten werden energieeffizient über LoRaWAN übertragen."
+      },
+      "understand": {
+        "category": "Analysieren",
+        "title": "Verstehen",
+        "description": "Ein Ampelsystem zeigt auf einer Karte den aktuellen Bewässerungsbedarf. Mitarbeiter erkennen auf einen Blick, welche Grünflächen Wasser brauchen. Zeitverläufe ermöglichen detaillierte Analysen."
+      },
+      "act": {
+        "category": "Ausführen",
+        "title": "Handeln",
+        "description": "Automatisierte Einsatz- und Routenplanung erzeugt optimierte Bewässerungstouren unter Berücksichtigung von Wasserkapazität, Fahrzeuggröße und Straßenrestriktionen."
+      }
+    }
+  },
   "layout": {
     "footer": {
       "homeAriaLabel": "Zur Startseite navigieren",
