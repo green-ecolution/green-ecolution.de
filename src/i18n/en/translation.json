@@ -1,1 +1,150 @@
-{}
+{
+  "navigation": {
+    "ariaLabel": "Main navigation",
+    "mobileTitle": "Main navigation",
+    "items": {
+      "project": "The Project",
+      "releases": "Releases",
+      "contact": "Contact",
+      "github": "GitHub"
+    },
+    "demo": {
+      "ariaLabel": "Demo",
+      "label": "Try it now"
+    },
+    "legal": {
+      "imprint": "Legal Notice",
+      "privacy": "Privacy Policy"
+    }
+  },
+  "welcomeCard": {
+    "titlePrefix": "Welcome to",
+    "titleHighlight": "Green Ecolution",
+    "subtitle": "Intelligent Green Space Management",
+    "description": "Learn how we optimize the irrigation of urban green spaces using smart sensors and data-driven analysis — for healthier trees, flower beds, and parks with efficient resource usage.",
+    "button": "Discover now"
+  },
+  "contactHero": {
+    "intro": "We look forward to hearing from you",
+    "cards": {
+      "email": {
+        "title": "Write to us",
+        "description": "Do you have questions about the project or would you like to learn more? We will get back to you shortly.",
+        "cta": "Send Email"
+      },
+      "github": {
+        "title": "Open Source",
+        "description": "Explore our code, contribute to development, or use Green Ecolution for your municipality.",
+        "cta": "View on GitHub"
+      }
+    }
+  },
+  "homepageHero": {
+    "label": "Smart Irrigation",
+    "headline": {
+      "start": "We enable",
+      "highlight": "smart irrigation",
+      "end": "for green spaces!"
+    },
+    "motto": "Measure. Understand. Act.",
+    "description": "Using sensor-based monitoring of green spaces, data is transmitted and analyzed through the LoRaWAN network, enabling actionable irrigation recommendations.",
+    "button": "Play animation"
+  },
+  "homepageHeroTrees": {
+    "adoptTreeAriaLabel": "Adopt a tree"
+  },
+  "homepageOverlay": {
+    "popups": {
+      "irrigationStatus": {
+        "label": "Measuring irrigation status",
+        "description": "Soil moisture is measured at different depths depending on vegetation type to gather data across multiple soil layers."
+      },
+      "dataTransmission": {
+        "label": "Data transmission",
+        "description": "Sensor data is transmitted via the public LoRaWAN network to a backend for further processing. LoRaWAN requires little energy and provides long range coverage, resulting in large area coverage and low maintenance effort."
+      },
+      "recommendations": {
+        "label": "Recommendations for action",
+        "description": "The transmitted sensor data is analyzed using scientific and mathematical methodologies. A dashboard visually displays whether irrigation will be necessary in the near future.",
+        "link": "View the benefits"
+      }
+    },
+    "button": {
+      "next": "Next",
+      "discover": "Discover"
+    },
+    "closeAriaLabel": "Close popup"
+  },
+  "adoptTreeModal": {
+    "ariaLabel": "Adoption certificate for {{fullName}}",
+    "certificateTitle": "Certificate of Adoption",
+    "certificateNumber": "No. {{number}}",
+    "fullName": "{{name}} the {{species}}",
+    "location": "is waiting for you in Flensburg",
+    "didYouKnow": "Did you know?",
+    "quote": "“Thank you for thinking of me! Projects like Green Ecolution finally give city trees like me the attention we deserve.”",
+    "since": "— {{name}}, in Flensburg since {{year}}",
+    "button": "Thank you, {{name}}! 🌳"
+  },
+  "adoptTreeData": {
+    "species": {
+      "birch": "Birch",
+      "spruce": "Spruce",
+      "oak": "Oak",
+      "beech": "Beech",
+      "chestnut": "Chestnut",
+      "linden": "Linden",
+      "maple": "Maple",
+      "ash": "Ash",
+      "elm": "Elm",
+      "plane": "Plane Tree",
+      "fir": "Fir",
+      "willow": "Willow",
+      "robinia": "Robinia",
+      "alder": "Alder",
+      "poplar": "Poplar"
+    },
+    "funFacts": {
+      "cooling": "A large urban tree can evaporate up to 400 liters of water per day and cool its surroundings by up to 3°C.",
+      "oxygen": "A single beech tree produces enough oxygen for 10 people per year.",
+      "dust": "Urban trees filter a significant portion of fine dust from the air in their immediate surroundings.",
+      "roots": "The roots of a street tree often extend over one and a half times the size of its crown area.",
+      "co2": "A 100-year-old tree has stored around 5 tons of CO₂ during its lifetime.",
+      "woodWideWeb": "Trees communicate through underground fungal networks — the so-called “Wood Wide Web”.",
+      "lifetime": "Street trees live an average of only 60 years — in rural areas they live three times longer.",
+      "noise": "Dense tree populations can reduce noise levels by up to 10 decibels.",
+      "water": "In hot summers, an urban tree may require up to 200 liters of additional water per week."
+    }
+  },
+  "releaseCard": {
+    "moreHighlights": "+{{count}} more"
+  },
+  "releaseTimeline": {
+    "empty": "No release notes available yet."
+  },
+  "components": {
+    "backToTop": {
+      "ariaLabel": "Back to top"
+    },
+    "errorFallback": {
+      "title": "Something went wrong",
+      "description": "An unexpected error occurred. Please try again or return to the homepage.",
+      "retryLabel": "Try again",
+      "homeLabel": "Back to homepage"
+    }
+  },
+  "helper": {
+    "sliderTranslations": {
+      "prev": "Show previous item",
+      "next": "Show next item",
+      "first": "Show first item",
+      "last": "Show last item",
+      "slideX": "Go to page %s",
+      "pageX": "Go to page %s",
+      "carousel": "Carousel",
+      "select": "Item pagination",
+      "slide": "Carousel item",
+      "slideLabel": "%s of %s"
+    }
+  }
+}
