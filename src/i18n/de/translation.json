@@ -1,0 +1,125 @@
+{
+  "navigation": {
+    "ariaLabel": "Hauptnavigation",
+    "mobileTitle": "Hauptnavigation",
+    "items": {
+      "project": "Das Projekt",
+      "releases": "Releases",
+      "contact": "Kontakt",
+      "github": "GitHub"
+    },
+    "demo": {
+      "ariaLabel": "Demo",
+      "label": "Jetzt ausprobieren"
+    },
+    "legal": {
+      "imprint": "Impressum",
+      "privacy": "Datenschutz"
+    }
+  },
+  "welcomeCard": {
+    "titlePrefix": "Willkommen bei",
+    "titleHighlight": "Green Ecolution",
+    "subtitle": "Intelligentes Grünflächenmanagement",
+    "description": "Erfahre, wie wir mit smarter Sensorik und datengestützten Analysen die Bewässerung städtischer Grünflächen optimieren – für gesündere Bäume, Beete und Parks bei effizientem Ressourceneinsatz.",
+    "button": "Jetzt entdecken"
+  },
+  "contactHero": {
+    "intro": "Wir freuen uns auf dich",
+    "cards": {
+      "email": {
+        "title": "Schreib uns",
+        "description": "Hast du Fragen zum Projekt oder möchtest du mehr erfahren? Wir melden uns zeitnah bei dir zurück.",
+        "cta": "E-Mail senden"
+      },
+      "github": {
+        "title": "Open Source",
+        "description": "Entdecke unseren Code, trage zur Entwicklung bei oder nutze Green Ecolution für deine Kommune.",
+        "cta": "Auf GitHub ansehen"
+      }
+    }
+  },
+  "homepageHero": {
+    "label": "Smart Irrigation",
+    "headline": {
+      "start": "Wir ermöglichen",
+      "highlight": "smarte Bewässerung",
+      "end": "von Grünflächen!"
+    },
+    "motto": "Messen. Verstehen. Handeln.",
+    "description": "Mittels sensorgestützter Überwachung von Grünflächen werden Daten über das LoRaWan-Netz übermittelt und ausgewertet, sodass Handlungsempfehlungen für die Bewässerung abgegeben werden können.",
+    "button": "Animation abspielen"
+  },
+  "homepageHeroTrees": {
+    "adoptTreeAriaLabel": "Baum adoptieren"
+  },
+  "homepageOverlay": {
+    "popups": {
+      "irrigationStatus": {
+        "label": "Messung des Bewässerungszustandes",
+        "description": "Die Bodenfeuchte wird in Abhängigkeit der Vegetationsform in unterschiedlichen Bodentiefen gemessen, um Daten über verschiedene Bodenschichten zu erhalten."
+      },
+      "dataTransmission": {
+        "label": "Übertragung der Daten",
+        "description": "Die Sensordaten werden mittels öffentlichen LoRaWAN-Netzwerk an ein Backend zur weiteren Verarbeitung übermittelt. LoRaWAN benötigt wenig Energie und besitzt eine hohe Reichweite, was zu einer großen Flächenabdeckung und einem geringen Wartungsaufwand führt."
+      },
+      "recommendations": {
+        "label": "Handlungsempfehlungen",
+        "description": "Die übermittelten Sensordaten werden anhand wissenschaftlicher/mathematischer Methodiken ausgewertet. Auf einen Dashboard wird graphisch dargestellt, ob eine Bewässerung in nächster Zeit notwendig ist.",
+        "link": "Zu den Vorteilen"
+      }
+    },
+    "button": {
+      "next": "Weiter",
+      "discover": "Entdecken"
+    },
+    "closeAriaLabel": "Popup schließen"
+  },
+  "adoptTreeModal": {
+    "ariaLabel": "Adoptionsurkunde für {{fullName}}",
+    "certificateTitle": "Adoptionsurkunde",
+    "certificateNumber": "Nr. {{number}}",
+    "fullName": "{{name}} die {{species}}",
+    "location": "wartet in Flensburg auf dich",
+    "didYouKnow": "Wusstest du?",
+    "quote": "„Danke, dass du an mich denkst! Mit Projekten wie Green Ecolution bekommen Stadtbäume wie ich endlich die Aufmerksamkeit, die wir verdienen.\"",
+    "since": "— {{name}}, seit {{year}} in Flensburg",
+    "button": "Danke, {{name}}! 🌳"
+  },
+  "adoptTreeData": {
+    "species": {
+      "birch": "Birke",
+      "spruce": "Fichte",
+      "oak": "Eiche",
+      "beech": "Buche",
+      "chestnut": "Kastanie",
+      "linden": "Linde",
+      "maple": "Ahorn",
+      "ash": "Esche",
+      "elm": "Ulme",
+      "plane": "Platane",
+      "fir": "Tanne",
+      "willow": "Weide",
+      "robinia": "Robinie",
+      "alder": "Erle",
+      "poplar": "Pappel"
+    },
+    "funFacts": {
+      "cooling": "Ein großer Stadtbaum kann bis zu 400 Liter Wasser am Tag verdunsten und so die Umgebung um bis zu 3°C kühlen.",
+      "oxygen": "Eine einzige Buche produziert genug Sauerstoff für 10 Menschen pro Jahr.",
+      "dust": "Stadtbäume filtern einen relevanten Anteil des Feinstaubs aus der Luft in ihrer unmittelbaren Umgebung.",
+      "roots": "Die Wurzeln eines Straßenbaums erstrecken sich oft über das Anderthalbfache der Kronenfläche.",
+      "co2": "Ein 100-jähriger Baum hat in seinem Leben etwa 5 Tonnen CO₂ gebunden.",
+      "woodWideWeb": "Bäume kommunizieren über unterirdische Pilznetzwerke - das sogenannte „Wood Wide Web\".",
+      "lifetime": "Straßenbäume leben im Durchschnitt nur 60 Jahre - auf dem Land werden sie dreimal so alt.",
+      "noise": "Ein dichter Baumbestand kann den Lärmpegel um bis zu 10 Dezibel senken.",
+      "water": "In heißen Sommern braucht ein Stadtbaum bis zu 200 Liter Wasser pro Woche zusätzlich."
+    }
+  },
+  "releaseCard": {
+    "moreHighlights": "+{{count}} mehr"
+  },
+  "releaseTimeline": {
+    "empty": "Es sind noch keine Release Notes vorhanden."
+  }
+}
