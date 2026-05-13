@@ -198,6 +198,7 @@ function ArchitectureCard({
   isVisible: boolean
   reducedMotion: boolean
 }) {
+  const { t } = useTranslation()
   const Icon = step.icon
 
   return (
@@ -240,8 +241,10 @@ function ArchitectureCard({
           </div>
 
           {/* Content */}
-          <h3 className="font-lato font-bold text-lg lg:text-xl text-white mb-1">{step.label}</h3>
-          <p className="text-white/70 text-sm leading-relaxed">{step.description}</p>
+          <h3 className="font-lato font-bold text-lg lg:text-xl text-white mb-1">
+            {t(step.label)}
+          </h3>
+          <p className="text-white/70 text-sm leading-relaxed">{t(step.description)}</p>
         </div>
       </div>
     </div>

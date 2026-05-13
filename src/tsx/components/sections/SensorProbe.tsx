@@ -317,7 +317,7 @@ function SensorProbe() {
                 className="flex items-center gap-2 border border-green-light-900/40 rounded-full px-4 py-2 transition-all duration-300 hover:border-green-light-900 hover:bg-green-light-100/50 hover:shadow-sm cursor-default"
               >
                 <span className="font-lato font-bold text-green-dark-900">{spec.value}</span>
-                <span className="text-sm text-grey-600">{spec.label}</span>
+                <span className="text-sm text-grey-600">{t(spec.label)}</span>
               </div>
             ))}
           </div>
@@ -341,9 +341,11 @@ function SensorProbe() {
                   </div>
                   <div>
                     <h3 className="font-lato font-semibold text-grey-900 mb-0.5">
-                      {feature.label}
+                      {t(feature.label)}
                     </h3>
-                    <p className="text-sm text-grey-600 leading-relaxed">{feature.description}</p>
+                    <p className="text-sm text-grey-600 leading-relaxed">
+                      {t(feature.description)}
+                    </p>
                   </div>
                 </div>
               )

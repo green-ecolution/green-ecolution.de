@@ -102,14 +102,14 @@ function ProcessCompact() {
                 <Icon className="w-8 h-8 text-green-dark-900/40 mb-5 lg:w-10 lg:h-10" />
 
                 <span className="text-xs font-semibold tracking-widest uppercase text-green-dark-900/60 block mb-2">
-                  {step.number} · {step.category}
+                  {step.number} · {t(step.category)}
                 </span>
 
                 <h3 className="font-lato font-bold text-xl text-grey-900 mb-3 lg:text-2xl">
-                  {step.title}
+                  {t(step.title)}
                 </h3>
 
-                <p className="text-grey-600 text-sm leading-relaxed">{step.description}</p>
+                <p className="text-grey-600 text-sm leading-relaxed">{t(step.description)}</p>
               </article>
             )
           })}
