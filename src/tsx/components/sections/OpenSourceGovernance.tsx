@@ -116,14 +116,14 @@ function OpenSourceGovernance() {
                 </div>
 
                 <span className="text-xs font-semibold tracking-widest uppercase text-green-light-900/70 mb-2 block">
-                  {pillar.category}
+                  {t(pillar.category)}
                 </span>
 
                 <h3 className="font-lato font-bold text-white mb-2 tracking-wide">
-                  {pillar.title}
+                  {t(pillar.title)}
                 </h3>
 
-                <p className="text-white/50 text-sm leading-relaxed">{pillar.description}</p>
+                <p className="text-white/50 text-sm leading-relaxed">{t(pillar.description)}</p>
               </article>
             )
           })}

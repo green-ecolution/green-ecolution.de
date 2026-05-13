@@ -135,7 +135,7 @@ function VisionRoadmap() {
                     <div className="pb-6">
                       <div className="flex items-center gap-2 mb-1">
                         <h4 className="font-lato font-semibold text-grey-900 group-hover:text-green-dark-900 transition-colors">
-                          {item.title}
+                          {t(item.title)}
                         </h4>
                         <span
                           className={`text-[10px] font-semibold tracking-wider uppercase ${config.labelColor}`}
@@ -143,7 +143,7 @@ function VisionRoadmap() {
                           {config.label}
                         </span>
                       </div>
-                      <p className="text-sm text-grey-600 leading-relaxed">{item.description}</p>
+                      <p className="text-sm text-grey-600 leading-relaxed">{t(item.description)}</p>
                     </div>
                   </div>
                 )

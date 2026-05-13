@@ -115,16 +115,16 @@ function Process() {
                 <div className="flex items-center gap-3 mb-4">
                   <Icon className="w-6 h-6 text-green-dark-900/50" />
                   <span className="text-xs font-semibold tracking-widest uppercase text-green-dark-900/60">
-                    {step.number} · {step.category}
+                    {step.number} · {t(step.category)}
                   </span>
                 </div>
 
                 <h3 className="font-lato font-bold text-2xl text-grey-900 mb-3 lg:text-3xl">
-                  {step.title}
+                  {t(step.title)}
                 </h3>
 
                 <p className="text-grey-900/70 leading-relaxed mb-6 lg:text-lg">
-                  {step.description}
+                  {t(step.description)}
                 </p>
               </div>
 

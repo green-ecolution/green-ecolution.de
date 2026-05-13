@@ -118,13 +118,13 @@ function Challenge() {
               >
                 <div className="mb-3">
                   <span className="font-lato text-3xl font-bold text-white tracking-tight lg:text-4xl xl:text-5xl">
-                    {figure.value}
+                    {t(figure.value)}
                   </span>
                 </div>
                 <span className="inline-block text-xs font-semibold tracking-widest uppercase text-green-light-900 mb-3">
-                  {figure.unit}
+                  {t(figure.unit)}
                 </span>
-                <p className="text-white/60 text-sm leading-relaxed">{figure.description}</p>
+                <p className="text-white/60 text-sm leading-relaxed">{t(figure.description)}</p>
               </article>
             ))}
           </div>
