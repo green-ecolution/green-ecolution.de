@@ -1,48 +1,42 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { ArrowUpRight } from 'lucide-react'
 
 const links = [
   {
-    label: 'Software für die Stadt Flensburg',
-    subLabel:
-      'Dies ist die Software, die für die Stadt Flensburg entwickelt und aufgesetzt wurde. Diese Software wird primär vom Technischen Betriebszentrum Flensburg genutzt.',
+    label: 'sections.furtherLinks.items.flensburgSoftware.label',
+    subLabel: 'sections.furtherLinks.items.flensburgSoftware.subLabel',
     url: 'https://app.green-ecolution.de/',
   },
   {
-    label: 'Organisation auf GitHub',
-    subLabel:
-      'Dort finden Sie alle Code-Repositories, die mit dem Projekt in Verbindung stehen, wie z. B. Backend und Frontend der Software',
+    label: 'sections.furtherLinks.items.githubOrganization.label',
+    subLabel: 'sections.furtherLinks.items.githubOrganization.subLabel',
     url: 'https://github.com/green-ecolution',
   },
   {
-    label: 'Blog-Beitrag der HS Flensburg',
-    subLabel:
-      'Auch auf der Website der HS Flensburg wurde ein Beitrag zum Forschungsprojekt veröffentlicht.',
+    label: 'sections.furtherLinks.items.hsFlensburgBlog.label',
+    subLabel: 'sections.furtherLinks.items.hsFlensburgBlog.subLabel',
     url: 'https://hs-flensburg.de/studium/master/ai/abgeschlossene-arbeiten/green-ecolution-smartes-gruenflaechenmanagement-fuer-die',
   },
   {
-    label: 'Instagram-Beitrag der HS Flensburg',
-    subLabel:
-      'Nicht nur auf der Website, sondern auch auf Instagram wurde Green Ecolution erwähnt.',
+    label: 'sections.furtherLinks.items.hsFlensburgInstagram.label',
+    subLabel: 'sections.furtherLinks.items.hsFlensburgInstagram.subLabel',
     url: 'https://www.instagram.com/hochschuleflensburg/p/DA3aCgaPqoq/',
   },
   {
-    label: 'Teil des DigitalHub.SH 2025',
-    subLabel:
-      'Green Ecolution wurde als eines der Open-Source-Projekte im Rahmen des DigitalHub.SH 2025 vorgestellt und finanziert.',
+    label: 'sections.furtherLinks.items.digitalHub.label',
+    subLabel: 'sections.furtherLinks.items.digitalHub.subLabel',
     url: 'https://www.schleswig-holstein.de/DE/landesregierung/ministerien-behoerden/I/Presse/PI/2025/cds/251014_cds_open-source-projekte?nn=a3865cbf-b1fb-4b2f-bc47-f7ac05f3f7b5',
   },
   {
-    label: 'Pressemitteilung der Stadt Flensburg',
-    subLabel:
-      'Auch die Stadt Flensburg berichtete über Green Ecolution und die Bedeutung des Projekts für ein nachhaltiges Stadtmanagement.',
+    label: 'sections.furtherLinks.items.flensburgPress.label',
+    subLabel: 'sections.furtherLinks.items.flensburgPress.subLabel',
     url: 'https://www.presse-service.de/data.aspx/static/1200128.html',
   },
   {
-    label: 'Live Demo',
-    subLabel:
-      'Die öffentlich zugängliche Demo-Instanz zeigt den aktuellen Funktionsumfang: Kartenansicht mit Ampelsystem, Dashboard mit Sensordaten und automatisierte Routenberechnung.',
+    label: 'sections.furtherLinks.items.liveDemo.label',
+    subLabel: 'sections.furtherLinks.items.liveDemo.subLabel',
     url: 'https://demo.green-ecolution.de/',
   },
 ]
@@ -72,6 +66,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function FurtherLinks() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -88,12 +83,12 @@ function FurtherLinks() {
       >
         <div className="inline-block mb-4 lg:mx-auto">
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-            Ressourcen
+            {t('sections.furtherLinks.label')}
           </span>
           <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
         </div>
         <h2 className="font-lato font-bold text-2xl lg:text-3xl text-grey-900">
-          Weiterführende Links & Erwähnungen
+          {t('sections.furtherLinks.title')}
         </h2>
       </article>
 
@@ -120,9 +115,9 @@ function FurtherLinks() {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   <h3 className="font-lato font-semibold text-lg text-grey-900 mb-2 group-hover:text-green-dark-900 transition-colors">
-                    {link.label}
+                    {t(link.label)}
                   </h3>
-                  <p className="text-grey-600 text-sm leading-relaxed">{link.subLabel}</p>
+                  <p className="text-grey-600 text-sm leading-relaxed">{t(link.subLabel)}</p>
                 </div>
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-green-dark-900/10 flex items-center justify-center group-hover:bg-green-dark-900 transition-colors">
                   <ArrowUpRight className="w-5 h-5 text-green-dark-900 group-hover:text-white transition-colors" />

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import { i18nTranslated } from '../../helper/sliderTranslations'
 import '@splidejs/react-splide/css'
@@ -30,32 +31,29 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function Introduction() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
   const facts = [
     {
-      label: 'Entwicklung einer Sensorlösung',
+      label: t('sections.introduction.facts.sensor.label'),
       icon: '/assets/svg/general/sensor.svg',
-      description:
-        'Daten zur Bodenfeuchte werden mithilfe von in unterschiedlicher Tiefe platzierten Sensoren geliefert.',
+      description: t('sections.introduction.facts.sensor.description'),
     },
     {
-      label: 'Auswertung der Messdaten',
+      label: t('sections.introduction.facts.evaluation.label'),
       icon: '/assets/svg/general/statistics.svg',
-      description:
-        'Auswertung der durch Sensoren übermittelten Daten für eine bedarfsgerechte Bewässerung von Jungbäumen.',
+      description: t('sections.introduction.facts.evaluation.description'),
     },
     {
-      label: 'Augenmerk auf Jungbäume',
+      label: t('sections.introduction.facts.youngTrees.label'),
       icon: '/assets/svg/general/tree.svg',
-      description:
-        'Jungbäume sind besonders hitzeanfällig und daher äußerst schutzbedürftig. Aus diesem Grund werden Bäume in deren ersten drei Standjahren überwacht.',
+      description: t('sections.introduction.facts.youngTrees.description'),
     },
     {
-      label: 'Monitoring mehrerer Standorte',
+      label: t('sections.introduction.facts.locations.label'),
       icon: '/assets/svg/general/location.svg',
-      description:
-        'Unter Verwendung des LoRaWan-Netzes können verschiedene Standorte überwacht und weitere einfach eingebunden werden.',
+      description: t('sections.introduction.facts.locations.description'),
     },
   ]
 
@@ -84,7 +82,7 @@ function Introduction() {
         >
           <div className="inline-block">
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-              Überblick
+              {t('sections.introduction.label')}
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
@@ -98,7 +96,7 @@ function Introduction() {
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
         >
-          Was beinhaltet smartes Grünflächenmanagement?
+          {t('sections.introduction.title')}
         </h2>
         <p
           className={`
@@ -108,10 +106,7 @@ function Introduction() {
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
         >
-          Smartes Grünflächenmanagement umfasst die effiziente Überwachung und Bewässerung von
-          Vegetation auf Grünflächen durch den Einsatz moderner Technologien wie Sensoren und
-          Datenanalyse. Dadurch wird eine präzise Steuerung der Pflegemaßnahmen ermöglicht, die
-          angepasst sind an die spezifischen Standortbedingungen.
+          {t('sections.introduction.description')}
         </p>
       </article>
 
@@ -131,7 +126,7 @@ function Introduction() {
             breakpoints: breakpoints,
             reducedMotion: { speed: 0, rewindSpeed: 0 },
           }}
-          aria-label="Fakten zum Grünflächenmanagement"
+          aria-label={t('sections.introduction.carouselAriaLabel')}
           className="splide--grid md:px-2"
         >
           {facts.map((fact) => (

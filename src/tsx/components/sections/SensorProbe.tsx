@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { sensorSpecs, sensorFeatures } from '../../../data/sensorSpecs'
 
@@ -33,10 +34,11 @@ function SoilIllustration({
   isVisible: boolean
   reducedMotion: boolean
 }) {
+  const { t } = useTranslation()
   const depths = [
-    { y: 120, label: '30 cm', color: '#658A58', zone: 'Feinwurzeln' },
-    { y: 200, label: '60 cm', color: '#4C7741', zone: 'Hauptwurzeln' },
-    { y: 280, label: '90 cm', color: '#3D5F35', zone: 'Tiefenwurzeln' },
+    { y: 120, label: '30 cm', color: '#658A58', zone: t('sections.sensorProbe.depths.fineRoots') },
+    { y: 200, label: '60 cm', color: '#4C7741', zone: t('sections.sensorProbe.depths.mainRoots') },
+    { y: 280, label: '90 cm', color: '#3D5F35', zone: t('sections.sensorProbe.depths.deepRoots') },
   ]
 
   return (
@@ -45,7 +47,7 @@ function SoilIllustration({
       className={`w-full max-w-sm mx-auto transition-all ${reducedMotion ? '' : 'duration-1000'} ${
         isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
       }`}
-      aria-label="Schematische Darstellung einer Bodensonde in drei Tiefen"
+      aria-label={t('sections.sensorProbe.illustrationAriaLabel')}
       role="img"
     >
       {/* Sky */}
@@ -251,6 +253,7 @@ function SoilIllustration({
 }
 
 function SensorProbe() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -276,7 +279,7 @@ function SensorProbe() {
             }`}
           >
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-              Hardware
+              {t('sections.sensorProbe.label')}
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
@@ -288,7 +291,7 @@ function SensorProbe() {
             }`}
             style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
           >
-            Die Bodensonde
+            {t('sections.sensorProbe.title')}
           </h2>
 
           {/* Description */}
@@ -298,12 +301,7 @@ function SensorProbe() {
             }`}
             style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
           >
-            Konzipiert für den Einsatz im öffentlichen Raum. Sensoren in drei Tiefen (30, 60 und 90
-            cm) bilden das gesamte Wurzelprofil eines Baumes ab, von den oberflächennahen
-            Feinwurzeln bis zu den tieferen Hauptwurzeln. So lässt sich erkennen, ob Wasser
-            tatsächlich im Wurzelbereich ankommt oder nur die Oberfläche benetzt wird. Die
-            Installation erfolgt bodenbündig mit handelsüblichen Erdbohrern. Pflegearbeiten wie
-            Mähen werden nicht beeinträchtigt.
+            {t('sections.sensorProbe.description')}
           </p>
 
           {/* Spec Badges */}

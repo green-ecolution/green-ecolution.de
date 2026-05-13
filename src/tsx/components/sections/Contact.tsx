@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Mail } from 'lucide-react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
@@ -170,6 +171,7 @@ function WateringAnimation({ reducedMotion }: { reducedMotion: boolean }) {
 }
 
 const Contact: React.FC<ContactProps> = ({ spacingTop = true }) => {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -186,7 +188,7 @@ const Contact: React.FC<ContactProps> = ({ spacingTop = true }) => {
         }`}
       >
         <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-          Kontakt
+          {t('sections.contact.label')}
         </span>
         <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
       </div>
@@ -220,7 +222,7 @@ const Contact: React.FC<ContactProps> = ({ spacingTop = true }) => {
               }`}
               style={{ transitionDelay: reducedMotion ? '0ms' : '400ms' }}
             >
-              Lass uns gemeinsam grüner werden
+              {t('sections.contact.title')}
             </h2>
             <p
               className={`text-white/80 mb-8 max-w-xl lg:max-w-none leading-relaxed transition-all ${reducedMotion ? '' : 'duration-700'} ${
@@ -228,8 +230,7 @@ const Contact: React.FC<ContactProps> = ({ spacingTop = true }) => {
               }`}
               style={{ transitionDelay: reducedMotion ? '0ms' : '550ms' }}
             >
-              Hast du Fragen, Feedback oder ein Anliegen? Wir freuen uns über deine Nachricht und
-              melden uns so schnell wie möglich bei dir.
+              {t('sections.contact.description')}
             </p>
 
             <div
@@ -240,11 +241,11 @@ const Contact: React.FC<ContactProps> = ({ spacingTop = true }) => {
             >
               <a
                 href="mailto:info@green-ecolution.de"
-                aria-label="Kontaktiere uns gerne per E-Mail"
+                aria-label={t('sections.contact.emailAriaLabel')}
                 className="group inline-flex items-center justify-center gap-x-3 rounded-xl font-semibold px-8 py-4 bg-white text-green-dark-900 transition-all duration-300 hover:bg-green-light-100 hover:shadow-lg hover:shadow-black/20 hover:scale-105 active:scale-100"
               >
                 <Mail className="w-5 h-5 transition-transform group-hover:-rotate-12" />
-                <span>Schreib uns</span>
+                <span>{t('sections.contact.emailLabel')}</span>
               </a>
             </div>
           </div>

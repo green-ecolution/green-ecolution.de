@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from '@tanstack/react-router'
 import { workflowSteps } from '../../../data/workflowSteps'
 import Arrow from '../../icons/Arrow'
@@ -29,6 +30,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function ProcessCompact() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -46,7 +48,7 @@ function ProcessCompact() {
             }`}
           >
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-              Lösung
+              {t('sections.processCompact.label')}
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
@@ -57,20 +59,20 @@ function ProcessCompact() {
             }`}
             style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
           >
-            Der durchgängige Workflow
+            {t('sections.processCompact.title')}
           </h2>
         </div>
 
         <Link
           to="/project"
           hash="process"
-          aria-label="Mehr über den Prozess erfahren"
+          aria-label={t('sections.processCompact.moreAriaLabel')}
           className={`hidden lg:flex group items-center gap-x-2 font-semibold text-green-dark-900 hover:text-green-light-900 transition-colors duration-300 whitespace-nowrap ${reducedMotion ? '' : 'transition-all duration-700'} ${
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
           style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
         >
-          Mehr erfahren
+          {t('sections.processCompact.moreLabel')}
           <Arrow classes="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
       </div>
@@ -124,10 +126,10 @@ function ProcessCompact() {
         <Link
           to="/project"
           hash="process"
-          aria-label="Mehr über den Prozess erfahren"
+          aria-label={t('sections.processCompact.moreAriaLabel')}
           className="group flex items-center gap-x-2 font-semibold text-green-dark-900 hover:text-green-light-900 transition-colors duration-300"
         >
-          Mehr erfahren
+          {t('sections.processCompact.moreLabel')}
           <Arrow classes="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
       </div>
