@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ArrowUp } from 'lucide-react'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
 function BackToTop() {
+  const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
   const reducedMotion = useReducedMotion()
 
@@ -27,7 +29,7 @@ function BackToTop() {
   return (
     <button
       onClick={scrollToTop}
-      aria-label="Zurück nach oben"
+      aria-label={t('components.backToTop.ariaLabel')}
       className={`fixed bottom-6 right-6 z-50 p-3 rounded-full bg-green-dark-900 text-white shadow-lg cursor-pointer
         transition-all duration-300 hover:bg-green-middle-900 hover:scale-110 hover:shadow-xl
         focus:outline-none focus:ring-2 focus:ring-green-light-900 focus:ring-offset-2

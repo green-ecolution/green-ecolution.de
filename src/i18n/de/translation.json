@@ -122,6 +122,51 @@
   "releaseTimeline": {
     "empty": "Es sind noch keine Release Notes vorhanden."
   },
+  "components": {
+    "backToTop": {
+      "ariaLabel": "Zurück nach oben"
+    },
+    "errorFallback": {
+      "title": "Etwas ist schief gelaufen",
+      "description": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut oder kehre zur Startseite zurück.",
+      "retryLabel": "Erneut versuchen",
+      "homeLabel": "Zur Startseite"
+    }
+  },
+  "helper": {
+    "sliderTranslations": {
+      "prev": "Vorheriges Element anzeigen",
+      "next": "Nächstes Element anzeigen",
+      "first": "Erstes Element anzeigen",
+      "last": "Letztes Element anzeigen",
+      "slideX": "Zu Seite %s springen",
+      "pageX": "Zu Seite %s springen",
+      "carousel": "Slider",
+      "select": "Paginierung der Elemente",
+      "slide": "Slider Element",
+      "slideLabel": "%s von %s"
+    }
+  },
+  "layout": {
+    "footer": {
+      "homeAriaLabel": "Zur Startseite navigieren",
+      "logoAlt": "Logo Green Ecolution",
+      "description": "Green Ecolution ist ein digitales System zur bedarfsgerechten und ressourcenschonenden Bewässerung von Stadtbäumen und leistet damit einen Beitrag zu einer nachhaltigen und klimaresilienten Stadtentwicklung.",
+      "contactAriaLabel": "Kontaktiere uns gern per Mail",
+      "contactLabel": "Kontakt",
+      "githubAriaLabel": "Besuche uns auf GitHub",
+      "metaNavigationAriaLabel": "Meta-Navigation",
+      "legal": {
+        "imprint": "Impressum",
+        "privacy": "Datenschutz"
+      }
+    },
+    "header": {
+      "skipToContent": "Zum Hauptinhalt springen",
+      "homeAriaLabel": "Zur Startseite navigieren",
+      "navigationToggleAriaLabel": "Hauptnavigation öffnen"
+    }
+  },
   "sections": {
     "advantages": {
       "label": "Vorteile",
