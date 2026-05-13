@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import ReactPlayer from 'react-player'
 import VideoPreview from '../VideoPreview'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
@@ -72,6 +73,7 @@ const VideoCard = (props: {
 )
 
 const Videos = () => {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -91,7 +93,7 @@ const Videos = () => {
         >
           <div className="inline-block">
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-              Videos
+              {t('sections.videos.label')}
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 lg:mx-auto" />
           </div>
@@ -105,7 +107,7 @@ const Videos = () => {
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
         >
-          Lerne das Projekt per Video kennen
+          {t('sections.videos.title')}
         </h2>
         <p
           className={`
@@ -115,10 +117,7 @@ const Videos = () => {
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
         >
-          Im Rahmen des Forschungsprojekts wurden nicht nur eine Sensorlösung und eine Software
-          entwickelt, sondern auch Videos produziert. Diese Videos veranschaulichen anschaulich die
-          Inhalte des Projekts, einschließlich der Zielsetzung, der Problemstellung und der von uns
-          entwickelten Lösung.
+          {t('sections.videos.description')}
         </p>
       </article>
 
@@ -133,9 +132,9 @@ const Videos = () => {
           <VideoCard
             src={VIDEO_SHORT}
             thumbnail={VIDEO_SHORT_THMBNL}
-            title="Kurzvideo"
-            describtion="In diesem kurzen Video geben wir dir einen ersten Einblick in unser Projekt. Erfahre in wenigen Minuten, worum es geht und was du von den kommenden Inhalten erwarten kannst. Schau dir das Video an, um einen schnellen Überblick zu bekommen!"
-            duration="ca. 30 Sekunden"
+            title={t('sections.videos.cards.short.title')}
+            describtion={t('sections.videos.cards.short.description')}
+            duration={t('sections.videos.cards.short.duration')}
           />
         </div>
         <div
@@ -148,9 +147,9 @@ const Videos = () => {
           <VideoCard
             src={VIDEO_LONG}
             thumbnail={VIDEO_LONG_THMBNL}
-            title="Langvideo"
-            describtion="In diesem ausführlichen Video tauchen wir tiefer in unser Projekt ein. Hier erläutern wir die wichtigsten Details, Hintergründe und die nächsten Schritte. Dieses Video bietet dir umfassende Informationen und hilft dir, das Projekt besser zu verstehen. Viel Spaß beim Anschauen und Entdecken!"
-            duration="ca. 4 Minuten"
+            title={t('sections.videos.cards.long.title')}
+            describtion={t('sections.videos.cards.long.description')}
+            duration={t('sections.videos.cards.long.duration')}
           />
         </div>
       </section>

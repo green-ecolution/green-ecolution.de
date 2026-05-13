@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import { i18nTranslated } from '../../helper/sliderTranslations'
 import '@splidejs/react-splide/css'
@@ -34,41 +35,38 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
   const stakeholder = [
     {
       label: 'PROGEEK GmbH',
-      role: 'Technischer Partner',
+      role: t('sections.stakeholder.items.progeek.role'),
       url: 'https://progeek.de/',
       image: '/assets/images/logo/progeek.svg',
-      description:
-        'PROGEEK steht für innovative IT-Lösungen, individuelle Softwareentwicklung und digitale Beratung – mit dem Ziel, Unternehmen auf ihrem Weg in die Zukunft der Digitalisierung zu begleiten.',
+      description: t('sections.stakeholder.items.progeek.description'),
     },
     {
       label: 'Smarte Grenzregion',
-      role: 'Projektkoordinator',
+      role: t('sections.stakeholder.items.smarteGrenzregion.role'),
       url: 'https://smarte-grenzregion.de/',
       image: '/assets/images/logo/smarte-grenzregion.png',
-      description:
-        'Das Projekt „Smarte Grenzregion zwischen den Meeren" will die digitale Transformation in der Region vorantreiben, um eine integrierte und nachhaltige Stadt- und Regionalentwicklung zu gestalten und das Gemeinwohl zu stärken.',
+      description: t('sections.stakeholder.items.smarteGrenzregion.description'),
     },
     {
       label: 'Hochschule Flensburg',
-      role: 'Initiator',
+      role: t('sections.stakeholder.items.hochschuleFlensburg.role'),
       url: 'https://hs-flensburg.de/',
       image: '/assets/images/logo/hochschule-flensburg.png',
-      description:
-        'Die Hochschule Flensburg bietet praxisnahe Studiengänge mit Fokus auf angewandte Forschung und enge Zusammenarbeit mit der Industrie an.',
+      description: t('sections.stakeholder.items.hochschuleFlensburg.description'),
     },
     {
       label: 'TBZ Flensburg',
-      role: 'Anwendungspartner',
+      role: t('sections.stakeholder.items.tbzFlensburg.role'),
       url: 'https://www.tbz-flensburg.de/',
       image: '/assets/images/logo/tbz.png',
-      description:
-        'Das Technische Betriebszentrum (TBZ) ist der zentrale Dienstleister für die Stadt Flensburg und u.a. für die Pflege öffentlicher Grünflächen, Straßenreinigung sowie Abfallwirtschaft zuständig.',
+      description: t('sections.stakeholder.items.tbzFlensburg.description'),
     },
   ]
 
@@ -96,7 +94,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
       >
         <div className={`inline-block ${hasDesktopList ? 'lg:mx-auto' : ''}`}>
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-            Partner & Beteiligte
+            {t('sections.stakeholder.label')}
           </span>
           <div
             className={`h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 ${hasDesktopList ? 'lg:mx-auto' : ''}`}
@@ -114,7 +112,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
         >
-          Wer sind die Beteiligten?
+          {t('sections.stakeholder.title')}
         </h2>
         <p
           className={`
@@ -124,9 +122,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
         >
-          In Zusammenarbeit zwischen PROGEEK, der Smarten-Grenzregion, der Stadt Flensburg und der
-          Hochschule Flensburg soll eine bedarfsgerechte und datenbasierte Bewässerung für Bäume
-          aufgebaut werden.
+          {t('sections.stakeholder.description')}
         </p>
       </article>
 
@@ -147,7 +143,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
             ...(hasDesktopList && { breakpoints: breakpoints }),
             reducedMotion: { speed: 0, rewindSpeed: 0 },
           }}
-          aria-label="Beteiligten am Projekt"
+          aria-label={t('sections.stakeholder.carouselAriaLabel')}
         >
           {stakeholder.map((company, index) => (
             <SplideSlide key={company.label} className="pb-10 px-4 md:px-6">

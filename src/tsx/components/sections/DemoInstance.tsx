@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { ExternalLink } from 'lucide-react'
 
@@ -27,6 +28,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function DemoInstance() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -58,7 +60,7 @@ function DemoInstance() {
               }`}
             >
               <span className="text-xs font-bold tracking-widest text-white uppercase">
-                Live Demo
+                {t('sections.demoInstance.label')}
               </span>
               <div className="h-0.5 w-12 bg-gradient-to-r from-white/50 to-transparent mt-1" />
             </div>
@@ -69,7 +71,7 @@ function DemoInstance() {
               }`}
               style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
             >
-              Überzeug dich selbst
+              {t('sections.demoInstance.title')}
             </h2>
 
             <p
@@ -78,9 +80,7 @@ function DemoInstance() {
               }`}
               style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
             >
-              Die öffentlich zugängliche Demo-Instanz zeigt den aktuellen Funktionsumfang:
-              Kartenansicht mit Ampelsystem, Dashboard mit Sensordaten und automatisierte
-              Routenberechnung. Keine Installation nötig, direkt im Browser.
+              {t('sections.demoInstance.description')}
             </p>
 
             <div
@@ -93,10 +93,10 @@ function DemoInstance() {
                 href="https://demo.green-ecolution.de"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Demo von Green Ecolution im Browser öffnen"
+                aria-label={t('sections.demoInstance.openDemoAriaLabel')}
                 className="group inline-flex items-center justify-center gap-x-3 rounded-xl font-semibold px-8 py-4 bg-white text-green-dark-900 transition-all duration-300 hover:bg-green-light-100 hover:shadow-lg hover:shadow-black/20 hover:scale-105 active:scale-100"
               >
-                <span>Demo öffnen</span>
+                <span>{t('sections.demoInstance.openDemoLabel')}</span>
                 <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
             </div>
@@ -130,7 +130,7 @@ function DemoInstance() {
               <div className="relative">
                 <img
                   src="/assets/images/releases/v0.1.0-dashboard.png"
-                  alt="Green Ecolution Demo, Dashboard mit Kartenansicht und Sensordaten"
+                  alt={t('sections.demoInstance.imageAlt')}
                   className="w-full h-auto"
                   loading="lazy"
                 />

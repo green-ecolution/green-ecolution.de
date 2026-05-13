@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Lottie from 'lottie-react'
 import dashboardAnimation from '../../../json/dashboardAnimation.json'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
@@ -28,6 +29,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function DashboardPreview() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -44,7 +46,7 @@ function DashboardPreview() {
           }`}
         >
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-            Software
+            {t('sections.dashboardPreview.label')}
           </span>
           <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
         </div>
@@ -55,10 +57,10 @@ function DashboardPreview() {
           }`}
           style={{ transitionDelay: reducedMotion ? '0ms' : '150ms' }}
         >
-          Fundierte Handlungsempfehlungen
+          {t('sections.dashboardPreview.title.firstLine')}
           <br className="hidden sm:block" />
           <span className="sm:hidden"> </span>
-          zur Bewässerung auf einen Blick
+          {t('sections.dashboardPreview.title.secondLine')}
         </h2>
 
         <p
@@ -67,10 +69,7 @@ function DashboardPreview() {
           }`}
           style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
         >
-          Unser System liefert anhand wissenschaftlicher Datenauswertung fundierte
-          Handlungsempfehlungen, zu welchem Zeitpunkt eine Bewässerung notwendig ist. Die Daten
-          werden dahingehend aufbereitet, dass diese einfach zu interpretieren sind und in die
-          Einsatzplanung eingebunden werden können.
+          {t('sections.dashboardPreview.description')}
         </p>
       </article>
 
@@ -106,7 +105,7 @@ function DashboardPreview() {
           <div className="relative overflow-hidden">
             <img
               src="/assets/images/releases/v0.1.0-dashboard.png"
-              alt="Green Ecolution Dashboard - Übersicht der Bewässerungsempfehlungen"
+              alt={t('sections.dashboardPreview.imageAlt')}
               className="w-full h-auto"
             />
             {/* Lottie animation overlay - hidden on mobile */}

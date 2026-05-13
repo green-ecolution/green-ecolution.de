@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { architectureSteps } from '../../../data/architectureSteps'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
@@ -248,6 +249,7 @@ function ArchitectureCard({
 }
 
 function Architecture() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, visibleItems, isVisible } = useStaggeredVisibility(
     architectureSteps.length,
@@ -268,16 +270,15 @@ function Architecture() {
       >
         <div className="inline-block mb-4">
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-            System-Architektur
+            {t('sections.architecture.label')}
           </span>
           <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
         </div>
         <h2 className="font-lato font-bold text-2xl lg:text-4xl mb-4 text-grey-900">
-          Der Datenfluss im Überblick
+          {t('sections.architecture.title')}
         </h2>
         <p className="text-grey-600 max-w-2xl mx-auto text-base lg:text-lg">
-          Von der Messung am Baum bis zur optimierten Bewässerungsroute – so fließen die Daten durch
-          das Green Ecolution System.
+          {t('sections.architecture.description')}
         </p>
       </article>
 

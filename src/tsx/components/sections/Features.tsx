@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   TreeDeciduous,
   Truck,
@@ -93,51 +94,46 @@ function FeatureCard({ feature }: { feature: Feature }) {
 }
 
 function Features() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
   const features: Feature[] = [
     {
-      label: 'Echtzeit-Dashboard',
+      label: t('sections.features.items.dashboard.label'),
       icon: <LayoutDashboard />,
-      description:
-        'Alle wichtigen KPIs auf einen Blick: Bodenfeuchtewerte, anstehende Touren, Teamverfügbarkeit und Fahrzeugstatus in einem zentralen Dashboard.',
+      description: t('sections.features.items.dashboard.description'),
       color: 'green-dark',
       size: 'large',
     },
     {
-      label: 'Intelligente Gruppierung',
+      label: t('sections.features.items.grouping.label'),
       icon: <TreeDeciduous />,
-      description:
-        'Fasse Bäume zu Bewässerungs\u00ADeinheiten zusammen. Automatische Berechnung des Wasserbedarfs pro Cluster.',
+      description: t('sections.features.items.grouping.description'),
       color: 'green-light',
     },
     {
-      label: 'Fleet Management',
+      label: t('sections.features.items.fleet.label'),
       icon: <Truck />,
-      description:
-        'Verwalte Transporter und Anhänger mit Wasserkapazitäten. Automatische Nachfüllstopps in der Routenplanung.',
+      description: t('sections.features.items.fleet.description'),
       color: 'green-middle',
     },
     {
-      label: 'Tour-Planung',
+      label: t('sections.features.items.tourPlanning.label'),
       icon: <ClipboardList />,
-      description:
-        "Optimierte Bewässerungspläne mit Echtzeit-Status: Von 'geplant' über 'aktiv' bis 'abgeschlossen'.",
+      description: t('sections.features.items.tourPlanning.description'),
       color: 'green-middle',
     },
     {
-      label: 'Teamverwaltung',
+      label: t('sections.features.items.team.label'),
       icon: <Users />,
-      description:
-        'Verwalte Fahrer mit Führerscheinklassen und Verfügbarkeit. Optimiere die Einsatzplanung.',
+      description: t('sections.features.items.team.description'),
       color: 'green-light',
     },
     {
-      label: 'Nachanalyse',
+      label: t('sections.features.items.analysis.label'),
       icon: <BarChart3 />,
-      description:
-        'Dokumentiere den tatsächlichen Wasserverbrauch pro Cluster und Tour. Analysiere Trends und optimiere zukünftige Planungen datenbasiert.',
+      description: t('sections.features.items.analysis.description'),
       color: 'green-dark',
       size: 'large',
     },
@@ -159,7 +155,7 @@ function Features() {
       >
         <div className="inline-block">
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-            Features
+            {t('sections.features.label')}
           </span>
           <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 mx-auto" />
         </div>
@@ -174,7 +170,7 @@ function Features() {
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
         >
-          Green Ecolution im Überblick
+          {t('sections.features.title')}
         </h2>
         <p
           className={`
@@ -184,8 +180,7 @@ function Features() {
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
         >
-          Von der Sensorerfassung über die intelligente Routenplanung bis zur detaillierten
-          Auswertung - alle Funktionen für ein effizientes und nachhaltiges Grünflächenmanagement
+          {t('sections.features.description')}
         </p>
       </article>
 

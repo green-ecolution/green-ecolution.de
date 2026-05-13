@@ -121,5 +121,326 @@
   },
   "releaseTimeline": {
     "empty": "Es sind noch keine Release Notes vorhanden."
+  },
+  "sections": {
+    "advantages": {
+      "label": "Vorteile",
+      "title": "Alle weiteren Funktionen und Vorteile im Überblick.",
+      "description": "Das Projekt ist öffentlich einsehbar und hat als Ziel, den Wasserverbrauch für die Bewässerung zu verringern sowie eine variable Einsatzplanung zu ermöglichen.",
+      "items": {
+        "open": {
+          "label": "Offene Lösung für alle",
+          "description": "Skalierbare Open-Source-Lösung für Kommunen zur Förderung von Weiterentwicklungen und Transparenz"
+        },
+        "routes": {
+          "label": "Optimierte Routen",
+          "description": "Individuelle Einsatzplanung zur effizienteren Bewässerung"
+        },
+        "less": {
+          "label": "Weniger ist mehr",
+          "description": "Gezielte Bewässerung, weniger Wasserverbrauch"
+        }
+      }
+    },
+    "architecture": {
+      "label": "System-Architektur",
+      "title": "Der Datenfluss im Überblick",
+      "description": "Von der Messung am Baum bis zur optimierten Bewässerungsroute – so fließen die Daten durch das Green Ecolution System."
+    },
+    "challenge": {
+      "quote": {
+        "primary": "Städte gießen nach Gefühl.",
+        "highlight": "Nicht nach Bedarf."
+      },
+      "description": "Städtische Grünflächen regulieren das Mikroklima, fördern Biodiversität und stärken den Standortwettbewerb. Doch anhaltende Trockenheit und fehlende Digitalisierung gefährden dieses Gut. Die Bewässerungsplanung vieler Kommunen stützt sich allein auf die Einschätzung einzelner Mitarbeiter, ganz ohne Datengrundlage. Statt bedarfsgerechter Bewässerung wird pauschal gegossen, was Wasser verschwendet und trotzdem nicht alle Bäume erreicht. Nicht optimierte Bewässerungsfahrten verursachen zusätzlich vermeidbare CO₂-Emissionen."
+    },
+    "contact": {
+      "label": "Kontakt",
+      "title": "Lass uns gemeinsam grüner werden",
+      "description": "Hast du Fragen, Feedback oder ein Anliegen? Wir freuen uns über deine Nachricht und melden uns so schnell wie möglich bei dir.",
+      "emailAriaLabel": "Kontaktiere uns gerne per E-Mail",
+      "emailLabel": "Schreib uns"
+    },
+    "dashboardPreview": {
+      "label": "Software",
+      "title": {
+        "firstLine": "Fundierte Handlungsempfehlungen",
+        "secondLine": "zur Bewässerung auf einen Blick"
+      },
+      "description": "Unser System liefert anhand wissenschaftlicher Datenauswertung fundierte Handlungsempfehlungen, zu welchem Zeitpunkt eine Bewässerung notwendig ist. Die Daten werden dahingehend aufbereitet, dass diese einfach zu interpretieren sind und in die Einsatzplanung eingebunden werden können.",
+      "imageAlt": "Green Ecolution Dashboard - Übersicht der Bewässerungsempfehlungen"
+    },
+    "demoInstance": {
+      "label": "Live Demo",
+      "title": "Überzeug dich selbst",
+      "description": "Die öffentlich zugängliche Demo-Instanz zeigt den aktuellen Funktionsumfang: Kartenansicht mit Ampelsystem, Dashboard mit Sensordaten und automatisierte Routenberechnung. Keine Installation nötig, direkt im Browser.",
+      "openDemoAriaLabel": "Demo von Green Ecolution im Browser öffnen",
+      "openDemoLabel": "Demo öffnen",
+      "imageAlt": "Green Ecolution Demo, Dashboard mit Kartenansicht und Sensordaten"
+    },
+    "faq": {
+      "label": "FAQ",
+      "title": "Oft gestellte Fragen zu Green Ecolution",
+      "items": {
+        "behind": {
+          "question": "Wer steckt hinter dem Projekt Green Ecolution?",
+          "schemaAnswer": "Das Projekt \"Green Ecolution\" wurde im Rahmen eines Forschungsprojekts im Masterstudiengang \"Angewandte Informatik\" an der Hochschule Flensburg ins Leben gerufen. Nach dem erfolgreichen Abschluss des Forschungsprojekts wird die Weiterentwicklung des Systems nun von PROGEEK übernommen, in enger Zusammenarbeit mit der Smarten Grenzregion und der Stadt Flensburg.",
+          "answer": {
+            "beforeHs": "Das Projekt \"Green Ecolution\" wurde im Rahmen eines Forschungsprojekts im Masterstudiengang \"Angewandte Informatik\" an der",
+            "beforeProgeek": "ins Leben gerufen. Nach dem erfolgreichen Abschluss des Forschungsprojekts wird die Weiterentwicklung des Systems nun von",
+            "beforeSmarteGrenzregion": "übernommen, in enger Zusammenarbeit mit der",
+            "beforeStadtFlensburg": "und der"
+          }
+        },
+        "value": {
+          "question": "Welchen Mehrwert bietet das Projekt?",
+          "schemaAnswer": "Das Forschungsprojekt \"Green Ecolution\" hat gezeigt, wie digitale Technologien gezielt eingesetzt werden können, um die Bewässerung von Stadtbäumen effizienter, nachhaltiger und ressourcenschonender zu gestalten. Durch den Einsatz moderner Sensorik und intelligenter Datenauswertung wurde eine Grundlage geschaffen, um Wasserverbrauch und Pflegeaufwand deutlich zu reduzieren.",
+          "answer": {
+            "primary": "Das Forschungsprojekt \"Green Ecolution\" hat gezeigt, wie digitale Technologien gezielt eingesetzt werden können, um die Bewässerung von Stadtbäumen effizienter, nachhaltiger und ressourcenschonender zu gestalten. Durch den Einsatz moderner Sensorik und intelligenter Datenauswertung wurde eine Grundlage geschaffen, um Wasserverbrauch und Pflegeaufwand deutlich zu reduzieren.",
+            "secondary": "Die gewonnenen Erkenntnisse und entwickelten Systeme leisten einen wichtigen Beitrag zur nachhaltigen Stadtentwicklung in Flensburg. Sie unterstützen eine datenbasierte Entscheidungsfindung und fördern den verantwortungsvollen Umgang mit natürlichen Ressourcen - zum Nutzen von Umwelt, Stadtverwaltung und Bürger:innen."
+          }
+        },
+        "public": {
+          "question": "Was bedeutet es, dass das Projekt öffentlich zugänglich ist?",
+          "schemaAnswer": "Der Quellcode des Projekts ist in einem öffentlich zugänglichen GitHub-Repository verfügbar. Dadurch kann der aktuelle Entwicklungsstand jederzeit eingesehen werden, was Transparenz schafft und interessierten Personen ermöglicht, die Weiterentwicklung nachzuvollziehen oder sich aktiv einzubringen.",
+          "answer": {
+            "beforeGithub": "Der Quellcode des Projekts ist in einem öffentlich zugänglichen",
+            "afterGithub": "verfügbar. Dadurch kann der aktuelle Entwicklungsstand jederzeit eingesehen werden, was Transparenz schafft und interessierten Personen ermöglicht, die Weiterentwicklung nachzuvollziehen oder sich aktiv einzubringen.",
+            "beforeOpenData": "Perspektivisch ist zudem eine Anbindung an das",
+            "afterOpenData": "des Landes Schleswig-Holstein vorgesehen, um zukünftig ausgewählte Sensordaten öffentlich zugänglich zu machen. Diese Erweiterung befindet sich derzeit in Planung."
+          }
+        },
+        "sensors": {
+          "question": "Welche Sensoren werden eingesetzt?",
+          "schemaAnswer": "Im Rahmen des Forschungsprojekts wurden Watermark-Sensoren zur Messung der Bodenwasserspannung und SMT100-Sensoren zur Messung der Bodenfeuchte und -temperatur eingesetzt. Diese Sensoren bildeten die Grundlage für die Entwicklung und Erprobung des Systems.",
+          "answer": {
+            "intro": "Im Rahmen des Forschungsprojekts wurden folgende Sensoren eingesetzt, um präzise Daten zur Bodenfeuchte und -beschaffenheit zu erfassen. Diese Sensoren bildeten die Grundlage für die Entwicklung und Erprobung des Systems.",
+            "watermarkPrefix": "Zur Messung der Bodenwasserspannung:",
+            "smt100Prefix": "Zur Messung der Bodenfeuchte und -temperatur:",
+            "outlook": "In zukünftigen Entwicklungsphasen kann die Sensorik je nach Anforderungen und technologischem Fortschritt weiter angepasst oder erweitert werden."
+          }
+        },
+        "progress": {
+          "question": "Wie ist der aktuelle Fortschritt des Projekts?",
+          "schemaAnswer": "Das Forschungsprojekt „Green Ecolution\" wurde im Rahmen des Masterstudiengangs „Angewandte Informatik\" an der Hochschule Flensburg erfolgreich abgeschlossen. Im Oktober 2025 erhielt das Projekt im Rahmen des DigitalHub Call for Concepts eine Finanzierung. Aktuell arbeiten PROGEEK, die Stadt Flensburg und die Smarte Grenzregion gemeinsam an der Weiterentwicklung.",
+          "answer": {
+            "beforeHs": "Das Forschungsprojekt „Green Ecolution“ wurde im Rahmen des Masterstudiengangs „Angewandte Informatik“ an der",
+            "afterHs": "erfolgreich abgeschlossen. Aufbauend auf den im Projekt erzielten Ergebnissen wird die Weiterentwicklung nun fortgesetzt.",
+            "beforeDigitalHub": "Im Oktober 2025 erhielt das Projekt im Rahmen des",
+            "beforeOpenSourceProgram": "des Landesprogramms",
+            "afterDigitalHub": "eine Finanzierung. Dadurch kann das System weiter ausgebaut und praxisnah erprobt werden.",
+            "beforeProgeek": "Aktuell arbeiten",
+            "beforeStadtFlensburg": "die",
+            "beforeSmarteGrenzregion": "und die",
+            "afterSmarteGrenzregion": "gemeinsam an der Weiterentwicklung und Integration des Systems, um die gewonnenen Erkenntnisse nachhaltig in den kommunalen Alltag zu überführen."
+          }
+        }
+      }
+    },
+    "features": {
+      "label": "Features",
+      "title": "Green Ecolution im Überblick",
+      "description": "Von der Sensorerfassung über die intelligente Routenplanung bis zur detaillierten Auswertung - alle Funktionen für ein effizientes und nachhaltiges Grünflächenmanagement",
+      "items": {
+        "dashboard": {
+          "label": "Echtzeit-Dashboard",
+          "description": "Alle wichtigen KPIs auf einen Blick: Bodenfeuchtewerte, anstehende Touren, Teamverfügbarkeit und Fahrzeugstatus in einem zentralen Dashboard."
+        },
+        "grouping": {
+          "label": "Intelligente Gruppierung",
+          "description": "Fasse Bäume zu Bewässerungs­einheiten zusammen. Automatische Berechnung des Wasserbedarfs pro Cluster."
+        },
+        "fleet": {
+          "label": "Fleet Management",
+          "description": "Verwalte Transporter und Anhänger mit Wasserkapazitäten. Automatische Nachfüllstopps in der Routenplanung."
+        },
+        "tourPlanning": {
+          "label": "Tour-Planung",
+          "description": "Optimierte Bewässerungspläne mit Echtzeit-Status: Von 'geplant' über 'aktiv' bis 'abgeschlossen'."
+        },
+        "team": {
+          "label": "Teamverwaltung",
+          "description": "Verwalte Fahrer mit Führerscheinklassen und Verfügbarkeit. Optimiere die Einsatzplanung."
+        },
+        "analysis": {
+          "label": "Nachanalyse",
+          "description": "Dokumentiere den tatsächlichen Wasserverbrauch pro Cluster und Tour. Analysiere Trends und optimiere zukünftige Planungen datenbasiert."
+        }
+      }
+    },
+    "furtherLinks": {
+      "label": "Ressourcen",
+      "title": "Weiterführende Links & Erwähnungen",
+      "items": {
+        "flensburgSoftware": {
+          "label": "Software für die Stadt Flensburg",
+          "subLabel": "Dies ist die Software, die für die Stadt Flensburg entwickelt und aufgesetzt wurde. Diese Software wird primär vom Technischen Betriebszentrum Flensburg genutzt."
+        },
+        "githubOrganization": {
+          "label": "Organisation auf GitHub",
+          "subLabel": "Dort finden Sie alle Code-Repositories, die mit dem Projekt in Verbindung stehen, wie z. B. Backend und Frontend der Software"
+        },
+        "hsFlensburgBlog": {
+          "label": "Blog-Beitrag der HS Flensburg",
+          "subLabel": "Auch auf der Website der HS Flensburg wurde ein Beitrag zum Forschungsprojekt veröffentlicht."
+        },
+        "hsFlensburgInstagram": {
+          "label": "Instagram-Beitrag der HS Flensburg",
+          "subLabel": "Nicht nur auf der Website, sondern auch auf Instagram wurde Green Ecolution erwähnt."
+        },
+        "digitalHub": {
+          "label": "Teil des DigitalHub.SH 2025",
+          "subLabel": "Green Ecolution wurde als eines der Open-Source-Projekte im Rahmen des DigitalHub.SH 2025 vorgestellt und finanziert."
+        },
+        "flensburgPress": {
+          "label": "Pressemitteilung der Stadt Flensburg",
+          "subLabel": "Auch die Stadt Flensburg berichtete über Green Ecolution und die Bedeutung des Projekts für ein nachhaltiges Stadtmanagement."
+        },
+        "liveDemo": {
+          "label": "Live Demo",
+          "subLabel": "Die öffentlich zugängliche Demo-Instanz zeigt den aktuellen Funktionsumfang: Kartenansicht mit Ampelsystem, Dashboard mit Sensordaten und automatisierte Routenberechnung."
+        }
+      }
+    },
+    "hero": {
+      "defaultLabel": "Projekt"
+    },
+    "introduction": {
+      "label": "Überblick",
+      "title": "Was beinhaltet smartes Grünflächenmanagement?",
+      "description": "Smartes Grünflächenmanagement umfasst die effiziente Überwachung und Bewässerung von Vegetation auf Grünflächen durch den Einsatz moderner Technologien wie Sensoren und Datenanalyse. Dadurch wird eine präzise Steuerung der Pflegemaßnahmen ermöglicht, die angepasst sind an die spezifischen Standortbedingungen.",
+      "carouselAriaLabel": "Fakten zum Grünflächenmanagement",
+      "facts": {
+        "sensor": {
+          "label": "Entwicklung einer Sensorlösung",
+          "description": "Daten zur Bodenfeuchte werden mithilfe von in unterschiedlicher Tiefe platzierten Sensoren geliefert."
+        },
+        "evaluation": {
+          "label": "Auswertung der Messdaten",
+          "description": "Auswertung der durch Sensoren übermittelten Daten für eine bedarfsgerechte Bewässerung von Jungbäumen."
+        },
+        "youngTrees": {
+          "label": "Augenmerk auf Jungbäume",
+          "description": "Jungbäume sind besonders hitzeanfällig und daher äußerst schutzbedürftig. Aus diesem Grund werden Bäume in deren ersten drei Standjahren überwacht."
+        },
+        "locations": {
+          "label": "Monitoring mehrerer Standorte",
+          "description": "Unter Verwendung des LoRaWan-Netzes können verschiedene Standorte überwacht und weitere einfach eingebunden werden."
+        }
+      }
+    },
+    "latestRelease": {
+      "label": "Releases",
+      "title": "Was gibt's Neues?",
+      "description": "Wir entwickeln Green Ecolution kontinuierlich weiter. Schau dir die neuesten Funktionen, Verbesserungen und Bugfixes an – und erfahre, woran wir gerade arbeiten.",
+      "allReleasesAriaLabel": "Alle Releases ansehen",
+      "allReleasesLabel": "Alle Releases",
+      "currentLabel": "Aktuell",
+      "detailsLabel": "Details ansehen"
+    },
+    "openSourceGovernance": {
+      "label": "Governance",
+      "title": "Open Source als Prinzip",
+      "description": "Transparenz, Unabhängigkeit und Nachnutzbarkeit: die Grundpfeiler unserer Open-Source-Strategie."
+    },
+    "process": {
+      "label": "Prozess",
+      "title": "Messen. Verstehen. Handeln.",
+      "description": "Von der Bodenfeuchte zur optimierten Bewässerungsroute, in einem durchgängigen digitalen Workflow.",
+      "stepDetails": {
+        "sensor": {
+          "depths": "Bodenfeuchtesensoren in 30, 60 und 90 cm Tiefe",
+          "measurements": "Erfassung von Bodenfeuchte, Temperatur und Bodenwasserspannung",
+          "transmission": "Energieeffiziente Übertragung über LoRaWAN",
+          "installation": "Bodenbündige Installation, kein Einfluss auf Pflegearbeiten"
+        },
+        "dashboard": {
+          "trafficLight": "Ampelsystem zeigt Bewässerungsbedarf auf einer Karte",
+          "prioritization": "Priorisierung nach Dringlichkeit bei begrenzten Kapazitäten",
+          "timelines": "Zeitverläufe für Bodenfeuchte, Temperatur und Wasserspannung",
+          "kpis": "Echtzeit-Dashboard mit allen relevanten KPIs"
+        },
+        "routing": {
+          "planning": "Automatisierte Einsatz- und Routenplanung",
+          "capacity": "Berücksichtigung von Wasserkapazität und Fahrzeuggröße",
+          "restrictions": "Straßen- und Zufahrtsrestriktionen einbezogen",
+          "export": "Export der Routen auf Navigationsgeräte"
+        }
+      }
+    },
+    "processCompact": {
+      "label": "Lösung",
+      "title": "Der durchgängige Workflow",
+      "moreAriaLabel": "Mehr über den Prozess erfahren",
+      "moreLabel": "Mehr erfahren"
+    },
+    "sensorProbe": {
+      "label": "Hardware",
+      "title": "Die Bodensonde",
+      "description": "Konzipiert für den Einsatz im öffentlichen Raum. Sensoren in drei Tiefen (30, 60 und 90 cm) bilden das gesamte Wurzelprofil eines Baumes ab, von den oberflächennahen Feinwurzeln bis zu den tieferen Hauptwurzeln. So lässt sich erkennen, ob Wasser tatsächlich im Wurzelbereich ankommt oder nur die Oberfläche benetzt wird. Die Installation erfolgt bodenbündig mit handelsüblichen Erdbohrern. Pflegearbeiten wie Mähen werden nicht beeinträchtigt.",
+      "illustrationAriaLabel": "Schematische Darstellung einer Bodensonde in drei Tiefen",
+      "depths": {
+        "fineRoots": "Feinwurzeln",
+        "mainRoots": "Hauptwurzeln",
+        "deepRoots": "Tiefenwurzeln"
+      }
+    },
+    "stakeholder": {
+      "label": "Partner & Beteiligte",
+      "title": "Wer sind die Beteiligten?",
+      "description": "In Zusammenarbeit zwischen PROGEEK, der Smarten-Grenzregion, der Stadt Flensburg und der Hochschule Flensburg soll eine bedarfsgerechte und datenbasierte Bewässerung für Bäume aufgebaut werden.",
+      "carouselAriaLabel": "Beteiligten am Projekt",
+      "items": {
+        "progeek": {
+          "role": "Technischer Partner",
+          "description": "PROGEEK steht für innovative IT-Lösungen, individuelle Softwareentwicklung und digitale Beratung – mit dem Ziel, Unternehmen auf ihrem Weg in die Zukunft der Digitalisierung zu begleiten."
+        },
+        "smarteGrenzregion": {
+          "role": "Projektkoordinator",
+          "description": "Das Projekt „Smarte Grenzregion zwischen den Meeren\" will die digitale Transformation in der Region vorantreiben, um eine integrierte und nachhaltige Stadt- und Regionalentwicklung zu gestalten und das Gemeinwohl zu stärken."
+        },
+        "hochschuleFlensburg": {
+          "role": "Initiator",
+          "description": "Die Hochschule Flensburg bietet praxisnahe Studiengänge mit Fokus auf angewandte Forschung und enge Zusammenarbeit mit der Industrie an."
+        },
+        "tbzFlensburg": {
+          "role": "Anwendungspartner",
+          "description": "Das Technische Betriebszentrum (TBZ) ist der zentrale Dienstleister für die Stadt Flensburg und u.a. für die Pflege öffentlicher Grünflächen, Straßenreinigung sowie Abfallwirtschaft zuständig."
+        }
+      }
+    },
+    "videos": {
+      "label": "Videos",
+      "title": "Lerne das Projekt per Video kennen",
+      "description": "Im Rahmen des Forschungsprojekts wurden nicht nur eine Sensorlösung und eine Software entwickelt, sondern auch Videos produziert. Diese Videos veranschaulichen anschaulich die Inhalte des Projekts, einschließlich der Zielsetzung, der Problemstellung und der von uns entwickelten Lösung.",
+      "cards": {
+        "short": {
+          "title": "Kurzvideo",
+          "description": "In diesem kurzen Video geben wir dir einen ersten Einblick in unser Projekt. Erfahre in wenigen Minuten, worum es geht und was du von den kommenden Inhalten erwarten kannst. Schau dir das Video an, um einen schnellen Überblick zu bekommen!",
+          "duration": "ca. 30 Sekunden"
+        },
+        "long": {
+          "title": "Langvideo",
+          "description": "In diesem ausführlichen Video tauchen wir tiefer in unser Projekt ein. Hier erläutern wir die wichtigsten Details, Hintergründe und die nächsten Schritte. Dieses Video bietet dir umfassende Informationen und hilft dir, das Projekt besser zu verstehen. Viel Spaß beim Anschauen und Entdecken!",
+          "duration": "ca. 4 Minuten"
+        }
+      }
+    },
+    "visionRoadmap": {
+      "label": "Vision",
+      "title": "Für jede Kommune gemacht",
+      "description": {
+        "primary": "Die Plattform ist bewusst so gestaltet, dass sie in jeder Kommune eingesetzt werden kann. Kartenbereiche, Organisationsstrukturen und Bewässerungsregionen sind frei konfigurierbar.",
+        "secondary": "Es werden ausschließlich offene Standards und Open-Source-Komponenten verwendet. Cloud-native Architektur mit Kubernetes ermöglicht einen mandantenfähigen, hochverfügbaren Betrieb. Weitere Kommunen können leicht hinzugefügt werden."
+      },
+      "roadmapLabel": "Roadmap",
+      "futureAriaLabel": "Weitere Ideen in Planung",
+      "futureLabel": "und vieles mehr in Planung",
+      "status": {
+        "completed": "Abgeschlossen",
+        "inProgress": "In Arbeit",
+        "planned": "Geplant"
+      }
+    }
   }
 }
