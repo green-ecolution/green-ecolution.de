@@ -20,7 +20,7 @@ RUN VITE_APP_VERSION="${VERSION}" VITE_BUILD_VERSION="${BUILD_VERSION}" pnpm run
 #############################################
 # Nginx
 #############################################
-FROM nginx:1.29 AS runner
+FROM nginx:1.31 AS runner
 RUN rm -f /etc/nginx/conf.d/default.conf && rm -rf /etc/nginx/templates/*
 RUN cat > /etc/nginx/nginx.conf <<'EOF'
 worker_processes auto;
