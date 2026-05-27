@@ -5,113 +5,113 @@ import type { LucideIcon } from 'lucide-react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 function useIntersectionObserver(threshold = 0.1) {
-    const [isVisible, setIsVisible] = useState(false)
-    const ref = useRef<HTMLDivElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true)
-                }
-            },
-            { threshold, rootMargin: '0px 0px -50px 0px' },
-        )
-
-        if (ref.current) {
-            observer.observe(ref.current)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
         }
+      },
+      { threshold, rootMargin: '0px 0px -50px 0px' },
+    )
 
-        return () => observer.disconnect()
-    }, [threshold])
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
 
-    return { ref, isVisible }
+    return () => observer.disconnect()
+  }, [threshold])
+
+  return { ref, isVisible }
 }
 
 function FloatingLeaf({
-    className,
-    delay,
-    reducedMotion,
+  className,
+  delay,
+  reducedMotion,
 }: {
-    className: string
-    delay: string
-    reducedMotion: boolean
+  className: string
+  delay: string
+  reducedMotion: boolean
 }) {
-    return (
-        <div
-            className={`absolute pointer-events-none ${className}`}
-            style={{
-                animation: reducedMotion ? 'none' : `float 6s ease-in-out infinite`,
-                animationDelay: delay,
-            }}
-        >
-            <Leaf className="w-6 h-6 text-green-light-900/20 rotate-45" />
-        </div>
-    )
+  return (
+    <div
+      className={`absolute pointer-events-none ${className}`}
+      style={{
+        animation: reducedMotion ? 'none' : `float 6s ease-in-out infinite`,
+        animationDelay: delay,
+      }}
+    >
+      <Leaf className="w-6 h-6 text-green-light-900/20 rotate-45" />
+    </div>
+  )
 }
 
 function ContactCard({
-    href,
-    icon: Icon,
-    title,
-    description,
-    cta,
-    isExternal,
-    delay,
-    isVisible,
-    reducedMotion,
-    accentColor,
+  href,
+  icon: Icon,
+  title,
+  description,
+  cta,
+  isExternal,
+  delay,
+  isVisible,
+  reducedMotion,
+  accentColor,
 }: {
-    href: string
-    icon: LucideIcon | string
-    title: string
-    description: string
-    cta: string
-    isExternal?: boolean
-    delay: number
-    isVisible: boolean
-    reducedMotion: boolean
-    accentColor: 'light' | 'middle' | 'dark'
+  href: string
+  icon: LucideIcon | string
+  title: string
+  description: string
+  cta: string
+  isExternal?: boolean
+  delay: number
+  isVisible: boolean
+  reducedMotion: boolean
+  accentColor: 'light' | 'middle' | 'dark'
 }) {
-    const colors = {
-        light: {
-            bg: 'from-green-light-900/10 to-green-light-100',
-            border: 'border-green-light-900/20',
-            icon: 'bg-green-light-900',
-            hover: 'hover:border-green-light-900/40 hover:shadow-green-light-900/10',
-        },
-        middle: {
-            bg: 'from-green-middle-900/10 to-green-light-100',
-            border: 'border-green-middle-900/20',
-            icon: 'bg-green-middle-900',
-            hover: 'hover:border-green-middle-900/40 hover:shadow-green-middle-900/10',
-        },
-        dark: {
-            bg: 'from-green-dark-900/10 to-green-light-100',
-            border: 'border-green-dark-900/20',
-            icon: 'bg-green-dark-900',
-            hover: 'hover:border-green-dark-900/40 hover:shadow-green-dark-900/10',
-        },
-    }
+  const colors = {
+    light: {
+      bg: 'from-green-light-900/10 to-green-light-100',
+      border: 'border-green-light-900/20',
+      icon: 'bg-green-light-900',
+      hover: 'hover:border-green-light-900/40 hover:shadow-green-light-900/10',
+    },
+    middle: {
+      bg: 'from-green-middle-900/10 to-green-light-100',
+      border: 'border-green-middle-900/20',
+      icon: 'bg-green-middle-900',
+      hover: 'hover:border-green-middle-900/40 hover:shadow-green-middle-900/10',
+    },
+    dark: {
+      bg: 'from-green-dark-900/10 to-green-light-100',
+      border: 'border-green-dark-900/20',
+      icon: 'bg-green-dark-900',
+      hover: 'hover:border-green-dark-900/40 hover:shadow-green-dark-900/10',
+    },
+  }
 
-    const colorSet = colors[accentColor]
+  const colorSet = colors[accentColor]
   const isImageIcon = typeof Icon === 'string'
 
-    return (
-        <div
-            className={`
+  return (
+    <div
+      className={`
         ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
       `}
-            style={{
-                transition: !reducedMotion ? 'opacity 700ms, transform 700ms' : undefined,
-                transitionDelay: !reducedMotion ? `${delay}ms` : '0ms',
-            }}
-        >
-            <a
-                href={href}
-                target={isExternal ? '_blank' : undefined}
-                rel={isExternal ? 'noopener noreferrer' : undefined}
-                className={`
+      style={{
+        transition: !reducedMotion ? 'opacity 700ms, transform 700ms' : undefined,
+        transitionDelay: !reducedMotion ? `${delay}ms` : '0ms',
+      }}
+    >
+      <a
+        href={href}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noopener noreferrer' : undefined}
+        className={`
           group relative flex flex-col items-center text-center p-6 md:p-8 h-full
           bg-gradient-to-br ${colorSet.bg}
           border-2 ${colorSet.border}
@@ -120,24 +120,24 @@ function ContactCard({
           ${colorSet.hover}
           hover:shadow-xl hover:-translate-y-1
         `}
-            >
-                {/* Decorative corner leaf */}
-                <div className="absolute -top-3 -right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div
-                        className={`w-8 h-8 ${colorSet.icon} rounded-full flex items-center justify-center shadow-lg`}
-                    >
-                        <Leaf className="w-4 h-4 text-white" />
-                    </div>
-                </div>
+      >
+        {/* Decorative corner leaf */}
+        <div className="absolute -top-3 -right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div
+            className={`w-8 h-8 ${colorSet.icon} rounded-full flex items-center justify-center shadow-lg`}
+          >
+            <Leaf className="w-4 h-4 text-white" />
+          </div>
+        </div>
 
-                {/* Icon */}
-                <div
-                    className={`
+        {/* Icon */}
+        <div
+          className={`
             w-14 h-14 md:w-16 md:h-16 rounded-2xl ${colorSet.icon}
             flex items-center justify-center mb-6
             shadow-lg group-hover:scale-110 transition-transform duration-300
           `}
-                >{isImageIcon ? (
+        >{isImageIcon ? (
             <img
               src={Icon}
               className="w-7 h-7 md:w-8 md:h-8 brightness-0 invert"
@@ -145,128 +145,128 @@ function ContactCard({
               loading="lazy"
             />
           ) : (
-                    <Icon className="w-7 h-7 md:w-8 md:h-8 text-white" />)}
-                </div>
+          <Icon className="w-7 h-7 md:w-8 md:h-8 text-white" />)}
+        </div>
 
-                {/* Content */}
-                <h3 className="font-lato font-bold text-xl md:text-2xl text-grey-900 mb-2">{title}</h3>
-                <p className="text-grey-900/80 text-sm md:text-base leading-relaxed mb-6 flex-grow">
-                    {description}
-                </p>
+        {/* Content */}
+        <h3 className="font-lato font-bold text-xl md:text-2xl text-grey-900 mb-2">{title}</h3>
+        <p className="text-grey-900/80 text-sm md:text-base leading-relaxed mb-6 flex-grow">
+          {description}
+        </p>
 
-                {/* CTA */}
-                <div className="flex items-center justify-center gap-2 text-green-dark-900 font-semibold group-hover:gap-3 transition-all duration-300">
-                    <span>{cta}</span>
-                    {isExternal ? (
-                        <ExternalLink className="w-4 h-4" />
-                    ) : (
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                    )}
-                </div>
+        {/* CTA */}
+        <div className="flex items-center justify-center gap-2 text-green-dark-900 font-semibold group-hover:gap-3 transition-all duration-300">
+          <span>{cta}</span>
+          {isExternal ? (
+            <ExternalLink className="w-4 h-4" />
+          ) : (
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+          )}
+        </div>
 
-                {/* Organic shape overlay on hover */}
-                <div
-                    className={`
+        {/* Organic shape overlay on hover */}
+        <div
+          className={`
             absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100
             transition-opacity duration-300 pointer-events-none
             bg-gradient-to-tr from-transparent via-white/5 to-white/20
           `}
-                />
-            </a>
-        </div>
-    )
+        />
+      </a>
+    </div>
+  )
 }
 
 function ContactHeroContent() {
-    const reducedMotion = useReducedMotion()
-    const { ref, isVisible } = useIntersectionObserver()
-    const { t } = useTranslation()
+  const reducedMotion = useReducedMotion()
+  const { ref, isVisible } = useIntersectionObserver()
+  const { t } = useTranslation()
 
-    return (
-        <div ref={ref} className="relative mt-12 lg:mt-16">
-            {/* Floating decorative leaves */}
-            <FloatingLeaf
-                className="top-0 left-[10%] hidden md:block"
-                delay="0s"
-                reducedMotion={reducedMotion}
-            />
-            <FloatingLeaf
-                className="top-1/2 right-[5%] hidden lg:block"
-                delay="2s"
-                reducedMotion={reducedMotion}
-            />
-            <FloatingLeaf
-                className="bottom-0 left-[20%] hidden md:block"
-                delay="4s"
-                reducedMotion={reducedMotion}
-            />
+  return (
+    <div ref={ref} className="relative mt-12 lg:mt-16">
+      {/* Floating decorative leaves */}
+      <FloatingLeaf
+        className="top-0 left-[10%] hidden md:block"
+        delay="0s"
+        reducedMotion={reducedMotion}
+      />
+      <FloatingLeaf
+        className="top-1/2 right-[5%] hidden lg:block"
+        delay="2s"
+        reducedMotion={reducedMotion}
+      />
+      <FloatingLeaf
+        className="bottom-0 left-[20%] hidden md:block"
+        delay="4s"
+        reducedMotion={reducedMotion}
+      />
 
-            {/* Section intro */}
-            <div
-                className={`
+      {/* Section intro */}
+      <div
+        className={`
           text-center mb-10 lg:mb-12
           transition-all ${reducedMotion ? '' : 'duration-700'}
           ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
         `}
-            >
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-light-100 rounded-full mb-4">
-                    <div className="w-2 h-2 bg-green-light-900 rounded-full animate-pulse" />
-                    <span className="text-xs font-semibold text-green-dark-900 tracking-wide uppercase">
-                        {t('contactHero.intro')}
-                    </span>
-                </div>
-            </div>
+      >
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-light-100 rounded-full mb-4">
+          <div className="w-2 h-2 bg-green-light-900 rounded-full animate-pulse" />
+          <span className="text-xs font-semibold text-green-dark-900 tracking-wide uppercase">
+            {t('contactHero.intro')}
+          </span>
+        </div>
+      </div>
 
-            {/* Contact cards grid */}
-            <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
-                <ContactCard
-                    href="mailto:info@green-ecolution.de"
-                    icon={Mail}
-                    title={t('contactHero.cards.email.title')}
-                    description={t('contactHero.cards.email.description')}
-                    cta={t('contactHero.cards.email.cta')}
-                    delay={200}
-                    isVisible={isVisible}
-                    reducedMotion={reducedMotion}
-                    accentColor="dark"
-                />
+      {/* Contact cards grid */}
+      <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
+        <ContactCard
+          href="mailto:info@green-ecolution.de"
+          icon={Mail}
+          title={t('contactHero.cards.email.title')}
+          description={t('contactHero.cards.email.description')}
+          cta={t('contactHero.cards.email.cta')}
+          delay={200}
+          isVisible={isVisible}
+          reducedMotion={reducedMotion}
+          accentColor="dark"
+        />
 
-                <ContactCard
-                    href="https://github.com/green-ecolution"
-                    icon="/assets/svg/socials/github.svg"
-                    title={t('contactHero.cards.github.title')}
-                    description={t('contactHero.cards.github.description')}
-                    cta={t('contactHero.cards.github.cta')}
-                    isExternal
-                    delay={400}
-                    isVisible={isVisible}
-                    reducedMotion={reducedMotion}
-                    accentColor="middle"
-                />
-            </div>
+        <ContactCard
+          href="https://github.com/green-ecolution"
+          icon="/assets/svg/socials/github.svg"
+          title={t('contactHero.cards.github.title')}
+          description={t('contactHero.cards.github.description')}
+          cta={t('contactHero.cards.github.cta')}
+          isExternal
+          delay={400}
+          isVisible={isVisible}
+          reducedMotion={reducedMotion}
+          accentColor="middle"
+        />
+      </div>
 
-            {/* Bottom decorative element */}
-            <div
-                className={`
+      {/* Bottom decorative element */}
+      <div
+        className={`
           flex justify-center mt-12 lg:mt-16
           transition-all ${reducedMotion ? '' : 'duration-700'}
           ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
         `}
-                style={{ transitionDelay: reducedMotion ? '0ms' : '600ms' }}
-            >
-                <div className="flex items-center gap-4">
-                    <div className="h-px w-12 bg-gradient-to-r from-transparent to-green-light-900/30" />
-                    <div className="flex gap-1">
-                        <div className="w-1.5 h-1.5 bg-green-dark-900/30 rounded-full" />
-                        <div className="w-1.5 h-1.5 bg-green-middle-900/30 rounded-full" />
-                        <div className="w-1.5 h-1.5 bg-green-light-900/30 rounded-full" />
-                    </div>
-                    <div className="h-px w-12 bg-gradient-to-l from-transparent to-green-light-900/30" />
-                </div>
-            </div>
+        style={{ transitionDelay: reducedMotion ? '0ms' : '600ms' }}
+      >
+        <div className="flex items-center gap-4">
+          <div className="h-px w-12 bg-gradient-to-r from-transparent to-green-light-900/30" />
+          <div className="flex gap-1">
+            <div className="w-1.5 h-1.5 bg-green-dark-900/30 rounded-full" />
+            <div className="w-1.5 h-1.5 bg-green-middle-900/30 rounded-full" />
+            <div className="w-1.5 h-1.5 bg-green-light-900/30 rounded-full" />
+          </div>
+          <div className="h-px w-12 bg-gradient-to-l from-transparent to-green-light-900/30" />
+        </div>
+      </div>
 
-            {/* CSS for floating animation */}
-            <style>{`
+      {/* CSS for floating animation */}
+      <style>{`
         @keyframes float {
           0%, 100% {
             transform: translateY(0) rotate(45deg);
@@ -276,8 +276,8 @@ function ContactHeroContent() {
           }
         }
       `}</style>
-        </div>
-    )
+    </div>
+  )
 }
 
 export default ContactHeroContent
