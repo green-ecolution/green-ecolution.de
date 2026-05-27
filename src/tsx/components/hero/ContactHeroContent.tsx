@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { Mail, Github, ExternalLink, Leaf, ArrowRight } from 'lucide-react'
+import { Mail, ExternalLink, Leaf, ArrowRight } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 function useIntersectionObserver(threshold = 0.1) {
@@ -61,7 +62,7 @@ function ContactCard({
   accentColor,
 }: {
   href: string
-  icon: typeof Mail
+  icon: LucideIcon | string
   title: string
   description: string
   cta: string
@@ -93,6 +94,7 @@ function ContactCard({
   }
 
   const colorSet = colors[accentColor]
+  const isImageIcon = typeof Icon === 'string'
 
   return (
     <div
@@ -135,7 +137,16 @@ function ContactCard({
             shadow-lg group-hover:scale-110 transition-transform duration-300
           `}
         >
-          <Icon className="w-7 h-7 md:w-8 md:h-8 text-white" />
+          {isImageIcon ? (
+            <img
+              src={Icon}
+              className="w-7 h-7 md:w-8 md:h-8 brightness-0 invert"
+              alt=""
+              loading="lazy"
+            />
+          ) : (
+            <Icon className="w-7 h-7 md:w-8 md:h-8 text-white" />
+          )}
         </div>
 
         {/* Content */}
@@ -222,7 +233,7 @@ function ContactHeroContent() {
 
         <ContactCard
           href="https://github.com/green-ecolution"
-          icon={Github}
+          icon="/assets/svg/socials/github.svg"
           title="Open Source"
           description="Entdecke unseren Code, trage zur Entwicklung bei oder nutze Green Ecolution für deine Kommune."
           cta="Auf GitHub ansehen"
