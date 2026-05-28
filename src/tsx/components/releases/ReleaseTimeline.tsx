@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import type { Release } from '../../types/release'
 import ReleaseCard from './ReleaseCard'
 
@@ -6,6 +7,8 @@ interface ReleaseTimelineProps {
 }
 
 const ReleaseTimeline: React.FC<ReleaseTimelineProps> = ({ releases }) => {
+  const { t } = useTranslation()
+
   if (releases.length === 0) {
     return (
       <div className="text-center py-12">
@@ -24,7 +27,7 @@ const ReleaseTimeline: React.FC<ReleaseTimelineProps> = ({ releases }) => {
             />
           </svg>
         </div>
-        <p className="text-grey-900/50 text-sm">Es sind noch keine Release Notes vorhanden.</p>
+        <p className="text-grey-900/50 text-sm">{t('releaseTimeline.empty')}</p>
       </div>
     )
   }

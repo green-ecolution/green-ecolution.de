@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { roadmapItems } from '../../../data/roadmapItems'
 
@@ -26,27 +27,27 @@ function useIntersectionObserver(threshold = 0.1) {
   return { ref, isVisible }
 }
 
-const statusConfig = {
-  completed: {
-    dot: 'bg-green-dark-900',
-    label: 'Abgeschlossen',
-    labelColor: 'text-green-dark-900',
-  },
-  'in-progress': {
-    dot: 'bg-green-light-900 animate-pulse',
-    label: 'In Arbeit',
-    labelColor: 'text-green-light-900',
-  },
-  planned: {
-    dot: 'bg-grey-900/30',
-    label: 'Geplant',
-    labelColor: 'text-grey-600',
-  },
-}
-
 function VisionRoadmap() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
+  const statusConfig = {
+    completed: {
+      dot: 'bg-green-dark-900',
+      label: t('sections.visionRoadmap.status.completed'),
+      labelColor: 'text-green-dark-900',
+    },
+    'in-progress': {
+      dot: 'bg-green-light-900 animate-pulse',
+      label: t('sections.visionRoadmap.status.inProgress'),
+      labelColor: 'text-green-light-900',
+    },
+    planned: {
+      dot: 'bg-grey-900/30',
+      label: t('sections.visionRoadmap.status.planned'),
+      labelColor: 'text-grey-600',
+    },
+  }
 
   return (
     <section
@@ -66,7 +67,7 @@ function VisionRoadmap() {
               }`}
             >
               <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-                Vision
+                {t('sections.visionRoadmap.label')}
               </span>
               <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
             </div>
@@ -77,7 +78,7 @@ function VisionRoadmap() {
               }`}
               style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
             >
-              Für jede Kommune gemacht
+              {t('sections.visionRoadmap.title')}
             </h2>
 
             <div
@@ -87,14 +88,10 @@ function VisionRoadmap() {
               style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
             >
               <p className="text-grey-900/70 leading-relaxed">
-                Die Plattform ist bewusst so gestaltet, dass sie in jeder Kommune eingesetzt werden
-                kann. Kartenbereiche, Organisationsstrukturen und Bewässerungsregionen sind frei
-                konfigurierbar.
+                {t('sections.visionRoadmap.description.primary')}
               </p>
               <p className="text-grey-900/70 leading-relaxed">
-                Es werden ausschließlich offene Standards und Open-Source-Komponenten verwendet.
-                Cloud-native Architektur mit Kubernetes ermöglicht einen mandantenfähigen,
-                hochverfügbaren Betrieb. Weitere Kommunen können leicht hinzugefügt werden.
+                {t('sections.visionRoadmap.description.secondary')}
               </p>
             </div>
           </div>
@@ -107,7 +104,7 @@ function VisionRoadmap() {
               }`}
               style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
             >
-              Roadmap
+              {t('sections.visionRoadmap.roadmapLabel')}
             </h3>
 
             <div className="space-y-0">
@@ -138,7 +135,7 @@ function VisionRoadmap() {
                     <div className="pb-6">
                       <div className="flex items-center gap-2 mb-1">
                         <h4 className="font-lato font-semibold text-grey-900 group-hover:text-green-dark-900 transition-colors">
-                          {item.title}
+                          {t(item.title)}
                         </h4>
                         <span
                           className={`text-[10px] font-semibold tracking-wider uppercase ${config.labelColor}`}
@@ -146,7 +143,7 @@ function VisionRoadmap() {
                           {config.label}
                         </span>
                       </div>
-                      <p className="text-sm text-grey-600 leading-relaxed">{item.description}</p>
+                      <p className="text-sm text-grey-600 leading-relaxed">{t(item.description)}</p>
                     </div>
                   </div>
                 )
@@ -160,7 +157,7 @@ function VisionRoadmap() {
                 style={{
                   transitionDelay: reducedMotion ? '0ms' : `${350 + roadmapItems.length * 120}ms`,
                 }}
-                aria-label="Weitere Ideen in Planung"
+                aria-label={t('sections.visionRoadmap.futureAriaLabel')}
               >
                 {/* Diminishing dots along a fading timeline — continuation metaphor */}
                 <div
@@ -184,7 +181,7 @@ function VisionRoadmap() {
                   <span className="mr-1 text-green-light-900/50 not-italic tracking-widest">
                     ···
                   </span>
-                  und vieles mehr in Planung
+                  {t('sections.visionRoadmap.futureLabel')}
                 </p>
               </div>
             </div>

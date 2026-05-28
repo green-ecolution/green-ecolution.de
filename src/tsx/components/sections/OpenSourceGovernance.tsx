@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { governancePillars } from '../../../data/governancePillars'
 
@@ -27,6 +28,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function OpenSourceGovernance() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -54,7 +56,7 @@ function OpenSourceGovernance() {
             }`}
           >
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-              Governance
+              {t('sections.openSourceGovernance.label')}
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
@@ -65,7 +67,7 @@ function OpenSourceGovernance() {
             }`}
             style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
           >
-            Open Source als Prinzip
+            {t('sections.openSourceGovernance.title')}
           </h2>
 
           <p
@@ -74,8 +76,7 @@ function OpenSourceGovernance() {
             }`}
             style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
           >
-            Transparenz, Unabhängigkeit und Nachnutzbarkeit: die Grundpfeiler unserer
-            Open-Source-Strategie.
+            {t('sections.openSourceGovernance.description')}
           </p>
         </div>
 
@@ -115,14 +116,14 @@ function OpenSourceGovernance() {
                 </div>
 
                 <span className="text-xs font-semibold tracking-widest uppercase text-green-light-900/70 mb-2 block">
-                  {pillar.category}
+                  {t(pillar.category)}
                 </span>
 
                 <h3 className="font-lato font-bold text-white mb-2 tracking-wide">
-                  {pillar.title}
+                  {t(pillar.title)}
                 </h3>
 
-                <p className="text-white/50 text-sm leading-relaxed">{pillar.description}</p>
+                <p className="text-white/50 text-sm leading-relaxed">{t(pillar.description)}</p>
               </article>
             )
           })}

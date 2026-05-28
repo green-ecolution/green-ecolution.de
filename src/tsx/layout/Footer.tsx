@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from '@tanstack/react-router'
 import Button from '../components/Button'
 import { useReducedMotion } from '../hooks/useReducedMotion'
@@ -28,6 +29,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function Footer() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -44,27 +46,26 @@ function Footer() {
             ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
           `}
         >
-          <Link to="/" aria-label="Zur Startseite navigieren" className="group">
+          <Link to="/" aria-label={t('layout.footer.homeAriaLabel')} className="group">
             <img
               src="/assets/svg/logo/logo-icon-white.svg"
               className="w-12 h-12 mb-6 transition-all ease-in-out duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(172,182,59,0.5)]"
-              alt="Logo Green Ecolution"
+              alt={t('layout.footer.logoAlt')}
               loading="lazy"
             />
           </Link>
-          <p className="max-w-sm">
-            Green Ecolution ist ein digitales System zur bedarfsgerechten und ressourcenschonenden
-            Bewässerung von Stadtbäumen und leistet damit einen Beitrag zu einer nachhaltigen und
-            klimaresilienten Stadtentwicklung.
-          </p>
+          <p className="max-w-sm">{t('layout.footer.description')}</p>
           <div className="flex flex-wrap gap-6 mt-8">
-            <Button href="mailto:info@green-ecolution.de" ariaLabel="Kontaktiere uns gern per Mail">
+            <Button
+              href="mailto:info@green-ecolution.de"
+              ariaLabel={t('layout.footer.contactAriaLabel')}
+            >
               <img src="/assets/svg/socials/mail.svg" className="w-6 h-6" alt="" loading="lazy" />
-              <span>Kontakt</span>
+              <span>{t('layout.footer.contactLabel')}</span>
             </Button>
             <Button
               href="https://github.com/green-ecolution"
-              ariaLabel="Besuche uns auf GitHub"
+              ariaLabel={t('layout.footer.githubAriaLabel')}
               isExternalLink
             >
               <img src="/assets/svg/socials/github.svg" className="w-6 h-6" alt="" loading="lazy" />
@@ -81,14 +82,14 @@ function Footer() {
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '150ms' }}
         >
-          <nav aria-label="Meta-Navigation">
+          <nav aria-label={t('layout.footer.metaNavigationAriaLabel')}>
             <ul className="flex items-center justify-center gap-x-6 sm:justify-start md:justify-end">
               <li>
                 <Link
                   to="/impressum"
                   className="relative font-bold transition-all ease-in-out duration-300 hover:text-green-light-900 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-green-light-900 after:transition-all after:duration-300 hover:after:w-full"
                 >
-                  Impressum
+                  {t('layout.footer.legal.imprint')}
                 </Link>
               </li>
               <li>
@@ -96,7 +97,7 @@ function Footer() {
                   to="/datenschutz"
                   className="relative font-bold transition-all ease-in-out duration-300 hover:text-green-light-900 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-green-light-900 after:transition-all after:duration-300 hover:after:w-full"
                 >
-                  Datenschutz
+                  {t('layout.footer.legal.privacy')}
                 </Link>
               </li>
             </ul>

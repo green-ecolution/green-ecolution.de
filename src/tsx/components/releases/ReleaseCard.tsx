@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 import type { Release } from '../../types/release'
 import { formatReleaseDate } from '../../helper/formatDate'
 
@@ -10,6 +11,7 @@ interface ReleaseCardProps {
 const ReleaseCard: React.FC<ReleaseCardProps> = ({ release, index = 0 }) => {
   const { frontmatter, slug } = release
   const formattedDate = formatReleaseDate(frontmatter.date)
+  const { t } = useTranslation()
 
   return (
     <article className="group relative" style={{ animationDelay: `${index * 100}ms` }}>
@@ -80,7 +82,9 @@ const ReleaseCard: React.FC<ReleaseCardProps> = ({ release, index = 0 }) => {
                 ))}
                 {frontmatter.highlights.length > 4 && (
                   <span className="text-xs text-grey-900/40 px-2 py-1">
-                    +{frontmatter.highlights.length - 4} mehr
+                    {t('releaseCard.moreHighlights', {
+                      count: frontmatter.highlights.length - 4,
+                    })}
                   </span>
                 )}
               </div>

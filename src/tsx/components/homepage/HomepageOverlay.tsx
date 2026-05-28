@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 import Arrow from '../../icons/Arrow'
 import HomepageOverlayIcons from './HomepageOverlayIcons'
 import WelcomeCard from '../cards/WelcomeCard'
@@ -16,48 +17,6 @@ interface HomepageOverlayProps {
   onClose: () => void
 }
 
-const popups: Popup[] = [
-  {
-    label: 'Messung des Bewässerungszustandes',
-    shortName: 'Bewässerungszustand',
-    description: (
-      <>
-        Die Bodenfeuchte wird in Abhängigkeit der Vegetationsform in unterschiedlichen Bodentiefen
-        gemessen, um Daten über verschiedene Bodenschichten zu erhalten.
-      </>
-    ),
-  },
-  {
-    label: 'Übertragung der Daten',
-    shortName: 'Datenübertragung',
-    description: (
-      <>
-        Die Sensordaten werden mittels öffentlichen LoRaWAN-Netzwerk an ein Backend zur weiteren
-        Verarbeitung übermittelt. LoRaWAN benötigt wenig Energie und besitzt eine hohe Reichweite,
-        was zu einer großen Flächenabdeckung und einem geringen Wartungsaufwand führt.
-      </>
-    ),
-  },
-  {
-    label: 'Handlungsempfehlungen',
-    shortName: 'Handlungsempfehlungen',
-    description: (
-      <>
-        Die übermittelten Sensordaten werden anhand wissenschaftlicher/mathematischer Methodiken
-        ausgewertet. Auf einen Dashboard wird graphisch dargestellt, ob eine Bewässerung in nächster
-        Zeit notwendig ist.&nbsp;
-        <Link
-          to="/project"
-          hash="vorteile"
-          className="text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900"
-        >
-          Zu den Vorteilen
-        </Link>
-      </>
-    ),
-  },
-]
-
 const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
   initialLoad,
   isOverlayVisible,
@@ -65,8 +24,39 @@ const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
 }) => {
   const [currentPopupIndex, setCurrentPopupIndex] = useState(0)
   const [isPopupVisible, setIsPopupVisible] = useState(false)
-  const currentPopup = popups[currentPopupIndex]
+  const { t } = useTranslation()
   const delay = 1500
+
+  const popups: Popup[] = [
+    {
+      label: t('homepageOverlay.popups.irrigationStatus.label'),
+      shortName: 'Bewässerungszustand',
+      description: <>{t('homepageOverlay.popups.irrigationStatus.description')}</>,
+    },
+    {
+      label: t('homepageOverlay.popups.dataTransmission.label'),
+      shortName: 'Datenübertragung',
+      description: <>{t('homepageOverlay.popups.dataTransmission.description')}</>,
+    },
+    {
+      label: t('homepageOverlay.popups.recommendations.label'),
+      shortName: 'Handlungsempfehlungen',
+      description: (
+        <>
+          {t('homepageOverlay.popups.recommendations.description')}&nbsp;
+          <Link
+            to="/project"
+            hash="vorteile"
+            className="text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900"
+          >
+            {t('homepageOverlay.popups.recommendations.link')}
+          </Link>
+        </>
+      ),
+    },
+  ]
+
+  const currentPopup = popups[currentPopupIndex]
 
   const startTimer = useCallback((callback: () => void, delay: number) => {
     const timer = setTimeout(callback, delay)
@@ -191,7 +181,11 @@ const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
                 "
                 onClick={handleNextClick}
               >
-                <span>{currentPopupIndex < popups.length - 1 ? 'Weiter' : 'Entdecken'}</span>
+                <span>
+                  {currentPopupIndex < popups.length - 1
+                    ? t('homepageOverlay.button.next')
+                    : t('homepageOverlay.button.discover')}
+                </span>
                 <Arrow classes="w-5 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </div>
@@ -199,7 +193,7 @@ const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
             {/* Close button */}
             <button
               type="button"
-              aria-label="Popup schließen"
+              aria-label={t('homepageOverlay.closeAriaLabel')}
               onClick={onClose}
               className="
                 absolute -right-3 -top-3

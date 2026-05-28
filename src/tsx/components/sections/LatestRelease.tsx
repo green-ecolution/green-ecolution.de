@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from '@tanstack/react-router'
 import { getAllReleases } from '../../../content/releases'
 import Button from '../Button'
@@ -31,6 +32,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function LatestRelease() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
   const releases = getAllReleases()
@@ -57,7 +59,7 @@ function LatestRelease() {
           >
             <div className="inline-block">
               <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-                Releases
+                {t('sections.latestRelease.label')}
               </span>
               <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
             </div>
@@ -71,7 +73,7 @@ function LatestRelease() {
             `}
             style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
           >
-            Was gibt's Neues?
+            {t('sections.latestRelease.title')}
           </h2>
           <p
             className={`
@@ -81,8 +83,7 @@ function LatestRelease() {
             `}
             style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
           >
-            Wir entwickeln Green Ecolution kontinuierlich weiter. Schau dir die neuesten Funktionen,
-            Verbesserungen und Bugfixes an – und erfahre, woran wir gerade arbeiten.
+            {t('sections.latestRelease.description')}
           </p>
           <div
             className={`
@@ -91,8 +92,12 @@ function LatestRelease() {
             `}
             style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
           >
-            <Button href="/releases" ariaLabel="Alle Releases ansehen" isDark>
-              <span>Alle Releases</span>
+            <Button
+              href="/releases"
+              ariaLabel={t('sections.latestRelease.allReleasesAriaLabel')}
+              isDark
+            >
+              <span>{t('sections.latestRelease.allReleasesLabel')}</span>
               <Arrow classes="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
             </Button>
           </div>
@@ -115,7 +120,7 @@ function LatestRelease() {
                 v{latestRelease.frontmatter.version}
               </span>
               <span className="bg-green-light-900/30 text-white px-3 py-1 rounded-full text-sm font-bold">
-                Aktuell
+                {t('sections.latestRelease.currentLabel')}
               </span>
             </div>
             <time
@@ -133,7 +138,9 @@ function LatestRelease() {
               </p>
             )}
             <div className="flex items-center gap-2 text-white/70 group-hover:text-white group-hover:gap-3 transition-all duration-300 mt-4">
-              <span className="text-sm font-medium">Details ansehen</span>
+              <span className="text-sm font-medium">
+                {t('sections.latestRelease.detailsLabel')}
+              </span>
               <span>→</span>
             </div>
           </Link>

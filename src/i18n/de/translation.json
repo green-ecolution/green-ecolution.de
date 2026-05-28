@@ -1,0 +1,833 @@
+{
+  "navigation": {
+    "ariaLabel": "Hauptnavigation",
+    "mobileTitle": "Hauptnavigation",
+    "items": {
+      "project": "Das Projekt",
+      "releases": "Releases",
+      "contact": "Kontakt",
+      "github": "GitHub"
+    },
+    "demo": {
+      "ariaLabel": "Demo",
+      "label": "Jetzt ausprobieren"
+    },
+    "legal": {
+      "imprint": "Impressum",
+      "privacy": "Datenschutz"
+    }
+  },
+  "welcomeCard": {
+    "titlePrefix": "Willkommen bei",
+    "titleHighlight": "Green Ecolution",
+    "subtitle": "Intelligentes Grünflächenmanagement",
+    "description": "Erfahre, wie wir mit smarter Sensorik und datengestützten Analysen die Bewässerung städtischer Grünflächen optimieren – für gesündere Bäume, Beete und Parks bei effizientem Ressourceneinsatz.",
+    "button": "Jetzt entdecken"
+  },
+  "contactHero": {
+    "intro": "Wir freuen uns auf dich",
+    "cards": {
+      "email": {
+        "title": "Schreib uns",
+        "description": "Hast du Fragen zum Projekt oder möchtest du mehr erfahren? Wir melden uns zeitnah bei dir zurück.",
+        "cta": "E-Mail senden"
+      },
+      "github": {
+        "title": "Open Source",
+        "description": "Entdecke unseren Code, trage zur Entwicklung bei oder nutze Green Ecolution für deine Kommune.",
+        "cta": "Auf GitHub ansehen"
+      }
+    }
+  },
+  "homepageHero": {
+    "label": "Smart Irrigation",
+    "headline": {
+      "start": "Wir ermöglichen",
+      "highlight": "smarte Bewässerung",
+      "end": "von Grünflächen!"
+    },
+    "motto": "Messen. Verstehen. Handeln.",
+    "description": "Mittels sensorgestützter Überwachung von Grünflächen werden Daten über das LoRaWan-Netz übermittelt und ausgewertet, sodass Handlungsempfehlungen für die Bewässerung abgegeben werden können.",
+    "button": "Animation abspielen"
+  },
+  "homepageHeroTrees": {
+    "adoptTreeAriaLabel": "Baum adoptieren"
+  },
+  "homepageOverlay": {
+    "popups": {
+      "irrigationStatus": {
+        "label": "Messung des Bewässerungszustandes",
+        "description": "Die Bodenfeuchte wird in Abhängigkeit der Vegetationsform in unterschiedlichen Bodentiefen gemessen, um Daten über verschiedene Bodenschichten zu erhalten."
+      },
+      "dataTransmission": {
+        "label": "Übertragung der Daten",
+        "description": "Die Sensordaten werden mittels öffentlichen LoRaWAN-Netzwerk an ein Backend zur weiteren Verarbeitung übermittelt. LoRaWAN benötigt wenig Energie und besitzt eine hohe Reichweite, was zu einer großen Flächenabdeckung und einem geringen Wartungsaufwand führt."
+      },
+      "recommendations": {
+        "label": "Handlungsempfehlungen",
+        "description": "Die übermittelten Sensordaten werden anhand wissenschaftlicher/mathematischer Methodiken ausgewertet. Auf einen Dashboard wird graphisch dargestellt, ob eine Bewässerung in nächster Zeit notwendig ist.",
+        "link": "Zu den Vorteilen"
+      }
+    },
+    "button": {
+      "next": "Weiter",
+      "discover": "Entdecken"
+    },
+    "closeAriaLabel": "Popup schließen"
+  },
+  "adoptTreeModal": {
+    "ariaLabel": "Adoptionsurkunde für {{fullName}}",
+    "certificateTitle": "Adoptionsurkunde",
+    "certificateNumber": "Nr. {{number}}",
+    "fullName": "{{name}} die {{species}}",
+    "location": "wartet in Flensburg auf dich",
+    "didYouKnow": "Wusstest du?",
+    "quote": "„Danke, dass du an mich denkst! Mit Projekten wie Green Ecolution bekommen Stadtbäume wie ich endlich die Aufmerksamkeit, die wir verdienen.\"",
+    "since": "— {{name}}, seit {{year}} in Flensburg",
+    "button": "Danke, {{name}}! 🌳"
+  },
+  "adoptTreeData": {
+    "species": {
+      "birch": "Birke",
+      "spruce": "Fichte",
+      "oak": "Eiche",
+      "beech": "Buche",
+      "chestnut": "Kastanie",
+      "linden": "Linde",
+      "maple": "Ahorn",
+      "ash": "Esche",
+      "elm": "Ulme",
+      "plane": "Platane",
+      "fir": "Tanne",
+      "willow": "Weide",
+      "robinia": "Robinie",
+      "alder": "Erle",
+      "poplar": "Pappel"
+    },
+    "funFacts": {
+      "cooling": "Ein großer Stadtbaum kann bis zu 400 Liter Wasser am Tag verdunsten und so die Umgebung um bis zu 3°C kühlen.",
+      "oxygen": "Eine einzige Buche produziert genug Sauerstoff für 10 Menschen pro Jahr.",
+      "dust": "Stadtbäume filtern einen relevanten Anteil des Feinstaubs aus der Luft in ihrer unmittelbaren Umgebung.",
+      "roots": "Die Wurzeln eines Straßenbaums erstrecken sich oft über das Anderthalbfache der Kronenfläche.",
+      "co2": "Ein 100-jähriger Baum hat in seinem Leben etwa 5 Tonnen CO₂ gebunden.",
+      "woodWideWeb": "Bäume kommunizieren über unterirdische Pilznetzwerke - das sogenannte „Wood Wide Web\".",
+      "lifetime": "Straßenbäume leben im Durchschnitt nur 60 Jahre - auf dem Land werden sie dreimal so alt.",
+      "noise": "Ein dichter Baumbestand kann den Lärmpegel um bis zu 10 Dezibel senken.",
+      "water": "In heißen Sommern braucht ein Stadtbaum bis zu 200 Liter Wasser pro Woche zusätzlich."
+    }
+  },
+  "releaseCard": {
+    "moreHighlights": "+{{count}} mehr"
+  },
+  "releaseTimeline": {
+    "empty": "Es sind noch keine Release Notes vorhanden."
+  },
+  "components": {
+    "backToTop": {
+      "ariaLabel": "Zurück nach oben"
+    },
+    "errorFallback": {
+      "title": "Etwas ist schief gelaufen",
+      "description": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut oder kehre zur Startseite zurück.",
+      "retryLabel": "Erneut versuchen",
+      "homeLabel": "Zur Startseite"
+    }
+  },
+  "helper": {
+    "sliderTranslations": {
+      "prev": "Vorheriges Element anzeigen",
+      "next": "Nächstes Element anzeigen",
+      "first": "Erstes Element anzeigen",
+      "last": "Letztes Element anzeigen",
+      "slideX": "Zu Seite %s springen",
+      "pageX": "Zu Seite %s springen",
+      "carousel": "Slider",
+      "select": "Paginierung der Elemente",
+      "slide": "Slider Element",
+      "slideLabel": "%s von %s"
+    }
+  },
+  "data": {
+    "processSteps": {
+      "installSensors": {
+        "label": "Sensoren installieren",
+        "shortName": "Installation",
+        "description": "Bodenfeuchtesensoren werden an ausgewählten Bäumen angebracht – schnell, unkompliziert und wartungsarm."
+      },
+      "collectRealtimeData": {
+        "label": "Echtzeitdaten erfassen",
+        "shortName": "Daten",
+        "description": "Die Sensoren messen kontinuierlich die Bodenfeuchtigkeit und übertragen die Werte automatisch ins System."
+      },
+      "detectWateringNeed": {
+        "label": "Bewässerungsbedarf erkennen",
+        "shortName": "Analyse",
+        "description": "Das Dashboard zeigt dir auf einen Blick, welche Bäume Wasser brauchen – priorisiert nach Dringlichkeit."
+      },
+      "planOptimizedRoutes": {
+        "label": "Optimierte Routen planen",
+        "shortName": "Planung",
+        "description": "Green Ecolution berechnet die effizienteste Tour für dein Team – weniger Fahrzeit, mehr Bewässerung."
+      },
+      "waterAndEvaluate": {
+        "label": "Bewässern und auswerten",
+        "shortName": "Umsetzung",
+        "description": "Dein Team fährt die optimierte Route. Danach siehst du genau, wie viel Wasser wo eingesetzt wurde."
+      }
+    },
+    "governancePillars": {
+      "license": {
+        "category": "Lizenz",
+        "title": "AGPL-3.0-only",
+        "description": "Lizenziert unter der AGPL. Finanziert im Rahmen des Landesprogramms „Offene Innovation\" des DigitalHub.SH Schleswig-Holstein."
+      },
+      "sovereignty": {
+        "category": "Souveränität",
+        "title": "Digitale Souveränität",
+        "description": "Keine Abhängigkeit von proprietären Plattformen. Kommunen behalten die Kontrolle über ihre Daten und Infrastruktur. Kein Vendor-Lock-in."
+      },
+      "modularity": {
+        "category": "Modularität",
+        "title": "Plugin-System",
+        "description": "Modulare Erweiterungen für kommunenspezifische Anpassungen ohne Änderung der Kernsoftware. Import-Plugins für Baumkataster, CSV, Datenbanken."
+      },
+      "integration": {
+        "category": "Integration",
+        "title": "API-first",
+        "description": "Offene Schnittstellen für Integration in kommunale IT-Landschaften. Anbindung an IoT-Hubs und Open-Data-Portale."
+      },
+      "community": {
+        "category": "Community",
+        "title": "Nachnutzung & Community",
+        "description": "Quellcode und Dokumentation öffentlich auf GitHub. Andere Kommunen können die Lösung nachnutzen und anpassen."
+      },
+      "efficiency": {
+        "category": "Wirtschaftlichkeit",
+        "title": "Kosteneffizienz",
+        "description": "Keine Lizenzkosten. Geschäftsmodell basiert auf Dienstleistungen: Hosting, Anpassung, Sensorvertrieb. Regionale Wertschöpfung in SH."
+      }
+    },
+    "challengeFigures": {
+      "water": {
+        "value": "50.000",
+        "unit": "Liter / Jahr",
+        "description": "Wasser werden pro mittelgroße Kommune jährlich ausgebracht, ohne Datengrundlage, ohne bedarfsgerechte Steuerung."
+      },
+      "tree": {
+        "value": "1.700 €",
+        "unit": "pro Baum",
+        "description": "kostet ein einzelner Straßenbaum. Ein vermeidbarer Totalverlust durch fehlende bedarfsgerechte Bewässerung finanziert Jahre Sensorbetrieb."
+      },
+      "bed": {
+        "value": "bis 60.000 €",
+        "unit": "pro Beet",
+        "description": "kann ein komplettes Straßenbeet kosten, inklusive Tiefbau, Substrat und Infrastruktur."
+      }
+    },
+    "architectureSteps": {
+      "sensor": {
+        "label": "Sensor",
+        "description": "Misst Bodenfeuchte am Baum"
+      },
+      "gateway": {
+        "label": "Gateway",
+        "description": "LoRaWAN Übertragung"
+      },
+      "backend": {
+        "label": "Backend",
+        "description": "Datenverarbeitung & Analyse"
+      },
+      "dashboard": {
+        "label": "Dashboard",
+        "description": "Visualisierung & Tourenplanung"
+      }
+    },
+    "sensorSpecs": {
+      "specs": {
+        "depths": "Messtiefen",
+        "network": "Funknetz",
+        "battery": "Jahre Batterie"
+      },
+      "features": {
+        "soilMoisture": {
+          "label": "Bodenfeuchte",
+          "description": "Volumetrische Messung der Bodenfeuchtigkeit in mehreren Tiefen"
+        },
+        "temperature": {
+          "label": "Temperatur",
+          "description": "Erfassung der Bodentemperatur für präzise Bewässerungsempfehlungen"
+        },
+        "waterTension": {
+          "label": "Bodenwasserspannung",
+          "description": "Messung der Saugspannung zur Bestimmung der Wasserverfügbarkeit"
+        }
+      }
+    },
+    "roadmapItems": {
+      "mobileApp": {
+        "title": "Mobile App mit QR-Scan",
+        "description": "Sensor-Setup per QR-Code und GPS direkt vor Ort am Baum"
+      },
+      "sensorFirmware": {
+        "title": "Eigene Sensor-Firmware",
+        "description": "Vollständig selbst entwickelte Firmware für maximale Kontrolle und Anpassbarkeit"
+      },
+      "roles": {
+        "title": "Benutzer- und Rollenkonzept",
+        "description": "Feingranulare Rechteverwaltung für Mitarbeitende, Dienstleister und Partnerkommunen"
+      },
+      "openData": {
+        "title": "Open-Data-Export",
+        "description": "Anbindung an das Open-Data-Portal des Landes Schleswig-Holstein"
+      },
+      "greenSpaceTypes": {
+        "title": "Weitere Grünflächentypen",
+        "description": "Erweiterung auf Beete, Stauden und Parks über Bäume hinaus"
+      }
+    },
+    "workflowSteps": {
+      "measure": {
+        "category": "Erfassen",
+        "title": "Messen",
+        "description": "Bodenfeuchtesensoren erfassen Parameter wie Bodenfeuchte, Temperatur und Bodenwasserspannung in mehreren Tiefen (30/60/90 cm). Die Daten werden energieeffizient über LoRaWAN übertragen."
+      },
+      "understand": {
+        "category": "Analysieren",
+        "title": "Verstehen",
+        "description": "Ein Ampelsystem zeigt auf einer Karte den aktuellen Bewässerungsbedarf. Mitarbeiter erkennen auf einen Blick, welche Grünflächen Wasser brauchen. Zeitverläufe ermöglichen detaillierte Analysen."
+      },
+      "act": {
+        "category": "Ausführen",
+        "title": "Handeln",
+        "description": "Automatisierte Einsatz- und Routenplanung erzeugt optimierte Bewässerungstouren unter Berücksichtigung von Wasserkapazität, Fahrzeuggröße und Straßenrestriktionen."
+      }
+    }
+  },
+  "layout": {
+    "footer": {
+      "homeAriaLabel": "Zur Startseite navigieren",
+      "logoAlt": "Logo Green Ecolution",
+      "description": "Green Ecolution ist ein digitales System zur bedarfsgerechten und ressourcenschonenden Bewässerung von Stadtbäumen und leistet damit einen Beitrag zu einer nachhaltigen und klimaresilienten Stadtentwicklung.",
+      "contactAriaLabel": "Kontaktiere uns gern per Mail",
+      "contactLabel": "Kontakt",
+      "githubAriaLabel": "Besuche uns auf GitHub",
+      "metaNavigationAriaLabel": "Meta-Navigation",
+      "legal": {
+        "imprint": "Impressum",
+        "privacy": "Datenschutz"
+      }
+    },
+    "header": {
+      "skipToContent": "Zum Hauptinhalt springen",
+      "homeAriaLabel": "Zur Startseite navigieren",
+      "navigationToggleAriaLabel": "Hauptnavigation öffnen"
+    }
+  },
+  "pages": {
+    "legalLabel": "Rechtliches",
+    "breadcrumbs": {
+      "home": "Startseite",
+      "project": "Projekt",
+      "contact": "Kontakt",
+      "impressum": "Impressum",
+      "datenschutz": "Datenschutz"
+    },
+    "home": {
+      "documentTitle": "Startseite | Green Ecolution | Smartes Grünflächenmanagement"
+    },
+    "project": {
+      "documentTitle": "Projekt | Green Ecolution | Smartes Grünflächenmanagement",
+      "hero": {
+        "headline": "Smartes Grünflächenmanagement für lebenswerte Städte",
+        "description": "Green Ecolution ist eine Open-Source-Lösung für die effiziente Bewässerung urbaner Bäume. Unsere Software kombiniert Sensordaten mit intelligenter Routenoptimierung und ermöglicht so eine gezielte, ressourcenschonende Einsatzplanung. Entwickelt in Zusammenarbeit mit der Stadt Flensburg – bald auch verfügbar für deine Kommune."
+      }
+    },
+    "contact": {
+      "documentTitle": "Kontakt | Green Ecolution | Smartes Grünflächenmanagement",
+      "label": "Kontakt",
+      "hero": {
+        "headline": "Lass uns in Kontakt treten",
+        "description": "Du hast Fragen zum Projekt, möchtest deine Kommune anbinden oder zur Entwicklung beitragen? Wir freuen uns über jede Nachricht und melden uns zeitnah bei dir."
+      }
+    },
+    "notFound": {
+      "title": "Die Seite konnte nicht gefunden werden.",
+      "description": "Die gewünschte Seite ist nicht erreichbar, da sie entweder nicht existiert oder es zu einem Fehler gekommen ist. Error-Code: 404",
+      "homeAriaLabel": "Zur Startseite",
+      "homeLabel": "Zur Startseite"
+    },
+    "releases": {
+      "documentTitle": "Releases | Green Ecolution | Smartes Grünflächenmanagement",
+      "label": "Releases",
+      "title": "Release Notes",
+      "description": "Entdecke die neuesten Funktionen, Verbesserungen und Bugfixes – wir arbeiten kontinuierlich daran, Green Ecolution noch besser zu machen.",
+      "latestLabel": "Aktuelles Release",
+      "newLabel": "Neu",
+      "detailsLabel": "Details ansehen",
+      "olderLabel": "Ältere Releases"
+    },
+    "releaseDetail": {
+      "documentTitle": "v{{version}} - {{title}} | Green Ecolution",
+      "backAriaLabel": "Zurück zu allen Releases",
+      "backLabel": "Alle Releases",
+      "label": "Release Notes",
+      "currentLabel": "Aktuell",
+      "releaseLinkLabel": "Release",
+      "sourceLinkLabel": "Source",
+      "changelogTitle": "# Changelog for v{{version}}",
+      "navigationAriaLabel": "Release Navigation",
+      "newerVersionLabel": "Neuere Version",
+      "olderVersionLabel": "Ältere Version",
+      "feedbackText": "Fehler gefunden oder Feedback zu diesem Release?",
+      "issueLabel": "Issue erstellen →"
+    },
+    "impressum": {
+      "documentTitle": "Impressum | Green Ecolution | Smartes Grünflächenmanagement",
+      "hero": {
+        "headline": "Impressum",
+        "description": "Angaben gemäß § 5 TMG"
+      },
+      "contact": {
+        "title": "Kontakt",
+        "phoneLabel": "Telefon:",
+        "emailLabel": "E-Mail:"
+      },
+      "commercialRegister": {
+        "title": "Handelsregister",
+        "registerCourtLabel": "Registergericht:",
+        "registerCourtValue": "Amtsgericht Flensburg",
+        "registerNumberLabel": "Registernummer:",
+        "taxNumberLabel": "Steuernummer:",
+        "vatIdLabel": "USt-IdNr.:",
+        "managingDirectorsLabel": "Geschäftsführer:"
+      },
+      "contentLiability": {
+        "title": "Haftung für Inhalte",
+        "paragraph1": "Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.",
+        "paragraph2": "Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen."
+      },
+      "linkLiability": {
+        "title": "Haftung für Links",
+        "paragraph1": "Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.",
+        "paragraph2": "Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen."
+      },
+      "copyright": {
+        "title": "Urheberrecht",
+        "paragraph1": "Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.",
+        "paragraph2": "Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet."
+      }
+    },
+    "datenschutz": {
+      "documentTitle": "Datenschutz | Green Ecolution | Smartes Grünflächenmanagement",
+      "hero": {
+        "headline": "Datenschutz",
+        "description": "Informationen zum Umgang mit Ihren personenbezogenen Daten"
+      },
+      "overview": {
+        "title": "1. Datenschutz auf einen Blick",
+        "generalNotesTitle": "Allgemeine Hinweise",
+        "generalNotesText": "Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Ausführliche Informationen zum Thema Datenschutz entnehmen Sie unserer unter diesem Text aufgeführten Datenschutzerklärung.",
+        "dataCollectionTitle": "Datenerfassung auf dieser Website",
+        "responsibleQuestion": "Wer ist verantwortlich für die Datenerfassung auf dieser Website?",
+        "responsibleAnswer": "Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Abschnitt „Hinweis zur Verantwortlichen Stelle\" in dieser Datenschutzerklärung entnehmen.",
+        "howCollectQuestion": "Wie erfassen wir Ihre Daten?",
+        "howCollectAnswer": "Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z.B. um Daten handeln, die Sie in ein Kontaktformular eingeben. Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z.B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald Sie diese Website betreten.",
+        "dataUseQuestion": "Wofür nutzen wir Ihre Daten?",
+        "dataUseAnswer": "Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden.",
+        "rightsQuestion": "Welche Rechte haben Sie bezüglich Ihrer Daten?",
+        "rightsAnswer": "Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. Zudem haben Sie das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Des Weiteren steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu."
+      },
+      "hosting": {
+        "title": "2. Hosting",
+        "externalTitle": "Externes Hosting",
+        "paragraph1": "Diese Website wird bei einem externen Dienstleister gehostet (Hoster). Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann es v.a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten, Vertragsdaten, Kontaktdaten, Namen, Websitezugriffe und sonstige Daten, die über eine Website generiert werden, handeln.",
+        "paragraph2": "Der Einsatz des Hosters erfolgt zum Zwecke der Vertragserfüllung gegenüber unseren potenziellen und bestehenden Kunden (Art. 6 Abs. 1 lit. b DSGVO) und im Interesse einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots durch einen professionellen Anbieter (Art. 6 Abs. 1 lit. f DSGVO). Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TTDSG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z.B. Device-Fingerprinting) im Sinne des TTDSG umfasst. Die Einwilligung ist jederzeit widerrufbar.",
+        "paragraph3": "Unser Hoster wird Ihre Daten nur insoweit verarbeiten, wie dies zur Erfüllung seiner Leistungspflichten erforderlich ist und unsere Weisungen in Bezug auf diese Daten befolgen.",
+        "providerIntro": "Wir nutzen folgenden Hoster:"
+      },
+      "general": {
+        "title": "3. Allgemeine Hinweise und Pflichtinformationen",
+        "privacyTitle": "Datenschutz",
+        "privacyParagraph1": "Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.",
+        "privacyParagraph2": "Wenn Sie diese Website benutzen, werden verschiedene personenbezogene Daten erhoben. Personenbezogene Daten sind Daten, mit denen Sie persönlich identifiziert werden können. Die vorliegende Datenschutzerklärung erläutert, welche Daten wir erheben und wofür wir sie nutzen. Sie erläutert auch, wie und zu welchem Zweck das geschieht.",
+        "privacyParagraph3": "Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.",
+        "responsibleTitle": "Hinweis zur verantwortlichen Stelle",
+        "responsibleIntro": "Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:",
+        "emailLabel": "E-Mail:",
+        "responsibleDefinition": "Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten (z.B. Namen, E-Mail-Adressen o.Ä.) entscheidet.",
+        "storageDurationTitle": "Speicherdauer",
+        "storageDurationText": "Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe für die Speicherung Ihrer personenbezogenen Daten haben (z.B. steuer- oder handelsrechtliche Aufbewahrungsfristen); im letztgenannten Fall erfolgt die Löschung nach Fortfall dieser Gründe.",
+        "legalBasisTitle": "Allgemeine Hinweise zu den Rechtsgrundlagen der Datenverarbeitung auf dieser Website",
+        "legalBasisText": "Sofern Sie in die Datenverarbeitung eingewilligt haben, verarbeiten wir Ihre personenbezogenen Daten auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO bzw. Art. 9 Abs. 2 lit. a DSGVO, sofern besondere Datenkategorien nach Art. 9 Abs. 1 DSGVO verarbeitet werden. Sind Ihre Daten zur Vertragserfüllung oder zur Durchführung vorvertraglicher Maßnahmen erforderlich, verarbeiten wir Ihre Daten auf Grundlage des Art. 6 Abs. 1 lit. b DSGVO. Des Weiteren verarbeiten wir Ihre Daten, sofern diese zur Erfüllung einer rechtlichen Verpflichtung erforderlich sind auf Grundlage von Art. 6 Abs. 1 lit. c DSGVO. Die Datenverarbeitung kann ferner auf Grundlage unseres berechtigten Interesses nach Art. 6 Abs. 1 lit. f DSGVO erfolgen.",
+        "revocationTitle": "Widerruf Ihrer Einwilligung zur Datenverarbeitung",
+        "revocationText": "Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.",
+        "objectionTitle": "Widerspruchsrecht gegen die Datenerhebung in besonderen Fällen sowie gegen Direktwerbung (Art. 21 DSGVO)",
+        "objectionParagraph1": "Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, haben Sie jederzeit das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, gegen die Verarbeitung Ihrer personenbezogenen Daten Widerspruch einzulegen; dies gilt auch für ein auf diese Bestimmungen gestütztes Profiling. Wenn Sie Widerspruch einlegen, werden wir Ihre betroffenen personenbezogenen Daten nicht mehr verarbeiten, es sei denn, wir können zwingende schutzwürdige Gründe für die Verarbeitung nachweisen, die Ihre Interessen, Rechte und Freiheiten überwiegen oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen (Widerspruch nach Art. 21 Abs. 1 DSGVO).",
+        "objectionParagraph2": "Werden Ihre personenbezogenen Daten verarbeitet, um Direktwerbung zu betreiben, so haben Sie das Recht, jederzeit Widerspruch gegen die Verarbeitung Sie betreffender personenbezogener Daten zum Zwecke derartiger Werbung einzulegen; dies gilt auch für das Profiling, soweit es mit solcher Direktwerbung in Verbindung steht. Wenn Sie widersprechen, werden Ihre personenbezogenen Daten anschließend nicht mehr zum Zwecke der Direktwerbung verwendet (Widerspruch nach Art. 21 Abs. 2 DSGVO).",
+        "complaintTitle": "Beschwerderecht bei der zuständigen Aufsichtsbehörde",
+        "complaintText": "Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres gewöhnlichen Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes zu. Das Beschwerderecht besteht unbeschadet anderweitiger verwaltungsrechtlicher oder gerichtlicher Rechtsbehelfe.",
+        "dataPortabilityTitle": "Recht auf Datenübertragbarkeit",
+        "dataPortabilityText": "Sie haben das Recht, Daten, die wir auf Grundlage Ihrer Einwilligung oder in Erfüllung eines Vertrags automatisiert verarbeiten, an sich oder an einen Dritten in einem gängigen, maschinenlesbaren Format aushändigen zu lassen. Sofern Sie die direkte Übertragung der Daten an einen anderen Verantwortlichen verlangen, erfolgt dies nur, soweit es technisch machbar ist.",
+        "encryptionTitle": "SSL- bzw. TLS-Verschlüsselung",
+        "encryptionText": "Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte, wie zum Beispiel Bestellungen oder Anfragen, die Sie an uns als Seitenbetreiber senden, eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://\" auf „https://\" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile. Wenn die SSL- bzw. TLS-Verschlüsselung aktiviert ist, können die Daten, die Sie an uns übermitteln, nicht von Dritten mitgelesen werden.",
+        "informationDeletionCorrectionTitle": "Auskunft, Löschung und Berichtigung",
+        "informationDeletionCorrectionText": "Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung und ggf. ein Recht auf Berichtigung oder Löschung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene Daten können Sie sich jederzeit an uns wenden.",
+        "restrictionTitle": "Recht auf Einschränkung der Verarbeitung",
+        "restrictionIntro": "Sie haben das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Hierzu können Sie sich jederzeit an uns wenden. Das Recht auf Einschränkung der Verarbeitung besteht in folgenden Fällen:",
+        "restrictionItems": {
+          "accuracy": "Wenn Sie die Richtigkeit Ihrer bei uns gespeicherten personenbezogenen Daten bestreiten, benötigen wir in der Regel Zeit, um dies zu überprüfen. Für die Dauer der Prüfung haben Sie das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen.",
+          "unlawful": "Wenn die Verarbeitung Ihrer personenbezogenen Daten unrechtmäßig geschah/geschieht, können Sie statt der Löschung die Einschränkung der Datenverarbeitung verlangen.",
+          "legalClaims": "Wenn wir Ihre personenbezogenen Daten nicht mehr benötigen, Sie sie jedoch zur Ausübung, Verteidigung oder Geltendmachung von Rechtsansprüchen benötigen, haben Sie das Recht, statt der Löschung die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen.",
+          "objection": "Wenn Sie einen Widerspruch nach Art. 21 Abs. 1 DSGVO eingelegt haben, muss eine Abwägung zwischen Ihren und unseren Interessen vorgenommen werden. Solange noch nicht feststeht, wessen Interessen überwiegen, haben Sie das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen."
+        },
+        "restrictionOutro": "Wenn Sie die Verarbeitung Ihrer personenbezogenen Daten eingeschränkt haben, dürfen diese Daten – von ihrer Speicherung abgesehen – nur mit Ihrer Einwilligung oder zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen oder zum Schutz der Rechte einer anderen natürlichen oder juristischen Person oder aus Gründen eines wichtigen öffentlichen Interesses der Europäischen Union oder eines Mitgliedstaats verarbeitet werden."
+      },
+      "dataCollection": {
+        "title": "4. Datenerfassung auf dieser Website",
+        "cookiesTitle": "Cookies",
+        "cookiesParagraph1": "Unsere Internetseiten verwenden so genannte „Cookies\". Cookies sind kleine Textdateien und richten auf Ihrem Endgerät keinen Schaden an. Sie werden entweder vorübergehend für die Dauer einer Sitzung (Session-Cookies) oder dauerhaft (permanente Cookies) auf Ihrem Endgerät gespeichert. Session-Cookies werden nach Ende Ihres Besuchs automatisch gelöscht. Permanente Cookies bleiben auf Ihrem Endgerät gespeichert, bis Sie diese selbst löschen oder eine automatische Löschung durch Ihren Webbrowser erfolgt.",
+        "cookiesParagraph2": "Teilweise können auch Cookies von Drittunternehmen auf Ihrem Endgerät gespeichert werden, wenn Sie unsere Seite betreten (Third-Party-Cookies). Diese ermöglichen uns oder Ihnen die Nutzung bestimmter Dienstleistungen des Drittunternehmens (z.B. Cookies zur Abwicklung von Zahlungsdienstleistungen).",
+        "cookiesParagraph3": "Cookies haben verschiedene Funktionen. Zahlreiche Cookies sind technisch notwendig, da bestimmte Websitefunktionen ohne diese nicht funktionieren würden (z.B. die Warenkorbfunktion oder die Anzeige von Videos). Andere Cookies dienen dazu, das Nutzerverhalten auszuwerten oder Werbung anzuzeigen.",
+        "cookiesParagraph4": "Cookies, die zur Durchführung des elektronischen Kommunikationsvorgangs, zur Bereitstellung bestimmter, von Ihnen erwünschter Funktionen oder zur Optimierung der Website erforderlich sind (notwendige Cookies), werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, sofern keine andere Rechtsgrundlage angegeben wird. Der Websitebetreiber hat ein berechtigtes Interesse an der Speicherung von notwendigen Cookies zur technisch fehlerfreien und optimierten Bereitstellung seiner Dienste.",
+        "cookiesParagraph5": "Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden und Cookies nur im Einzelfall erlauben, die Annahme von Cookies für bestimmte Fälle oder generell ausschließen sowie das automatische Löschen der Cookies beim Schließen des Browsers aktivieren. Bei der Deaktivierung von Cookies kann die Funktionalität dieser Website eingeschränkt sein.",
+        "serverLogsTitle": "Server-Log-Dateien",
+        "serverLogsIntro": "Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind:",
+        "serverLogItems": {
+          "browser": "Browsertyp und Browserversion",
+          "operatingSystem": "verwendetes Betriebssystem",
+          "referrerUrl": "Referrer URL",
+          "hostName": "Hostname des zugreifenden Rechners",
+          "requestTime": "Uhrzeit der Serveranfrage",
+          "ipAddress": "IP-Adresse"
+        },
+        "serverLogsText": "Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an der technisch fehlerfreien Darstellung und der Optimierung seiner Website – hierzu müssen die Server-Log-Files erfasst werden.",
+        "contactFormTitle": "Kontaktformular",
+        "contactFormParagraph1": "Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.",
+        "contactFormParagraph2": "Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde; die Einwilligung ist jederzeit widerrufbar.",
+        "contactFormParagraph3": "Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt. Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt."
+      },
+      "sourceLabel": "Quelle:"
+    }
+  },
+  "sections": {
+    "advantages": {
+      "label": "Vorteile",
+      "title": "Alle weiteren Funktionen und Vorteile im Überblick.",
+      "description": "Das Projekt ist öffentlich einsehbar und hat als Ziel, den Wasserverbrauch für die Bewässerung zu verringern sowie eine variable Einsatzplanung zu ermöglichen.",
+      "items": {
+        "open": {
+          "label": "Offene Lösung für alle",
+          "description": "Skalierbare Open-Source-Lösung für Kommunen zur Förderung von Weiterentwicklungen und Transparenz"
+        },
+        "routes": {
+          "label": "Optimierte Routen",
+          "description": "Individuelle Einsatzplanung zur effizienteren Bewässerung"
+        },
+        "less": {
+          "label": "Weniger ist mehr",
+          "description": "Gezielte Bewässerung, weniger Wasserverbrauch"
+        }
+      }
+    },
+    "architecture": {
+      "label": "System-Architektur",
+      "title": "Der Datenfluss im Überblick",
+      "description": "Von der Messung am Baum bis zur optimierten Bewässerungsroute – so fließen die Daten durch das Green Ecolution System."
+    },
+    "challenge": {
+      "quote": {
+        "primary": "Städte gießen nach Gefühl.",
+        "highlight": "Nicht nach Bedarf."
+      },
+      "description": "Städtische Grünflächen regulieren das Mikroklima, fördern Biodiversität und stärken den Standortwettbewerb. Doch anhaltende Trockenheit und fehlende Digitalisierung gefährden dieses Gut. Die Bewässerungsplanung vieler Kommunen stützt sich allein auf die Einschätzung einzelner Mitarbeiter, ganz ohne Datengrundlage. Statt bedarfsgerechter Bewässerung wird pauschal gegossen, was Wasser verschwendet und trotzdem nicht alle Bäume erreicht. Nicht optimierte Bewässerungsfahrten verursachen zusätzlich vermeidbare CO₂-Emissionen."
+    },
+    "contact": {
+      "label": "Kontakt",
+      "title": "Lass uns gemeinsam grüner werden",
+      "description": "Hast du Fragen, Feedback oder ein Anliegen? Wir freuen uns über deine Nachricht und melden uns so schnell wie möglich bei dir.",
+      "emailAriaLabel": "Kontaktiere uns gerne per E-Mail",
+      "emailLabel": "Schreib uns"
+    },
+    "dashboardPreview": {
+      "label": "Software",
+      "title": {
+        "firstLine": "Fundierte Handlungsempfehlungen",
+        "secondLine": "zur Bewässerung auf einen Blick"
+      },
+      "description": "Unser System liefert anhand wissenschaftlicher Datenauswertung fundierte Handlungsempfehlungen, zu welchem Zeitpunkt eine Bewässerung notwendig ist. Die Daten werden dahingehend aufbereitet, dass diese einfach zu interpretieren sind und in die Einsatzplanung eingebunden werden können.",
+      "imageAlt": "Green Ecolution Dashboard - Übersicht der Bewässerungsempfehlungen"
+    },
+    "demoInstance": {
+      "label": "Live Demo",
+      "title": "Überzeug dich selbst",
+      "description": "Die öffentlich zugängliche Demo-Instanz zeigt den aktuellen Funktionsumfang: Kartenansicht mit Ampelsystem, Dashboard mit Sensordaten und automatisierte Routenberechnung. Keine Installation nötig, direkt im Browser.",
+      "openDemoAriaLabel": "Demo von Green Ecolution im Browser öffnen",
+      "openDemoLabel": "Demo öffnen",
+      "imageAlt": "Green Ecolution Demo, Dashboard mit Kartenansicht und Sensordaten"
+    },
+    "faq": {
+      "label": "FAQ",
+      "title": "Oft gestellte Fragen zu Green Ecolution",
+      "items": {
+        "behind": {
+          "question": "Wer steckt hinter dem Projekt Green Ecolution?",
+          "schemaAnswer": "Das Projekt \"Green Ecolution\" wurde im Rahmen eines Forschungsprojekts im Masterstudiengang \"Angewandte Informatik\" an der Hochschule Flensburg ins Leben gerufen. Nach dem erfolgreichen Abschluss des Forschungsprojekts wird die Weiterentwicklung des Systems nun von PROGEEK übernommen, in enger Zusammenarbeit mit der Smarten Grenzregion und der Stadt Flensburg.",
+          "answer": {
+            "beforeHs": "Das Projekt \"Green Ecolution\" wurde im Rahmen eines Forschungsprojekts im Masterstudiengang \"Angewandte Informatik\" an der",
+            "beforeProgeek": "ins Leben gerufen. Nach dem erfolgreichen Abschluss des Forschungsprojekts wird die Weiterentwicklung des Systems nun von",
+            "beforeSmarteGrenzregion": "übernommen, in enger Zusammenarbeit mit der",
+            "beforeStadtFlensburg": "und der"
+          }
+        },
+        "value": {
+          "question": "Welchen Mehrwert bietet das Projekt?",
+          "schemaAnswer": "Das Forschungsprojekt \"Green Ecolution\" hat gezeigt, wie digitale Technologien gezielt eingesetzt werden können, um die Bewässerung von Stadtbäumen effizienter, nachhaltiger und ressourcenschonender zu gestalten. Durch den Einsatz moderner Sensorik und intelligenter Datenauswertung wurde eine Grundlage geschaffen, um Wasserverbrauch und Pflegeaufwand deutlich zu reduzieren.",
+          "answer": {
+            "primary": "Das Forschungsprojekt \"Green Ecolution\" hat gezeigt, wie digitale Technologien gezielt eingesetzt werden können, um die Bewässerung von Stadtbäumen effizienter, nachhaltiger und ressourcenschonender zu gestalten. Durch den Einsatz moderner Sensorik und intelligenter Datenauswertung wurde eine Grundlage geschaffen, um Wasserverbrauch und Pflegeaufwand deutlich zu reduzieren.",
+            "secondary": "Die gewonnenen Erkenntnisse und entwickelten Systeme leisten einen wichtigen Beitrag zur nachhaltigen Stadtentwicklung in Flensburg. Sie unterstützen eine datenbasierte Entscheidungsfindung und fördern den verantwortungsvollen Umgang mit natürlichen Ressourcen - zum Nutzen von Umwelt, Stadtverwaltung und Bürger:innen."
+          }
+        },
+        "public": {
+          "question": "Was bedeutet es, dass das Projekt öffentlich zugänglich ist?",
+          "schemaAnswer": "Der Quellcode des Projekts ist in einem öffentlich zugänglichen GitHub-Repository verfügbar. Dadurch kann der aktuelle Entwicklungsstand jederzeit eingesehen werden, was Transparenz schafft und interessierten Personen ermöglicht, die Weiterentwicklung nachzuvollziehen oder sich aktiv einzubringen.",
+          "answer": {
+            "beforeGithub": "Der Quellcode des Projekts ist in einem öffentlich zugänglichen",
+            "afterGithub": "verfügbar. Dadurch kann der aktuelle Entwicklungsstand jederzeit eingesehen werden, was Transparenz schafft und interessierten Personen ermöglicht, die Weiterentwicklung nachzuvollziehen oder sich aktiv einzubringen.",
+            "beforeOpenData": "Perspektivisch ist zudem eine Anbindung an das",
+            "afterOpenData": "des Landes Schleswig-Holstein vorgesehen, um zukünftig ausgewählte Sensordaten öffentlich zugänglich zu machen. Diese Erweiterung befindet sich derzeit in Planung."
+          }
+        },
+        "sensors": {
+          "question": "Welche Sensoren werden eingesetzt?",
+          "schemaAnswer": "Im Rahmen des Forschungsprojekts wurden Watermark-Sensoren zur Messung der Bodenwasserspannung und SMT100-Sensoren zur Messung der Bodenfeuchte und -temperatur eingesetzt. Diese Sensoren bildeten die Grundlage für die Entwicklung und Erprobung des Systems.",
+          "answer": {
+            "intro": "Im Rahmen des Forschungsprojekts wurden folgende Sensoren eingesetzt, um präzise Daten zur Bodenfeuchte und -beschaffenheit zu erfassen. Diese Sensoren bildeten die Grundlage für die Entwicklung und Erprobung des Systems.",
+            "watermarkPrefix": "Zur Messung der Bodenwasserspannung:",
+            "smt100Prefix": "Zur Messung der Bodenfeuchte und -temperatur:",
+            "outlook": "In zukünftigen Entwicklungsphasen kann die Sensorik je nach Anforderungen und technologischem Fortschritt weiter angepasst oder erweitert werden."
+          }
+        },
+        "progress": {
+          "question": "Wie ist der aktuelle Fortschritt des Projekts?",
+          "schemaAnswer": "Das Forschungsprojekt „Green Ecolution\" wurde im Rahmen des Masterstudiengangs „Angewandte Informatik\" an der Hochschule Flensburg erfolgreich abgeschlossen. Im Oktober 2025 erhielt das Projekt im Rahmen des DigitalHub Call for Concepts eine Finanzierung. Aktuell arbeiten PROGEEK, die Stadt Flensburg und die Smarte Grenzregion gemeinsam an der Weiterentwicklung.",
+          "answer": {
+            "beforeHs": "Das Forschungsprojekt „Green Ecolution“ wurde im Rahmen des Masterstudiengangs „Angewandte Informatik“ an der",
+            "afterHs": "erfolgreich abgeschlossen. Aufbauend auf den im Projekt erzielten Ergebnissen wird die Weiterentwicklung nun fortgesetzt.",
+            "beforeDigitalHub": "Im Oktober 2025 erhielt das Projekt im Rahmen des",
+            "beforeOpenSourceProgram": "des Landesprogramms",
+            "afterDigitalHub": "eine Finanzierung. Dadurch kann das System weiter ausgebaut und praxisnah erprobt werden.",
+            "beforeProgeek": "Aktuell arbeiten",
+            "beforeStadtFlensburg": "die",
+            "beforeSmarteGrenzregion": "und die",
+            "afterSmarteGrenzregion": "gemeinsam an der Weiterentwicklung und Integration des Systems, um die gewonnenen Erkenntnisse nachhaltig in den kommunalen Alltag zu überführen."
+          }
+        }
+      }
+    },
+    "features": {
+      "label": "Features",
+      "title": "Green Ecolution im Überblick",
+      "description": "Von der Sensorerfassung über die intelligente Routenplanung bis zur detaillierten Auswertung - alle Funktionen für ein effizientes und nachhaltiges Grünflächenmanagement",
+      "items": {
+        "dashboard": {
+          "label": "Echtzeit-Dashboard",
+          "description": "Alle wichtigen KPIs auf einen Blick: Bodenfeuchtewerte, anstehende Touren, Teamverfügbarkeit und Fahrzeugstatus in einem zentralen Dashboard."
+        },
+        "grouping": {
+          "label": "Intelligente Gruppierung",
+          "description": "Fasse Bäume zu Bewässerungs­einheiten zusammen. Automatische Berechnung des Wasserbedarfs pro Cluster."
+        },
+        "fleet": {
+          "label": "Fleet Management",
+          "description": "Verwalte Transporter und Anhänger mit Wasserkapazitäten. Automatische Nachfüllstopps in der Routenplanung."
+        },
+        "tourPlanning": {
+          "label": "Tour-Planung",
+          "description": "Optimierte Bewässerungspläne mit Echtzeit-Status: Von 'geplant' über 'aktiv' bis 'abgeschlossen'."
+        },
+        "team": {
+          "label": "Teamverwaltung",
+          "description": "Verwalte Fahrer mit Führerscheinklassen und Verfügbarkeit. Optimiere die Einsatzplanung."
+        },
+        "analysis": {
+          "label": "Nachanalyse",
+          "description": "Dokumentiere den tatsächlichen Wasserverbrauch pro Cluster und Tour. Analysiere Trends und optimiere zukünftige Planungen datenbasiert."
+        }
+      }
+    },
+    "furtherLinks": {
+      "label": "Ressourcen",
+      "title": "Weiterführende Links & Erwähnungen",
+      "items": {
+        "flensburgSoftware": {
+          "label": "Software für die Stadt Flensburg",
+          "subLabel": "Dies ist die Software, die für die Stadt Flensburg entwickelt und aufgesetzt wurde. Diese Software wird primär vom Technischen Betriebszentrum Flensburg genutzt."
+        },
+        "githubOrganization": {
+          "label": "Organisation auf GitHub",
+          "subLabel": "Dort finden Sie alle Code-Repositories, die mit dem Projekt in Verbindung stehen, wie z. B. Backend und Frontend der Software"
+        },
+        "hsFlensburgBlog": {
+          "label": "Blog-Beitrag der HS Flensburg",
+          "subLabel": "Auch auf der Website der HS Flensburg wurde ein Beitrag zum Forschungsprojekt veröffentlicht."
+        },
+        "hsFlensburgInstagram": {
+          "label": "Instagram-Beitrag der HS Flensburg",
+          "subLabel": "Nicht nur auf der Website, sondern auch auf Instagram wurde Green Ecolution erwähnt."
+        },
+        "digitalHub": {
+          "label": "Teil des DigitalHub.SH 2025",
+          "subLabel": "Green Ecolution wurde als eines der Open-Source-Projekte im Rahmen des DigitalHub.SH 2025 vorgestellt und finanziert."
+        },
+        "flensburgPress": {
+          "label": "Pressemitteilung der Stadt Flensburg",
+          "subLabel": "Auch die Stadt Flensburg berichtete über Green Ecolution und die Bedeutung des Projekts für ein nachhaltiges Stadtmanagement."
+        },
+        "liveDemo": {
+          "label": "Live Demo",
+          "subLabel": "Die öffentlich zugängliche Demo-Instanz zeigt den aktuellen Funktionsumfang: Kartenansicht mit Ampelsystem, Dashboard mit Sensordaten und automatisierte Routenberechnung."
+        }
+      }
+    },
+    "hero": {
+      "defaultLabel": "Projekt"
+    },
+    "introduction": {
+      "label": "Überblick",
+      "title": "Was beinhaltet smartes Grünflächenmanagement?",
+      "description": "Smartes Grünflächenmanagement umfasst die effiziente Überwachung und Bewässerung von Vegetation auf Grünflächen durch den Einsatz moderner Technologien wie Sensoren und Datenanalyse. Dadurch wird eine präzise Steuerung der Pflegemaßnahmen ermöglicht, die angepasst sind an die spezifischen Standortbedingungen.",
+      "carouselAriaLabel": "Fakten zum Grünflächenmanagement",
+      "facts": {
+        "sensor": {
+          "label": "Entwicklung einer Sensorlösung",
+          "description": "Daten zur Bodenfeuchte werden mithilfe von in unterschiedlicher Tiefe platzierten Sensoren geliefert."
+        },
+        "evaluation": {
+          "label": "Auswertung der Messdaten",
+          "description": "Auswertung der durch Sensoren übermittelten Daten für eine bedarfsgerechte Bewässerung von Jungbäumen."
+        },
+        "youngTrees": {
+          "label": "Augenmerk auf Jungbäume",
+          "description": "Jungbäume sind besonders hitzeanfällig und daher äußerst schutzbedürftig. Aus diesem Grund werden Bäume in deren ersten drei Standjahren überwacht."
+        },
+        "locations": {
+          "label": "Monitoring mehrerer Standorte",
+          "description": "Unter Verwendung des LoRaWan-Netzes können verschiedene Standorte überwacht und weitere einfach eingebunden werden."
+        }
+      }
+    },
+    "latestRelease": {
+      "label": "Releases",
+      "title": "Was gibt's Neues?",
+      "description": "Wir entwickeln Green Ecolution kontinuierlich weiter. Schau dir die neuesten Funktionen, Verbesserungen und Bugfixes an – und erfahre, woran wir gerade arbeiten.",
+      "allReleasesAriaLabel": "Alle Releases ansehen",
+      "allReleasesLabel": "Alle Releases",
+      "currentLabel": "Aktuell",
+      "detailsLabel": "Details ansehen"
+    },
+    "openSourceGovernance": {
+      "label": "Governance",
+      "title": "Open Source als Prinzip",
+      "description": "Transparenz, Unabhängigkeit und Nachnutzbarkeit: die Grundpfeiler unserer Open-Source-Strategie."
+    },
+    "process": {
+      "label": "Prozess",
+      "title": "Messen. Verstehen. Handeln.",
+      "description": "Von der Bodenfeuchte zur optimierten Bewässerungsroute, in einem durchgängigen digitalen Workflow.",
+      "stepDetails": {
+        "sensor": {
+          "depths": "Bodenfeuchtesensoren in 30, 60 und 90 cm Tiefe",
+          "measurements": "Erfassung von Bodenfeuchte, Temperatur und Bodenwasserspannung",
+          "transmission": "Energieeffiziente Übertragung über LoRaWAN",
+          "installation": "Bodenbündige Installation, kein Einfluss auf Pflegearbeiten"
+        },
+        "dashboard": {
+          "trafficLight": "Ampelsystem zeigt Bewässerungsbedarf auf einer Karte",
+          "prioritization": "Priorisierung nach Dringlichkeit bei begrenzten Kapazitäten",
+          "timelines": "Zeitverläufe für Bodenfeuchte, Temperatur und Wasserspannung",
+          "kpis": "Echtzeit-Dashboard mit allen relevanten KPIs"
+        },
+        "routing": {
+          "planning": "Automatisierte Einsatz- und Routenplanung",
+          "capacity": "Berücksichtigung von Wasserkapazität und Fahrzeuggröße",
+          "restrictions": "Straßen- und Zufahrtsrestriktionen einbezogen",
+          "export": "Export der Routen auf Navigationsgeräte"
+        }
+      }
+    },
+    "processCompact": {
+      "label": "Lösung",
+      "title": "Der durchgängige Workflow",
+      "moreAriaLabel": "Mehr über den Prozess erfahren",
+      "moreLabel": "Mehr erfahren"
+    },
+    "sensorProbe": {
+      "label": "Hardware",
+      "title": "Die Bodensonde",
+      "description": "Konzipiert für den Einsatz im öffentlichen Raum. Sensoren in drei Tiefen (30, 60 und 90 cm) bilden das gesamte Wurzelprofil eines Baumes ab, von den oberflächennahen Feinwurzeln bis zu den tieferen Hauptwurzeln. So lässt sich erkennen, ob Wasser tatsächlich im Wurzelbereich ankommt oder nur die Oberfläche benetzt wird. Die Installation erfolgt bodenbündig mit handelsüblichen Erdbohrern. Pflegearbeiten wie Mähen werden nicht beeinträchtigt.",
+      "illustrationAriaLabel": "Schematische Darstellung einer Bodensonde in drei Tiefen",
+      "depths": {
+        "fineRoots": "Feinwurzeln",
+        "mainRoots": "Hauptwurzeln",
+        "deepRoots": "Tiefenwurzeln"
+      }
+    },
+    "stakeholder": {
+      "label": "Partner & Beteiligte",
+      "title": "Wer sind die Beteiligten?",
+      "description": "In Zusammenarbeit zwischen PROGEEK, der Smarten-Grenzregion, der Stadt Flensburg und der Hochschule Flensburg soll eine bedarfsgerechte und datenbasierte Bewässerung für Bäume aufgebaut werden.",
+      "carouselAriaLabel": "Beteiligten am Projekt",
+      "items": {
+        "progeek": {
+          "role": "Technischer Partner",
+          "description": "PROGEEK steht für innovative IT-Lösungen, individuelle Softwareentwicklung und digitale Beratung – mit dem Ziel, Unternehmen auf ihrem Weg in die Zukunft der Digitalisierung zu begleiten."
+        },
+        "smarteGrenzregion": {
+          "role": "Projektkoordinator",
+          "description": "Das Projekt „Smarte Grenzregion zwischen den Meeren\" will die digitale Transformation in der Region vorantreiben, um eine integrierte und nachhaltige Stadt- und Regionalentwicklung zu gestalten und das Gemeinwohl zu stärken."
+        },
+        "hochschuleFlensburg": {
+          "role": "Initiator",
+          "description": "Die Hochschule Flensburg bietet praxisnahe Studiengänge mit Fokus auf angewandte Forschung und enge Zusammenarbeit mit der Industrie an."
+        },
+        "tbzFlensburg": {
+          "role": "Anwendungspartner",
+          "description": "Das Technische Betriebszentrum (TBZ) ist der zentrale Dienstleister für die Stadt Flensburg und u.a. für die Pflege öffentlicher Grünflächen, Straßenreinigung sowie Abfallwirtschaft zuständig."
+        }
+      }
+    },
+    "videos": {
+      "label": "Videos",
+      "title": "Lerne das Projekt per Video kennen",
+      "description": "Im Rahmen des Forschungsprojekts wurden nicht nur eine Sensorlösung und eine Software entwickelt, sondern auch Videos produziert. Diese Videos veranschaulichen anschaulich die Inhalte des Projekts, einschließlich der Zielsetzung, der Problemstellung und der von uns entwickelten Lösung.",
+      "cards": {
+        "short": {
+          "title": "Kurzvideo",
+          "description": "In diesem kurzen Video geben wir dir einen ersten Einblick in unser Projekt. Erfahre in wenigen Minuten, worum es geht und was du von den kommenden Inhalten erwarten kannst. Schau dir das Video an, um einen schnellen Überblick zu bekommen!",
+          "duration": "ca. 30 Sekunden"
+        },
+        "long": {
+          "title": "Langvideo",
+          "description": "In diesem ausführlichen Video tauchen wir tiefer in unser Projekt ein. Hier erläutern wir die wichtigsten Details, Hintergründe und die nächsten Schritte. Dieses Video bietet dir umfassende Informationen und hilft dir, das Projekt besser zu verstehen. Viel Spaß beim Anschauen und Entdecken!",
+          "duration": "ca. 4 Minuten"
+        }
+      }
+    },
+    "visionRoadmap": {
+      "label": "Vision",
+      "title": "Für jede Kommune gemacht",
+      "description": {
+        "primary": "Die Plattform ist bewusst so gestaltet, dass sie in jeder Kommune eingesetzt werden kann. Kartenbereiche, Organisationsstrukturen und Bewässerungsregionen sind frei konfigurierbar.",
+        "secondary": "Es werden ausschließlich offene Standards und Open-Source-Komponenten verwendet. Cloud-native Architektur mit Kubernetes ermöglicht einen mandantenfähigen, hochverfügbaren Betrieb. Weitere Kommunen können leicht hinzugefügt werden."
+      },
+      "roadmapLabel": "Roadmap",
+      "futureAriaLabel": "Weitere Ideen in Planung",
+      "futureLabel": "und vieles mehr in Planung",
+      "status": {
+        "completed": "Abgeschlossen",
+        "inProgress": "In Arbeit",
+        "planned": "Geplant"
+      }
+    }
+  }
+}

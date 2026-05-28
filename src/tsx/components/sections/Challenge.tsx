@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { challengeFigures } from '../../../data/challengeFigures'
 
@@ -27,6 +28,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function Challenge() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -73,9 +75,11 @@ function Challenge() {
               style={{ transitionDelay: reducedMotion ? '0ms' : '150ms' }}
             >
               <p className="font-lato text-2xl font-light italic text-white leading-snug max-w-3xl md:text-3xl lg:text-4xl xl:text-5xl">
-                Städte gießen nach Gefühl.
+                {t('sections.challenge.quote.primary')}
                 <br />
-                <span className="text-green-light-900">Nicht nach Bedarf.</span>
+                <span className="text-green-light-900">
+                  {t('sections.challenge.quote.highlight')}
+                </span>
               </p>
             </blockquote>
           </div>
@@ -95,13 +99,7 @@ function Challenge() {
             }`}
             style={{ transitionDelay: reducedMotion ? '0ms' : '450ms' }}
           >
-            Städtische Grünflächen regulieren das Mikroklima, fördern Biodiversität und stärken den
-            Standortwettbewerb. Doch anhaltende Trockenheit und fehlende Digitalisierung gefährden
-            dieses Gut. Die Bewässerungsplanung vieler Kommunen stützt sich allein auf die
-            Einschätzung einzelner Mitarbeiter, ganz ohne Datengrundlage. Statt bedarfsgerechter
-            Bewässerung wird pauschal gegossen, was Wasser verschwendet und trotzdem nicht alle
-            Bäume erreicht. Nicht optimierte Bewässerungsfahrten verursachen zusätzlich vermeidbare
-            CO₂-Emissionen.
+            {t('sections.challenge.description')}
           </p>
 
           {/* Cost Figures Grid */}
@@ -120,13 +118,13 @@ function Challenge() {
               >
                 <div className="mb-3">
                   <span className="font-lato text-3xl font-bold text-white tracking-tight lg:text-4xl xl:text-5xl">
-                    {figure.value}
+                    {t(figure.value)}
                   </span>
                 </div>
                 <span className="inline-block text-xs font-semibold tracking-widest uppercase text-green-light-900 mb-3">
-                  {figure.unit}
+                  {t(figure.unit)}
                 </span>
-                <p className="text-white/60 text-sm leading-relaxed">{figure.description}</p>
+                <p className="text-white/60 text-sm leading-relaxed">{t(figure.description)}</p>
               </article>
             ))}
           </div>

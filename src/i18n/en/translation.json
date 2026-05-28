@@ -1,0 +1,833 @@
+{
+  "navigation": {
+    "ariaLabel": "Main navigation",
+    "mobileTitle": "Main navigation",
+    "items": {
+      "project": "The Project",
+      "releases": "Releases",
+      "contact": "Contact",
+      "github": "GitHub"
+    },
+    "demo": {
+      "ariaLabel": "Demo",
+      "label": "Try it now"
+    },
+    "legal": {
+      "imprint": "Legal Notice",
+      "privacy": "Privacy Policy"
+    }
+  },
+  "welcomeCard": {
+    "titlePrefix": "Welcome to",
+    "titleHighlight": "Green Ecolution",
+    "subtitle": "Intelligent Green Space Management",
+    "description": "Learn how we optimize the irrigation of urban green spaces using smart sensors and data-driven analysis — for healthier trees, flower beds, and parks with efficient resource usage.",
+    "button": "Discover now"
+  },
+  "contactHero": {
+    "intro": "We look forward to hearing from you",
+    "cards": {
+      "email": {
+        "title": "Write to us",
+        "description": "Do you have questions about the project or would you like to learn more? We will get back to you shortly.",
+        "cta": "Send Email"
+      },
+      "github": {
+        "title": "Open Source",
+        "description": "Explore our code, contribute to development, or use Green Ecolution for your municipality.",
+        "cta": "View on GitHub"
+      }
+    }
+  },
+  "homepageHero": {
+    "label": "Smart Irrigation",
+    "headline": {
+      "start": "We enable",
+      "highlight": "smart irrigation",
+      "end": "for green spaces!"
+    },
+    "motto": "Measure. Understand. Act.",
+    "description": "Using sensor-based monitoring of green spaces, data is transmitted and analyzed through the LoRaWAN network, enabling actionable irrigation recommendations.",
+    "button": "Play animation"
+  },
+  "homepageHeroTrees": {
+    "adoptTreeAriaLabel": "Adopt a tree"
+  },
+  "homepageOverlay": {
+    "popups": {
+      "irrigationStatus": {
+        "label": "Measuring irrigation status",
+        "description": "Soil moisture is measured at different depths depending on vegetation type to gather data across multiple soil layers."
+      },
+      "dataTransmission": {
+        "label": "Data transmission",
+        "description": "Sensor data is transmitted via the public LoRaWAN network to a backend for further processing. LoRaWAN requires little energy and provides long range coverage, resulting in large area coverage and low maintenance effort."
+      },
+      "recommendations": {
+        "label": "Recommendations for action",
+        "description": "The transmitted sensor data is analyzed using scientific and mathematical methodologies. A dashboard visually displays whether irrigation will be necessary in the near future.",
+        "link": "View the benefits"
+      }
+    },
+    "button": {
+      "next": "Next",
+      "discover": "Discover"
+    },
+    "closeAriaLabel": "Close popup"
+  },
+  "adoptTreeModal": {
+    "ariaLabel": "Adoption certificate for {{fullName}}",
+    "certificateTitle": "Certificate of Adoption",
+    "certificateNumber": "No. {{number}}",
+    "fullName": "{{name}} the {{species}}",
+    "location": "is waiting for you in Flensburg",
+    "didYouKnow": "Did you know?",
+    "quote": "“Thank you for thinking of me! Projects like Green Ecolution finally give city trees like me the attention we deserve.”",
+    "since": "— {{name}}, in Flensburg since {{year}}",
+    "button": "Thank you, {{name}}! 🌳"
+  },
+  "adoptTreeData": {
+    "species": {
+      "birch": "Birch",
+      "spruce": "Spruce",
+      "oak": "Oak",
+      "beech": "Beech",
+      "chestnut": "Chestnut",
+      "linden": "Linden",
+      "maple": "Maple",
+      "ash": "Ash",
+      "elm": "Elm",
+      "plane": "Plane Tree",
+      "fir": "Fir",
+      "willow": "Willow",
+      "robinia": "Robinia",
+      "alder": "Alder",
+      "poplar": "Poplar"
+    },
+    "funFacts": {
+      "cooling": "A large urban tree can evaporate up to 400 liters of water per day and cool its surroundings by up to 3°C.",
+      "oxygen": "A single beech tree produces enough oxygen for 10 people per year.",
+      "dust": "Urban trees filter a significant portion of fine dust from the air in their immediate surroundings.",
+      "roots": "The roots of a street tree often extend over one and a half times the size of its crown area.",
+      "co2": "A 100-year-old tree has stored around 5 tons of CO₂ during its lifetime.",
+      "woodWideWeb": "Trees communicate through underground fungal networks — the so-called “Wood Wide Web”.",
+      "lifetime": "Street trees live an average of only 60 years — in rural areas they live three times longer.",
+      "noise": "Dense tree populations can reduce noise levels by up to 10 decibels.",
+      "water": "In hot summers, an urban tree may require up to 200 liters of additional water per week."
+    }
+  },
+  "releaseCard": {
+    "moreHighlights": "+{{count}} more"
+  },
+  "releaseTimeline": {
+    "empty": "No release notes available yet."
+  },
+  "components": {
+    "backToTop": {
+      "ariaLabel": "Back to top"
+    },
+    "errorFallback": {
+      "title": "Something went wrong",
+      "description": "An unexpected error occurred. Please try again or return to the homepage.",
+      "retryLabel": "Try again",
+      "homeLabel": "Back to homepage"
+    }
+  },
+  "helper": {
+    "sliderTranslations": {
+      "prev": "Show previous item",
+      "next": "Show next item",
+      "first": "Show first item",
+      "last": "Show last item",
+      "slideX": "Go to page %s",
+      "pageX": "Go to page %s",
+      "carousel": "Carousel",
+      "select": "Item pagination",
+      "slide": "Carousel item",
+      "slideLabel": "%s of %s"
+    }
+  },
+  "data": {
+    "processSteps": {
+      "installSensors": {
+        "label": "Install sensors",
+        "shortName": "Installation",
+        "description": "Soil moisture sensors are attached to selected trees - quickly, easily, and with low maintenance."
+      },
+      "collectRealtimeData": {
+        "label": "Collect real-time data",
+        "shortName": "Data",
+        "description": "The sensors continuously measure soil moisture and automatically transmit the values to the system."
+      },
+      "detectWateringNeed": {
+        "label": "Detect irrigation needs",
+        "shortName": "Analysis",
+        "description": "The dashboard shows you at a glance which trees need water, prioritized by urgency."
+      },
+      "planOptimizedRoutes": {
+        "label": "Plan optimized routes",
+        "shortName": "Planning",
+        "description": "Green Ecolution calculates the most efficient route for your team - less driving time, more irrigation."
+      },
+      "waterAndEvaluate": {
+        "label": "Irrigate and evaluate",
+        "shortName": "Execution",
+        "description": "Your team follows the optimized route. Afterwards, you can see exactly how much water was used and where."
+      }
+    },
+    "governancePillars": {
+      "license": {
+        "category": "License",
+        "title": "AGPL-3.0-only",
+        "description": "Licensed under the AGPL. Funded as part of the \"Open Innovation\" state program by DigitalHub.SH Schleswig-Holstein."
+      },
+      "sovereignty": {
+        "category": "Sovereignty",
+        "title": "Digital Sovereignty",
+        "description": "No dependency on proprietary platforms. Municipalities retain control over their data and infrastructure. No vendor lock-in."
+      },
+      "modularity": {
+        "category": "Modularity",
+        "title": "Plugin System",
+        "description": "Modular extensions for municipality-specific adaptations without changing the core software. Import plugins for tree registers, CSV, and databases."
+      },
+      "integration": {
+        "category": "Integration",
+        "title": "API-first",
+        "description": "Open interfaces for integration into municipal IT landscapes. Connectivity to IoT hubs and open data portals."
+      },
+      "community": {
+        "category": "Community",
+        "title": "Reuse & Community",
+        "description": "Source code and documentation are publicly available on GitHub. Other municipalities can reuse and adapt the solution."
+      },
+      "efficiency": {
+        "category": "Economic Efficiency",
+        "title": "Cost Efficiency",
+        "description": "No license fees. The business model is based on services: hosting, customization, and sensor distribution. Regional value creation in Schleswig-Holstein."
+      }
+    },
+    "challengeFigures": {
+      "water": {
+        "value": "50,000",
+        "unit": "liters / year",
+        "description": "of water are applied annually per medium-sized municipality, without a data basis and without needs-based control."
+      },
+      "tree": {
+        "value": "€1,700",
+        "unit": "per tree",
+        "description": "is the cost of a single street tree. One avoidable total loss due to missing needs-based irrigation can finance years of sensor operation."
+      },
+      "bed": {
+        "value": "up to €60,000",
+        "unit": "per bed",
+        "description": "is what a complete street planting bed can cost, including civil engineering, substrate, and infrastructure."
+      }
+    },
+    "architectureSteps": {
+      "sensor": {
+        "label": "Sensor",
+        "description": "Measures soil moisture at the tree"
+      },
+      "gateway": {
+        "label": "Gateway",
+        "description": "LoRaWAN transmission"
+      },
+      "backend": {
+        "label": "Backend",
+        "description": "Data processing & analysis"
+      },
+      "dashboard": {
+        "label": "Dashboard",
+        "description": "Visualization & route planning"
+      }
+    },
+    "sensorSpecs": {
+      "specs": {
+        "depths": "Measurement depths",
+        "network": "Radio network",
+        "battery": "Years of battery life"
+      },
+      "features": {
+        "soilMoisture": {
+          "label": "Soil moisture",
+          "description": "Volumetric measurement of soil moisture at multiple depths"
+        },
+        "temperature": {
+          "label": "Temperature",
+          "description": "Recording soil temperature for precise irrigation recommendations"
+        },
+        "waterTension": {
+          "label": "Soil water tension",
+          "description": "Measuring suction tension to determine water availability"
+        }
+      }
+    },
+    "roadmapItems": {
+      "mobileApp": {
+        "title": "Mobile app with QR scan",
+        "description": "Sensor setup via QR code and GPS directly on site at the tree"
+      },
+      "sensorFirmware": {
+        "title": "Custom sensor firmware",
+        "description": "Fully self-developed firmware for maximum control and adaptability"
+      },
+      "roles": {
+        "title": "User and role concept",
+        "description": "Fine-grained rights management for employees, service providers, and partner municipalities"
+      },
+      "openData": {
+        "title": "Open data export",
+        "description": "Connection to the open data portal of the state of Schleswig-Holstein"
+      },
+      "greenSpaceTypes": {
+        "title": "Additional green space types",
+        "description": "Expansion beyond trees to flower beds, perennials, and parks"
+      }
+    },
+    "workflowSteps": {
+      "measure": {
+        "category": "Collect",
+        "title": "Measure",
+        "description": "Soil moisture sensors record parameters such as soil moisture, temperature, and soil water tension at multiple depths (30/60/90 cm). The data is transmitted energy-efficiently via LoRaWAN."
+      },
+      "understand": {
+        "category": "Analyze",
+        "title": "Understand",
+        "description": "A traffic light system shows the current irrigation need on a map. Employees can see at a glance which green spaces need water. Timelines enable detailed analysis."
+      },
+      "act": {
+        "category": "Execute",
+        "title": "Act",
+        "description": "Automated deployment and route planning creates optimized irrigation tours while taking water capacity, vehicle size, and road restrictions into account."
+      }
+    }
+  },
+  "layout": {
+    "footer": {
+      "homeAriaLabel": "Navigate to homepage",
+      "logoAlt": "Green Ecolution logo",
+      "description": "Green Ecolution is a digital system for needs-based, resource-efficient irrigation of urban trees, contributing to sustainable and climate-resilient urban development.",
+      "contactAriaLabel": "Feel free to contact us by email",
+      "contactLabel": "Contact",
+      "githubAriaLabel": "Visit us on GitHub",
+      "metaNavigationAriaLabel": "Meta navigation",
+      "legal": {
+        "imprint": "Legal Notice",
+        "privacy": "Privacy Policy"
+      }
+    },
+    "header": {
+      "skipToContent": "Skip to main content",
+      "homeAriaLabel": "Navigate to homepage",
+      "navigationToggleAriaLabel": "Open main navigation"
+    }
+  },
+  "pages": {
+    "legalLabel": "Legal",
+    "breadcrumbs": {
+      "home": "Homepage",
+      "project": "Project",
+      "contact": "Contact",
+      "impressum": "Legal Notice",
+      "datenschutz": "Privacy Policy"
+    },
+    "home": {
+      "documentTitle": "Homepage | Green Ecolution | Smart Green Space Management"
+    },
+    "project": {
+      "documentTitle": "Project | Green Ecolution | Smart Green Space Management",
+      "hero": {
+        "headline": "Smart green space management for livable cities",
+        "description": "Green Ecolution is an open source solution for efficiently irrigating urban trees. Our software combines sensor data with intelligent route optimization, enabling targeted, resource-efficient deployment planning. Developed in collaboration with the City of Flensburg - soon also available for your municipality."
+      }
+    },
+    "contact": {
+      "documentTitle": "Contact | Green Ecolution | Smart Green Space Management",
+      "label": "Contact",
+      "hero": {
+        "headline": "Let's get in touch",
+        "description": "Do you have questions about the project, want to connect your municipality, or contribute to development? We welcome every message and will get back to you shortly."
+      }
+    },
+    "notFound": {
+      "title": "The page could not be found.",
+      "description": "The requested page cannot be reached because it either does not exist or an error occurred. Error code: 404",
+      "homeAriaLabel": "To homepage",
+      "homeLabel": "To homepage"
+    },
+    "releases": {
+      "documentTitle": "Releases | Green Ecolution | Smart Green Space Management",
+      "label": "Releases",
+      "title": "Release Notes",
+      "description": "Discover the latest features, improvements, and bug fixes - we are continuously working to make Green Ecolution even better.",
+      "latestLabel": "Latest release",
+      "newLabel": "New",
+      "detailsLabel": "View details",
+      "olderLabel": "Older releases"
+    },
+    "releaseDetail": {
+      "documentTitle": "v{{version}} - {{title}} | Green Ecolution",
+      "backAriaLabel": "Back to all releases",
+      "backLabel": "All releases",
+      "label": "Release Notes",
+      "currentLabel": "Current",
+      "releaseLinkLabel": "Release",
+      "sourceLinkLabel": "Source",
+      "changelogTitle": "# Changelog for v{{version}}",
+      "navigationAriaLabel": "Release navigation",
+      "newerVersionLabel": "Newer version",
+      "olderVersionLabel": "Older version",
+      "feedbackText": "Found a bug or have feedback on this release?",
+      "issueLabel": "Create issue ->"
+    },
+    "impressum": {
+      "documentTitle": "Legal Notice | Green Ecolution | Smart Green Space Management",
+      "hero": {
+        "headline": "Legal Notice",
+        "description": "Information pursuant to Section 5 TMG"
+      },
+      "contact": {
+        "title": "Contact",
+        "phoneLabel": "Phone:",
+        "emailLabel": "Email:"
+      },
+      "commercialRegister": {
+        "title": "Commercial Register",
+        "registerCourtLabel": "Register court:",
+        "registerCourtValue": "Local Court of Flensburg",
+        "registerNumberLabel": "Registration number:",
+        "taxNumberLabel": "Tax number:",
+        "vatIdLabel": "VAT ID:",
+        "managingDirectorsLabel": "Managing directors:"
+      },
+      "contentLiability": {
+        "title": "Liability for Content",
+        "paragraph1": "As a service provider, we are responsible for our own content on these pages in accordance with Section 7 para. 1 TMG and general law. However, pursuant to Sections 8 to 10 TMG, as a service provider we are not obligated to monitor transmitted or stored third-party information or to investigate circumstances indicating unlawful activity.",
+        "paragraph2": "Obligations to remove or block the use of information under general law remain unaffected. Liability in this regard is only possible from the point in time at which we become aware of a specific legal violation. If we become aware of corresponding legal violations, we will remove this content immediately."
+      },
+      "linkLiability": {
+        "title": "Liability for Links",
+        "paragraph1": "Our offering contains links to external third-party websites over whose content we have no influence. Therefore, we cannot assume any liability for this external content. The respective provider or operator of the linked pages is always responsible for their content.",
+        "paragraph2": "The linked pages were checked for possible legal violations at the time of linking. Illegal content was not apparent at the time of linking. However, permanent monitoring of the linked pages' content is not reasonable without specific indications of a legal violation. If we become aware of legal violations, we will remove such links immediately."
+      },
+      "copyright": {
+        "title": "Copyright",
+        "paragraph1": "The content and works created by the site operators on these pages are subject to German copyright law. Reproduction, editing, distribution, and any form of exploitation outside the limits of copyright require the written consent of the respective author or creator.",
+        "paragraph2": "Downloads and copies of this site are permitted for private, non-commercial use only. Where content on this site was not created by the operator, third-party copyrights are respected. In particular, third-party content is identified as such."
+      }
+    },
+    "datenschutz": {
+      "documentTitle": "Privacy Policy | Green Ecolution | Smart Green Space Management",
+      "hero": {
+        "headline": "Privacy Policy",
+        "description": "Information on how your personal data is handled"
+      },
+      "overview": {
+        "title": "1. Privacy at a Glance",
+        "generalNotesTitle": "General information",
+        "generalNotesText": "The following information provides a simple overview of what happens to your personal data when you visit this website. Personal data is any data with which you can be personally identified. Detailed information on data protection can be found in our privacy policy listed below this text.",
+        "dataCollectionTitle": "Data collection on this website",
+        "responsibleQuestion": "Who is responsible for data collection on this website?",
+        "responsibleAnswer": "Data processing on this website is carried out by the website operator. You can find the operator's contact details in the section \"Notice concerning the responsible party\" in this privacy policy.",
+        "howCollectQuestion": "How do we collect your data?",
+        "howCollectAnswer": "Your data is collected when you provide it to us. This may include data that you enter into a contact form. Other data is collected automatically or with your consent by our IT systems when you visit the website. This mainly includes technical data (e.g. internet browser, operating system, or time the page was accessed). This data is collected automatically as soon as you enter this website.",
+        "dataUseQuestion": "What do we use your data for?",
+        "dataUseAnswer": "Some data is collected to ensure error-free provision of the website. Other data may be used to analyze your user behavior.",
+        "rightsQuestion": "What rights do you have regarding your data?",
+        "rightsAnswer": "You have the right at any time to receive free information about the origin, recipients, and purpose of your stored personal data. You also have the right to request correction or deletion of this data. If you have given consent to data processing, you may withdraw this consent at any time for the future. You also have the right, under certain circumstances, to request restriction of the processing of your personal data. Furthermore, you have the right to lodge a complaint with the competent supervisory authority."
+      },
+      "hosting": {
+        "title": "2. Hosting",
+        "externalTitle": "External hosting",
+        "paragraph1": "This website is hosted by an external service provider (host). The personal data collected on this website is stored on the host's servers. This may primarily include IP addresses, contact requests, metadata and communication data, contract data, contact details, names, website access data, and other data generated through a website.",
+        "paragraph2": "The host is used for the purpose of fulfilling contracts with our potential and existing customers (Art. 6 para. 1 lit. b GDPR) and in the interest of secure, fast, and efficient provision of our online offering by a professional provider (Art. 6 para. 1 lit. f GDPR). If corresponding consent has been requested, processing is carried out exclusively on the basis of Art. 6 para. 1 lit. a GDPR and Section 25 para. 1 TTDSG, insofar as the consent includes the storage of cookies or access to information on the user's device (e.g. device fingerprinting) within the meaning of the TTDSG. Consent can be withdrawn at any time.",
+        "paragraph3": "Our host will process your data only to the extent necessary to fulfill its service obligations and will follow our instructions regarding this data.",
+        "providerIntro": "We use the following host:"
+      },
+      "general": {
+        "title": "3. General Information and Mandatory Information",
+        "privacyTitle": "Data protection",
+        "privacyParagraph1": "The operators of these pages take the protection of your personal data very seriously. We treat your personal data confidentially and in accordance with statutory data protection regulations and this privacy policy.",
+        "privacyParagraph2": "When you use this website, various personal data is collected. Personal data is data with which you can be personally identified. This privacy policy explains what data we collect and what we use it for. It also explains how and for what purpose this is done.",
+        "privacyParagraph3": "We point out that data transmission on the internet (e.g. communication by email) may have security gaps. Complete protection of data against access by third parties is not possible.",
+        "responsibleTitle": "Notice concerning the responsible party",
+        "responsibleIntro": "The responsible party for data processing on this website is:",
+        "emailLabel": "Email:",
+        "responsibleDefinition": "The responsible party is the natural or legal person who alone or jointly with others determines the purposes and means of processing personal data (e.g. names, email addresses, etc.).",
+        "storageDurationTitle": "Storage duration",
+        "storageDurationText": "Unless a more specific storage duration has been stated within this privacy policy, your personal data will remain with us until the purpose for data processing no longer applies. If you assert a legitimate deletion request or withdraw consent to data processing, your data will be deleted unless we have other legally permissible reasons for storing your personal data (e.g. retention periods under tax or commercial law); in the latter case, deletion will take place after these reasons no longer apply.",
+        "legalBasisTitle": "General information on the legal bases for data processing on this website",
+        "legalBasisText": "If you have consented to data processing, we process your personal data on the basis of Art. 6 para. 1 lit. a GDPR or Art. 9 para. 2 lit. a GDPR, provided that special categories of data pursuant to Art. 9 para. 1 GDPR are processed. If your data is required to fulfill a contract or to carry out pre-contractual measures, we process your data on the basis of Art. 6 para. 1 lit. b GDPR. Furthermore, we process your data if this is necessary to fulfill a legal obligation on the basis of Art. 6 para. 1 lit. c GDPR. Data processing may also be carried out on the basis of our legitimate interest pursuant to Art. 6 para. 1 lit. f GDPR.",
+        "revocationTitle": "Withdrawal of your consent to data processing",
+        "revocationText": "Many data processing operations are only possible with your express consent. You may withdraw consent you have already given at any time. The lawfulness of data processing carried out before the withdrawal remains unaffected by the withdrawal.",
+        "objectionTitle": "Right to object to data collection in special cases and to direct advertising (Art. 21 GDPR)",
+        "objectionParagraph1": "If data processing is carried out on the basis of Art. 6 para. 1 lit. e or f GDPR, you have the right at any time, on grounds relating to your particular situation, to object to the processing of your personal data; this also applies to profiling based on these provisions. If you object, we will no longer process your affected personal data unless we can demonstrate compelling legitimate grounds for processing that outweigh your interests, rights, and freedoms, or processing serves the establishment, exercise, or defense of legal claims (objection pursuant to Art. 21 para. 1 GDPR).",
+        "objectionParagraph2": "If your personal data is processed for direct advertising purposes, you have the right to object at any time to the processing of personal data concerning you for the purpose of such advertising; this also applies to profiling insofar as it is associated with such direct advertising. If you object, your personal data will subsequently no longer be used for direct advertising purposes (objection pursuant to Art. 21 para. 2 GDPR).",
+        "complaintTitle": "Right to lodge a complaint with the competent supervisory authority",
+        "complaintText": "In the event of violations of the GDPR, data subjects have the right to lodge a complaint with a supervisory authority, in particular in the member state of their habitual residence, place of work, or place of the alleged violation. The right to lodge a complaint exists without prejudice to other administrative or judicial remedies.",
+        "dataPortabilityTitle": "Right to data portability",
+        "dataPortabilityText": "You have the right to have data that we process automatically on the basis of your consent or in fulfillment of a contract handed over to you or to a third party in a commonly used, machine-readable format. If you request the direct transfer of data to another controller, this will only be done where technically feasible.",
+        "encryptionTitle": "SSL or TLS encryption",
+        "encryptionText": "For security reasons and to protect the transmission of confidential content, such as orders or inquiries you send to us as the site operator, this site uses SSL or TLS encryption. You can recognize an encrypted connection when the browser address line changes from \"http://\" to \"https://\" and by the lock symbol in your browser line. If SSL or TLS encryption is activated, the data you transmit to us cannot be read by third parties.",
+        "informationDeletionCorrectionTitle": "Information, deletion, and correction",
+        "informationDeletionCorrectionText": "Within the scope of applicable legal provisions, you have the right at any time to free information about your stored personal data, its origin and recipients, and the purpose of data processing, and, if applicable, a right to correction or deletion of this data. You can contact us at any time regarding this or any other questions about personal data.",
+        "restrictionTitle": "Right to restriction of processing",
+        "restrictionIntro": "You have the right to request restriction of the processing of your personal data. You can contact us at any time to do so. The right to restriction of processing exists in the following cases:",
+        "restrictionItems": {
+          "accuracy": "If you dispute the accuracy of your personal data stored by us, we generally need time to verify this. For the duration of the verification, you have the right to request restriction of the processing of your personal data.",
+          "unlawful": "If the processing of your personal data was or is unlawful, you may request restriction of data processing instead of deletion.",
+          "legalClaims": "If we no longer need your personal data, but you need it to exercise, defend, or establish legal claims, you have the right to request restriction of the processing of your personal data instead of deletion.",
+          "objection": "If you have lodged an objection pursuant to Art. 21 para. 1 GDPR, your interests and ours must be weighed against each other. As long as it has not yet been determined whose interests prevail, you have the right to request restriction of the processing of your personal data."
+        },
+        "restrictionOutro": "If you have restricted the processing of your personal data, this data may - apart from being stored - only be processed with your consent, for the establishment, exercise, or defense of legal claims, for the protection of the rights of another natural or legal person, or for reasons of important public interest of the European Union or a member state."
+      },
+      "dataCollection": {
+        "title": "4. Data Collection on This Website",
+        "cookiesTitle": "Cookies",
+        "cookiesParagraph1": "Our websites use so-called \"cookies\". Cookies are small text files and do not cause any damage to your device. They are stored either temporarily for the duration of a session (session cookies) or permanently (persistent cookies) on your device. Session cookies are automatically deleted after your visit. Persistent cookies remain stored on your device until you delete them yourself or they are automatically deleted by your web browser.",
+        "cookiesParagraph2": "In some cases, cookies from third-party companies may also be stored on your device when you enter our site (third-party cookies). These enable us or you to use certain services of the third-party company (e.g. cookies for processing payment services).",
+        "cookiesParagraph3": "Cookies have various functions. Numerous cookies are technically necessary because certain website functions would not work without them (e.g. the shopping cart function or display of videos). Other cookies are used to evaluate user behavior or display advertising.",
+        "cookiesParagraph4": "Cookies required to carry out the electronic communication process, to provide certain functions you have requested, or to optimize the website (necessary cookies) are stored on the basis of Art. 6 para. 1 lit. f GDPR, unless another legal basis is specified. The website operator has a legitimate interest in storing necessary cookies for technically error-free and optimized provision of its services.",
+        "cookiesParagraph5": "You can configure your browser so that you are informed about the setting of cookies and only allow cookies in individual cases, exclude the acceptance of cookies for certain cases or generally, and activate automatic deletion of cookies when closing the browser. If cookies are disabled, the functionality of this website may be restricted.",
+        "serverLogsTitle": "Server log files",
+        "serverLogsIntro": "The provider of the pages automatically collects and stores information in so-called server log files, which your browser automatically transmits to us. These are:",
+        "serverLogItems": {
+          "browser": "Browser type and browser version",
+          "operatingSystem": "Operating system used",
+          "referrerUrl": "Referrer URL",
+          "hostName": "Host name of the accessing computer",
+          "requestTime": "Time of the server request",
+          "ipAddress": "IP address"
+        },
+        "serverLogsText": "This data is not merged with other data sources. This data is collected on the basis of Art. 6 para. 1 lit. f GDPR. The website operator has a legitimate interest in technically error-free presentation and optimization of its website - for this purpose, server log files must be collected.",
+        "contactFormTitle": "Contact form",
+        "contactFormParagraph1": "If you send us inquiries via the contact form, your details from the inquiry form, including the contact details you provide there, will be stored by us for the purpose of processing the inquiry and in case of follow-up questions. We do not pass on this data without your consent.",
+        "contactFormParagraph2": "This data is processed on the basis of Art. 6 para. 1 lit. b GDPR, provided that your inquiry is related to the fulfillment of a contract or is required to carry out pre-contractual measures. In all other cases, processing is based on our legitimate interest in effectively handling inquiries addressed to us (Art. 6 para. 1 lit. f GDPR) or on your consent (Art. 6 para. 1 lit. a GDPR), if this has been requested; consent can be withdrawn at any time.",
+        "contactFormParagraph3": "The data you enter in the contact form will remain with us until you request deletion, withdraw your consent to storage, or the purpose for data storage no longer applies. Mandatory statutory provisions - in particular retention periods - remain unaffected."
+      },
+      "sourceLabel": "Source:"
+    }
+  },
+  "sections": {
+    "advantages": {
+      "label": "Benefits",
+      "title": "All other features and benefits at a glance.",
+      "description": "The project is publicly accessible and aims to reduce water consumption for irrigation while enabling flexible deployment planning.",
+      "items": {
+        "open": {
+          "label": "Open solution for everyone",
+          "description": "Scalable open source solution for municipalities to promote further development and transparency"
+        },
+        "routes": {
+          "label": "Optimized routes",
+          "description": "Individual deployment planning for more efficient irrigation"
+        },
+        "less": {
+          "label": "Less is more",
+          "description": "Targeted irrigation, lower water consumption"
+        }
+      }
+    },
+    "architecture": {
+      "label": "System Architecture",
+      "title": "Data flow at a glance",
+      "description": "From measurement at the tree to the optimized irrigation route - this is how data flows through the Green Ecolution system."
+    },
+    "challenge": {
+      "quote": {
+        "primary": "Cities water by instinct.",
+        "highlight": "Not by need."
+      },
+      "description": "Urban green spaces regulate the microclimate, promote biodiversity, and strengthen location competitiveness. Yet persistent drought and a lack of digitalization are putting this asset at risk. Many municipalities base their irrigation planning solely on the assessment of individual employees, without any data basis. Instead of needs-based irrigation, watering is done across the board, wasting water while still failing to reach all trees. Unoptimized irrigation trips also cause avoidable CO₂ emissions."
+    },
+    "contact": {
+      "label": "Contact",
+      "title": "Let's grow greener together",
+      "description": "Do you have questions, feedback, or a request? We look forward to your message and will get back to you as soon as possible.",
+      "emailAriaLabel": "Feel free to contact us by email",
+      "emailLabel": "Write to us"
+    },
+    "dashboardPreview": {
+      "label": "Software",
+      "title": {
+        "firstLine": "Evidence-based recommendations",
+        "secondLine": "for irrigation at a glance"
+      },
+      "description": "Our system uses scientific data analysis to provide evidence-based recommendations on when irrigation is necessary. The data is prepared so that it is easy to interpret and can be integrated into deployment planning.",
+      "imageAlt": "Green Ecolution dashboard - overview of irrigation recommendations"
+    },
+    "demoInstance": {
+      "label": "Live Demo",
+      "title": "See for yourself",
+      "description": "The publicly accessible demo instance shows the current feature set: map view with traffic light system, dashboard with sensor data, and automated route calculation. No installation required, directly in the browser.",
+      "openDemoAriaLabel": "Open Green Ecolution demo in browser",
+      "openDemoLabel": "Open demo",
+      "imageAlt": "Green Ecolution demo, dashboard with map view and sensor data"
+    },
+    "faq": {
+      "label": "FAQ",
+      "title": "Frequently asked questions about Green Ecolution",
+      "items": {
+        "behind": {
+          "question": "Who is behind the Green Ecolution project?",
+          "schemaAnswer": "The \"Green Ecolution\" project was launched as part of a research project in the Master's degree program \"Applied Computer Science\" at Flensburg University of Applied Sciences. After the successful completion of the research project, further development of the system is now being handled by PROGEEK in close collaboration with Smarte Grenzregion and the City of Flensburg.",
+          "answer": {
+            "beforeHs": "The \"Green Ecolution\" project originated from a research project in the Master's degree program \"Applied Computer Science\" at",
+            "beforeProgeek": "and was initiated there. After the successful completion of the research project, further development of the system is now being handled by",
+            "beforeSmarteGrenzregion": "in close collaboration with",
+            "beforeStadtFlensburg": "and the"
+          }
+        },
+        "value": {
+          "question": "What added value does the project provide?",
+          "schemaAnswer": "The \"Green Ecolution\" research project has shown how digital technologies can be used in a targeted way to make irrigation of urban trees more efficient, sustainable, and resource-efficient. By using modern sensor technology and intelligent data analysis, a foundation was created to significantly reduce water consumption and maintenance effort.",
+          "answer": {
+            "primary": "The \"Green Ecolution\" research project has shown how digital technologies can be used in a targeted way to make irrigation of urban trees more efficient, sustainable, and resource-efficient. By using modern sensor technology and intelligent data analysis, a foundation was created to significantly reduce water consumption and maintenance effort.",
+            "secondary": "The insights gained and systems developed make an important contribution to sustainable urban development in Flensburg. They support data-based decision-making and promote responsible use of natural resources - benefiting the environment, city administration, and citizens."
+          }
+        },
+        "public": {
+          "question": "What does it mean that the project is publicly accessible?",
+          "schemaAnswer": "The project's source code is available in a publicly accessible GitHub repository. This means the current development status can be viewed at any time, creating transparency and enabling interested people to follow further development or actively contribute.",
+          "answer": {
+            "beforeGithub": "The project's source code is available in the public",
+            "afterGithub": "and can be viewed at any time. This creates transparency and enables interested people to follow further development or actively contribute.",
+            "beforeOpenData": "In the future, a connection to the",
+            "afterOpenData": "of the state of Schleswig-Holstein is also planned in order to make selected sensor data publicly accessible. This extension is currently in planning."
+          }
+        },
+        "sensors": {
+          "question": "Which sensors are used?",
+          "schemaAnswer": "As part of the research project, Watermark sensors were used to measure soil water tension and SMT100 sensors were used to measure soil moisture and temperature. These sensors formed the basis for developing and testing the system.",
+          "answer": {
+            "intro": "As part of the research project, the following sensors were used to collect precise data on soil moisture and soil conditions. These sensors formed the basis for developing and testing the system.",
+            "watermarkPrefix": "For measuring soil water tension:",
+            "smt100Prefix": "For measuring soil moisture and temperature:",
+            "outlook": "In future development phases, the sensor technology can be further adapted or expanded depending on requirements and technological progress."
+          }
+        },
+        "progress": {
+          "question": "What is the current progress of the project?",
+          "schemaAnswer": "The \"Green Ecolution\" research project was successfully completed as part of the Master's degree program \"Applied Computer Science\" at Flensburg University of Applied Sciences. In October 2025, the project received funding through the DigitalHub Call for Concepts. PROGEEK, the City of Flensburg, and Smarte Grenzregion are currently working together on further development.",
+          "answer": {
+            "beforeHs": "The \"Green Ecolution\" research project was carried out as part of the Master's degree program \"Applied Computer Science\" at",
+            "afterHs": "and was successfully completed. Building on the results achieved in the project, further development is now continuing.",
+            "beforeDigitalHub": "In October 2025, the project received funding through the",
+            "beforeOpenSourceProgram": "of the state program",
+            "afterDigitalHub": "This allows the system to be further expanded and tested in practice.",
+            "beforeProgeek": "Currently,",
+            "beforeStadtFlensburg": "the",
+            "beforeSmarteGrenzregion": "and",
+            "afterSmarteGrenzregion": "are working together on further developing and integrating the system in order to sustainably transfer the insights gained into everyday municipal practice."
+          }
+        }
+      }
+    },
+    "features": {
+      "label": "Features",
+      "title": "Green Ecolution at a glance",
+      "description": "From sensor data collection to intelligent route planning and detailed evaluation - all features for efficient and sustainable green space management",
+      "items": {
+        "dashboard": {
+          "label": "Real-time dashboard",
+          "description": "All important KPIs at a glance: soil moisture values, upcoming tours, team availability, and vehicle status in one central dashboard."
+        },
+        "grouping": {
+          "label": "Intelligent grouping",
+          "description": "Group trees into irrigation units. Automatic calculation of water demand per cluster."
+        },
+        "fleet": {
+          "label": "Fleet management",
+          "description": "Manage vans and trailers with water capacities. Automatic refill stops in route planning."
+        },
+        "tourPlanning": {
+          "label": "Tour planning",
+          "description": "Optimized irrigation plans with real-time status: from 'planned' to 'active' to 'completed'."
+        },
+        "team": {
+          "label": "Team management",
+          "description": "Manage drivers with license classes and availability. Optimize deployment planning."
+        },
+        "analysis": {
+          "label": "Post-analysis",
+          "description": "Document actual water consumption per cluster and tour. Analyze trends and optimize future planning based on data."
+        }
+      }
+    },
+    "furtherLinks": {
+      "label": "Resources",
+      "title": "Further links & mentions",
+      "items": {
+        "flensburgSoftware": {
+          "label": "Software for the City of Flensburg",
+          "subLabel": "This is the software that was developed and set up for the City of Flensburg. This software is primarily used by the Technical Operations Center Flensburg."
+        },
+        "githubOrganization": {
+          "label": "Organization on GitHub",
+          "subLabel": "There you will find all code repositories associated with the project, such as the software backend and frontend"
+        },
+        "hsFlensburgBlog": {
+          "label": "Blog post by Flensburg University of Applied Sciences",
+          "subLabel": "A post about the research project was also published on the Flensburg University of Applied Sciences website."
+        },
+        "hsFlensburgInstagram": {
+          "label": "Instagram post by Flensburg University of Applied Sciences",
+          "subLabel": "Green Ecolution was mentioned not only on the website, but also on Instagram."
+        },
+        "digitalHub": {
+          "label": "Part of DigitalHub.SH 2025",
+          "subLabel": "Green Ecolution was presented and funded as one of the open source projects as part of DigitalHub.SH 2025."
+        },
+        "flensburgPress": {
+          "label": "Press release by the City of Flensburg",
+          "subLabel": "The City of Flensburg also reported on Green Ecolution and the importance of the project for sustainable city management."
+        },
+        "liveDemo": {
+          "label": "Live demo",
+          "subLabel": "The publicly accessible demo instance shows the current feature set: map view with traffic light system, dashboard with sensor data, and automated route calculation."
+        }
+      }
+    },
+    "hero": {
+      "defaultLabel": "Project"
+    },
+    "introduction": {
+      "label": "Overview",
+      "title": "What does smart green space management include?",
+      "description": "Smart green space management covers efficient monitoring and irrigation of vegetation on green spaces through the use of modern technologies such as sensors and data analysis. This enables precise control of maintenance measures adapted to specific site conditions.",
+      "carouselAriaLabel": "Facts about green space management",
+      "facts": {
+        "sensor": {
+          "label": "Development of a sensor solution",
+          "description": "Data on soil moisture is provided by sensors placed at different depths."
+        },
+        "evaluation": {
+          "label": "Evaluation of measurement data",
+          "description": "Evaluation of data transmitted by sensors for needs-based irrigation of young trees."
+        },
+        "youngTrees": {
+          "label": "Focus on young trees",
+          "description": "Young trees are especially vulnerable to heat and therefore particularly in need of protection. For this reason, trees are monitored during their first three years after planting."
+        },
+        "locations": {
+          "label": "Monitoring multiple locations",
+          "description": "Using the LoRaWAN network, various locations can be monitored and additional ones can be added easily."
+        }
+      }
+    },
+    "latestRelease": {
+      "label": "Releases",
+      "title": "What's new?",
+      "description": "We continuously develop Green Ecolution further. Take a look at the latest features, improvements, and bug fixes - and learn what we are currently working on.",
+      "allReleasesAriaLabel": "View all releases",
+      "allReleasesLabel": "All releases",
+      "currentLabel": "Current",
+      "detailsLabel": "View details"
+    },
+    "openSourceGovernance": {
+      "label": "Governance",
+      "title": "Open source as a principle",
+      "description": "Transparency, independence, and reusability: the pillars of our open source strategy."
+    },
+    "process": {
+      "label": "Process",
+      "title": "Measure. Understand. Act.",
+      "description": "From soil moisture to optimized irrigation route, in one continuous digital workflow.",
+      "stepDetails": {
+        "sensor": {
+          "depths": "Soil moisture sensors at depths of 30, 60, and 90 cm",
+          "measurements": "Recording soil moisture, temperature, and soil water tension",
+          "transmission": "Energy-efficient transmission via LoRaWAN",
+          "installation": "Flush-to-ground installation, no impact on maintenance work"
+        },
+        "dashboard": {
+          "trafficLight": "Traffic light system shows irrigation needs on a map",
+          "prioritization": "Prioritization by urgency when capacity is limited",
+          "timelines": "Timelines for soil moisture, temperature, and water tension",
+          "kpis": "Real-time dashboard with all relevant KPIs"
+        },
+        "routing": {
+          "planning": "Automated deployment and route planning",
+          "capacity": "Consideration of water capacity and vehicle size",
+          "restrictions": "Road and access restrictions included",
+          "export": "Export routes to navigation devices"
+        }
+      }
+    },
+    "processCompact": {
+      "label": "Solution",
+      "title": "The continuous workflow",
+      "moreAriaLabel": "Learn more about the process",
+      "moreLabel": "Learn more"
+    },
+    "sensorProbe": {
+      "label": "Hardware",
+      "title": "The soil probe",
+      "description": "Designed for use in public spaces. Sensors at three depths (30, 60, and 90 cm) cover a tree's entire root profile, from the shallow fine roots to the deeper main roots. This makes it possible to see whether water actually reaches the root zone or merely wets the surface. Installation is flush with the ground using standard earth augers. Maintenance work such as mowing is not affected.",
+      "illustrationAriaLabel": "Schematic illustration of a soil probe at three depths",
+      "depths": {
+        "fineRoots": "Fine roots",
+        "mainRoots": "Main roots",
+        "deepRoots": "Deep roots"
+      }
+    },
+    "stakeholder": {
+      "label": "Partners & Participants",
+      "title": "Who are the participants?",
+      "description": "In collaboration between PROGEEK, Smarte Grenzregion, the City of Flensburg, and Flensburg University of Applied Sciences, a needs-based and data-driven irrigation system for trees is being built.",
+      "carouselAriaLabel": "Project participants",
+      "items": {
+        "progeek": {
+          "role": "Technical partner",
+          "description": "PROGEEK stands for innovative IT solutions, custom software development, and digital consulting - with the goal of supporting companies on their path into the future of digitalization."
+        },
+        "smarteGrenzregion": {
+          "role": "Project coordinator",
+          "description": "The \"Smarte Grenzregion zwischen den Meeren\" project aims to drive digital transformation in the region in order to shape integrated and sustainable urban and regional development and strengthen the common good."
+        },
+        "hochschuleFlensburg": {
+          "role": "Initiator",
+          "description": "Flensburg University of Applied Sciences offers practice-oriented degree programs with a focus on applied research and close collaboration with industry."
+        },
+        "tbzFlensburg": {
+          "role": "Application partner",
+          "description": "The Technical Operations Center (TBZ) is the central service provider for the City of Flensburg and is responsible, among other things, for maintaining public green spaces, street cleaning, and waste management."
+        }
+      }
+    },
+    "videos": {
+      "label": "Videos",
+      "title": "Get to know the project by video",
+      "description": "As part of the research project, not only a sensor solution and software were developed, but videos were also produced. These videos clearly illustrate the project's content, including its objectives, the problem statement, and the solution we developed.",
+      "cards": {
+        "short": {
+          "title": "Short video",
+          "description": "In this short video, we give you an initial insight into our project. Learn in just a few minutes what it is about and what you can expect from the upcoming content. Watch the video for a quick overview!",
+          "duration": "approx. 30 seconds"
+        },
+        "long": {
+          "title": "Long video",
+          "description": "In this detailed video, we dive deeper into our project. Here we explain the most important details, background information, and next steps. This video gives you comprehensive information and helps you better understand the project. Enjoy watching and exploring!",
+          "duration": "approx. 4 minutes"
+        }
+      }
+    },
+    "visionRoadmap": {
+      "label": "Vision",
+      "title": "Made for every municipality",
+      "description": {
+        "primary": "The platform is deliberately designed so that it can be used in any municipality. Map areas, organizational structures, and irrigation regions are freely configurable.",
+        "secondary": "Only open standards and open source components are used. Cloud-native architecture with Kubernetes enables multi-tenant, highly available operation. Additional municipalities can be added easily."
+      },
+      "roadmapLabel": "Roadmap",
+      "futureAriaLabel": "More ideas in planning",
+      "futureLabel": "and much more in planning",
+      "status": {
+        "completed": "Completed",
+        "inProgress": "In progress",
+        "planned": "Planned"
+      }
+    }
+  }
+}

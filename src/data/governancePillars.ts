@@ -10,45 +10,39 @@ interface GovernancePillar {
 
 export const governancePillars: GovernancePillar[] = [
   {
-    category: 'Lizenz',
-    title: 'AGPL-3.0-only',
-    description:
-      'Lizenziert unter der AGPL. Finanziert im Rahmen des Landesprogramms „Offene Innovation" des DigitalHub.SH Schleswig-Holstein.',
+    category: 'data.governancePillars.license.category',
+    title: 'data.governancePillars.license.title',
+    description: 'data.governancePillars.license.description',
     icon: Shield,
   },
   {
-    category: 'Souveränität',
-    title: 'Digitale Souveränität',
-    description:
-      'Keine Abhängigkeit von proprietären Plattformen. Kommunen behalten die Kontrolle über ihre Daten und Infrastruktur. Kein Vendor-Lock-in.',
+    category: 'data.governancePillars.sovereignty.category',
+    title: 'data.governancePillars.sovereignty.title',
+    description: 'data.governancePillars.sovereignty.description',
     icon: Lock,
   },
   {
-    category: 'Modularität',
-    title: 'Plugin-System',
-    description:
-      'Modulare Erweiterungen für kommunenspezifische Anpassungen ohne Änderung der Kernsoftware. Import-Plugins für Baumkataster, CSV, Datenbanken.',
+    category: 'data.governancePillars.modularity.category',
+    title: 'data.governancePillars.modularity.title',
+    description: 'data.governancePillars.modularity.description',
     icon: Puzzle,
   },
   {
-    category: 'Integration',
-    title: 'API-first',
-    description:
-      'Offene Schnittstellen für Integration in kommunale IT-Landschaften. Anbindung an IoT-Hubs und Open-Data-Portale.',
+    category: 'data.governancePillars.integration.category',
+    title: 'data.governancePillars.integration.title',
+    description: 'data.governancePillars.integration.description',
     icon: Plug,
   },
   {
-    category: 'Community',
-    title: 'Nachnutzung & Community',
-    description:
-      'Quellcode und Dokumentation öffentlich auf GitHub. Andere Kommunen können die Lösung nachnutzen und anpassen.',
+    category: 'data.governancePillars.community.category',
+    title: 'data.governancePillars.community.title',
+    description: 'data.governancePillars.community.description',
     icon: Users,
   },
   {
-    category: 'Wirtschaftlichkeit',
-    title: 'Kosteneffizienz',
-    description:
-      'Keine Lizenzkosten. Geschäftsmodell basiert auf Dienstleistungen: Hosting, Anpassung, Sensorvertrieb. Regionale Wertschöpfung in SH.',
+    category: 'data.governancePillars.efficiency.category',
+    title: 'data.governancePillars.efficiency.title',
+    description: 'data.governancePillars.efficiency.description',
     icon: PiggyBank,
   },
 ]

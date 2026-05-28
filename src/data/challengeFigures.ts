@@ -6,21 +6,18 @@ interface ChallengeFigure {
 
 export const challengeFigures: ChallengeFigure[] = [
   {
-    value: '50.000',
-    unit: 'Liter / Jahr',
-    description:
-      'Wasser werden pro mittelgroße Kommune jährlich ausgebracht, ohne Datengrundlage, ohne bedarfsgerechte Steuerung.',
+    value: 'data.challengeFigures.water.value',
+    unit: 'data.challengeFigures.water.unit',
+    description: 'data.challengeFigures.water.description',
   },
   {
-    value: '1.700 €',
-    unit: 'pro Baum',
-    description:
-      'kostet ein einzelner Straßenbaum. Ein vermeidbarer Totalverlust durch fehlende bedarfsgerechte Bewässerung finanziert Jahre Sensorbetrieb.',
+    value: 'data.challengeFigures.tree.value',
+    unit: 'data.challengeFigures.tree.unit',
+    description: 'data.challengeFigures.tree.description',
   },
   {
-    value: 'bis 60.000 €',
-    unit: 'pro Beet',
-    description:
-      'kann ein komplettes Straßenbeet kosten, inklusive Tiefbau, Substrat und Infrastruktur.',
+    value: 'data.challengeFigures.bed.value',
+    unit: 'data.challengeFigures.bed.unit',
+    description: 'data.challengeFigures.bed.description',
   },
 ]

@@ -1,10 +1,12 @@
 import Lottie from 'lottie-react'
+import { useTranslation } from 'react-i18next'
 import cableAnimation from '../../json/cableAnimation.json'
 import Button from '../components/Button'
 import Arrow from '../icons/Arrow'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
 function NotFoundPage() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
 
   return (
@@ -19,15 +21,12 @@ function NotFoundPage() {
       <div className="mt-[55vh] mx-auto max-w-208 xl:max-w-screen-lg">
         <section className="my-28 px-4 md:px-6 lg:my-36 xl:my-52">
           <h1 className="font-lato font-bold text-4xl mb-4 lg:mb-6 lg:text-5xl lg:text-center xl:text-6xl">
-            Die Seite konnte nicht gefunden werden.
+            {t('pages.notFound.title')}
           </h1>
-          <p className="lg:text-center mb-10">
-            Die gewünschte Seite ist nicht erreichbar, da sie entweder nicht existiert oder es zu
-            einem Fehler gekommen ist. Error-Code: 404
-          </p>
+          <p className="lg:text-center mb-10">{t('pages.notFound.description')}</p>
           <div className="lg:flex lg:items-center lg:justify-center">
-            <Button href="/" ariaLabel="Zur Startseite" isDark>
-              <span>Zur Startseite</span>
+            <Button href="/" ariaLabel={t('pages.notFound.homeAriaLabel')} isDark>
+              <span>{t('pages.notFound.homeLabel')}</span>
               <Arrow classes="w-6 text-white transition-all ease-in-out duration-300 group-hover:translate-x-2" />
             </Button>
           </div>
