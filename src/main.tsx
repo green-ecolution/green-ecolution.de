@@ -11,6 +11,7 @@ const router = createRouter({
 
 router.subscribe('onResolved', () => {
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  window.a?.pageView()
 })
 
 declare module '@tanstack/react-router' {
