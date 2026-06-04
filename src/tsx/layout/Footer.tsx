@@ -105,9 +105,7 @@ function Footer() {
             © {new Date().getFullYear()} Green Ecolution
             <span className="hidden sm:inline"> · </span>
             <br className="sm:hidden" />
-            <span className="text-white/40">
-              {import.meta.env.VITE_APP_VERSION} · {import.meta.env.VITE_BUILD_VERSION}
-            </span>
+            <span className="text-white/40">{import.meta.env.VITE_APP_VERSION}</span>
           </p>
         </div>
       </div>
