@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.6.2...v1.7.0) (2026-06-04)
+
+
+### Features
+
+* connect analytics pageview tracking to router ([#385](https://github.com/green-ecolution/green-ecolution.de/issues/385)) ([8156b4d](https://github.com/green-ecolution/green-ecolution.de/commit/8156b4d48e6a7ec28f0bc913f5b1432e09693b99))
+* remove BUILD_VERSION in footer ([589062d](https://github.com/green-ecolution/green-ecolution.de/commit/589062d3655edb035590bfe36d49d89e036825dd))
+
 ## [1.6.2](https://github.com/green-ecolution/green-ecolution.de/compare/v1.6.1...v1.6.2) (2026-06-01)
 
 
