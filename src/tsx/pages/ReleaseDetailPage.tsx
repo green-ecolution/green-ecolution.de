@@ -70,6 +70,9 @@ function ReleaseDetailPage() {
 
   const getSectionIcon = (text: string): string => {
     const lowerText = text.toLowerCase()
+    if (lowerText.includes('highlight')) {
+      return '⭐'
+    }
     if (
       lowerText.includes('neu') ||
       lowerText.includes('feature') ||
@@ -153,6 +156,9 @@ function ReleaseDetailPage() {
 
   const getSectionColor = (text: string): string => {
     const lowerText = text.toLowerCase()
+    if (lowerText.includes('highlight')) {
+      return 'bg-green-dark-900/10 text-green-dark-900 border-green-dark-900/20'
+    }
     if (
       lowerText.includes('neu') ||
       lowerText.includes('feature') ||
@@ -396,9 +402,30 @@ function ReleaseDetailPage() {
                     {children}
                   </h3>
                 ),
-                p: ({ children }) => (
-                  <p className="my-2 text-grey-900/80 leading-relaxed">{children}</p>
-                ),
+                p: ({ node, children }) => {
+                  const paragraphChildren = node?.children ?? []
+                  const imageCount = paragraphChildren.filter(
+                    (child) => child.type === 'element' && child.tagName === 'img',
+                  ).length
+                  const isImageGallery =
+                    imageCount > 1 &&
+                    paragraphChildren.every(
+                      (child) =>
+                        child.type === 'text' ||
+                        (child.type === 'element' &&
+                          (child.tagName === 'img' || child.tagName === 'br')),
+                    )
+
+                  if (isImageGallery) {
+                    return (
+                      <div className="my-6 flex flex-col gap-4 sm:flex-row sm:items-start [&>figure]:my-0 sm:[&>figure]:flex-1 sm:[&>figure]:min-w-0">
+                        {children}
+                      </div>
+                    )
+                  }
+
+                  return <p className="my-2 text-grey-900/80 leading-relaxed">{children}</p>
+                },
                 ul: ({ children }) => (
                   <ul className="my-3 space-y-2 text-grey-900/80">{children}</ul>
                 ),
