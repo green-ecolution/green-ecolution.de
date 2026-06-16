@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import Accordion from '../Accordion'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
@@ -31,6 +31,8 @@ function Faq() {
   const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
+  const faqLinkClass =
+    'text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900'
   const faqData = [
     {
       question: t('sections.faq.items.behind.question'),
@@ -114,43 +116,43 @@ function Faq() {
         >
           <Accordion label={t('sections.faq.items.behind.question')}>
             <p>
-              {t('sections.faq.items.behind.answer.beforeHs')}&nbsp;
-              <a
-                href="https://hs-flensburg.de/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900"
-              >
-                Hochschule Flensburg
-              </a>
-              &nbsp;{t('sections.faq.items.behind.answer.beforeProgeek')}&nbsp;
-              <a
-                href="https://progeek.de/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900"
-              >
-                PROGEEK
-              </a>
-              &nbsp;{t('sections.faq.items.behind.answer.beforeSmarteGrenzregion')}&nbsp;
-              <a
-                href="https://smarte-grenzregion.de/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900"
-              >
-                Smarten Grenzregion
-              </a>
-              &nbsp;{t('sections.faq.items.behind.answer.beforeStadtFlensburg')}&nbsp;
-              <a
-                href="https://www.flensburg.de/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900"
-              >
-                Stadt Flensburg
-              </a>
-              .
+              <Trans
+                i18nKey="sections.faq.items.behind.answer"
+                components={{
+                  hs: (
+                    <a
+                      href="https://hs-flensburg.de/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={faqLinkClass}
+                    />
+                  ),
+                  pg: (
+                    <a
+                      href="https://progeek.de/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={faqLinkClass}
+                    />
+                  ),
+                  sg: (
+                    <a
+                      href="https://smarte-grenzregion.de/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={faqLinkClass}
+                    />
+                  ),
+                  sf: (
+                    <a
+                      href="https://www.flensburg.de/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={faqLinkClass}
+                    />
+                  ),
+                }}
+              />
             </p>
           </Accordion>
         </div>

@@ -442,12 +442,7 @@
         "behind": {
           "question": "Wer steckt hinter dem Projekt Green Ecolution?",
           "schemaAnswer": "Das Projekt \"Green Ecolution\" wurde im Rahmen eines Forschungsprojekts im Masterstudiengang \"Angewandte Informatik\" an der Hochschule Flensburg ins Leben gerufen. Nach dem erfolgreichen Abschluss des Forschungsprojekts wird die Weiterentwicklung des Systems nun von PROGEEK übernommen, in enger Zusammenarbeit mit der Smarten Grenzregion und der Stadt Flensburg.",
-          "answer": {
-            "beforeHs": "Das Projekt \"Green Ecolution\" wurde im Rahmen eines Forschungsprojekts im Masterstudiengang \"Angewandte Informatik\" an der",
-            "beforeProgeek": "ins Leben gerufen. Nach dem erfolgreichen Abschluss des Forschungsprojekts wird die Weiterentwicklung des Systems nun von",
-            "beforeSmarteGrenzregion": "übernommen, in enger Zusammenarbeit mit der",
-            "beforeStadtFlensburg": "und der"
-          }
+          "answer": "Das Projekt \"Green Ecolution\" wurde im Rahmen eines Forschungsprojekts im Masterstudiengang \"Angewandte Informatik\" an der <hs>Hochschule Flensburg</hs> ins Leben gerufen. Nach dem erfolgreichen Abschluss des Forschungsprojekts wird die Weiterentwicklung des Systems nun von <pg>PROGEEK</pg> übernommen, in enger Zusammenarbeit mit der <sg>Smarten Grenzregion</sg> und der <sf>Stadt Flensburg</sf>."
         },
         "value": {
           "question": "Welchen Mehrwert bietet das Projekt?",

@@ -572,12 +572,7 @@
         "behind": {
           "question": "Who is behind the Green Ecolution project?",
           "schemaAnswer": "The \"Green Ecolution\" project was launched as part of a research project in the Master's degree program \"Applied Computer Science\" at Flensburg University of Applied Sciences. After the successful completion of the research project, further development of the system is now being handled by PROGEEK in close collaboration with Smarte Grenzregion and the City of Flensburg.",
-          "answer": {
-            "beforeHs": "The \"Green Ecolution\" project originated from a research project in the Master's degree program \"Applied Computer Science\" at",
-            "beforeProgeek": "and was initiated there. After the successful completion of the research project, further development of the system is now being handled by",
-            "beforeSmarteGrenzregion": "in close collaboration with",
-            "beforeStadtFlensburg": "and the"
-          }
+          "answer": "The \"Green Ecolution\" project was launched as part of a research project in the Master's degree program \"Applied Computer Science\" at <hs>Flensburg University of Applied Sciences</hs>. After the successful completion of the research project, further development of the system is now being handled by <pg>PROGEEK</pg> in close collaboration with <sg>Smarte Grenzregion</sg> and the <sf>City of Flensburg</sf>."
         },
         "value": {
           "question": "What added value does the project provide?",

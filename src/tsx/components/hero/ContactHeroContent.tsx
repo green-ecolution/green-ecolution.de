@@ -137,7 +137,8 @@ function ContactCard({
             flex items-center justify-center mb-6
             shadow-lg group-hover:scale-110 transition-transform duration-300
           `}
-        >{isImageIcon ? (
+        >
+          {isImageIcon ? (
             <img
               src={Icon}
               className="w-7 h-7 md:w-8 md:h-8 brightness-0 invert"
@@ -145,7 +146,8 @@ function ContactCard({
               loading="lazy"
             />
           ) : (
-          <Icon className="w-7 h-7 md:w-8 md:h-8 text-white" />)}
+            <Icon className="w-7 h-7 md:w-8 md:h-8 text-white" />
+          )}
         </div>
 
         {/* Content */}
