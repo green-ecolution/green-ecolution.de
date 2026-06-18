@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 interface HeroProps {
@@ -8,7 +9,8 @@ interface HeroProps {
   children?: ReactNode
 }
 
-const Hero: React.FC<HeroProps> = ({ headline, description, label = 'Projekt', children }) => {
+const Hero: React.FC<HeroProps> = ({ headline, description, label, children }) => {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const [isVisible, setIsVisible] = useState(false)
 
@@ -27,7 +29,7 @@ const Hero: React.FC<HeroProps> = ({ headline, description, label = 'Projekt', c
           }`}
         >
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-            {label}
+            {label ?? t('sections.hero.defaultLabel')}
           </span>
           <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
         </div>

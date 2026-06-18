@@ -6,29 +6,28 @@ interface RoadmapItem {
 
 export const roadmapItems: RoadmapItem[] = [
   {
-    title: 'Mobile App mit QR-Scan',
-    description: 'Sensor-Setup per QR-Code und GPS direkt vor Ort am Baum',
+    title: 'data.roadmapItems.mobileApp.title',
+    description: 'data.roadmapItems.mobileApp.description',
     status: 'in-progress',
   },
   {
-    title: 'Eigene Sensor-Firmware',
-    description: 'Vollständig selbst entwickelte Firmware für maximale Kontrolle und Anpassbarkeit',
+    title: 'data.roadmapItems.sensorFirmware.title',
+    description: 'data.roadmapItems.sensorFirmware.description',
     status: 'planned',
   },
   {
-    title: 'Benutzer- und Rollenkonzept',
-    description:
-      'Feingranulare Rechteverwaltung für Mitarbeitende, Dienstleister und Partnerkommunen',
+    title: 'data.roadmapItems.roles.title',
+    description: 'data.roadmapItems.roles.description',
     status: 'planned',
   },
   {
-    title: 'Open-Data-Export',
-    description: 'Anbindung an das Open-Data-Portal des Landes Schleswig-Holstein',
+    title: 'data.roadmapItems.openData.title',
+    description: 'data.roadmapItems.openData.description',
     status: 'planned',
   },
   {
-    title: 'Weitere Grünflächentypen',
-    description: 'Erweiterung auf Beete, Stauden und Parks über Bäume hinaus',
+    title: 'data.roadmapItems.greenSpaceTypes.title',
+    description: 'data.roadmapItems.greenSpaceTypes.description',
     status: 'planned',
   },
 ]

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Lottie from 'lottie-react'
 import treeLightGreenAnimation from '../../../json/treeLightGreenAnimation.json'
 import treeMiddleGreenAnimation from '../../../json/treeMiddleGreenAnimation.json'
@@ -11,6 +12,7 @@ import type { AdoptionData } from './adoptTreeData'
 function HomepageHeroTrees() {
   const reducedMotion = useReducedMotion()
   const [adoption, setAdoption] = useState<AdoptionData | null>(null)
+  const { t } = useTranslation()
 
   return (
     <div>
@@ -56,7 +58,7 @@ function HomepageHeroTrees() {
         />
         <button
           type="button"
-          aria-label="Baum adoptieren"
+          aria-label={t('homepageHeroTrees.adoptTreeAriaLabel')}
           className="pointer-events-auto absolute inset-0 cursor-pointer"
           onClick={() => setAdoption(generateAdoptionData('light'))}
         />
@@ -74,7 +76,7 @@ function HomepageHeroTrees() {
         />
         <button
           type="button"
-          aria-label="Baum adoptieren"
+          aria-label={t('homepageHeroTrees.adoptTreeAriaLabel')}
           className="pointer-events-auto absolute inset-0 cursor-pointer"
           onClick={() => setAdoption(generateAdoptionData('middle'))}
         />
@@ -92,7 +94,7 @@ function HomepageHeroTrees() {
         />
         <button
           type="button"
-          aria-label="Baum adoptieren"
+          aria-label={t('homepageHeroTrees.adoptTreeAriaLabel')}
           className="pointer-events-auto absolute inset-0 cursor-pointer"
           onClick={() => setAdoption(generateAdoptionData('dark'))}
         />

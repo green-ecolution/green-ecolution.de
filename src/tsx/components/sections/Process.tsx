@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { workflowSteps } from '../../../data/workflowSteps'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
@@ -28,26 +29,27 @@ function useIntersectionObserver(threshold = 0.1) {
 
 const stepDetails: string[][] = [
   [
-    'Bodenfeuchtesensoren in 30, 60 und 90 cm Tiefe',
-    'Erfassung von Bodenfeuchte, Temperatur und Bodenwasserspannung',
-    'Energieeffiziente Übertragung über LoRaWAN',
-    'Bodenbündige Installation, kein Einfluss auf Pflegearbeiten',
+    'sections.process.stepDetails.sensor.depths',
+    'sections.process.stepDetails.sensor.measurements',
+    'sections.process.stepDetails.sensor.transmission',
+    'sections.process.stepDetails.sensor.installation',
   ],
   [
-    'Ampelsystem zeigt Bewässerungsbedarf auf einer Karte',
-    'Priorisierung nach Dringlichkeit bei begrenzten Kapazitäten',
-    'Zeitverläufe für Bodenfeuchte, Temperatur und Wasserspannung',
-    'Echtzeit-Dashboard mit allen relevanten KPIs',
+    'sections.process.stepDetails.dashboard.trafficLight',
+    'sections.process.stepDetails.dashboard.prioritization',
+    'sections.process.stepDetails.dashboard.timelines',
+    'sections.process.stepDetails.dashboard.kpis',
   ],
   [
-    'Automatisierte Einsatz- und Routenplanung',
-    'Berücksichtigung von Wasserkapazität und Fahrzeuggröße',
-    'Straßen- und Zufahrtsrestriktionen einbezogen',
-    'Export der Routen auf Navigationsgeräte',
+    'sections.process.stepDetails.routing.planning',
+    'sections.process.stepDetails.routing.capacity',
+    'sections.process.stepDetails.routing.restrictions',
+    'sections.process.stepDetails.routing.export',
   ],
 ]
 
 function Process() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -65,7 +67,7 @@ function Process() {
           }`}
         >
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-            Prozess
+            {t('sections.process.label')}
           </span>
           <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
         </div>
@@ -76,7 +78,7 @@ function Process() {
           }`}
           style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
         >
-          Messen. Verstehen. Handeln.
+          {t('sections.process.title')}
         </h2>
 
         <p
@@ -85,8 +87,7 @@ function Process() {
           }`}
           style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
         >
-          Von der Bodenfeuchte zur optimierten Bewässerungsroute, in einem durchgängigen digitalen
-          Workflow.
+          {t('sections.process.description')}
         </p>
       </div>
 
@@ -114,16 +115,16 @@ function Process() {
                 <div className="flex items-center gap-3 mb-4">
                   <Icon className="w-6 h-6 text-green-dark-900/50" />
                   <span className="text-xs font-semibold tracking-widest uppercase text-green-dark-900/60">
-                    {step.number} · {step.category}
+                    {step.number} · {t(step.category)}
                   </span>
                 </div>
 
                 <h3 className="font-lato font-bold text-2xl text-grey-900 mb-3 lg:text-3xl">
-                  {step.title}
+                  {t(step.title)}
                 </h3>
 
                 <p className="text-grey-900/70 leading-relaxed mb-6 lg:text-lg">
-                  {step.description}
+                  {t(step.description)}
                 </p>
               </div>
 
@@ -134,7 +135,9 @@ function Process() {
                     {details.map((detail) => (
                       <li key={detail} className="flex items-start gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-green-dark-900/40 mt-2 flex-shrink-0" />
-                        <span className="text-sm text-grey-900/70 leading-relaxed">{detail}</span>
+                        <span className="text-sm text-grey-900/70 leading-relaxed">
+                          {t(detail)}
+                        </span>
                       </li>
                     ))}
                   </ul>

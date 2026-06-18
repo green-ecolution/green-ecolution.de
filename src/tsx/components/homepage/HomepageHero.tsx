@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import Arrow from '../../icons/Arrow'
 import HomepageOverlay from './HomepageOverlay'
 import HomepageHeroTrees from './HomepageHeroTrees'
@@ -13,6 +14,7 @@ function HomepageHero() {
   const [isInitialLoad, setIsInitialLoad] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const reducedMotion = useReducedMotion()
+  const { t } = useTranslation()
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- trigger animation on mount
@@ -118,7 +120,7 @@ function HomepageHero() {
             >
               <span className="w-2 h-2 bg-green-light-900 rounded-full animate-pulse" />
               <span className="text-xs font-semibold text-green-dark-900 tracking-wide uppercase">
-                Smart Irrigation
+                {t('homepageHero.label')}
               </span>
             </div>
 
@@ -131,9 +133,9 @@ function HomepageHero() {
               `}
               style={{ transitionDelay: reducedMotion ? '0ms' : '150ms' }}
             >
-              Wir ermöglichen{' '}
+              {t('homepageHero.headline.start')}{' '}
               <span className="relative inline-block">
-                <span className="relative z-10">smarte Bewässerung</span>
+                <span className="relative z-10">{t('homepageHero.headline.highlight')}</span>
                 <span
                   className={`
                     absolute -bottom-1 left-0 h-3 bg-green-light-900/30 -z-0 rounded-xs
@@ -143,7 +145,7 @@ function HomepageHero() {
                   style={{ transitionDelay: reducedMotion ? '0ms' : '600ms' }}
                 />
               </span>{' '}
-              von Grünflächen!
+              {t('homepageHero.headline.end')}
             </h1>
 
             {/* Motto tagline */}
@@ -155,7 +157,7 @@ function HomepageHero() {
               `}
               style={{ transitionDelay: reducedMotion ? '0ms' : '250ms' }}
             >
-              Messen. Verstehen. Handeln.
+              {t('homepageHero.motto')}
             </p>
 
             {/* Description with stagger */}
@@ -167,9 +169,7 @@ function HomepageHero() {
               `}
               style={{ transitionDelay: reducedMotion ? '0ms' : '350ms' }}
             >
-              Mittels sensorgestützter Überwachung von Grünflächen werden Daten über das
-              LoRaWan-Netz übermittelt und ausgewertet, sodass Handlungsempfehlungen für die
-              Bewässerung abgegeben werden können.
+              {t('homepageHero.description')}
             </p>
 
             {/* Button with stagger */}
@@ -194,7 +194,7 @@ function HomepageHero() {
                 `}
                 onClick={handleOpenOverlay}
               >
-                <span>Animation abspielen</span>
+                <span>{t('homepageHero.button')}</span>
                 <Arrow classes="w-5 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from '@tanstack/react-router'
 import Lottie from 'lottie-react'
 import MainNavigation from '../components/navigation/MainNavigation'
@@ -6,6 +7,7 @@ import logoAnimation from '../../json/logoAnimation.json'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
 function Header() {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const reducedMotion = useReducedMotion()
@@ -71,7 +73,7 @@ function Header() {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-white focus:px-6 focus:py-3 focus:rounded-lg focus:shadow-lg focus:text-green-dark-900 focus:font-semibold focus:border-2 focus:border-green-middle-600 focus:outline-none focus:ring-2 focus:ring-green-middle-600 focus:ring-offset-2 transition-all"
       >
-        Zum Hauptinhalt springen
+        {t('layout.header.skipToContent')}
       </a>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all ease-in-out duration-300
@@ -80,7 +82,7 @@ function Header() {
         <div className="relative px-4 py-5 max-w-screen-lg mx-auto flex justify-between items-center md:px-6 xl:max-w-screen-xl">
           <Link
             to="/"
-            aria-label="Zur Startseite navigieren"
+            aria-label={t('layout.header.homeAriaLabel')}
             className={`flex items-center gap-x-4 xl:gap-x-5 ${open ? 'opacity-0' : ''}`}
           >
             <figure className="w-24 xl:w-28">
@@ -97,7 +99,7 @@ function Header() {
             aria-expanded={open}
             aria-controls="main-navigation"
             aria-haspopup="menu"
-            aria-label="Hauptnavigation öffnen"
+            aria-label={t('layout.header.navigationToggleAriaLabel')}
             className="relative w-10 h-10 p-2 z-50 group cursor-pointer lg:hidden"
             onClick={() => toggleNavigation(!open)}
           >

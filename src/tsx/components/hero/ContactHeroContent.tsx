@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Mail, ExternalLink, Leaf, ArrowRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
@@ -181,6 +182,7 @@ function ContactCard({
 function ContactHeroContent() {
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
+  const { t } = useTranslation()
 
   return (
     <div ref={ref} className="relative mt-12 lg:mt-16">
@@ -212,7 +214,7 @@ function ContactHeroContent() {
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-light-100 rounded-full mb-4">
           <div className="w-2 h-2 bg-green-light-900 rounded-full animate-pulse" />
           <span className="text-xs font-semibold text-green-dark-900 tracking-wide uppercase">
-            Wir freuen uns auf dich
+            {t('contactHero.intro')}
           </span>
         </div>
       </div>
@@ -222,9 +224,9 @@ function ContactHeroContent() {
         <ContactCard
           href="mailto:info@green-ecolution.de"
           icon={Mail}
-          title="Schreib uns"
-          description="Hast du Fragen zum Projekt oder möchtest du mehr erfahren? Wir melden uns zeitnah bei dir zurück."
-          cta="E-Mail senden"
+          title={t('contactHero.cards.email.title')}
+          description={t('contactHero.cards.email.description')}
+          cta={t('contactHero.cards.email.cta')}
           delay={200}
           isVisible={isVisible}
           reducedMotion={reducedMotion}
@@ -234,9 +236,9 @@ function ContactHeroContent() {
         <ContactCard
           href="https://github.com/green-ecolution"
           icon="/assets/svg/socials/github.svg"
-          title="Open Source"
-          description="Entdecke unseren Code, trage zur Entwicklung bei oder nutze Green Ecolution für deine Kommune."
-          cta="Auf GitHub ansehen"
+          title={t('contactHero.cards.github.title')}
+          description={t('contactHero.cards.github.description')}
+          cta={t('contactHero.cards.github.cta')}
           isExternal
           delay={400}
           isVisible={isVisible}

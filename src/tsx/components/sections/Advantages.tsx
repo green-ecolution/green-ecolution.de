@@ -1,25 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import AdvantageCard from '../cards/AdvantageCard'
 
 const advantages = [
   {
-    label: 'Offene Lösung für alle',
+    label: 'sections.advantages.items.open.label',
     icon: '/assets/svg/general/people.svg',
-    description:
-      'Skalierbare Open-Source-Lösung für Kommunen zur Förderung von Weiterentwicklungen und Transparenz',
+    description: 'sections.advantages.items.open.description',
     accentColor: 'dark' as const,
   },
   {
-    label: 'Optimierte Routen',
+    label: 'sections.advantages.items.routes.label',
     icon: '/assets/svg/general/map.svg',
-    description: 'Individuelle Einsatzplanung zur effizienteren Bewässerung',
+    description: 'sections.advantages.items.routes.description',
     accentColor: 'middle' as const,
   },
   {
-    label: 'Weniger ist mehr',
+    label: 'sections.advantages.items.less.label',
     icon: '/assets/svg/general/reduce.svg',
-    description: 'Gezielte Bewässerung, weniger Wasserverbrauch',
+    description: 'sections.advantages.items.less.description',
     accentColor: 'dark' as const,
   },
 ]
@@ -49,6 +49,7 @@ function useIntersectionObserver(threshold = 0.1) {
 }
 
 function Advantages() {
+  const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const { ref, isVisible } = useIntersectionObserver()
 
@@ -67,17 +68,14 @@ function Advantages() {
         >
           <div className="inline-block mb-4">
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-              Vorteile
+              {t('sections.advantages.label')}
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
           <h2 className="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900">
-            Alle weiteren Funktionen und Vorteile im Überblick.
+            {t('sections.advantages.title')}
           </h2>
-          <p className="text-grey-600 leading-relaxed">
-            Das Projekt ist öffentlich einsehbar und hat als Ziel, den Wasserverbrauch für die
-            Bewässerung zu verringern sowie eine variable Einsatzplanung zu ermöglichen.
-          </p>
+          <p className="text-grey-600 leading-relaxed">{t('sections.advantages.description')}</p>
         </article>
 
         {/* Advantage Cards */}
@@ -92,9 +90,9 @@ function Advantages() {
             }}
           >
             <AdvantageCard
-              label={advantage.label}
+              label={t(advantage.label)}
               icon={advantage.icon}
-              description={advantage.description}
+              description={t(advantage.description)}
               accentColor={advantage.accentColor}
             />
           </article>

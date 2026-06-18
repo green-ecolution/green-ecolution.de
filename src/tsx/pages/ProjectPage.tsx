@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import Advantages from '../components/sections/Advantages'
 import Architecture from '../components/sections/Architecture'
 import DashboardPreview from '../components/sections/DashboardPreview'
@@ -12,9 +13,11 @@ import VisionRoadmap from '../components/sections/VisionRoadmap'
 import BreadcrumbSchema from '../components/BreadcrumbSchema'
 
 function ProjectPage() {
+  const { t } = useTranslation()
+
   useEffect(() => {
-    document.title = 'Projekt | Green Ecolution | Smartes Grünflächenmanagement'
-  }, [])
+    document.title = t('pages.project.documentTitle')
+  }, [t])
 
   useEffect(() => {
     const hash = window.location.hash
@@ -26,11 +29,8 @@ function ProjectPage() {
     }
   }, [])
 
-  const heroHeadline = 'Smartes Grünflächenmanagement für lebenswerte Städte'
-  const heroDescription =
-    'Green Ecolution ist eine Open-Source-Lösung für die effiziente Bewässerung urbaner Bäume. \
-  Unsere Software kombiniert Sensordaten mit intelligenter Routenoptimierung und ermöglicht so eine gezielte, \
-  ressourcenschonende Einsatzplanung. Entwickelt in Zusammenarbeit mit der Stadt Flensburg – bald auch verfügbar für deine Kommune.'
+  const heroHeadline = t('pages.project.hero.headline')
+  const heroDescription = t('pages.project.hero.description')
 
   return (
     <main
@@ -39,8 +39,8 @@ function ProjectPage() {
     >
       <BreadcrumbSchema
         items={[
-          { name: 'Startseite', path: '/' },
-          { name: 'Projekt', path: '/project' },
+          { name: t('pages.breadcrumbs.home'), path: '/' },
+          { name: t('pages.breadcrumbs.project'), path: '/project' },
         ]}
       />
       <Hero headline={heroHeadline} description={heroDescription} />

@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
+import { useTranslation } from 'react-i18next'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import type { AdoptionData } from './adoptTreeData'
@@ -42,6 +43,7 @@ function TreeIllustration({ variant }: { variant: TreeVariant }) {
 
 function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
   const reducedMotion = useReducedMotion()
+  const { t } = useTranslation()
   const ref = useOutsideClick(onClose) as React.RefObject<HTMLDivElement>
 
   const handleKeyDown = useCallback(
@@ -60,7 +62,11 @@ function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
   if (!data) return null
 
   const colors = variantColors[data.treeVariant]
-  const fullName = `${data.tree.name} die ${data.tree.species}`
+  const species = t(data.tree.speciesKey)
+  const fullName = t('adoptTreeModal.fullName', {
+    name: data.tree.name,
+    species,
+  })
 
   return createPortal(
     <div
@@ -75,7 +81,7 @@ function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
         ref={ref}
         role="dialog"
         aria-modal="true"
-        aria-label={`Adoptionsurkunde für ${fullName}`}
+        aria-label={t('adoptTreeModal.ariaLabel', { fullName })}
         className={`
           relative w-full max-w-md overflow-hidden
           bg-green-light-100 rounded-3xl shadow-2xl
@@ -102,10 +108,10 @@ function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
 
         <div className="px-6 pt-6 pb-2 sm:px-8 sm:pt-8">
           <p className="text-xs font-nunito-sans font-semibold uppercase tracking-widest text-green-dark-900/50 mb-1">
-            Adoptionsurkunde
+            {t('adoptTreeModal.certificateTitle')}
           </p>
           <p className="text-xxs font-nunito-sans text-green-dark-900/40 mb-5">
-            Nr. {data.certNumber}
+            {t('adoptTreeModal.certificateNumber', { number: data.certNumber })}
           </p>
 
           <div className="flex items-center gap-5 mb-5">
@@ -123,7 +129,7 @@ function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
                 {data.tree.emoji} {fullName}
               </h2>
               <p className="text-sm text-green-dark-900/60 font-nunito-sans mt-1">
-                wartet in Flensburg auf dich
+                {t('adoptTreeModal.location')}
               </p>
             </div>
           </div>
@@ -135,9 +141,11 @@ function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
             "
           >
             <p className="text-xs font-semibold text-green-dark-900/50 uppercase tracking-wide mb-1.5">
-              Wusstest du?
+              {t('adoptTreeModal.didYouKnow')}
             </p>
-            <p className="text-sm text-grey-900/80 leading-relaxed font-nunito-sans">{data.fact}</p>
+            <p className="text-sm text-grey-900/80 leading-relaxed font-nunito-sans">
+              {t(data.factKey)}
+            </p>
           </div>
 
           <p
@@ -146,11 +154,13 @@ function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
               leading-relaxed mb-2
             "
           >
-            „Danke, dass du an mich denkst! Mit Projekten wie Green Ecolution bekommen Stadtbäume
-            wie ich endlich die Aufmerksamkeit, die wir verdienen."
+            {t('adoptTreeModal.quote')}
           </p>
           <p className="text-right text-xs text-green-dark-900/40 font-nunito-sans mb-5">
-            — {data.tree.name}, seit {data.plantedYear} in Flensburg
+            {t('adoptTreeModal.since', {
+              name: data.tree.name,
+              year: data.plantedYear,
+            })}
           </p>
         </div>
 
@@ -167,7 +177,7 @@ function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
               active:translate-y-0
             "
           >
-            Danke, {data.tree.name}! 🌳
+            {t('adoptTreeModal.button', { name: data.tree.name })}
           </button>
         </div>
       </div>
