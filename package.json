@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@splidejs/react-splide": "^0.7.12",
-    "@tanstack/react-router": "^1.170.15",
+    "@tanstack/react-router": "^1.170.16",
     "lottie-react": "^2.4.1",
     "lucide-react": "^1.18.0",
     "react": "^19.2.7",
