@@ -30,7 +30,7 @@ function ProjectPage() {
   const heroDescription =
     'Green Ecolution ist eine Open-Source-Lösung für die effiziente Bewässerung urbaner Bäume. \
   Unsere Software kombiniert Sensordaten mit intelligenter Routenoptimierung und ermöglicht so eine gezielte, \
-  ressourcenschonende Einsatzplanung. Entwickelt in Zusammenarbeit mit der Stadt Flensburg – bald auch verfügbar für deine Kommune.'
+  ressourcenschonende Einsatzplanung. Entwickelt in Zusammenarbeit mit der Stadt Flensburg und bald auch für deine Kommune verfügbar.'
 
   return (
     <main

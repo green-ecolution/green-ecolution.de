@@ -115,10 +115,9 @@ const Videos = () => {
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
         >
-          Im Rahmen des Forschungsprojekts wurden nicht nur eine Sensorlösung und eine Software
-          entwickelt, sondern auch Videos produziert. Diese Videos veranschaulichen anschaulich die
-          Inhalte des Projekts, einschließlich der Zielsetzung, der Problemstellung und der von uns
-          entwickelten Lösung.
+          Im Rahmen des Forschungsprojekts sind neben der Sensorlösung und der Software auch zwei
+          Videos entstanden. Sie stellen das Projekt vor: die Zielsetzung, die Problemstellung und
+          die entwickelte Lösung.
         </p>
       </article>
 
@@ -134,7 +133,7 @@ const Videos = () => {
             src={VIDEO_SHORT}
             thumbnail={VIDEO_SHORT_THMBNL}
             title="Kurzvideo"
-            describtion="In diesem kurzen Video geben wir dir einen ersten Einblick in unser Projekt. Erfahre in wenigen Minuten, worum es geht und was du von den kommenden Inhalten erwarten kannst. Schau dir das Video an, um einen schnellen Überblick zu bekommen!"
+            describtion="Ein kurzer Einstieg in das Projekt. In rund einer halben Minute erfährst du, worum es bei Green Ecolution geht."
             duration="ca. 30 Sekunden"
           />
         </div>
@@ -149,7 +148,7 @@ const Videos = () => {
             src={VIDEO_LONG}
             thumbnail={VIDEO_LONG_THMBNL}
             title="Langvideo"
-            describtion="In diesem ausführlichen Video tauchen wir tiefer in unser Projekt ein. Hier erläutern wir die wichtigsten Details, Hintergründe und die nächsten Schritte. Dieses Video bietet dir umfassende Informationen und hilft dir, das Projekt besser zu verstehen. Viel Spaß beim Anschauen und Entdecken!"
+            describtion="Das ausführliche Video geht tiefer und erklärt die wichtigsten Hintergründe, Details und die nächsten Schritte des Projekts."
             duration="ca. 4 Minuten"
           />
         </div>

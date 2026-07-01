@@ -49,13 +49,13 @@ function Introduction() {
       label: 'Augenmerk auf Jungbäume',
       icon: '/assets/svg/general/tree.svg',
       description:
-        'Jungbäume sind besonders hitzeanfällig und daher äußerst schutzbedürftig. Aus diesem Grund werden Bäume in deren ersten drei Standjahren überwacht.',
+        'Jungbäume sind besonders hitzeanfällig und daher schutzbedürftig. Deshalb werden Bäume in ihren ersten drei Standjahren überwacht.',
     },
     {
       label: 'Monitoring mehrerer Standorte',
       icon: '/assets/svg/general/location.svg',
       description:
-        'Unter Verwendung des LoRaWan-Netzes können verschiedene Standorte überwacht und weitere einfach eingebunden werden.',
+        'Unter Verwendung des LoRaWAN-Netzes können verschiedene Standorte überwacht und weitere einfach eingebunden werden.',
     },
   ]
 
@@ -108,10 +108,9 @@ function Introduction() {
           `}
           style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
         >
-          Smartes Grünflächenmanagement umfasst die effiziente Überwachung und Bewässerung von
-          Vegetation auf Grünflächen durch den Einsatz moderner Technologien wie Sensoren und
-          Datenanalyse. Dadurch wird eine präzise Steuerung der Pflegemaßnahmen ermöglicht, die
-          angepasst sind an die spezifischen Standortbedingungen.
+          Beim smarten Grünflächenmanagement überwachen Sensoren die Grünflächen kontinuierlich und
+          liefern die Datengrundlage für ihre Bewässerung und Pflege. So lassen sich die Maßnahmen
+          präzise steuern und an die jeweiligen Standortbedingungen anpassen.
         </p>
       </article>
 

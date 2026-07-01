@@ -72,7 +72,7 @@ function Advantages() {
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
           <h2 className="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900">
-            Alle weiteren Funktionen und Vorteile im Überblick.
+            Alle weiteren Funktionen und Vorteile
           </h2>
           <p className="text-grey-600 leading-relaxed">
             Das Projekt ist öffentlich einsehbar und hat als Ziel, den Wasserverbrauch für die

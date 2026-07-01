@@ -38,8 +38,8 @@ const funFacts: string[] = [
   'Stadtbäume filtern einen relevanten Anteil des Feinstaubs aus der Luft in ihrer unmittelbaren Umgebung.',
   'Die Wurzeln eines Straßenbaums erstrecken sich oft über das Anderthalbfache der Kronenfläche.',
   'Ein 100-jähriger Baum hat in seinem Leben etwa 5 Tonnen CO₂ gebunden.',
-  'Bäume kommunizieren über unterirdische Pilznetzwerke - das sogenannte „Wood Wide Web".',
-  'Straßenbäume leben im Durchschnitt nur 60 Jahre - auf dem Land werden sie dreimal so alt.',
+  'Bäume kommunizieren über unterirdische Pilznetzwerke, das sogenannte „Wood Wide Web".',
+  'Straßenbäume leben im Durchschnitt nur 60 Jahre. Auf dem Land werden sie dreimal so alt.',
   'Ein dichter Baumbestand kann den Lärmpegel um bis zu 10 Dezibel senken.',
   'In heißen Sommern braucht ein Stadtbaum bis zu 200 Liter Wasser pro Woche zusätzlich.',
 ]

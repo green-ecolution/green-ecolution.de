@@ -13,7 +13,7 @@ export const governancePillars: GovernancePillar[] = [
     category: 'Lizenz',
     title: 'AGPL-3.0-only',
     description:
-      'Lizenziert unter der AGPL. Finanziert im Rahmen des Landesprogramms „Offene Innovation" des DigitalHub.SH Schleswig-Holstein.',
+      'Lizenziert unter der AGPL. Finanziert im Rahmen des Landesprogramms „Offene Innovation" des DigitalHub.SH.',
     icon: Shield,
   },
   {
@@ -48,7 +48,7 @@ export const governancePillars: GovernancePillar[] = [
     category: 'Wirtschaftlichkeit',
     title: 'Kosteneffizienz',
     description:
-      'Keine Lizenzkosten. Geschäftsmodell basiert auf Dienstleistungen: Hosting, Anpassung, Sensorvertrieb. Regionale Wertschöpfung in SH.',
+      'Keine Lizenzkosten. Geschäftsmodell basiert auf Dienstleistungen: Hosting, Anpassung, Sensorvertrieb. Regionale Wertschöpfung in Schleswig-Holstein.',
     icon: PiggyBank,
   },
 ]

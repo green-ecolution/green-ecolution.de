@@ -123,7 +123,7 @@ function Features() {
       label: 'Tour-Planung',
       icon: <ClipboardList />,
       description:
-        "Optimierte Bewässerungspläne mit Echtzeit-Status: Von 'geplant' über 'aktiv' bis 'abgeschlossen'.",
+        'Optimierte Bewässerungspläne mit Echtzeit-Status: Von „geplant“ über „aktiv“ bis „abgeschlossen“.',
       color: 'green-middle',
     },
     {
@@ -185,7 +185,7 @@ function Features() {
           style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
         >
           Von der Sensorerfassung über die intelligente Routenplanung bis zur detaillierten
-          Auswertung - alle Funktionen für ein effizientes und nachhaltiges Grünflächenmanagement
+          Auswertung: alle Funktionen für ein effizientes und nachhaltiges Grünflächenmanagement
         </p>
       </article>
 

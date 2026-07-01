@@ -32,7 +32,7 @@ const popups: Popup[] = [
     shortName: 'Datenübertragung',
     description: (
       <>
-        Die Sensordaten werden mittels öffentlichen LoRaWAN-Netzwerk an ein Backend zur weiteren
+        Die Sensordaten werden über ein öffentliches LoRaWAN-Netzwerk an ein Backend zur weiteren
         Verarbeitung übermittelt. LoRaWAN benötigt wenig Energie und besitzt eine hohe Reichweite,
         was zu einer großen Flächenabdeckung und einem geringen Wartungsaufwand führt.
       </>
@@ -43,8 +43,8 @@ const popups: Popup[] = [
     shortName: 'Handlungsempfehlungen',
     description: (
       <>
-        Die übermittelten Sensordaten werden anhand wissenschaftlicher/mathematischer Methodiken
-        ausgewertet. Auf einen Dashboard wird graphisch dargestellt, ob eine Bewässerung in nächster
+        Die übermittelten Sensordaten werden anhand wissenschaftlicher und mathematischer Methoden
+        ausgewertet. Auf einem Dashboard wird grafisch dargestellt, ob eine Bewässerung in nächster
         Zeit notwendig ist.&nbsp;
         <Link
           to="/project"

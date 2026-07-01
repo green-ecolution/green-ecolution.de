@@ -14,7 +14,7 @@ export const steps: ProcessStep[] = [
     label: 'Sensoren installieren',
     shortName: 'Installation',
     description:
-      'Bodenfeuchtesensoren werden an ausgewählten Bäumen angebracht – schnell, unkompliziert und wartungsarm.',
+      'Bodenfeuchtesensoren werden an ausgewählten Bäumen angebracht. Das ist schnell, unkompliziert und wartungsarm.',
     icon: Radio,
     color: 'green-dark',
   },
@@ -30,7 +30,7 @@ export const steps: ProcessStep[] = [
     label: 'Bewässerungsbedarf erkennen',
     shortName: 'Analyse',
     description:
-      'Das Dashboard zeigt dir auf einen Blick, welche Bäume Wasser brauchen – priorisiert nach Dringlichkeit.',
+      'Das Dashboard zeigt dir auf einen Blick, welche Bäume Wasser brauchen, priorisiert nach Dringlichkeit.',
     icon: LayoutDashboard,
     color: 'green-middle',
   },
@@ -38,7 +38,7 @@ export const steps: ProcessStep[] = [
     label: 'Optimierte Routen planen',
     shortName: 'Planung',
     description:
-      'Green Ecolution berechnet die effizienteste Tour für dein Team – weniger Fahrzeit, mehr Bewässerung.',
+      'Green Ecolution berechnet die effizienteste Tour für dein Team: weniger Fahrzeit, mehr Bewässerung.',
     icon: Route,
     color: 'green-light',
   },

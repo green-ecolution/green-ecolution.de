@@ -81,8 +81,8 @@ function LatestRelease() {
             `}
             style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
           >
-            Wir entwickeln Green Ecolution kontinuierlich weiter. Schau dir die neuesten Funktionen,
-            Verbesserungen und Bugfixes an – und erfahre, woran wir gerade arbeiten.
+            Wir entwickeln Green Ecolution kontinuierlich weiter. Schau dir die neuesten Funktionen
+            an und erfahre, woran wir gerade arbeiten.
           </p>
           <div
             className={`

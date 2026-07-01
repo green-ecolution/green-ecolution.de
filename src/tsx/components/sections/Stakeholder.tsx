@@ -44,7 +44,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
       url: 'https://progeek.de/',
       image: '/assets/images/logo/progeek.svg',
       description:
-        'PROGEEK steht für innovative IT-Lösungen, individuelle Softwareentwicklung und digitale Beratung – mit dem Ziel, Unternehmen auf ihrem Weg in die Zukunft der Digitalisierung zu begleiten.',
+        'PROGEEK steht für innovative IT-Lösungen, individuelle Softwareentwicklung und digitale Beratung, mit dem Ziel, Unternehmen auf ihrem Weg in die Zukunft der Digitalisierung zu begleiten.',
     },
     {
       label: 'Smarte Grenzregion',

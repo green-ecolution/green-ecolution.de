@@ -12,7 +12,7 @@ const links = [
   {
     label: 'Organisation auf GitHub',
     subLabel:
-      'Dort finden Sie alle Code-Repositories, die mit dem Projekt in Verbindung stehen, wie z. B. Backend und Frontend der Software',
+      'Dort findest du alle Code-Repositories, die mit dem Projekt in Verbindung stehen, etwa Backend und Frontend der Software',
     url: 'https://github.com/green-ecolution',
   },
   {
@@ -41,8 +41,7 @@ const links = [
   },
   {
     label: 'Live Demo',
-    subLabel:
-      'Die öffentlich zugängliche Demo-Instanz zeigt den aktuellen Funktionsumfang: Kartenansicht mit Ampelsystem, Dashboard mit Sensordaten und automatisierte Routenberechnung.',
+    subLabel: 'Die öffentliche Demo-Instanz, direkt im Browser und ohne Installation.',
     url: 'https://demo.green-ecolution.de/',
   },
 ]

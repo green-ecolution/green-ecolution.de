@@ -168,7 +168,7 @@ function HomepageHero() {
               style={{ transitionDelay: reducedMotion ? '0ms' : '350ms' }}
             >
               Mittels sensorgestützter Überwachung von Grünflächen werden Daten über das
-              LoRaWan-Netz übermittelt und ausgewertet, sodass Handlungsempfehlungen für die
+              LoRaWAN-Netz übermittelt und ausgewertet, sodass Handlungsempfehlungen für die
               Bewässerung abgegeben werden können.
             </p>
 

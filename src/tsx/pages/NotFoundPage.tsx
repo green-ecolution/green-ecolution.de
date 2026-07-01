@@ -23,7 +23,7 @@ function NotFoundPage() {
           </h1>
           <p className="lg:text-center mb-10">
             Die gewünschte Seite ist nicht erreichbar, da sie entweder nicht existiert oder es zu
-            einem Fehler gekommen ist. Error-Code: 404
+            einem Fehler gekommen ist. Fehlercode: 404
           </p>
           <div className="lg:flex lg:items-center lg:justify-center">
             <Button href="/" ariaLabel="Zur Startseite" isDark>

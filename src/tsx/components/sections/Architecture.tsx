@@ -273,11 +273,11 @@ function Architecture() {
           <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
         </div>
         <h2 className="font-lato font-bold text-2xl lg:text-4xl mb-4 text-grey-900">
-          Der Datenfluss im Überblick
+          Der Weg der Daten
         </h2>
         <p className="text-grey-600 max-w-2xl mx-auto text-base lg:text-lg">
-          Von der Messung am Baum bis zur optimierten Bewässerungsroute – so fließen die Daten durch
-          das Green Ecolution System.
+          So gelangen die Messwerte vom Baum bis zur optimierten Bewässerungsroute durch das Green
+          Ecolution System.
         </p>
       </article>
 

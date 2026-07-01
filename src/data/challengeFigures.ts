@@ -9,13 +9,13 @@ export const challengeFigures: ChallengeFigure[] = [
     value: '50.000',
     unit: 'Liter / Jahr',
     description:
-      'Wasser werden pro mittelgroße Kommune jährlich ausgebracht, ohne Datengrundlage, ohne bedarfsgerechte Steuerung.',
+      'Wasser verbraucht eine mittelgroße Kommune für die Bewässerung, oft ohne Datengrundlage und ohne bedarfsgerechte Steuerung.',
   },
   {
     value: '1.700 €',
     unit: 'pro Baum',
     description:
-      'kostet ein einzelner Straßenbaum. Ein vermeidbarer Totalverlust durch fehlende bedarfsgerechte Bewässerung finanziert Jahre Sensorbetrieb.',
+      'kostet ein einzelner Straßenbaum. Geht er durch fehlende Bewässerung verloren, deckt allein dieser Schaden die Sensorkosten für mehrere Jahre.',
   },
   {
     value: 'bis 60.000 €',

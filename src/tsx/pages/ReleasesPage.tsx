@@ -79,8 +79,8 @@ function ReleasesPage() {
             }`}
             style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
           >
-            Entdecke die neuesten Funktionen, Verbesserungen und Bugfixes – wir arbeiten
-            kontinuierlich daran, Green Ecolution noch besser zu machen.
+            Hier siehst du, was sich von Version zu Version geändert hat, von neuen Funktionen bis
+            zu behobenen Fehlern.
           </p>
         </header>
 

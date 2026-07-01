@@ -75,13 +75,13 @@ const WelcomeCard: React.FC<WelcomeCardProps> = ({
           </h2>
 
           <p className="text-sm text-green-dark-900 font-medium mb-4">
-            Intelligentes Grünflächenmanagement
+            Smartes Grünflächenmanagement
           </p>
 
           <p className="text-base text-grey-900/80 leading-relaxed mb-6">
             Erfahre, wie wir mit smarter Sensorik und datengestützten Analysen die Bewässerung
-            städtischer Grünflächen optimieren – für gesündere Bäume, Beete und Parks bei
-            effizientem Ressourceneinsatz.
+            städtischer Grünflächen optimieren, für gesündere Bäume, Beete und Parks bei effizientem
+            Ressourceneinsatz.
           </p>
 
           <button

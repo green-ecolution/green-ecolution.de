@@ -67,10 +67,9 @@ function DashboardPreview() {
           }`}
           style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
         >
-          Unser System liefert anhand wissenschaftlicher Datenauswertung fundierte
-          Handlungsempfehlungen, zu welchem Zeitpunkt eine Bewässerung notwendig ist. Die Daten
-          werden dahingehend aufbereitet, dass diese einfach zu interpretieren sind und in die
-          Einsatzplanung eingebunden werden können.
+          Unser System wertet die Sensordaten wissenschaftlich aus und zeigt, zu welchem Zeitpunkt
+          eine Bewässerung notwendig ist. Die Daten werden so aufbereitet, dass sie einfach zu
+          interpretieren und direkt in die Einsatzplanung einzubinden sind.
         </p>
       </article>
 

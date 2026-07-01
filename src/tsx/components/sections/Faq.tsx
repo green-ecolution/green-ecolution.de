@@ -119,8 +119,8 @@ function Faq() {
         >
           <Accordion label="Wer steckt hinter dem Projekt Green Ecolution?">
             <p>
-              Das Projekt "Green Ecolution" wurde im Rahmen eines Forschungsprojekts im
-              Masterstudiengang "Angewandte Informatik" an der&nbsp;
+              Das Projekt „Green Ecolution“ wurde im Rahmen eines Forschungsprojekts im
+              Masterstudiengang „Angewandte Informatik“ an der&nbsp;
               <a
                 href="https://hs-flensburg.de/"
                 target="_blank"
@@ -170,7 +170,7 @@ function Faq() {
         >
           <Accordion label="Welchen Mehrwert bietet das Projekt?">
             <p className="mb-4">
-              Das Forschungsprojekt "Green Ecolution" hat gezeigt, wie digitale Technologien gezielt
+              Das Forschungsprojekt „Green Ecolution“ hat gezeigt, wie digitale Technologien gezielt
               eingesetzt werden können, um die Bewässerung von Stadtbäumen effizienter, nachhaltiger
               und ressourcenschonender zu gestalten. Durch den Einsatz moderner Sensorik und
               intelligenter Datenauswertung wurde eine Grundlage geschaffen, um Wasserverbrauch und
@@ -180,7 +180,7 @@ function Faq() {
               Die gewonnenen Erkenntnisse und entwickelten Systeme leisten einen wichtigen Beitrag
               zur nachhaltigen Stadtentwicklung in Flensburg. Sie unterstützen eine datenbasierte
               Entscheidungsfindung und fördern den verantwortungsvollen Umgang mit natürlichen
-              Ressourcen - zum Nutzen von Umwelt, Stadtverwaltung und Bürger:innen.
+              Ressourcen, zum Nutzen von Umwelt, Stadtverwaltung und Bürger:innen.
             </p>
           </Accordion>
         </div>
