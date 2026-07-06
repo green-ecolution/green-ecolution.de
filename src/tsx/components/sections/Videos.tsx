@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import VideoPreview from '../VideoPreview'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
+import { videoBaseUrl } from '../../lib/runtimeEnv'
 
 function useIntersectionObserver(threshold = 0.1) {
   const [isVisible, setIsVisible] = useState(false)
@@ -27,14 +28,11 @@ function useIntersectionObserver(threshold = 0.1) {
   return { ref, isVisible }
 }
 
-const VIDEO_SHORT =
-  'https://s3.green-ecolution.de/public-videos/project-video/short/green-ecolution-short.m3u8'
-const VIDEO_SHORT_THMBNL =
-  'https://s3.green-ecolution.de/public-videos/project-video/short/green-ecolution-thumbnail.png'
-const VIDEO_LONG =
-  'https://s3.green-ecolution.de/public-videos/project-video/long/green-ecolution-long.m3u8'
-const VIDEO_LONG_THMBNL =
-  'https://s3.green-ecolution.de/public-videos/project-video/long/green-ecolution-thumbnail.png'
+const VIDEO_BASE = `${videoBaseUrl()}/project-video`
+const VIDEO_SHORT = `${VIDEO_BASE}/short/green-ecolution-short.m3u8`
+const VIDEO_SHORT_THMBNL = `${VIDEO_BASE}/short/green-ecolution-thumbnail.png`
+const VIDEO_LONG = `${VIDEO_BASE}/long/green-ecolution-long.m3u8`
+const VIDEO_LONG_THMBNL = `${VIDEO_BASE}/long/green-ecolution-thumbnail.png`
 
 const VideoCard = (props: {
   src: string

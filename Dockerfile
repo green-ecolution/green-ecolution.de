@@ -14,8 +14,12 @@ WORKDIR /app
 FROM base AS build
 ARG VERSION="develop"
 ARG BUILD_VERSION="unkown"
+ARG VITE_VIDEO_BASE_URL=""
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN VITE_APP_VERSION="${VERSION}" VITE_BUILD_VERSION="${BUILD_VERSION}" pnpm run build
+RUN VITE_APP_VERSION="${VERSION}" \
+    VITE_BUILD_VERSION="${BUILD_VERSION}" \
+    VITE_VIDEO_BASE_URL="${VITE_VIDEO_BASE_URL}" \
+    pnpm run build
 
 #############################################
 # Nginx
