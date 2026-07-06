@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.7.2...v1.8.0) (2026-07-06)
+
+
+### Features
+
+* make project video base url configurable via runtime env ([#405](https://github.com/green-ecolution/green-ecolution.de/issues/405)) ([118c997](https://github.com/green-ecolution/green-ecolution.de/commit/118c99741702f97e55502615d648c199064e679d))
+
 ## [1.7.2](https://github.com/green-ecolution/green-ecolution.de/compare/v1.7.1...v1.7.2) (2026-07-01)
 
 
