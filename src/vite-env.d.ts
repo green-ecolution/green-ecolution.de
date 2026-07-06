@@ -4,6 +4,7 @@ declare global {
   interface ImportMetaEnv {
     readonly VITE_APP_VERSION: string
     readonly VITE_BUILD_VERSION: string
+    readonly VITE_VIDEO_BASE_URL?: string
   }
 
   interface ImportMeta {
@@ -18,6 +19,7 @@ declare global {
 
   interface Window {
     a?: Analytics
+    _env_?: { VITE_VIDEO_BASE_URL?: string }
   }
 }
 
