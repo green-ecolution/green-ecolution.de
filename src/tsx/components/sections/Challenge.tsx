@@ -1,37 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
-import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { challengeFigures } from '../../../data/challengeFigures'
 
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
-
 function Challenge() {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
-
   return (
-    <section ref={ref} className="relative overflow-hidden">
+    <section className="relative overflow-hidden">
       {/* Dark gradient background — steeper angle for distinct feel vs Contact/Demo */}
       <div className="bg-gradient-to-b from-[#1e3a1a] via-green-dark-900 to-green-middle-900/90">
         {/* Crosshatch pattern — distinct from dot pattern used elsewhere */}
@@ -52,11 +23,7 @@ function Challenge() {
           {/* Quote Block */}
           <div className="mb-12 lg:mb-16 xl:mb-20">
             {/* Decorative quotation mark */}
-            <div
-              className={`transition-all ${reducedMotion ? '' : 'duration-1000'} ${
-                isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-              }`}
-            >
+            <div>
               <span
                 className="block mb-4 font-lato text-white/10 leading-none select-none"
                 style={{ fontSize: '5rem' }}
@@ -66,12 +33,7 @@ function Challenge() {
               </span>
             </div>
 
-            <blockquote
-              className={`border-l-2 border-green-light-900/30 pl-6 lg:pl-8 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '150ms' }}
-            >
+            <blockquote className="border-l-2 border-green-light-900/30 pl-6 lg:pl-8">
               <p className="font-lato text-2xl font-light italic text-white leading-snug max-w-3xl md:text-3xl lg:text-4xl xl:text-5xl">
                 Städte gießen nach Gefühl.
                 <br />
@@ -81,20 +43,10 @@ function Challenge() {
           </div>
 
           {/* Divider */}
-          <div
-            className={`w-16 h-px bg-gradient-to-r from-green-light-900/50 to-transparent mb-10 lg:mb-14 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 w-16' : 'opacity-0 w-0'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '350ms' }}
-          />
+          <div className="w-16 h-px bg-gradient-to-r from-green-light-900/50 to-transparent mb-10 lg:mb-14" />
 
           {/* Supporting text */}
-          <p
-            className={`text-white/70 leading-relaxed max-w-3xl mb-12 lg:mb-16 lg:text-lg transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '450ms' }}
-          >
+          <p className="text-white/70 leading-relaxed max-w-3xl mb-12 lg:mb-16 lg:text-lg">
             Städtische Grünflächen regulieren das Mikroklima, fördern Biodiversität und stärken den
             Standortwettbewerb. Doch anhaltende Trockenheit und fehlende Digitalisierung gefährden
             dieses Gut. Die Bewässerungsplanung vieler Kommunen stützt sich allein auf die
@@ -106,17 +58,10 @@ function Challenge() {
 
           {/* Cost Figures Grid */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-6">
-            {challengeFigures.map((figure, index) => (
+            {challengeFigures.map((figure) => (
               <article
                 key={figure.unit}
-                className={`group bg-white/[0.07] backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-white/10 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-lg ${
-                  isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : `opacity-0 translate-y-8 ${reducedMotion ? '' : '!duration-700'}`
-                }`}
-                style={{
-                  transitionDelay: reducedMotion || isVisible ? '0ms' : `${550 + index * 150}ms`,
-                }}
+                className="group bg-white/[0.07] backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-white/10 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-lg"
               >
                 <div className="mb-3">
                   <span className="font-lato text-3xl font-bold text-white tracking-tight lg:text-4xl xl:text-5xl">

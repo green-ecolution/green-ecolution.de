@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
 import {
   TreeDeciduous,
   Truck,
@@ -8,31 +7,6 @@ import {
   BarChart3,
 } from 'lucide-react'
 import { ReactNode } from 'react'
-import { useReducedMotion } from '../../hooks/useReducedMotion'
-
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
 
 interface Feature {
   label: string
@@ -93,9 +67,6 @@ function FeatureCard({ feature }: { feature: Feature }) {
 }
 
 function Features() {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
-
   const features: Feature[] = [
     {
       label: 'Echtzeit-Dashboard',
@@ -145,18 +116,11 @@ function Features() {
 
   return (
     <section
-      ref={ref}
       id="features"
       className="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
     >
       {/* Section Label */}
-      <div
-        className={`
-          text-center mb-6 lg:mb-8
-          ${reducedMotion ? '' : 'transition-all duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        `}
-      >
+      <div className="text-center mb-6 lg:mb-8">
         <div className="inline-block">
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
             Features
@@ -166,24 +130,10 @@ function Features() {
       </div>
 
       <article className="mb-8 lg:mb-14 text-center">
-        <h2
-          className={`
-            font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-        >
+        <h2 className="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl">
           Green Ecolution im Überblick
         </h2>
-        <p
-          className={`
-            text-grey-900/70 max-w-2xl mx-auto leading-relaxed
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
-        >
+        <p className="text-grey-900/70 max-w-2xl mx-auto leading-relaxed">
           Von der Sensorerfassung über die intelligente Routenplanung bis zur detaillierten
           Auswertung: alle Funktionen für ein effizientes und nachhaltiges Grünflächenmanagement
         </p>
@@ -193,13 +143,7 @@ function Features() {
         {features.map((feature, index) => (
           <div
             key={feature.label}
-            className={`
-              ${feature.size === 'large' ? 'col-span-2' : ''}
-              ${index === 0 ? 'lg:row-span-1' : ''}
-              ${reducedMotion ? '' : 'transition-all duration-700'}
-              ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-            `}
-            style={{ transitionDelay: reducedMotion ? '0ms' : `${300 + index * 100}ms` }}
+            className={`${feature.size === 'large' ? 'col-span-2' : ''} ${index === 0 ? 'lg:row-span-1' : ''}`}
           >
             <FeatureCard feature={feature} />
           </div>

@@ -1,51 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
 import { architectureSteps } from '../../../data/architectureSteps'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
-
-function useIntersectionObserver(threshold = 0.2) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -100px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
-
-function useStaggeredVisibility(itemCount: number, baseDelay = 200) {
-  const [visibleItems, setVisibleItems] = useState<Set<number>>(() => new Set())
-  const { ref, isVisible } = useIntersectionObserver(0.1)
-
-  useEffect(() => {
-    if (!isVisible) return
-
-    const timers: NodeJS.Timeout[] = []
-    for (let i = 0; i < itemCount; i++) {
-      const timer = setTimeout(() => {
-        setVisibleItems((prev) => new Set([...prev, i]))
-      }, i * baseDelay)
-      timers.push(timer)
-    }
-
-    return () => timers.forEach(clearTimeout)
-  }, [isVisible, itemCount, baseDelay])
-
-  return { ref, visibleItems, isVisible }
-}
 
 const cardConfigs = [
   {
@@ -87,24 +41,9 @@ function DataParticle({ delay, duration }: { delay: number; duration: number }) 
   )
 }
 
-function ConnectionLine({
-  isVisible,
-  reducedMotion,
-  index,
-}: {
-  isVisible: boolean
-  reducedMotion: boolean
-  index: number
-}) {
-  const pathLength = 100
-
+function ConnectionLine({ reducedMotion, index }: { reducedMotion: boolean; index: number }) {
   return (
-    <div
-      className={`hidden lg:flex items-center justify-center w-20 xl:w-28 transition-all duration-700 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
-      style={{ transitionDelay: `${(index + 1) * 200 + 300}ms` }}
-    >
+    <div className="hidden lg:flex items-center justify-center w-20 xl:w-28">
       <svg viewBox="0 0 100 40" className="w-full h-10" preserveAspectRatio="none">
         <defs>
           <linearGradient id={`lineGrad${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
@@ -124,20 +63,16 @@ function ConnectionLine({
           strokeDasharray="4 4"
         />
 
-        {/* Animated main path */}
+        {/* Main path */}
         <path
           d="M 0 20 Q 25 10 50 20 Q 75 30 100 20"
           fill="none"
           stroke={`url(#lineGrad${index})`}
           strokeWidth="2"
-          strokeDasharray={pathLength}
-          strokeDashoffset={isVisible && !reducedMotion ? 0 : pathLength}
-          className="transition-all duration-1000"
-          style={{ transitionDelay: `${(index + 1) * 200 + 400}ms` }}
         />
 
         {/* Data particles */}
-        {!reducedMotion && isVisible && (
+        {!reducedMotion && (
           <>
             <DataParticle delay={0 + index * 0.3} duration={2} />
             <DataParticle delay={0.7 + index * 0.3} duration={2} />
@@ -146,30 +81,15 @@ function ConnectionLine({
         )}
 
         {/* Arrow head */}
-        <polygon
-          points="92,20 100,17 100,23"
-          fill="#ACB63B"
-          className={`transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-          style={{ transitionDelay: `${(index + 1) * 200 + 600}ms` }}
-        />
+        <polygon points="92,20 100,17 100,23" fill="#ACB63B" />
       </svg>
     </div>
   )
 }
 
-function MobileConnectionLine({
-  isVisible,
-}: {
-  isVisible: boolean
-  reducedMotion: boolean
-  index: number
-}) {
+function MobileConnectionLine() {
   return (
-    <div
-      className={`flex lg:hidden justify-center py-3 transition-opacity duration-500 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
-    >
+    <div className="flex lg:hidden justify-center py-3">
       <svg viewBox="0 0 24 24" className="w-5 h-5 text-green-dark-900/40">
         <path
           d="M6 9 L12 15 L18 9"
@@ -187,25 +107,14 @@ function MobileConnectionLine({
 function ArchitectureCard({
   step,
   config,
-  index,
-  isVisible,
-  reducedMotion,
 }: {
   step: (typeof architectureSteps)[0]
   config: (typeof cardConfigs)[0]
-  index: number
-  isVisible: boolean
-  reducedMotion: boolean
 }) {
   const Icon = step.icon
 
   return (
-    <div
-      className={`group relative transition-all ${reducedMotion ? '' : 'duration-700'} ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
-      style={{ transitionDelay: reducedMotion ? '0ms' : `${index * 200}ms` }}
-    >
+    <div className="group relative">
       {/* Card */}
       <div
         className={`relative bg-gradient-to-br ${config.gradient} rounded-2xl p-5 lg:p-6
@@ -249,23 +158,14 @@ function ArchitectureCard({
 
 function Architecture() {
   const reducedMotion = useReducedMotion()
-  const { ref, visibleItems, isVisible } = useStaggeredVisibility(
-    architectureSteps.length,
-    reducedMotion ? 0 : 200,
-  )
 
   return (
     <section
       id="architecture"
-      ref={ref}
       className="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
     >
       {/* Header */}
-      <article
-        className={`mb-12 lg:mb-16 lg:text-center transition-all ${reducedMotion ? '' : 'duration-700'} ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-        }`}
-      >
+      <article className="mb-12 lg:mb-16 lg:text-center">
         <div className="inline-block mb-4">
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
             System-Architektur
@@ -285,19 +185,9 @@ function Architecture() {
       <div className="hidden lg:flex items-start justify-center">
         {architectureSteps.map((step, index) => (
           <div key={step.label} className="flex items-center">
-            <ArchitectureCard
-              step={step}
-              config={cardConfigs[index]}
-              index={index}
-              isVisible={visibleItems.has(index)}
-              reducedMotion={reducedMotion}
-            />
+            <ArchitectureCard step={step} config={cardConfigs[index]} />
             {index < architectureSteps.length - 1 && (
-              <ConnectionLine
-                isVisible={visibleItems.has(index)}
-                reducedMotion={reducedMotion}
-                index={index}
-              />
+              <ConnectionLine reducedMotion={reducedMotion} index={index} />
             )}
           </div>
         ))}
@@ -307,20 +197,8 @@ function Architecture() {
       <div className="lg:hidden flex flex-col items-center max-w-sm mx-auto">
         {architectureSteps.map((step, index) => (
           <div key={step.label} className="w-full">
-            <ArchitectureCard
-              step={step}
-              config={cardConfigs[index]}
-              index={index}
-              isVisible={visibleItems.has(index)}
-              reducedMotion={reducedMotion}
-            />
-            {index < architectureSteps.length - 1 && (
-              <MobileConnectionLine
-                isVisible={visibleItems.has(index)}
-                reducedMotion={reducedMotion}
-                index={index}
-              />
-            )}
+            <ArchitectureCard step={step} config={cardConfigs[index]} />
+            {index < architectureSteps.length - 1 && <MobileConnectionLine />}
           </div>
         ))}
       </div>

@@ -1,32 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import VideoPreview from '../VideoPreview'
-import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { videoBaseUrl } from '../../lib/runtimeEnv'
-
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
 
 const VIDEO_BASE = `${videoBaseUrl()}/project-video`
 const VIDEO_SHORT = `${VIDEO_BASE}/short/green-ecolution-short.m3u8`
@@ -70,23 +44,11 @@ const VideoCard = (props: {
 )
 
 const Videos = () => {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
-
   return (
-    <section
-      ref={ref}
-      className="relative overflow-hidden px-4 mx-auto md:px-6 py-20 lg:py-28 xl:py-36 before:bg-cover before:bg-background-light-dot before:w-[90%] before:h-[80%] before:absolute before:-right-4 before:top-12 before:-z-10 before:bg-no-repeat xl:before:bg-contain xl:before:top-20 xl:before:left-[10%] 3xl:before:left-[20%]"
-    >
+    <section className="relative overflow-hidden px-4 mx-auto md:px-6 py-20 lg:py-28 xl:py-36 before:bg-cover before:bg-background-light-dot before:w-[90%] before:h-[80%] before:absolute before:-right-4 before:top-12 before:-z-10 before:bg-no-repeat xl:before:bg-contain xl:before:top-20 xl:before:left-[10%] 3xl:before:left-[20%]">
       <article className="mx-auto mb-8 lg:mb-14 lg:text-center xl:max-w-screen-lg">
         {/* Section Label */}
-        <div
-          className={`
-            mb-6 lg:mb-8 lg:flex lg:justify-center
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-        >
+        <div className="mb-6 lg:mb-8 lg:flex lg:justify-center">
           <div className="inline-block">
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
               Videos
@@ -95,24 +57,10 @@ const Videos = () => {
           </div>
         </div>
 
-        <h2
-          className={`
-            font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-3xl
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-        >
+        <h2 className="font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-3xl">
           Lerne das Projekt per Video kennen
         </h2>
-        <p
-          className={`
-            text-grey-900/80 leading-relaxed
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
-        >
+        <p className="text-grey-900/80 leading-relaxed">
           Im Rahmen des Forschungsprojekts sind neben der Sensorlösung und der Software auch zwei
           Videos entstanden. Sie stellen das Projekt vor: die Zielsetzung, die Problemstellung und
           die entwickelte Lösung.
@@ -120,13 +68,7 @@ const Videos = () => {
       </article>
 
       <section className="mx-auto grid grid-cols-1 gap-6 lg:grid-cols-2 xl:max-w-screen-xl">
-        <div
-          className={`
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-        >
+        <div>
           <VideoCard
             src={VIDEO_SHORT}
             thumbnail={VIDEO_SHORT_THMBNL}
@@ -135,13 +77,7 @@ const Videos = () => {
             duration="ca. 30 Sekunden"
           />
         </div>
-        <div
-          className={`
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '400ms' }}
-        >
+        <div>
           <VideoCard
             src={VIDEO_LONG}
             thumbnail={VIDEO_LONG_THMBNL}

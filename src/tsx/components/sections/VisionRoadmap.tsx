@@ -1,30 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { roadmapItems } from '../../../data/roadmapItems'
-
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
 
 const statusConfig = {
   completed: {
@@ -46,13 +21,9 @@ const statusConfig = {
 
 function VisionRoadmap() {
   const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
 
   return (
-    <section
-      ref={ref}
-      className="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
-    >
+    <section className="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
       <div className="relative bg-green-light-100/50 rounded-2xl lg:rounded-3xl p-6 md:p-10 lg:p-12 xl:p-16 overflow-hidden">
         {/* Decorative organic shape */}
         <div className="absolute -top-10 -right-10 w-40 h-40 bg-green-light-900/8 rounded-full blur-2xl" />
@@ -60,32 +31,18 @@ function VisionRoadmap() {
           {/* Vision Text */}
           <div className="mb-10 lg:mb-0">
             {/* Section Label */}
-            <div
-              className={`inline-block mb-6 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-            >
+            <div className="inline-block mb-6">
               <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
                 Vision
               </span>
               <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
             </div>
 
-            <h2
-              className={`font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-3xl xl:text-4xl transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-            >
+            <h2 className="font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-3xl xl:text-4xl">
               Für jede Kommune gemacht
             </h2>
 
-            <div
-              className={`space-y-4 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
-            >
+            <div className="space-y-4">
               <p className="text-grey-900/70 leading-relaxed">
                 Die Plattform ist bewusst so gestaltet, dass sie in jeder Kommune eingesetzt werden
                 kann. Kartenbereiche, Organisationsstrukturen und Bewässerungsregionen sind frei
@@ -101,29 +58,16 @@ function VisionRoadmap() {
 
           {/* Roadmap Timeline */}
           <div>
-            <h3
-              className={`font-lato font-semibold text-sm tracking-wider uppercase text-grey-600 mb-6 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-            >
+            <h3 className="font-lato font-semibold text-sm tracking-wider uppercase text-grey-600 mb-6">
               Roadmap
             </h3>
 
             <div className="space-y-0">
-              {roadmapItems.map((item, index) => {
+              {roadmapItems.map((item) => {
                 const config = statusConfig[item.status]
 
                 return (
-                  <div
-                    key={item.title}
-                    className={`group relative flex gap-4 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                      isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
-                    }`}
-                    style={{
-                      transitionDelay: reducedMotion ? '0ms' : `${350 + index * 120}ms`,
-                    }}
-                  >
+                  <div key={item.title} className="group relative flex gap-4">
                     {/* Timeline connector */}
                     <div className="flex flex-col items-center">
                       <div
@@ -153,15 +97,7 @@ function VisionRoadmap() {
               })}
 
               {/* Timeline dissolving into the future */}
-              <div
-                className={`relative flex gap-4 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                  isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
-                }`}
-                style={{
-                  transitionDelay: reducedMotion ? '0ms' : `${350 + roadmapItems.length * 120}ms`,
-                }}
-                aria-label="Weitere Ideen in Planung"
-              >
+              <div className="relative flex gap-4" aria-label="Weitere Ideen in Planung">
                 {/* Diminishing dots along a fading timeline — continuation metaphor */}
                 <div
                   className="flex flex-col items-center"

@@ -1,72 +1,29 @@
-import { useEffect, useRef, useState } from 'react'
 import Lottie from 'lottie-react'
 import dashboardAnimation from '../../../json/dashboardAnimation.json'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
-
 function DashboardPreview() {
   const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
 
   return (
-    <section
-      ref={ref}
-      className="my-20 px-4 max-w-208 mx-auto md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
-    >
+    <section className="my-20 px-4 max-w-208 mx-auto md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
       {/* Header */}
       <article className="mb-10 lg:mb-14 lg:text-center">
-        <div
-          className={`inline-block mb-4 lg:mx-auto transition-all ${reducedMotion ? '' : 'duration-700'} ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}
-        >
+        <div className="inline-block mb-4 lg:mx-auto">
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
             Software
           </span>
           <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
         </div>
 
-        <h2
-          className={`font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '150ms' }}
-        >
+        <h2 className="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900">
           Fundierte Handlungsempfehlungen
           <br className="hidden sm:block" />
           <span className="sm:hidden"> </span>
           zur Bewässerung auf einen Blick
         </h2>
 
-        <p
-          className={`text-grey-600 leading-relaxed max-w-2xl lg:mx-auto transition-all ${reducedMotion ? '' : 'duration-700'} ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-        >
+        <p className="text-grey-600 leading-relaxed max-w-2xl lg:mx-auto">
           Unser System wertet die Sensordaten wissenschaftlich aus und zeigt, zu welchem Zeitpunkt
           eine Bewässerung notwendig ist. Die Daten werden so aufbereitet, dass sie einfach zu
           interpretieren und direkt in die Einsatzplanung einzubinden sind.
@@ -74,12 +31,7 @@ function DashboardPreview() {
       </article>
 
       {/* Dashboard Screenshot */}
-      <figure
-        className={`relative transition-all ${reducedMotion ? '' : 'duration-1000'} ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
-        style={{ transitionDelay: reducedMotion ? '0ms' : '450ms' }}
-      >
+      <figure className="relative">
         {/* Decorative background glow */}
         <div className="absolute inset-0 bg-gradient-to-b from-green-light-900/10 via-green-dark-900/5 to-transparent rounded-3xl blur-3xl scale-110" />
 
@@ -110,11 +62,7 @@ function DashboardPreview() {
             />
             {/* Lottie animation overlay - hidden on mobile */}
             <div className="hidden md:block absolute top-[25%] right-[3%] w-[42%] pointer-events-none bg-white">
-              <Lottie
-                animationData={dashboardAnimation}
-                autoplay={!reducedMotion && isVisible}
-                loop={true}
-              />
+              <Lottie animationData={dashboardAnimation} autoplay={!reducedMotion} loop={true} />
             </div>
           </div>
         </div>

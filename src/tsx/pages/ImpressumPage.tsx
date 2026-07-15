@@ -1,36 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import Hero from '../components/sections/Hero'
 import BreadcrumbSchema from '../components/BreadcrumbSchema'
-import { useReducedMotion } from '../hooks/useReducedMotion'
-
-function useIntersectionObserver(threshold = 0) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '100px 0px 0px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
 
 function ImpressumPage() {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
-
   useEffect(() => {
     document.title = 'Impressum | Green Ecolution | Smartes Grünflächenmanagement'
   }, [])
@@ -51,18 +23,10 @@ function ImpressumPage() {
       />
       <Hero headline={heroHeadline} description={heroDescription} label="Rechtliches" />
 
-      <section
-        ref={ref}
-        className="px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl mt-16 mb-28 lg:mb-36 xl:mb-52"
-      >
+      <section className="px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl mt-16 mb-28 lg:mb-36 xl:mb-52">
         <div className="space-y-12">
           {/* Kontakt */}
-          <div
-            className={`
-              ${reducedMotion ? '' : 'transition-all duration-700'}
-              ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-            `}
-          >
+          <div>
             <h2 className="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
               Kontakt
             </h2>
@@ -92,13 +56,7 @@ function ImpressumPage() {
           </div>
 
           {/* Handelsregister */}
-          <div
-            className={`
-              ${reducedMotion ? '' : 'transition-all duration-700'}
-              ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-            `}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-          >
+          <div>
             <h2 className="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
               Handelsregister
             </h2>
@@ -123,13 +81,7 @@ function ImpressumPage() {
           </div>
 
           {/* Haftung für Inhalte */}
-          <div
-            className={`
-              ${reducedMotion ? '' : 'transition-all duration-700'}
-              ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-            `}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
-          >
+          <div>
             <h2 className="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
               Haftung für Inhalte
             </h2>
@@ -150,13 +102,7 @@ function ImpressumPage() {
           </div>
 
           {/* Haftung für Links */}
-          <div
-            className={`
-              ${reducedMotion ? '' : 'transition-all duration-700'}
-              ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-            `}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-          >
+          <div>
             <h2 className="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
               Haftung für Links
             </h2>
@@ -176,13 +122,7 @@ function ImpressumPage() {
           </div>
 
           {/* Urheberrecht */}
-          <div
-            className={`
-              ${reducedMotion ? '' : 'transition-all duration-700'}
-              ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-            `}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '400ms' }}
-          >
+          <div>
             <h2 className="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
               Urheberrecht
             </h2>

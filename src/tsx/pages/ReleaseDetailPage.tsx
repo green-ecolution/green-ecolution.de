@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { Link, redirect } from '@tanstack/react-router'
 import Markdown from 'react-markdown'
 import { getReleaseBySlug, getAdjacentReleases, getAllReleases } from '../../content/releases'
 import { Route } from '../../routes/releases_.$slug'
 import { formatReleaseDate } from '../helper/formatDate'
-import { useReducedMotion } from '../hooks/useReducedMotion'
 
 const DEFAULT_REPOSITORY = 'https://github.com/green-ecolution/green-ecolution'
 
@@ -18,39 +17,10 @@ function getTextContent(node: ReactNode): string {
   return ''
 }
 
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
-
 function ReleaseDetailPage() {
   const { slug } = Route.useParams()
   const release = getReleaseBySlug(slug)
   const { prev, next } = getAdjacentReleases(slug)
-  const reducedMotion = useReducedMotion()
-  const { ref: headerRef, isVisible: headerVisible } = useIntersectionObserver()
-  const { ref: contentRef, isVisible: contentVisible } = useIntersectionObserver()
-  const { ref: changelogRef, isVisible: changelogVisible } = useIntersectionObserver()
-  const { ref: navRef, isVisible: navVisible } = useIntersectionObserver()
 
   useEffect(() => {
     if (release) {
@@ -259,12 +229,7 @@ function ReleaseDetailPage() {
         </Link>
 
         {/* Header */}
-        <header
-          ref={headerRef}
-          className={`mb-10 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-            headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}
-        >
+        <header className="mb-10">
           {/* Section Label */}
           <div className="inline-block mb-4">
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
@@ -274,12 +239,7 @@ function ReleaseDetailPage() {
           </div>
 
           {/* Meta Row */}
-          <div
-            className={`flex flex-col gap-3 mb-4 sm:flex-row sm:flex-wrap sm:items-center transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-          >
+          <div className="flex flex-col gap-3 mb-4 sm:flex-row sm:flex-wrap sm:items-center">
             <div className="flex items-center gap-3">
               <span className="bg-green-dark-900 text-white px-4 py-1.5 rounded-full text-sm font-lato font-bold shadow-xs">
                 v{frontmatter.version}
@@ -327,23 +287,13 @@ function ReleaseDetailPage() {
           </div>
 
           {/* Title */}
-          <h1
-            className={`font-lato font-bold text-3xl mb-4 text-grey-900 lg:text-5xl xl:text-6xl transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
-          >
+          <h1 className="font-lato font-bold text-3xl mb-4 text-grey-900 lg:text-5xl xl:text-6xl">
             {frontmatter.title}
           </h1>
 
           {/* Highlights */}
           {frontmatter.highlights && frontmatter.highlights.length > 0 && (
-            <div
-              className={`flex flex-wrap gap-2 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-            >
+            <div className="flex flex-wrap gap-2">
               {frontmatter.highlights.map((highlight) => (
                 <span
                   key={highlight}
@@ -357,24 +307,14 @@ function ReleaseDetailPage() {
 
           {/* Summary */}
           {frontmatter.summary && (
-            <p
-              className={`mt-4 text-lg text-grey-900/80 leading-relaxed lg:text-xl transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '400ms' }}
-            >
+            <p className="mt-4 text-lg text-grey-900/80 leading-relaxed lg:text-xl">
               {frontmatter.summary}
             </p>
           )}
         </header>
 
         {/* Markdown Content */}
-        <div
-          ref={contentRef}
-          className={`transition-all ${reducedMotion ? '' : 'duration-1000'} ${
-            contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
+        <div>
           <div className="relative bg-green-light-100 rounded-2xl lg:rounded-3xl shadow-md border border-grey-100 p-6 lg:p-8 overflow-hidden">
             {/* Decorative corner */}
             <div className="absolute -top-16 -right-16 w-32 h-32 bg-green-light-900/10 rounded-full blur-3xl" />
@@ -473,12 +413,7 @@ function ReleaseDetailPage() {
 
         {/* Changelog Section */}
         {frontmatter.changelog && frontmatter.changelog.length > 0 && (
-          <div
-            ref={changelogRef}
-            className={`mt-8 transition-all ${reducedMotion ? '' : 'duration-1000'} ${
-              changelogVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
+          <div className="mt-8">
             <div className="bg-grey-900 rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl">
               {/* Terminal Header */}
               <div className="bg-grey-900 px-4 py-3 flex items-center gap-2 border-b border-grey-100/10">
@@ -568,11 +503,8 @@ function ReleaseDetailPage() {
 
         {/* Prev/Next Navigation */}
         <nav
-          ref={navRef}
           aria-label="Release Navigation"
-          className={`mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-            navVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
+          className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4"
         >
           {prev ? (
             <Link

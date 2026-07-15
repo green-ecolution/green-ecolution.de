@@ -1,37 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
-import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { governancePillars } from '../../../data/governancePillars'
 
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
-
 function OpenSourceGovernance() {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
-
   return (
-    <section ref={ref} className="relative overflow-hidden bg-[#1a2a16]">
+    <section className="relative overflow-hidden bg-[#1a2a16]">
       {/* Subtle noise texture */}
       <div
         className="absolute inset-0 opacity-[0.03]"
@@ -48,32 +19,18 @@ function OpenSourceGovernance() {
       <div className="relative z-10 max-w-208 mx-auto px-4 py-20 md:px-6 lg:py-28 lg:max-w-screen-lg xl:py-36 xl:max-w-screen-xl">
         {/* Header */}
         <div className="mb-10 lg:mb-14">
-          <div
-            className={`inline-block mb-6 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-          >
+          <div className="inline-block mb-6">
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
               Governance
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
 
-          <h2
-            className={`font-lato font-bold text-2xl mb-4 text-white lg:text-3xl xl:text-4xl transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-          >
+          <h2 className="font-lato font-bold text-2xl mb-4 text-white lg:text-3xl xl:text-4xl">
             Open Source als Prinzip
           </h2>
 
-          <p
-            className={`text-white/60 leading-relaxed max-w-2xl transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
-          >
+          <p className="text-white/60 leading-relaxed max-w-2xl">
             Transparenz, Unabhängigkeit und Nachnutzbarkeit: die Grundpfeiler unserer
             Open-Source-Strategie.
           </p>
@@ -101,14 +58,7 @@ function OpenSourceGovernance() {
             return (
               <article
                 key={pillar.category}
-                className={`group p-6 lg:p-8 hover:bg-white/[0.03] ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                } ${borderClasses}`}
-                style={{
-                  transition: reducedMotion
-                    ? 'background-color 300ms'
-                    : `opacity 700ms ${300 + index * 100}ms, transform 700ms ${300 + index * 100}ms, background-color 300ms`,
-                }}
+                className={`group p-6 lg:p-8 hover:bg-white/[0.03] transition-colors duration-300 ${borderClasses}`}
               >
                 <div className="mb-4 w-10 h-10 rounded-lg bg-green-dark-900/60 flex items-center justify-center transition-colors group-hover:bg-green-dark-900">
                   <Icon className="w-5 h-5 text-green-light-900" />

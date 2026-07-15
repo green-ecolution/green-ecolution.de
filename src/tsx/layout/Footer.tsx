@@ -1,49 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import Button from '../components/Button'
-import { useReducedMotion } from '../hooks/useReducedMotion'
-
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
 
 function Footer() {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
-
   return (
-    <footer
-      ref={ref}
-      className="py-10 bg-background-footer-mobile bg-no-repeat bg-cover text-white md:pt-16 lg:bg-background-footer-desktop lg:bg-[35%] xl:bg-[55%] 3xl:bg-contain 3xl:bg-center hyphens-auto"
-    >
+    <footer className="py-10 bg-background-footer-mobile bg-no-repeat bg-cover text-white md:pt-16 lg:bg-background-footer-desktop lg:bg-[35%] xl:bg-[55%] 3xl:bg-contain 3xl:bg-center hyphens-auto">
       <div className="px-4 max-w-screen-lg mx-auto md:px-6 md:flex md:items-end md:justify-between md:gap-x-6 xl:max-w-screen-xl">
-        <div
-          className={`
-            pb-10 border-b border-b-white/20 md:border-none md:pb-0
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-        >
+        <div className="pb-10 border-b border-b-white/20 md:border-none md:pb-0">
           <Link to="/" aria-label="Zur Startseite navigieren" className="group">
             <img
               src="/assets/svg/logo/logo-icon-white.svg"
@@ -73,14 +35,7 @@ function Footer() {
           </div>
         </div>
 
-        <div
-          className={`
-            mt-10 md:justify-self-end md:mt-0
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '150ms' }}
-        >
+        <div className="mt-10 md:justify-self-end md:mt-0">
           <nav aria-label="Meta-Navigation">
             <ul className="flex items-center justify-center gap-x-6 sm:justify-start md:justify-end">
               <li>

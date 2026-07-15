@@ -1,30 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
 import Accordion from '../Accordion'
-import { useReducedMotion } from '../../hooks/useReducedMotion'
-
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
 
 const faqData = [
   {
@@ -68,14 +42,8 @@ const faqSchema = {
 }
 
 function Faq() {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
-
   return (
-    <section
-      ref={ref}
-      className="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 xl:my-36 xl:max-w-screen-lg"
-    >
+    <section className="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 xl:my-36 xl:max-w-screen-lg">
       <script
         type="application/ld+json"
         // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
@@ -83,13 +51,7 @@ function Faq() {
       />
 
       {/* Section Label */}
-      <div
-        className={`
-          mb-6 lg:mb-8 flex justify-center
-          ${reducedMotion ? '' : 'transition-all duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        `}
-      >
+      <div className="mb-6 lg:mb-8 flex justify-center">
         <div className="inline-block">
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
             FAQ
@@ -98,25 +60,12 @@ function Faq() {
         </div>
       </div>
 
-      <h2
-        className={`
-          font-lato font-bold text-center text-2xl mb-8 text-grey-900 lg:mb-12 lg:text-3xl
-          ${reducedMotion ? '' : 'transition-all duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        `}
-        style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-      >
+      <h2 className="font-lato font-bold text-center text-2xl mb-8 text-grey-900 lg:mb-12 lg:text-3xl">
         Oft gestellte Fragen zu Green Ecolution
       </h2>
 
       <ul className="flex flex-col gap-y-4 md:gap-y-5">
-        <div
-          className={`
-            ${reducedMotion ? '' : 'transition-all duration-500'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
-        >
+        <div>
           <Accordion label="Wer steckt hinter dem Projekt Green Ecolution?">
             <p>
               Das Projekt „Green Ecolution“ wurde im Rahmen eines Forschungsprojekts im
@@ -161,13 +110,7 @@ function Faq() {
             </p>
           </Accordion>
         </div>
-        <div
-          className={`
-            ${reducedMotion ? '' : 'transition-all duration-500'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-        >
+        <div>
           <Accordion label="Welchen Mehrwert bietet das Projekt?">
             <p className="mb-4">
               Das Forschungsprojekt „Green Ecolution“ hat gezeigt, wie digitale Technologien gezielt
@@ -184,13 +127,7 @@ function Faq() {
             </p>
           </Accordion>
         </div>
-        <div
-          className={`
-            ${reducedMotion ? '' : 'transition-all duration-500'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '400ms' }}
-        >
+        <div>
           <Accordion label="Was bedeutet es, dass das Projekt öffentlich zugänglich ist?">
             <p className="mb-4">
               Der Quellcode des Projekts ist in einem öffentlich zugänglichen&nbsp;
@@ -221,13 +158,7 @@ function Faq() {
             </p>
           </Accordion>
         </div>
-        <div
-          className={`
-            ${reducedMotion ? '' : 'transition-all duration-500'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '500ms' }}
-        >
+        <div>
           <Accordion label="Welche Sensoren werden eingesetzt?">
             <p className="mb-4">
               Im Rahmen des Forschungsprojekts wurden folgende Sensoren eingesetzt, um präzise Daten
@@ -264,13 +195,7 @@ function Faq() {
             </p>
           </Accordion>
         </div>
-        <div
-          className={`
-            ${reducedMotion ? '' : 'transition-all duration-500'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '600ms' }}
-        >
+        <div>
           <Accordion label="Wie ist der aktuelle Fortschritt des Projekts?">
             <p>
               Das Forschungsprojekt „Green Ecolution“ wurde im Rahmen des Masterstudiengangs

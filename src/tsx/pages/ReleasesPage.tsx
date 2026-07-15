@@ -1,40 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { Link } from '@tanstack/react-router'
 import { getAllReleases } from '../../content/releases'
 import ReleaseTimeline from '../components/releases/ReleaseTimeline'
 import { formatReleaseDate } from '../helper/formatDate'
-import { useReducedMotion } from '../hooks/useReducedMotion'
-
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
 
 function ReleasesPage() {
   const releases = getAllReleases()
   const latestRelease = releases[0]
   const olderReleases = releases.slice(1)
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
 
   useEffect(() => {
     document.title = 'Releases | Green Ecolution | Smartes Grünflächenmanagement'
@@ -47,38 +20,21 @@ function ReleasesPage() {
       id="main-content"
       className="relative overflow-hidden flex-grow before:bg-cover before:bg-background-yellow-dot before:w-4/5 before:h-[100vh] before:max-h-[45rem] before:absolute before:-right-4 before:-top-16 before:-z-10 before:bg-no-repeat sm:before:-right-10 lg:before:max-h-[55rem] xl:before:w-[70rem] xl:before:-right-40 2xl:before:right-[10%] 2xl:before:bg-contain"
     >
-      <section
-        ref={ref}
-        className="px-4 max-w-208 mx-auto mt-28 pb-16 md:px-6 lg:mt-36 lg:pb-24 lg:max-w-screen-lg xl:mt-52 xl:max-w-screen-xl"
-      >
+      <section className="px-4 max-w-208 mx-auto mt-28 pb-16 md:px-6 lg:mt-36 lg:pb-24 lg:max-w-screen-lg xl:mt-52 xl:max-w-screen-xl">
         {/* Header with section label */}
         <header className="lg:text-center mb-12 lg:mb-16">
-          <div
-            className={`inline-block mb-4 lg:mx-auto transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-          >
+          <div className="inline-block mb-4 lg:mx-auto">
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
               Releases
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
 
-          <h1
-            className={`font-lato font-bold text-3xl mb-4 text-grey-900 leading-tight md:text-4xl lg:text-5xl xl:text-6xl transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '150ms' }}
-          >
+          <h1 className="font-lato font-bold text-3xl mb-4 text-grey-900 leading-tight md:text-4xl lg:text-5xl xl:text-6xl">
             Release Notes
           </h1>
 
-          <p
-            className={`text-grey-600 leading-relaxed max-w-2xl lg:mx-auto lg:text-lg transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-          >
+          <p className="text-grey-600 leading-relaxed max-w-2xl lg:mx-auto lg:text-lg">
             Hier siehst du, was sich von Version zu Version geändert hat, von neuen Funktionen bis
             zu behobenen Fehlern.
           </p>
@@ -86,12 +42,7 @@ function ReleasesPage() {
 
         {/* Latest Release - Featured Card */}
         {latestRelease && (
-          <div
-            className={`mb-16 lg:mb-20 transition-all ${reducedMotion ? '' : 'duration-1000'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '450ms' }}
-          >
+          <div className="mb-16 lg:mb-20">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-bold uppercase tracking-wider text-green-dark-900">
                 Aktuelles Release
@@ -193,12 +144,7 @@ function ReleasesPage() {
 
         {/* Older Releases */}
         {olderReleases.length > 0 && (
-          <div
-            className={`transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '600ms' }}
-          >
+          <div>
             <div className="flex items-center gap-4 mb-6">
               <span className="text-xs font-bold uppercase tracking-wider text-grey-900/50">
                 Ältere Releases

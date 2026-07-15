@@ -1,42 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import { i18nTranslated } from '../../helper/sliderTranslations'
 import '@splidejs/react-splide/css'
 import StakeholderCard from '../cards/StakeholderCard'
-import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 interface StakeholderProps {
   hasDesktopList?: boolean
 }
 
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
-
 const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
-
   const stakeholder = [
     {
       label: 'PROGEEK GmbH',
@@ -80,20 +51,12 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
 
   return (
     <section
-      ref={ref}
       className={`max-w-208 mx-auto pt-20 mb-28 lg:pt-28 lg:mb-36 xl:pt-36 xl:mb-52 ${
         hasDesktopList ? 'lg:max-w-screen-lg xl:max-w-screen-xl' : ''
       }`}
     >
       {/* Section Label */}
-      <div
-        className={`
-          px-4 md:px-6 mb-6 lg:mb-8
-          transition-all ${reducedMotion ? '' : 'duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          ${hasDesktopList ? 'lg:text-center' : ''}
-        `}
-      >
+      <div className={`px-4 md:px-6 mb-6 lg:mb-8 ${hasDesktopList ? 'lg:text-center' : ''}`}>
         <div className={`inline-block ${hasDesktopList ? 'lg:mx-auto' : ''}`}>
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
             Partner & Beteiligte
@@ -106,23 +69,11 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
 
       {/* Header */}
       <article className={`px-4 mb-10 md:px-6 lg:mb-14 ${hasDesktopList ? 'lg:text-center' : ''}`}>
-        <h2
-          className={`
-            font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl
-            transition-all ${reducedMotion ? '' : 'duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-        >
+        <h2 className="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
           Wer sind die Beteiligten?
         </h2>
         <p
-          className={`
-            text-grey-900/70 leading-relaxed max-w-3xl ${hasDesktopList ? 'lg:mx-auto' : ''}
-            transition-all ${reducedMotion ? '' : 'duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
+          className={`text-grey-900/70 leading-relaxed max-w-3xl ${hasDesktopList ? 'lg:mx-auto' : ''}`}
         >
           In Zusammenarbeit zwischen PROGEEK, der Smarten-Grenzregion, der Stadt Flensburg und der
           Hochschule Flensburg soll eine bedarfsgerechte und datenbasierte Bewässerung für Bäume
@@ -131,13 +82,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
       </article>
 
       {/* Carousel/Grid */}
-      <div
-        className={`
-          transition-all ${reducedMotion ? '' : 'duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-        `}
-        style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-      >
+      <div>
         <Splide
           options={{
             rewind: true,
@@ -149,7 +94,7 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
           }}
           aria-label="Beteiligten am Projekt"
         >
-          {stakeholder.map((company, index) => (
+          {stakeholder.map((company) => (
             <SplideSlide key={company.label} className="pb-10 px-4 md:px-6">
               <StakeholderCard
                 label={company.label}
@@ -157,9 +102,6 @@ const Stakeholder: React.FC<StakeholderProps> = ({ hasDesktopList = false }) => 
                 url={company.url}
                 image={company.image}
                 hasDesktopList={hasDesktopList}
-                index={index}
-                isVisible={isVisible}
-                reducedMotion={reducedMotion}
               >
                 <p className="my-4 md:my-5 text-grey-900/80 leading-relaxed">
                   {company.description}

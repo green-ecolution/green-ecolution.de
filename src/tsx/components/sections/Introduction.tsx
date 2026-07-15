@@ -1,37 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import { i18nTranslated } from '../../helper/sliderTranslations'
 import '@splidejs/react-splide/css'
 import IntroductionCard from '../cards/IntroductionCard'
-import { useReducedMotion } from '../../hooks/useReducedMotion'
-
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
 
 function Introduction() {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
   const facts = [
     {
       label: 'Entwicklung einer Sensorlösung',
@@ -69,19 +41,10 @@ function Introduction() {
   }
 
   return (
-    <section
-      ref={ref}
-      className="max-w-208 mx-auto mt-36 mb-20 md:mt-40 lg:mt-16 lg:mb-0 lg:max-w-screen-lg lg:grid lg:grid-cols-[1fr_1.5fr] lg:gap-x-10 lg:items-center xl:grid-cols-2 xl:max-w-screen-xl"
-    >
+    <section className="max-w-208 mx-auto mt-36 mb-20 md:mt-40 lg:mt-16 lg:mb-0 lg:max-w-screen-lg lg:grid lg:grid-cols-[1fr_1.5fr] lg:gap-x-10 lg:items-center xl:grid-cols-2 xl:max-w-screen-xl">
       <article className="px-4 mb-8 md:px-6 lg:mb-14">
         {/* Section Label */}
-        <div
-          className={`
-            mb-6 lg:mb-8
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-        >
+        <div className="mb-6 lg:mb-8">
           <div className="inline-block">
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
               Überblick
@@ -90,37 +53,17 @@ function Introduction() {
           </div>
         </div>
 
-        <h2
-          className={`
-            font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-3xl
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-        >
+        <h2 className="font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-3xl">
           Was beinhaltet smartes Grünflächenmanagement?
         </h2>
-        <p
-          className={`
-            text-grey-900/80 leading-relaxed
-            ${reducedMotion ? '' : 'transition-all duration-700'}
-            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-          `}
-          style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
-        >
+        <p className="text-grey-900/80 leading-relaxed">
           Beim smarten Grünflächenmanagement überwachen Sensoren die Grünflächen kontinuierlich und
           liefern die Datengrundlage für ihre Bewässerung und Pflege. So lassen sich die Maßnahmen
           präzise steuern und an die jeweiligen Standortbedingungen anpassen.
         </p>
       </article>
 
-      <div
-        className={`
-          ${reducedMotion ? '' : 'transition-all duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-        `}
-        style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-      >
+      <div>
         <Splide
           options={{
             rewind: true,

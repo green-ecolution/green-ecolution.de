@@ -1,38 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { sensorSpecs, sensorFeatures } from '../../../data/sensorSpecs'
 
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
-
-function SoilIllustration({
-  isVisible,
-  reducedMotion,
-}: {
-  isVisible: boolean
-  reducedMotion: boolean
-}) {
+function SoilIllustration({ reducedMotion }: { reducedMotion: boolean }) {
   const depths = [
     { y: 120, label: '30 cm', color: '#658A58', zone: 'Feinwurzeln' },
     { y: 200, label: '60 cm', color: '#4C7741', zone: 'Hauptwurzeln' },
@@ -42,9 +11,7 @@ function SoilIllustration({
   return (
     <svg
       viewBox="0 0 320 360"
-      className={`w-full max-w-sm mx-auto transition-all ${reducedMotion ? '' : 'duration-1000'} ${
-        isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-      }`}
+      className="w-full max-w-sm mx-auto"
       aria-label="Schematische Darstellung einer Bodensonde in drei Tiefen"
       role="img"
     >
@@ -252,29 +219,21 @@ function SoilIllustration({
 
 function SensorProbe() {
   const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
 
   return (
-    <section
-      ref={ref}
-      className="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
-    >
+    <section className="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
       <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16 lg:items-center">
         {/* Illustration with subtle card treatment */}
         <div className="mb-10 lg:mb-0">
           <div className="relative bg-gradient-to-b from-green-light-100/60 to-white rounded-2xl p-4 lg:p-6 border border-green-dark-900/5 shadow-sm">
-            <SoilIllustration isVisible={isVisible} reducedMotion={reducedMotion} />
+            <SoilIllustration reducedMotion={reducedMotion} />
           </div>
         </div>
 
         {/* Content */}
         <div>
           {/* Section Label */}
-          <div
-            className={`inline-block mb-6 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-          >
+          <div className="inline-block mb-6">
             <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
               Hardware
             </span>
@@ -282,22 +241,12 @@ function SensorProbe() {
           </div>
 
           {/* Heading */}
-          <h2
-            className={`font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-          >
+          <h2 className="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
             Die Bodensonde
           </h2>
 
           {/* Description */}
-          <p
-            className={`text-grey-900/70 leading-relaxed mb-8 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
-          >
+          <p className="text-grey-900/70 leading-relaxed mb-8">
             Konzipiert für den Einsatz im öffentlichen Raum. Sensoren in drei Tiefen (30, 60 und 90
             cm) bilden das gesamte Wurzelprofil eines Baumes ab, von den oberflächennahen
             Feinwurzeln bis zu den tieferen Hauptwurzeln. So lässt sich erkennen, ob Wasser
@@ -307,12 +256,7 @@ function SensorProbe() {
           </p>
 
           {/* Spec Badges */}
-          <div
-            className={`flex flex-wrap gap-3 mb-8 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-          >
+          <div className="flex flex-wrap gap-3 mb-8">
             {sensorSpecs.map((spec) => (
               <div
                 key={spec.label}
@@ -326,18 +270,10 @@ function SensorProbe() {
 
           {/* Sensor Features */}
           <div className="space-y-4">
-            {sensorFeatures.map((feature, index) => {
+            {sensorFeatures.map((feature) => {
               const Icon = feature.icon
               return (
-                <div
-                  key={feature.label}
-                  className={`flex items-start gap-4 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                    isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-                  }`}
-                  style={{
-                    transitionDelay: reducedMotion ? '0ms' : `${400 + index * 100}ms`,
-                  }}
-                >
+                <div key={feature.label} className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-green-light-900/15 flex items-center justify-center">
                     <Icon className="w-5 h-5 text-green-dark-900" />
                   </div>

@@ -1,40 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
-import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { ExternalLink } from 'lucide-react'
 
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
-
 function DemoInstance() {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
-
   return (
-    <section
-      ref={ref}
-      className="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
-    >
+    <section className="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
       <div className="relative bg-gradient-to-tr from-green-dark-900 via-green-middle-900/80 to-green-dark-900 rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl ring-1 ring-white/5">
         {/* Distinct diagonal stripe pattern */}
         <div
@@ -52,43 +20,24 @@ function DemoInstance() {
           {/* Text Content */}
           <div className="mb-8 lg:mb-0">
             {/* Section Label */}
-            <div
-              className={`inline-block mb-6 transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-            >
+            <div className="inline-block mb-6">
               <span className="text-xs font-bold tracking-widest text-white uppercase">
                 Live Demo
               </span>
               <div className="h-0.5 w-12 bg-gradient-to-r from-white/50 to-transparent mt-1" />
             </div>
 
-            <h2
-              className={`font-lato font-bold text-2xl mb-4 text-white lg:text-3xl xl:text-4xl transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '100ms' }}
-            >
+            <h2 className="font-lato font-bold text-2xl mb-4 text-white lg:text-3xl xl:text-4xl">
               Überzeug dich selbst
             </h2>
 
-            <p
-              className={`text-white/70 leading-relaxed mb-8 max-w-lg transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '200ms' }}
-            >
+            <p className="text-white/70 leading-relaxed mb-8 max-w-lg">
               Die öffentlich zugängliche Demo-Instanz zeigt den aktuellen Funktionsumfang:
               Kartenansicht mit Ampelsystem, Dashboard mit Sensordaten und automatisierte
               Routenberechnung. Keine Installation nötig, direkt im Browser.
             </p>
 
-            <div
-              className={`transition-all ${reducedMotion ? '' : 'duration-700'} ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '300ms' }}
-            >
+            <div>
               <a
                 href="https://demo.green-ecolution.de"
                 target="_blank"
@@ -103,12 +52,7 @@ function DemoInstance() {
           </div>
 
           {/* Browser Mockup — hidden on small screens */}
-          <div
-            className={`hidden md:block transition-all ${reducedMotion ? '' : 'duration-1000'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-            style={{ transitionDelay: reducedMotion ? '0ms' : '400ms' }}
-          >
+          <div className="hidden md:block">
             <div className="bg-white rounded-xl lg:rounded-2xl shadow-2xl overflow-hidden">
               {/* Browser chrome */}
               <div className="flex items-center gap-2 px-3 py-2.5 sm:px-4 sm:py-3 bg-grey-900/5 border-b border-grey-900/10">

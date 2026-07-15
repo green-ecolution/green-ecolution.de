@@ -1,31 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
 import { Mail, ExternalLink, Leaf, ArrowRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
-
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
 
 function FloatingLeaf({
   className,
@@ -56,9 +31,6 @@ function ContactCard({
   description,
   cta,
   isExternal,
-  delay,
-  isVisible,
-  reducedMotion,
   accentColor,
 }: {
   href: string
@@ -67,9 +39,6 @@ function ContactCard({
   description: string
   cta: string
   isExternal?: boolean
-  delay: number
-  isVisible: boolean
-  reducedMotion: boolean
   accentColor: 'light' | 'middle' | 'dark'
 }) {
   const colors = {
@@ -97,15 +66,7 @@ function ContactCard({
   const isImageIcon = typeof Icon === 'string'
 
   return (
-    <div
-      className={`
-        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-      `}
-      style={{
-        transition: !reducedMotion ? 'opacity 700ms, transform 700ms' : undefined,
-        transitionDelay: !reducedMotion ? `${delay}ms` : '0ms',
-      }}
-    >
+    <div>
       <a
         href={href}
         target={isExternal ? '_blank' : undefined}
@@ -180,10 +141,9 @@ function ContactCard({
 
 function ContactHeroContent() {
   const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
 
   return (
-    <div ref={ref} className="relative mt-12 lg:mt-16">
+    <div className="relative mt-12 lg:mt-16">
       {/* Floating decorative leaves */}
       <FloatingLeaf
         className="top-0 left-[10%] hidden md:block"
@@ -202,13 +162,7 @@ function ContactHeroContent() {
       />
 
       {/* Section intro */}
-      <div
-        className={`
-          text-center mb-10 lg:mb-12
-          transition-all ${reducedMotion ? '' : 'duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        `}
-      >
+      <div className="text-center mb-10 lg:mb-12">
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-light-100 rounded-full mb-4">
           <div className="w-2 h-2 bg-green-light-900 rounded-full animate-pulse" />
           <span className="text-xs font-semibold text-green-dark-900 tracking-wide uppercase">
@@ -225,9 +179,6 @@ function ContactHeroContent() {
           title="Schreib uns"
           description="Hast du Fragen zum Projekt oder möchtest du mehr erfahren? Wir melden uns zeitnah bei dir zurück."
           cta="E-Mail senden"
-          delay={200}
-          isVisible={isVisible}
-          reducedMotion={reducedMotion}
           accentColor="dark"
         />
 
@@ -238,22 +189,12 @@ function ContactHeroContent() {
           description="Entdecke unseren Code, trage zur Entwicklung bei oder nutze Green Ecolution für deine Kommune."
           cta="Auf GitHub ansehen"
           isExternal
-          delay={400}
-          isVisible={isVisible}
-          reducedMotion={reducedMotion}
           accentColor="middle"
         />
       </div>
 
       {/* Bottom decorative element */}
-      <div
-        className={`
-          flex justify-center mt-12 lg:mt-16
-          transition-all ${reducedMotion ? '' : 'duration-700'}
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        `}
-        style={{ transitionDelay: reducedMotion ? '0ms' : '600ms' }}
-      >
+      <div className="flex justify-center mt-12 lg:mt-16">
         <div className="flex items-center gap-4">
           <div className="h-px w-12 bg-gradient-to-r from-transparent to-green-light-900/30" />
           <div className="flex gap-1">

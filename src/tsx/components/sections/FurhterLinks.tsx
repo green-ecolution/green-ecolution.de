@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
-import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { ArrowUpRight } from 'lucide-react'
 
 const links = [
@@ -46,45 +44,11 @@ const links = [
   },
 ]
 
-function useIntersectionObserver(threshold = 0.1) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return { ref, isVisible }
-}
-
 function FurtherLinks() {
-  const reducedMotion = useReducedMotion()
-  const { ref, isVisible } = useIntersectionObserver()
-
   return (
-    <section
-      ref={ref}
-      className="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
-    >
+    <section className="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
       {/* Header */}
-      <article
-        className={`mb-8 lg:mb-12 lg:text-center transition-all ${reducedMotion ? '' : 'duration-700'} ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-        }`}
-      >
+      <article className="mb-8 lg:mb-12 lg:text-center">
         <div className="inline-block mb-4 lg:mx-auto">
           <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
             Ressourcen
@@ -98,16 +62,8 @@ function FurtherLinks() {
 
       {/* Links Grid */}
       <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-        {links.map((link, index) => (
-          <li
-            key={link.label}
-            className={`transition-all ${reducedMotion ? '' : 'duration-700'} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-            style={{
-              transitionDelay: reducedMotion ? '0ms' : `${index * 100}ms`,
-            }}
-          >
+        {links.map((link) => (
+          <li key={link.label}>
             <a
               href={link.url}
               target="_blank"
