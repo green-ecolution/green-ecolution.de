@@ -198,13 +198,16 @@
     "availability": "Die Sonden sind über die PROGEEK GmbH beziehbar.",
     "specs": {
       "depths": {
-        "label": "Messtiefen"
+        "label": "Messtiefen",
+        "value": "3"
       },
       "network": {
-        "label": "Funknetz"
+        "label": "Funknetz",
+        "value": "LoRaWAN oder NB-IoT"
       },
       "batteryLife": {
-        "label": "Jahre Batterie"
+        "label": "Jahre Batterie",
+        "value": "3+"
       }
     },
     "features": {
@@ -215,10 +218,6 @@
       "temperature": {
         "label": "Temperatur",
         "description": "Erfassung der Bodentemperatur für präzise Bewässerungsempfehlungen"
-      },
-      "soilTension": {
-        "label": "Bodenwasserspannung",
-        "description": "Messung der Saugspannung zur Bestimmung der Wasserverfügbarkeit"
       }
     }
   },
@@ -252,7 +251,7 @@
       "measure": {
         "category": "Erfassen",
         "title": "Messen",
-        "description": "Bodenfeuchtesensoren erfassen Parameter wie Bodenfeuchte, Temperatur und Bodenwasserspannung in mehreren Tiefen (30/60/90 cm). Die Daten werden energieeffizient über LoRaWAN übertragen."
+        "description": "Bodenfeuchtesensoren erfassen Bodenfeuchte und Temperatur in mehreren Tiefen (30/60/90 cm). Die Daten werden energieeffizient über LoRaWAN übertragen."
       },
       "understand": {
         "category": "Analysieren",

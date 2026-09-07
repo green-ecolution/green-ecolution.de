@@ -23,10 +23,10 @@
       "measure": {
         "category": "Capture",
         "title": "Measure",
-        "description": "Soil moisture sensors capture parameters such as soil moisture, temperature, and soil water tension at multiple depths (30/60/90 cm). The data is transmitted energy-efficiently via LoRaWAN.",
+        "description": "Soil moisture sensors capture soil moisture and temperature at multiple depths (30/60/90 cm). The data is transmitted energy-efficiently via LoRaWAN.",
         "details": {
           "item1": "Soil moisture sensors at depths of 30, 60, and 90 cm",
-          "item2": "Measurement of soil moisture, temperature, and soil water tension",
+          "item2": "Measurement of soil moisture and temperature",
           "item3": "Energy-efficient transmission via LoRaWAN",
           "item4": "Flush-mounted installation, no impact on maintenance work"
         }

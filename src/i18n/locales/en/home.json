@@ -198,13 +198,16 @@
     "availability": "The probes are available through PROGEEK GmbH.",
     "specs": {
       "depths": {
-        "label": "Measurement depths"
+        "label": "Measurement depths",
+        "value": "3"
       },
       "network": {
-        "label": "Wireless network"
+        "label": "Wireless network",
+        "value": "LoRaWAN or NB-IoT"
       },
       "batteryLife": {
-        "label": "Years of battery life"
+        "label": "Years of battery life",
+        "value": "3+"
       }
     },
     "features": {
@@ -215,10 +218,6 @@
       "temperature": {
         "label": "Temperature",
         "description": "Measurement of soil temperature for precise irrigation recommendations"
-      },
-      "soilTension": {
-        "label": "Soil water tension",
-        "description": "Measurement of suction tension to determine water availability"
       }
     }
   },
@@ -252,7 +251,7 @@
       "measure": {
         "category": "Capture",
         "title": "Measure",
-        "description": "Soil moisture sensors capture parameters such as soil moisture, temperature, and soil water tension at multiple depths (30/60/90 cm). The data is transmitted energy-efficiently via LoRaWAN."
+        "description": "Soil moisture sensors capture soil moisture and temperature at multiple depths (30/60/90 cm). The data is transmitted energy-efficiently via LoRaWAN."
       },
       "understand": {
         "category": "Analyze",

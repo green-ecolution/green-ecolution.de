@@ -23,10 +23,10 @@
       "measure": {
         "category": "Erfassen",
         "title": "Messen",
-        "description": "Bodenfeuchtesensoren erfassen Parameter wie Bodenfeuchte, Temperatur und Bodenwasserspannung in mehreren Tiefen (30/60/90 cm). Die Daten werden energieeffizient über LoRaWAN übertragen.",
+        "description": "Bodenfeuchtesensoren erfassen Bodenfeuchte und Temperatur in mehreren Tiefen (30/60/90 cm). Die Daten werden energieeffizient über LoRaWAN übertragen.",
         "details": {
           "item1": "Bodenfeuchtesensoren in 30, 60 und 90 cm Tiefe",
-          "item2": "Erfassung von Bodenfeuchte, Temperatur und Bodenwasserspannung",
+          "item2": "Erfassung von Bodenfeuchte und Temperatur",
           "item3": "Energieeffiziente Übertragung über LoRaWAN",
           "item4": "Bodenbündige Installation, kein Einfluss auf Pflegearbeiten"
         }
