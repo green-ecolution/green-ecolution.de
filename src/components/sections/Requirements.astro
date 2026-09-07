@@ -3,6 +3,8 @@ import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { splitSlot } from '../../lib/slotText'
 import { requirementItems } from '../../data/requirements'
+import Arrow from '../icons/Arrow.astro'
+import Button from '../Button.astro'
 
 interface Props {
   language: Language
@@ -67,13 +69,10 @@ const tourLink = splitSlot(t('requirements.tourLinkRich'), 'streamlet')
     >{tourLink.after}
   </p>
 
-  <div class="mt-6">
-    <a
-      href={`/${language}/contact`}
-      aria-label={t('requirements.ctaAriaLabel')}
-      class="inline-flex items-center gap-2 font-semibold text-green-dark-900 underline decoration-2 underline-offset-2 transition-all hover:decoration-4"
-    >
-      {t('requirements.cta')}
-    </a>
+  <div class="mt-8">
+    <Button href={`/${language}/contact`} ariaLabel={t('requirements.ctaAriaLabel')} isDark>
+      <span>{t('requirements.cta')}</span>
+      <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+    </Button>
   </div>
 </section>

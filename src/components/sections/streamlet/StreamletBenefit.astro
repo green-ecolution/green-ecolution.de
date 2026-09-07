@@ -3,6 +3,8 @@ import type { Language } from '../../../i18n/languages'
 import { getTranslations } from '../../../i18n/t'
 import { splitSlot } from '../../../lib/slotText'
 import { benefitNeeds } from '../../../data/streamlet'
+import Arrow from '../../icons/Arrow.astro'
+import Button from '../../Button.astro'
 
 interface Props {
   language: Language
@@ -72,12 +74,9 @@ const integrated = splitSlot(t('benefit.integratedRich'), 'project')
       >{integrated.after}
     </p>
 
-    <a
-      href={`/${language}/project#architecture`}
-      aria-label={t('benefit.ctaAriaLabel')}
-      class="inline-flex items-center gap-2 font-semibold text-green-dark-900 underline decoration-2 underline-offset-2 transition-all hover:decoration-4"
-    >
-      {t('benefit.cta')}
-    </a>
+    <Button href={`/${language}/project#architecture`} ariaLabel={t('benefit.ctaAriaLabel')} isDark>
+      <span>{t('benefit.cta')}</span>
+      <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+    </Button>
   </div>
 </section>
