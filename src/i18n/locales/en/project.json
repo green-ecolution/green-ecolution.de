@@ -94,8 +94,8 @@
         "description": "Water carts, vans and trailers with their water capacities, plus the refill points across the city. A new fleet or fixed irrigation hardware is not required."
       },
       "network": {
-        "label": "LoRaWAN coverage once sensors are added",
-        "description": "The probes transmit over the open The Things Network. Since 2024 Schleswig-Holstein has built a state-wide network with more than 420 gateways. Only outside such coverage does a gateway of your own become necessary."
+        "label": "A radio link for the probes",
+        "description": "The probes transmit over LoRaWAN and the open The Things Network today. Since 2024 Schleswig-Holstein has built a state-wide network with more than 420 gateways. Where there is no coverage, you can either add a gateway of your own or run the same probes on NB-IoT with a SIM card. LoRaWAN is the technology in use today, not a condition."
       },
       "hosting": {
         "label": "Somewhere to run it",
@@ -118,7 +118,7 @@
       },
       "hardware": {
         "label": "Hardware",
-        "description": "The soil probe records the soil water status at several depths and transmits over LoRaWAN. It is designed for public spaces, is installed flush with the ground using standard earth augers and does not get in the way of maintenance work such as mowing. The probes are available through PROGEEK, a firmware of our own is in development, and regional manufacturing is the goal going forward."
+        "description": "The soil probe records the soil water status at several depths and transmits over LoRaWAN or, where LoRaWAN is unavailable, over NB-IoT with a SIM card. It is designed for public spaces, is installed flush with the ground using standard earth augers and does not get in the way of maintenance work such as mowing. The probes are available through PROGEEK, a firmware of our own is in development, and regional manufacturing is the goal going forward."
       },
       "services": {
         "label": "Services",

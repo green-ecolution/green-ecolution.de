@@ -94,8 +94,8 @@
         "description": "Gießwagen, Transporter und Anhänger mit ihren Wasserkapazitäten sowie die Nachfüllpunkte im Stadtgebiet. Eine neue Flotte oder stationäre Bewässerungstechnik ist nicht nötig."
       },
       "network": {
-        "label": "LoRaWAN-Abdeckung, sobald Sensorik dazukommt",
-        "description": "Die Sonden funken über das offene The Things Network. Schleswig-Holstein hat seit 2024 ein landesweites Netz mit über 420 Gateways aufgebaut. Nur außerhalb einer Abdeckung wird ein eigenes Gateway nötig."
+        "label": "Eine Funkanbindung für die Sonden",
+        "description": "Die Sonden funken heute über LoRaWAN und das offene The Things Network. Schleswig-Holstein hat seit 2024 ein landesweites Netz mit über 420 Gateways aufgebaut. Wo keine Abdeckung besteht, lässt sich entweder ein eigenes Gateway setzen, oder dieselben Sonden kommen mit NB-IoT und SIM-Karte zum Einsatz. LoRaWAN ist die heute genutzte Technik, keine Bedingung."
       },
       "hosting": {
         "label": "Ein Ort für den Betrieb",
@@ -118,7 +118,7 @@
       },
       "hardware": {
         "label": "Hardware",
-        "description": "Die Bodensonde erfasst den Bodenwasserstatus in mehreren Tiefen und funkt über LoRaWAN. Sie ist für den öffentlichen Raum ausgelegt, wird mit marktüblichen Erdbohrern bodenbündig eingebracht und behindert Pflegearbeiten wie Mähen nicht. Die Sonden sind über PROGEEK beziehbar, eine eigene Firmware ist in Entwicklung, und perspektivisch soll regional gefertigt werden."
+        "description": "Die Bodensonde erfasst den Bodenwasserstatus in mehreren Tiefen und funkt über LoRaWAN oder, wo kein LoRaWAN verfügbar ist, über NB-IoT mit SIM-Karte. Sie ist für den öffentlichen Raum ausgelegt, wird mit marktüblichen Erdbohrern bodenbündig eingebracht und behindert Pflegearbeiten wie Mähen nicht. Die Sonden sind über PROGEEK beziehbar, eine eigene Firmware ist in Entwicklung, und perspektivisch soll regional gefertigt werden."
       },
       "services": {
         "label": "Leistungen",
