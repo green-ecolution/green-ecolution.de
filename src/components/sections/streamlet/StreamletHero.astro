@@ -15,7 +15,7 @@ const KEYS = [
   'hero.tourAriaLabel',
   'hero.tank',
   'hero.lead',
-  'hero.origin',
+  'hero.originRich',
   'hero.repoAriaLabel',
   'hero.repo',
   'hero.docsAriaLabel',
@@ -26,4 +26,4 @@ const { language } = Astro.props
 const strings = pickStrings(language, 'streamlet', KEYS)
 ---
 
-<StreamletHeroIsland client:load strings={strings} />
+<StreamletHeroIsland client:load language={language} strings={strings} />

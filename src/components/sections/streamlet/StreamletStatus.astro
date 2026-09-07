@@ -87,6 +87,22 @@ const cta = splitSlot(t('status.cta.descriptionRich'), 'release')
       >
         <span class="whitespace-nowrap">{t('status.cta.issues')}</span>
       </a>
+
+      <a
+        href={`/${language}/`}
+        aria-label={t('status.cta.homeAriaLabel')}
+        class="flex items-center justify-center gap-x-3 rounded-2xl w-max font-semibold px-5 py-2 cursor-pointer transition-all ease-in-out duration-300 text-green-dark-900 border border-green-dark-900/30 hover:border-green-dark-900 hover:bg-white/70"
+      >
+        <span class="whitespace-nowrap">{t('status.cta.home')}</span>
+      </a>
+
+      <a
+        href={`/${language}/contact`}
+        aria-label={t('status.cta.contactAriaLabel')}
+        class="flex items-center justify-center gap-x-3 rounded-2xl w-max font-semibold px-5 py-2 cursor-pointer transition-all ease-in-out duration-300 text-green-dark-900 border border-green-dark-900/30 hover:border-green-dark-900 hover:bg-white/70"
+      >
+        <span class="whitespace-nowrap">{t('status.cta.contact')}</span>
+      </a>
     </div>
   </div>
 </section>

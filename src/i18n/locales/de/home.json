@@ -144,7 +144,9 @@
       },
       "tourPlanning": {
         "label": "Tour-Planung",
-        "description": "Optimierte Bewässerungspläne mit Echtzeit-Status: Von „geplant“ über „aktiv“ bis „abgeschlossen“."
+        "description": "Optimierte Bewässerungspläne mit Echtzeit-Status: Von „geplant“ über „aktiv“ bis „abgeschlossen“.",
+        "linkLabel": "Wie die Tourenoptimierung rechnet",
+        "linkAriaLabel": "Zur Seite über die Tourenoptimierung"
       },
       "teamManagement": {
         "label": "Teamverwaltung",

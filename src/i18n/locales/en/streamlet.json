@@ -1,14 +1,14 @@
 {
   "meta": {
-    "title": "Streamlet | Vehicle routing with refill stations | Green Ecolution",
+    "title": "Route optimisation with refill stations | Streamlet | Green Ecolution",
     "description": "Streamlet is a standalone open source service for vehicle routing with time windows and multiple refill stations. Stateless HTTP API, deterministic solver, AGPL-3.0."
   },
   "hero": {
-    "sectionLabel": "Open source project",
-    "title": "Streamlet",
-    "tagline": "Route planning for vehicles whose tank does not hold enough for the whole tour.",
-    "lead": "Streamlet fixes the order of the stops and plans the refills along the way in the same pass. It runs as a standalone service behind an HTTP API.",
-    "origin": "Streamlet was built for Green Ecolution because none of the solvers we evaluated could express this problem. It now lives in a repository of its own and has no dependency on Green Ecolution. Anyone with the same planning problem can adopt it as it is.",
+    "sectionLabel": "Open source project Streamlet",
+    "title": "Route optimisation for vehicles that have to refill along the way",
+    "tagline": "The order of the stops and the refills along the way are planned together, not one after the other.",
+    "lead": "Streamlet fixes the order of the stops and plans the refills in the same pass. The result is a tour a vehicle with a limited tank can actually drive.",
+    "originRich": "Streamlet was built for <project>Green Ecolution</project> because none of the planning tools we evaluated could express this problem. It now lives in a repository of its own and has no dependency on Green Ecolution. Anyone with the same planning problem can adopt it as it is.",
     "repo": "Repository",
     "repoAriaLabel": "Open the Streamlet repository on GitHub",
     "docs": "Documentation",
@@ -152,7 +152,11 @@
       "repo": "Go to the repository",
       "repoAriaLabel": "Open the Streamlet repository on GitHub",
       "issues": "Issues",
-      "issuesAriaLabel": "Open the Streamlet issues on GitHub"
+      "issuesAriaLabel": "Open the Streamlet issues on GitHub",
+      "home": "Go to Green Ecolution",
+      "homeAriaLabel": "Go to the Green Ecolution home page",
+      "contact": "Get in touch",
+      "contactAriaLabel": "Go to the Green Ecolution contact page"
     }
   }
 }

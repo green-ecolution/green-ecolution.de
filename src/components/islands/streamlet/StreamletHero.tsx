@@ -9,14 +9,16 @@ import { streamletLinks } from '../../../data/streamlet'
 import { staticTankLevel, tourProjectedSize } from '../../../data/streamletTour'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { supportsWebgl } from '../../../lib/webgl'
+import { splitSlot } from '../../../lib/slotText'
 
 const StreamletTour3D = lazy(() => import('./StreamletTour3D'))
 
-function StreamletHero() {
+function StreamletHero({ language }: { language: string }) {
   const t = useT()
   const prefersReducedMotion = useReducedMotion()
   const [canRenderModel] = useState(supportsWebgl)
   const tankLevel = useRef<HTMLDivElement>(null)
+  const origin = splitSlot(t('hero.originRich'), 'project')
 
   return (
     <section className="px-4 max-w-208 mx-auto pt-28 pb-14 md:px-6 lg:pt-36 lg:pb-24 lg:max-w-screen-lg xl:pt-44 xl:max-w-screen-xl">
@@ -66,7 +68,16 @@ function StreamletHero() {
         <div className="lg:col-start-1 lg:row-start-2 lg:mt-5 lg:self-start">
           <p className="text-grey-900/70 leading-relaxed mb-4">{t('hero.lead')}</p>
 
-          <p className="text-grey-900/60 leading-relaxed mb-8">{t('hero.origin')}</p>
+          <p className="text-grey-900/60 leading-relaxed mb-8">
+            {origin.before}
+            <a
+              href={`/${language}/project`}
+              className="font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
+            >
+              {origin.inner}
+            </a>
+            {origin.after}
+          </p>
 
           <div className="flex flex-wrap gap-4">
             <a

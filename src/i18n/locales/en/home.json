@@ -144,7 +144,9 @@
       },
       "tourPlanning": {
         "label": "Tour planning",
-        "description": "Optimized irrigation schedules with real-time status: from “planned” through “active” to “completed”."
+        "description": "Optimized irrigation schedules with real-time status: from “planned” through “active” to “completed”.",
+        "linkLabel": "How the route optimisation works",
+        "linkAriaLabel": "Go to the route optimisation page"
       },
       "teamManagement": {
         "label": "Team management",

@@ -1,14 +1,14 @@
 {
   "meta": {
-    "title": "Streamlet | Tourenplanung mit Nachfüllstationen | Green Ecolution",
+    "title": "Tourenoptimierung mit Nachfüllstationen | Streamlet | Green Ecolution",
     "description": "Streamlet ist ein eigenständiger Open-Source-Dienst für Tourenplanung mit Zeitfenstern und mehreren Nachfüllstationen. Zustandslose HTTP-API, deterministischer Solver, AGPL-3.0."
   },
   "hero": {
-    "sectionLabel": "Open-Source-Projekt",
-    "title": "Streamlet",
-    "tagline": "Tourenplanung für Fahrzeuge, deren Tankfüllung nicht für die ganze Tour reicht.",
-    "lead": "Streamlet legt die Reihenfolge der Halte fest und plant das Nachfüllen unterwegs gleich mit. Es läuft als eigenständiger Dienst hinter einer HTTP-API.",
-    "origin": "Entstanden ist Streamlet für Green Ecolution, weil die geprüften Solver dieses Problem nicht abbilden konnten. Heute liegt es in einem eigenen Repository und hat keine Abhängigkeit zu Green Ecolution. Wer dasselbe Planungsproblem hat, kann es unverändert übernehmen.",
+    "sectionLabel": "Open-Source-Projekt Streamlet",
+    "title": "Tourenoptimierung für Fahrzeuge, die unterwegs nachfüllen müssen",
+    "tagline": "Die Reihenfolge der Halte und das Nachfüllen unterwegs werden zusammen geplant, nicht nacheinander.",
+    "lead": "Streamlet legt die Reihenfolge der Halte fest und plant das Nachfüllen gleich mit. So entstehen Touren, die ein Fahrzeug mit begrenztem Tank tatsächlich fahren kann.",
+    "originRich": "Entstanden ist Streamlet für <project>Green Ecolution</project>, weil die geprüften Planungswerkzeuge dieses Problem nicht abbilden konnten. Heute liegt es in einem eigenen Repository und hat keine Abhängigkeit zu Green Ecolution. Wer dasselbe Planungsproblem hat, kann es unverändert übernehmen.",
     "repo": "Repository",
     "repoAriaLabel": "Streamlet-Repository auf GitHub öffnen",
     "docs": "Dokumentation",
@@ -152,7 +152,11 @@
       "repo": "Zum Repository",
       "repoAriaLabel": "Streamlet-Repository auf GitHub öffnen",
       "issues": "Issues",
-      "issuesAriaLabel": "Issues von Streamlet auf GitHub öffnen"
+      "issuesAriaLabel": "Issues von Streamlet auf GitHub öffnen",
+      "home": "Zu Green Ecolution",
+      "homeAriaLabel": "Zur Startseite von Green Ecolution",
+      "contact": "Kontakt aufnehmen",
+      "contactAriaLabel": "Zur Kontaktseite von Green Ecolution"
     }
   }
 }
