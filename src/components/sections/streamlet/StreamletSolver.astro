@@ -14,7 +14,7 @@ const { language } = Astro.props
 const t = getTranslations(language, 'streamlet')
 ---
 
-<section class="relative overflow-hidden bg-[#1a2a16]">
+<section id="solver" class="relative overflow-hidden bg-[#1a2a16]">
   <div
     class="absolute inset-0 opacity-[0.03]"
     style={`background-image: ${DOTS}; background-size: 20px 20px;`}
@@ -45,6 +45,10 @@ const t = getTranslations(language, 'streamlet')
       </h2>
 
       <p class="text-white/60 leading-relaxed max-w-2xl">{t('solver.description')}</p>
+
+      <p class="text-white/60 leading-relaxed max-w-2xl mt-4">{t('solver.termIntro')}</p>
+
+      <p class="text-white/60 leading-relaxed max-w-2xl mt-4">{t('solver.priorEngine')}</p>
     </div>
 
     <div class="grid grid-cols-1 gap-6 mb-8 lg:grid-cols-2 lg:gap-8">

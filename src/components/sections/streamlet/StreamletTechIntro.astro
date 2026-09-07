@@ -1,0 +1,51 @@
+---
+import type { Language } from '../../../i18n/languages'
+import { getTranslations } from '../../../i18n/t'
+import { techSections } from '../../../data/streamlet'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'streamlet')
+---
+
+<section
+  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
+>
+  <div class="rounded-2xl border border-dashed border-green-dark-900/25 p-6 lg:p-10">
+    <div class="inline-block mb-4">
+      <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+        {t('techIntro.sectionLabel')}
+      </span>
+      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+    </div>
+
+    <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl">
+      {t('techIntro.title')}
+    </h2>
+
+    <p class="text-grey-900/70 leading-relaxed max-w-2xl mb-6">{t('techIntro.description')}</p>
+
+    <nav aria-label={t('techIntro.jumpLabel')}>
+      <span class="block text-sm font-semibold text-grey-900 mb-3">
+        {t('techIntro.jumpLabel')}
+      </span>
+      <ul class="flex flex-wrap gap-3">
+        {
+          techSections.map((section) => (
+            <li>
+              <a
+                href={`#${section}`}
+                class="inline-flex items-center rounded-full border border-green-dark-900/30 px-4 py-1.5 text-sm font-semibold text-green-dark-900 transition-colors duration-300 hover:border-green-dark-900 hover:bg-green-light-100/70"
+              >
+                {t(`techIntro.links.${section}`)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</section>

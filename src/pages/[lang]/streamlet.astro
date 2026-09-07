@@ -2,12 +2,14 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro'
 import StreamletApi from '../../components/sections/streamlet/StreamletApi.astro'
+import StreamletBenefit from '../../components/sections/streamlet/StreamletBenefit.astro'
 import StreamletFit from '../../components/sections/streamlet/StreamletFit.astro'
 import StreamletHero from '../../components/sections/streamlet/StreamletHero.astro'
 import StreamletOperations from '../../components/sections/streamlet/StreamletOperations.astro'
 import StreamletProblem from '../../components/sections/streamlet/StreamletProblem.astro'
 import StreamletSolver from '../../components/sections/streamlet/StreamletSolver.astro'
 import StreamletStatus from '../../components/sections/streamlet/StreamletStatus.astro'
+import StreamletTechIntro from '../../components/sections/streamlet/StreamletTechIntro.astro'
 import StreamletTiles from '../../components/sections/streamlet/StreamletTiles.astro'
 import { getTranslations } from '../../i18n/t'
 import { languagePaths } from '../../lib/languagePaths'
@@ -36,7 +38,9 @@ const tc = getTranslations(language, 'common')
   <main id="main-content">
     <StreamletHero language={language} />
     <StreamletProblem language={language} />
+    <StreamletBenefit language={language} />
     <StreamletFit language={language} />
+    <StreamletTechIntro language={language} />
     <StreamletApi language={language} />
     <StreamletSolver language={language} />
     <StreamletTiles language={language} />

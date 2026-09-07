@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Route optimisation with refill stations | Streamlet | Green Ecolution",
-    "description": "Streamlet is a standalone open source service for vehicle routing with time windows and multiple refill stations. Stateless HTTP API, deterministic solver, AGPL-3.0."
+    "description": "Streamlet is a standalone open source service for route optimisation with time windows and multiple refill stations. Stateless HTTP API, reproducible results, AGPL-3.0."
   },
   "hero": {
     "sectionLabel": "Open source project Streamlet",
@@ -20,8 +20,8 @@
     "sectionLabel": "The problem",
     "title": "Stop order and refills depend on each other",
     "coupling": "As soon as a vehicle has to refill along the way, the best order of the stops depends on when and where it refills. Deciding both at once is the heart of the problem.",
-    "workarounds": "Without a solver that takes this as input, there are two options, and both cost solution quality: plan the tour without the refills and end up with an infeasible result, or cut the tour into pieces by hand and give up optimising across the whole of it.",
-    "approach": "Streamlet plans the refill stations in the same optimisation run instead of fitting them in afterwards. At Green Ecolution route optimisation previously ran on Vroom, which could not express several refill stations in the middle of a tour.",
+    "workarounds": "Without planning that takes this as input, there are two options, and both cost solution quality: plan the tour without the refills and end up with an infeasible result, or cut the tour into pieces by hand and give up optimising across the whole of it.",
+    "approach": "Streamlet plans the refill stations in the same optimisation run instead of fitting them in afterwards. At Green Ecolution route optimisation previously ran on a standard engine that could not express several refill stations in the middle of a tour.",
     "diagram": {
       "ariaLabel": "Diagram of a tour: the vehicle's fill level drops at every stop and is topped up again at a refill station in the middle of the tour.",
       "depot": "Depot",
@@ -33,9 +33,36 @@
       "refilled": "refilled"
     }
   },
+  "benefit": {
+    "sectionLabel": "In operation",
+    "title": "What this means in day-to-day operation",
+    "description": "A tour that plans the refills along with everything else saves the trips that would otherwise happen when the tank runs dry in the middle of the area. The stops are visited in the order that fits their time windows, and at the end of the shift the vehicle is back at the depot.",
+    "needs": {
+      "title": "Three inputs are enough",
+      "stops": {
+        "label": "The stops and their demand",
+        "description": "Where water has to go and how much. In Green Ecolution this comes from the sensor readings, but it can be supplied without sensors as well."
+      },
+      "fleet": {
+        "label": "The vehicles you already have",
+        "description": "Water carts, vans and trailers with their water capacity and the time window of the shift. There is no need for a new fleet."
+      },
+      "refill": {
+        "label": "The refill points",
+        "description": "Places in the service area where the vehicle can refill along the way. Several points are explicitly supported."
+      }
+    },
+    "sensorsOptional": {
+      "label": "Sensors are not a prerequisite",
+      "description": "Route planning works without readings. Sensor data improves the prioritisation because it shows which stops actually need water."
+    },
+    "integratedRich": "In <project>Green Ecolution</project> the route optimisation is already built in. Anyone using the platform does not have to wire up Streamlet themselves.",
+    "cta": "How the system is put together",
+    "ctaAriaLabel": "Go to the architecture section on the project page"
+  },
   "fit": {
     "sectionLabel": "Where it fits",
-    "title": "Does Streamlet fit your problem?",
+    "title": "Does this fit your planning problem?",
     "description": "Streamlet is not tailored to one industry, what matters is the structure of the tour. The more of these traits your tours have, the better the fit.",
     "criteria": {
       "tankCapacity": "Vehicles with limited tank capacity",
@@ -47,6 +74,18 @@
     "cargo": {
       "title": "Independent of what you carry",
       "description": "Streamlet knows about tank capacity and demand, not about irrigation. What you transport is up to you. Water is the first use case, and nothing in the API assumes it."
+    }
+  },
+  "techIntro": {
+    "sectionLabel": "Technical layer",
+    "title": "Technical from here on",
+    "description": "The sections below cover the interface, the optimisation, the map data and how to run it. They are written for IT departments, integrators and developers who want to embed or operate Streamlet themselves.",
+    "jumpLabel": "Jump to",
+    "links": {
+      "api": "Interface",
+      "solver": "Optimisation",
+      "tiles": "Map data",
+      "operations": "Operation"
     }
   },
   "api": {
@@ -78,6 +117,8 @@
     "sectionLabel": "Solver",
     "title": "Traceable instead of random",
     "description": "The solver works in two phases and without randomness. As long as the time budget does not cut in, the same input yields the same output, which makes results reproducible and regressions testable.",
+    "termIntro": "Solver here means the part that turns stops, vehicles and refill stations into the actual routes.",
+    "priorEngine": "At Green Ecolution route optimisation previously ran on Vroom. Vroom cannot express several refill stations in the middle of a tour, which is why Streamlet exists.",
     "stages": {
       "construction": {
         "label": "Construction",

@@ -2,12 +2,15 @@ import {
   Boxes,
   Clock,
   Container,
+  Droplets,
   Fuel,
   GitBranch,
   Layers,
+  MapPin,
   Repeat,
   Scale,
   ServerCog,
+  Truck,
   Warehouse,
 } from 'lucide-react'
 import type { ComponentType } from 'react'
@@ -122,3 +125,20 @@ export const streamletLimitations: StreamletLimitationId[] = [
   'depots',
   'missingFeatures',
 ]
+
+export type BenefitNeedId = 'stops' | 'fleet' | 'refill'
+
+interface BenefitNeed {
+  id: BenefitNeedId
+  icon: Icon
+}
+
+export const benefitNeeds: BenefitNeed[] = [
+  { id: 'stops', icon: MapPin },
+  { id: 'fleet', icon: Truck },
+  { id: 'refill', icon: Droplets },
+]
+
+export type TechSectionId = 'api' | 'solver' | 'tiles' | 'operations'
+
+export const techSections: TechSectionId[] = ['api', 'solver', 'tiles', 'operations']
