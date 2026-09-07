@@ -79,6 +79,55 @@
       }
     }
   },
+  "requirements": {
+    "sectionLabel": "Voraussetzungen",
+    "title": "Was Sie dafür brauchen",
+    "lead": "Der Einstieg ist kleiner, als es zunächst aussieht. Die vier Punkte beschreiben, was aus der Kommune kommen muss.",
+    "sensorsOptionalNote": "Die Einsatz- und Routenplanung rechnet bereits ohne Sensorik. Bäume, Flotte und Nachfüllpunkte genügen. Die Bodensonden verbessern die Priorisierung, weil sie zeigen, welche Flächen wirklich Wasser brauchen.",
+    "items": {
+      "treeData": {
+        "label": "Baum- und Flächendaten",
+        "description": "Die Standorte kommen per CSV-Import oder über die Anbindung eines vorhandenen Baumkatasters. Ein Kataster muss also nicht neu aufgebaut werden."
+      },
+      "fleet": {
+        "label": "Die vorhandene Flotte",
+        "description": "Gießwagen, Transporter und Anhänger mit ihren Wasserkapazitäten sowie die Nachfüllpunkte im Stadtgebiet. Eine neue Flotte oder stationäre Bewässerungstechnik ist nicht nötig."
+      },
+      "network": {
+        "label": "LoRaWAN-Abdeckung, sobald Sensorik dazukommt",
+        "description": "Die Sonden funken über das offene The Things Network. Schleswig-Holstein hat seit 2024 ein landesweites Netz mit über 420 Gateways aufgebaut. Nur außerhalb einer Abdeckung wird ein eigenes Gateway nötig."
+      },
+      "hosting": {
+        "label": "Ein Ort für den Betrieb",
+        "description": "Die Plattform läuft in einem Kubernetes-Cluster, entweder in eigener oder kommunaler Infrastruktur oder gehostet. Die Software selbst ist lizenzkostenfrei."
+      }
+    },
+    "tourLinkRich": "Wie die Tourenoptimierung rechnet und was sie als Eingabe erwartet, beschreibt die Seite zur <streamlet>Tourenoptimierung</streamlet>.",
+    "cta": "Einstieg besprechen",
+    "ctaAriaLabel": "Zur Kontaktseite"
+  },
+  "productScope": {
+    "sectionLabel": "Produktumfang",
+    "title": "Was zum System gehört",
+    "description": "Green Ecolution besteht aus Software, Hardware und den Leistungen drumherum. Die Software ist quelloffen, die Sonden und die Unterstützung kommen von der PROGEEK GmbH aus Flensburg.",
+    "framing": "Das Masterprojekt an der Hochschule Flensburg hat gezeigt, dass der Ansatz im kommunalen Alltag trägt. Was Kommunen heute bekommen, entsteht auf dieser Grundlage bei PROGEEK.",
+    "columns": {
+      "software": {
+        "label": "Software",
+        "description": "Die Plattform mit Karte und Dashboard, die Gruppierung zu Bewässerungseinheiten, Fuhrpark- und Teamverwaltung, das Benutzer- und Rollenkonzept, die Tourenoptimierung mit Nachfüllstationen, die Mobile App und die Auswertung des Verbrauchs. Der Quellcode ist offen, für Kommunen fallen keine Lizenzkosten an."
+      },
+      "hardware": {
+        "label": "Hardware",
+        "description": "Die Bodensonde erfasst den Bodenwasserstatus in mehreren Tiefen und funkt über LoRaWAN. Sie ist für den öffentlichen Raum ausgelegt, wird mit marktüblichen Erdbohrern bodenbündig eingebracht und behindert Pflegearbeiten wie Mähen nicht. Die Sonden sind über PROGEEK beziehbar, eine eigene Firmware ist in Entwicklung, und perspektivisch soll regional gefertigt werden."
+      },
+      "services": {
+        "label": "Leistungen",
+        "description": "PROGEEK übernimmt Hosting und Betrieb, passt die Plattform an die Organisationsstruktur der Kommune an, bindet vorhandene Datenquellen an und unterstützt bei der Einführung. Wer selbst betreiben will, kann das ebenso tun."
+      }
+    },
+    "cta": "Angebot anfragen",
+    "ctaAriaLabel": "Zur Kontaktseite"
+  },
   "governance": {
     "sectionLabel": "Governance",
     "title": "Open Source als Prinzip",
@@ -112,7 +161,7 @@
       "costEfficiency": {
         "category": "Wirtschaftlichkeit",
         "title": "Kosteneffizienz",
-        "description": "Keine Lizenzkosten. Geschäftsmodell basiert auf Dienstleistungen: Hosting, Anpassung, Sensorvertrieb. Regionale Wertschöpfung in Schleswig-Holstein."
+        "description": "Keine Lizenzkosten für Kommunen. Die Wertschöpfung bleibt in Schleswig-Holstein, weil Weiterentwicklung und Betrieb regional erfolgen."
       }
     }
   },

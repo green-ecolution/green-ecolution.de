@@ -79,6 +79,55 @@
       }
     }
   },
+  "requirements": {
+    "sectionLabel": "Requirements",
+    "title": "What you need for it",
+    "lead": "Getting started is smaller than it first looks. The four points describe what has to come from the municipality.",
+    "sensorsOptionalNote": "Scheduling and route planning already work without sensors. Trees, fleet and refill points are enough. The soil probes improve the prioritisation because they show which areas actually need water.",
+    "items": {
+      "treeData": {
+        "label": "Tree and area data",
+        "description": "Locations come in via CSV import or by connecting an existing tree register. There is no need to build a register from scratch."
+      },
+      "fleet": {
+        "label": "The fleet you already have",
+        "description": "Water carts, vans and trailers with their water capacities, plus the refill points across the city. A new fleet or fixed irrigation hardware is not required."
+      },
+      "network": {
+        "label": "LoRaWAN coverage once sensors are added",
+        "description": "The probes transmit over the open The Things Network. Since 2024 Schleswig-Holstein has built a state-wide network with more than 420 gateways. Only outside such coverage does a gateway of your own become necessary."
+      },
+      "hosting": {
+        "label": "Somewhere to run it",
+        "description": "The platform runs in a Kubernetes cluster, either in your own or the municipality's infrastructure, or hosted. The software itself is free of licence fees."
+      }
+    },
+    "tourLinkRich": "How the route optimisation works and what input it expects is described on the <streamlet>route optimisation</streamlet> page.",
+    "cta": "Discuss getting started",
+    "ctaAriaLabel": "Go to the contact page"
+  },
+  "productScope": {
+    "sectionLabel": "What you get",
+    "title": "What the system consists of",
+    "description": "Green Ecolution consists of software, hardware and the services around them. The software is open source; the probes and the support come from PROGEEK GmbH in Flensburg.",
+    "framing": "The master's project at Flensburg University of Applied Sciences showed that the approach holds up in municipal day-to-day work. What municipalities get today is built on that foundation at PROGEEK.",
+    "columns": {
+      "software": {
+        "label": "Software",
+        "description": "The platform with its map and dashboard, grouping into irrigation units, fleet and team management, the user and role model, route optimisation with refill stations, the mobile app and the review of consumption. The source code is open and there are no licence fees for municipalities."
+      },
+      "hardware": {
+        "label": "Hardware",
+        "description": "The soil probe records the soil water status at several depths and transmits over LoRaWAN. It is designed for public spaces, is installed flush with the ground using standard earth augers and does not get in the way of maintenance work such as mowing. The probes are available through PROGEEK, a firmware of our own is in development, and regional manufacturing is the goal going forward."
+      },
+      "services": {
+        "label": "Services",
+        "description": "PROGEEK handles hosting and operation, adapts the platform to the municipality's organisational structure, connects existing data sources and supports the rollout. Anyone who prefers to run it themselves can do that just as well."
+      }
+    },
+    "cta": "Request a quote",
+    "ctaAriaLabel": "Go to the contact page"
+  },
   "governance": {
     "sectionLabel": "Governance",
     "title": "Open source as a principle",
@@ -112,7 +161,7 @@
       "costEfficiency": {
         "category": "Cost efficiency",
         "title": "Cost efficiency",
-        "description": "No license fees. The business model is based on services: hosting, customization, and sensor distribution. Regional value creation in Schleswig-Holstein."
+        "description": "No licence fees for municipalities. Value creation stays in Schleswig-Holstein because development and operation happen regionally."
       }
     }
   },

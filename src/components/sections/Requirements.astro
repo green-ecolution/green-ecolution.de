@@ -1,0 +1,79 @@
+---
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+import { splitSlot } from '../../lib/slotText'
+import { requirementItems } from '../../data/requirements'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'project')
+
+const tourLink = splitSlot(t('requirements.tourLinkRich'), 'streamlet')
+---
+
+<section
+  id="requirements"
+  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
+>
+  <div class="mb-10 lg:mb-14">
+    <div class="inline-block mb-4">
+      <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+        {t('requirements.sectionLabel')}
+      </span>
+      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+    </div>
+
+    <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
+      {t('requirements.title')}
+    </h2>
+
+    <p class="text-grey-900/70 leading-relaxed max-w-2xl">{t('requirements.lead')}</p>
+  </div>
+
+  <div class="mb-8 rounded-2xl bg-green-light-100/70 border border-green-light-900/20 p-6 lg:p-8">
+    <p class="text-grey-900/80 leading-relaxed">{t('requirements.sensorsOptionalNote')}</p>
+  </div>
+
+  <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
+    {
+      requirementItems.map((item) => {
+        const Icon = item.icon
+
+        return (
+          <li class="h-full rounded-2xl border border-green-dark-900/10 bg-white p-5 lg:p-6">
+            <span class="flex w-10 h-10 rounded-lg bg-green-light-900/15 items-center justify-center mb-4">
+              <Icon className="w-5 h-5 text-green-dark-900" aria-hidden="true" />
+            </span>
+            <h3 class="font-lato font-semibold text-grey-900 mb-2">
+              {t(`requirements.items.${item.id}.label`)}
+            </h3>
+            <p class="text-grey-900/70 leading-relaxed">
+              {t(`requirements.items.${item.id}.description`)}
+            </p>
+          </li>
+        )
+      })
+    }
+  </ul>
+
+  <p class="text-grey-900/70 leading-relaxed mt-8 max-w-2xl">
+    {tourLink.before}<a
+      href={`/${language}/streamlet`}
+      class="font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
+      >{tourLink.inner}</a
+    >{tourLink.after}
+  </p>
+
+  <div class="mt-6">
+    <a
+      href={`/${language}/contact`}
+      aria-label={t('requirements.ctaAriaLabel')}
+      class="inline-flex items-center gap-2 font-semibold text-green-dark-900 underline decoration-2 underline-offset-2 transition-all hover:decoration-4"
+    >
+      {t('requirements.cta')}
+    </a>
+  </div>
+</section>

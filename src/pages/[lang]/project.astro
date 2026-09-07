@@ -10,6 +10,8 @@ import FurtherLinks from '../../components/sections/FurtherLinks.astro'
 import MediaFeature from '../../components/sections/MediaFeature.astro'
 import OpenSourceGovernance from '../../components/sections/OpenSourceGovernance.astro'
 import Process from '../../components/sections/Process.astro'
+import ProductScope from '../../components/sections/ProductScope.astro'
+import Requirements from '../../components/sections/Requirements.astro'
 import VisionRoadmap from '../../components/sections/VisionRoadmap.astro'
 import { getTranslations } from '../../i18n/t'
 import { languagePaths } from '../../lib/languagePaths'
@@ -50,6 +52,8 @@ const tc = getTranslations(language, 'common')
     <DashboardPreview language={language} />
     <Process language={language} />
     <Architecture language={language} />
+    <Requirements language={language} />
+    <ProductScope language={language} />
     <OpenSourceGovernance language={language} />
     <Advantages language={language} />
     <VisionRoadmap language={language} />
