@@ -125,6 +125,32 @@
       }
     }
   },
+  "targetGroups": {
+    "sectionLabel": "Zielgruppen",
+    "title": "Wer davon profitiert",
+    "description": "Green Ecolution ist für den kommunalen Betrieb gebaut. Je nach Rolle ist der Nutzen ein anderer.",
+    "items": {
+      "municipality": {
+        "role": "Kommunen und Stadtverwaltungen",
+        "description": "Entscheidungen über Wasser, Personal und Fahrzeuge beruhen auf Messwerten statt auf Erfahrung. Verbrauch und Einsätze sind pro Fläche und Tour dokumentiert und damit belegbar."
+      },
+      "operations": {
+        "role": "Technische Betriebszentren und Bauhöfe",
+        "description": "Einsatzpläne und Touren entstehen automatisch statt in Handarbeit. Fuhrpark, Teams und die Auswertung des tatsächlichen Verbrauchs liegen an einer Stelle."
+      },
+      "field": {
+        "role": "Die Gießkolonne",
+        "description": "Die Tour ist in der App einsehbar und lässt sich zusätzlich auf das Navigationsgerät im Fahrzeug übertragen. Ein Ampelsystem auf der Karte zeigt, welche Bäume und Gruppen Wasser brauchen."
+      },
+      "it": {
+        "role": "IT und Betrieb der Kommune",
+        "description": "Die Plattform läuft in einem Kubernetes-Cluster, in eigener oder kommunaler Infrastruktur oder gehostet. Offene Schnittstellen und ein Plug-in-System halten die Daten im eigenen Zugriff."
+      }
+    },
+    "closing": "Mittelbar profitieren alle anderen mit: gesunde Stadtbäume kühlen das Stadtklima und fördern die biologische Vielfalt.",
+    "cta": "Was Sie dafür brauchen",
+    "ctaAriaLabel": "Zu den Voraussetzungen auf der Projektseite"
+  },
   "features": {
     "sectionLabel": "Features",
     "title": "Green Ecolution im Überblick",

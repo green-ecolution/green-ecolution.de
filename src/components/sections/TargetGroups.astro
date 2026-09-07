@@ -1,0 +1,72 @@
+---
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+import { targetGroups } from '../../data/targetGroups'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'home')
+---
+
+<section
+  id="zielgruppen"
+  class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
+>
+  <div class="text-center mb-6 lg:mb-8">
+    <div class="inline-block">
+      <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+        {t('targetGroups.sectionLabel')}
+      </span>
+      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 mx-auto">
+      </div>
+    </div>
+  </div>
+
+  <article class="mb-8 lg:mb-14 text-center">
+    <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl">
+      {t('targetGroups.title')}
+    </h2>
+    <p class="text-grey-900/70 max-w-2xl mx-auto leading-relaxed">
+      {t('targetGroups.description')}
+    </p>
+  </article>
+
+  <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
+    {
+      targetGroups.map((group) => {
+        const Icon = group.icon
+
+        return (
+          <li class="h-full rounded-2xl border border-green-dark-900/10 bg-white p-5 lg:p-6">
+            <span class="flex w-10 h-10 rounded-lg bg-green-light-900/15 items-center justify-center mb-4">
+              <Icon className="w-5 h-5 text-green-dark-900" aria-hidden="true" />
+            </span>
+            <h3 class="font-lato font-bold text-base md:text-xl mb-2 text-grey-900">
+              {t(`targetGroups.items.${group.id}.role`)}
+            </h3>
+            <p class="text-grey-900/70 leading-relaxed">
+              {t(`targetGroups.items.${group.id}.description`)}
+            </p>
+          </li>
+        )
+      })
+    }
+  </ul>
+
+  <p class="text-grey-900/60 leading-relaxed mt-8 text-center max-w-2xl mx-auto">
+    {t('targetGroups.closing')}
+  </p>
+
+  <div class="mt-8 text-center">
+    <a
+      href={`/${language}/project#requirements`}
+      aria-label={t('targetGroups.ctaAriaLabel')}
+      class="inline-flex items-center gap-2 font-semibold text-green-dark-900 underline decoration-2 underline-offset-2 transition-all hover:decoration-4"
+    >
+      {t('targetGroups.cta')}
+    </a>
+  </div>
+</section>

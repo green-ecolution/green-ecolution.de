@@ -125,6 +125,32 @@
       }
     }
   },
+  "targetGroups": {
+    "sectionLabel": "Who it is for",
+    "title": "Who benefits",
+    "description": "Green Ecolution is built for municipal operations. The benefit differs depending on the role.",
+    "items": {
+      "municipality": {
+        "role": "Municipalities and city administrations",
+        "description": "Decisions about water, staff and vehicles rest on measurements instead of experience. Consumption and operations are documented per area and per tour, and can therefore be evidenced."
+      },
+      "operations": {
+        "role": "Municipal service centres and depots",
+        "description": "Schedules and tours are generated instead of assembled by hand. The fleet, the teams and the review of actual consumption all live in one place."
+      },
+      "field": {
+        "role": "The watering crew",
+        "description": "The tour can be viewed in the app and can also be transferred to the navigation device in the vehicle. A traffic-light system on the map shows which trees and groups need water."
+      },
+      "it": {
+        "role": "Municipal IT and operations",
+        "description": "The platform runs in a Kubernetes cluster, in your own or the municipality's infrastructure, or hosted. Open interfaces and a plug-in system keep the data within your own reach."
+      }
+    },
+    "closing": "Everyone else benefits indirectly: healthy urban trees cool the city climate and support biodiversity.",
+    "cta": "What you need for it",
+    "ctaAriaLabel": "Go to the requirements on the project page"
+  },
   "features": {
     "sectionLabel": "Features",
     "title": "Green Ecolution at a glance",
