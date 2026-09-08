@@ -148,7 +148,7 @@
       }
     },
     "closing": "Mittelbar profitieren alle anderen mit: gesunde Stadtbäume kühlen das Stadtklima und fördern die biologische Vielfalt.",
-    "cta": "Was Sie dafür brauchen",
+    "cta": "Was du dafür brauchst",
     "ctaAriaLabel": "Zu den Voraussetzungen auf der Projektseite",
     "photoAlt": "Zwei Personen an einem jungen Baum mit Wassersack. Eine kniet und bedient ein Tablet, die andere schaut zu.",
     "photoLead": "So sieht das im Alltag aus. Wer gießt, sieht am Baum, was dieser Standort braucht. Wer plant, sieht es am Schreibtisch. Beide arbeiten mit denselben Daten."
@@ -326,8 +326,8 @@
       },
       "openSource": {
         "question": "Was bringt uns der offene Quellcode?",
-        "answerPlain": "Drei Dinge, ganz praktisch. Sie können nachlesen und prüfen lassen, was das System mit Ihren Daten macht. Es fallen keine Lizenzkosten an. Und Sie sind an keinen Anbieter gebunden: der Quellcode liegt öffentlich auf GitHub und bleibt der Kommune auch dann, wenn sie später anders entscheidet.\n\nUm Einrichtung, Betrieb und Support kümmern wir uns. Offen heißt, dass Sie es selbst könnten, nicht dass Sie es müssen.",
-        "answerRich": "<p1>Drei Dinge, ganz praktisch. Sie können nachlesen und prüfen lassen, was das System mit Ihren Daten macht. Es fallen keine Lizenzkosten an. Und Sie sind an keinen Anbieter gebunden: der Quellcode liegt öffentlich auf <repo>GitHub</repo> und bleibt der Kommune auch dann, wenn sie später anders entscheidet.</p1><p2>Um Einrichtung, Betrieb und Support kümmern wir uns. Offen heißt, dass Sie es selbst könnten, nicht dass Sie es müssen.</p2>"
+        "answerPlain": "Drei Dinge, ganz praktisch. Du kannst nachlesen und prüfen lassen, was das System mit deinen Daten macht. Es fallen keine Lizenzkosten an. Und du bist an keinen Anbieter gebunden: der Quellcode liegt öffentlich auf GitHub und bleibt der Kommune auch dann, wenn sie später anders entscheidet.\n\nUm Einrichtung, Betrieb und Support kümmern wir uns. Offen heißt, dass du es selbst könntest, nicht dass du es musst.",
+        "answerRich": "<p1>Drei Dinge, ganz praktisch. Du kannst nachlesen und prüfen lassen, was das System mit deinen Daten macht. Es fallen keine Lizenzkosten an. Und du bist an keinen Anbieter gebunden: der Quellcode liegt öffentlich auf <repo>GitHub</repo> und bleibt der Kommune auch dann, wenn sie später anders entscheidet.</p1><p2>Um Einrichtung, Betrieb und Support kümmern wir uns. Offen heißt, dass du es selbst könntest, nicht dass du es musst.</p2>"
       },
       "sensors": {
         "question": "Ist das System an bestimmte Sensoren gebunden?",

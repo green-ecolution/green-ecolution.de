@@ -81,7 +81,7 @@
   },
   "requirements": {
     "sectionLabel": "Voraussetzungen",
-    "title": "Was Sie dafür brauchen",
+    "title": "Was du dafür brauchst",
     "lead": "Der Einstieg ist kleiner, als es zunächst aussieht. Die vier Punkte beschreiben, was aus der Kommune kommen muss.",
     "sensorsOptionalNote": "Die Einsatz- und Routenplanung rechnet bereits ohne Sensorik. Bäume, Flotte und Nachfüllpunkte genügen. Die Bodensonden verbessern die Priorisierung, weil sie zeigen, welche Flächen wirklich Wasser brauchen.",
     "items": {
@@ -99,7 +99,7 @@
       },
       "hosting": {
         "label": "Einen Betreiber für die Plattform",
-        "description": "Wir betreiben die Plattform für Sie, mit Updates, Sicherungen und Support. Weil der Quellcode offen und lizenzkostenfrei ist, bleibt der eigene Betrieb jederzeit möglich. Sie sind also nicht an uns gebunden und müssen sich trotzdem um nichts kümmern."
+        "description": "Wir betreiben die Plattform für dich, mit Updates, Sicherungen und Support. Weil der Quellcode offen und lizenzkostenfrei ist, bleibt der eigene Betrieb jederzeit möglich. Du bist also nicht an uns gebunden und musst dich trotzdem um nichts kümmern."
       }
     },
     "tourLinkRich": "Wie die Tourenoptimierung rechnet und was sie als Eingabe erwartet, beschreibt die Seite zur <streamlet>Tourenoptimierung</streamlet>.",
@@ -122,13 +122,13 @@
       },
       "services": {
         "label": "Leistungen",
-        "description": "PROGEEK übernimmt Hosting und Betrieb, passt die Plattform an die Organisationsstruktur der Kommune an, bindet vorhandene Datenquellen an und unterstützt bei der Einführung. Sie bekommen ein System, um das sich jemand kümmert, und behalten jede Freiheit, die offener Quellcode mitbringt."
+        "description": "PROGEEK übernimmt Hosting und Betrieb, passt die Plattform an die Organisationsstruktur der Kommune an, bindet vorhandene Datenquellen an und unterstützt bei der Einführung. Du bekommst ein System, um das sich jemand kümmert, und behältst jede Freiheit, die offener Quellcode mitbringt."
       }
     },
     "cta": "Angebot anfragen",
     "ctaAriaLabel": "Zur Kontaktseite",
     "photoAlt": "Zwei Mitarbeitende von PROGEEK sehen sich gemeinsam etwas auf einem Laptop an.",
-    "photoLead": "Wir beraten Sie von der ersten Frage bis zum laufenden Betrieb. Bei PROGEEK in Flensburg sprechen Sie direkt mit den Leuten, die das System bauen und betreiben."
+    "photoLead": "Wir beraten dich von der ersten Frage bis zum laufenden Betrieb. Bei PROGEEK in Flensburg sprichst du direkt mit den Leuten, die das System bauen und betreiben."
   },
   "governance": {
     "sectionLabel": "Governance",
