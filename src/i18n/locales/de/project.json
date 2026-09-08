@@ -98,8 +98,8 @@
         "description": "Die Sonden funken heute über LoRaWAN und das offene The Things Network. Schleswig-Holstein hat seit 2024 ein landesweites Netz mit über 420 Gateways aufgebaut. Wo keine Abdeckung besteht, lässt sich entweder ein eigenes Gateway setzen, oder dieselben Sonden kommen mit NB-IoT und SIM-Karte zum Einsatz. LoRaWAN ist die heute genutzte Technik, keine Bedingung."
       },
       "hosting": {
-        "label": "Ein Ort für den Betrieb",
-        "description": "Die Plattform läuft in einem Kubernetes-Cluster, entweder in eigener oder kommunaler Infrastruktur oder gehostet. Die Software selbst ist lizenzkostenfrei."
+        "label": "Einen Betreiber für die Plattform",
+        "description": "Wir betreiben die Plattform für Sie, mit Updates, Sicherungen und Support. Weil der Quellcode offen und lizenzkostenfrei ist, bleibt der eigene Betrieb jederzeit möglich. Sie sind also nicht an uns gebunden und müssen sich trotzdem um nichts kümmern."
       }
     },
     "tourLinkRich": "Wie die Tourenoptimierung rechnet und was sie als Eingabe erwartet, beschreibt die Seite zur <streamlet>Tourenoptimierung</streamlet>.",
@@ -122,7 +122,7 @@
       },
       "services": {
         "label": "Leistungen",
-        "description": "PROGEEK übernimmt Hosting und Betrieb, passt die Plattform an die Organisationsstruktur der Kommune an, bindet vorhandene Datenquellen an und unterstützt bei der Einführung. Wer selbst betreiben will, kann das ebenso tun."
+        "description": "PROGEEK übernimmt Hosting und Betrieb, passt die Plattform an die Organisationsstruktur der Kommune an, bindet vorhandene Datenquellen an und unterstützt bei der Einführung. Sie bekommen ein System, um das sich jemand kümmert, und behalten jede Freiheit, die offener Quellcode mitbringt."
       }
     },
     "cta": "Angebot anfragen",
@@ -158,7 +158,7 @@
       "community": {
         "category": "Community",
         "title": "Nachnutzung & Community",
-        "description": "Quellcode und Dokumentation öffentlich auf GitHub. Andere Kommunen können die Lösung nachnutzen und anpassen."
+        "description": "Quellcode und Dokumentation liegen öffentlich auf GitHub. Verbesserungen, die für eine Kommune entstehen, stehen allen anderen zur Verfügung."
       },
       "costEfficiency": {
         "category": "Wirtschaftlichkeit",
@@ -174,7 +174,7 @@
     "items": {
       "openSource": {
         "title": "Offene Lösung für alle",
-        "description": "Skalierbare Open-Source-Lösung für Kommunen zur Förderung von Weiterentwicklungen und Transparenz"
+        "description": "Prüfbarer Quellcode, keine Lizenzkosten und keine Bindung an einen Anbieter"
       },
       "optimizedRoutes": {
         "title": "Optimierte Routen",

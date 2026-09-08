@@ -144,7 +144,7 @@
       },
       "it": {
         "role": "IT und Betrieb der Kommune",
-        "description": "Die Plattform läuft in einem Kubernetes-Cluster, in eigener oder kommunaler Infrastruktur oder gehostet. Offene Schnittstellen und ein Plug-in-System halten die Daten im eigenen Zugriff."
+        "description": "Wir betreiben die Plattform, auf Wunsch auch im eigenen Kubernetes-Cluster der Kommune. Offene Schnittstellen, ein Plug-in-System und offener Quellcode halten Daten und Kontrolle im Haus."
       }
     },
     "closing": "Mittelbar profitieren alle anderen mit: gesunde Stadtbäume kühlen das Stadtklima und fördern die biologische Vielfalt.",
@@ -325,9 +325,9 @@
         "answerRich": "<p1>Für die Einsatz- und Routenplanung genügen die Standorte der Bäume und Flächen, die vorhandenen Fahrzeuge mit ihren Wasserkapazitäten und die Nachfüllpunkte im Stadtgebiet. Sensorik ist dafür keine Voraussetzung, sie verbessert die Priorisierung. Kommen Sonden dazu, brauchen sie eine Funkanbindung: heute LoRaWAN, alternativ NB-IoT mit SIM-Karte.</p1><p2>Welche Daten und welche Infrastruktur im Einzelnen nötig sind, steht bei den <requirements>Voraussetzungen auf der Projektseite</requirements>.</p2>"
       },
       "openSource": {
-        "question": "Was bedeutet es, dass das Projekt öffentlich zugänglich ist?",
-        "answerPlain": "Der Quellcode des Projekts ist in einem öffentlich zugänglichen GitHub-Repository verfügbar. Dadurch kann der aktuelle Entwicklungsstand jederzeit eingesehen werden, was Transparenz schafft und interessierten Personen ermöglicht, die Weiterentwicklung nachzuvollziehen oder sich aktiv einzubringen.\n\nPerspektivisch ist zudem eine Anbindung an das Open-Data-Portal des Landes Schleswig-Holstein vorgesehen, um zukünftig ausgewählte Sensordaten öffentlich zugänglich zu machen. Diese Erweiterung befindet sich derzeit in Planung.",
-        "answerRich": "<p1>Der Quellcode des Projekts ist in einem öffentlich zugänglichen <repo>GitHub-Repository</repo> verfügbar. Dadurch kann der aktuelle Entwicklungsstand jederzeit eingesehen werden, was Transparenz schafft und interessierten Personen ermöglicht, die Weiterentwicklung nachzuvollziehen oder sich aktiv einzubringen.</p1><p2>Perspektivisch ist zudem eine Anbindung an das <opendata>Open-Data-Portal</opendata> des Landes Schleswig-Holstein vorgesehen, um zukünftig ausgewählte Sensordaten öffentlich zugänglich zu machen. Diese Erweiterung befindet sich derzeit in Planung.</p2>"
+        "question": "Was bringt uns der offene Quellcode?",
+        "answerPlain": "Drei Dinge, ganz praktisch. Sie können nachlesen und prüfen lassen, was das System mit Ihren Daten macht. Es fallen keine Lizenzkosten an. Und Sie sind an keinen Anbieter gebunden: der Quellcode liegt öffentlich auf GitHub und bleibt der Kommune auch dann, wenn sie später anders entscheidet.\n\nUm Einrichtung, Betrieb und Support kümmern wir uns. Offen heißt, dass Sie es selbst könnten, nicht dass Sie es müssen.",
+        "answerRich": "<p1>Drei Dinge, ganz praktisch. Sie können nachlesen und prüfen lassen, was das System mit Ihren Daten macht. Es fallen keine Lizenzkosten an. Und Sie sind an keinen Anbieter gebunden: der Quellcode liegt öffentlich auf <repo>GitHub</repo> und bleibt der Kommune auch dann, wenn sie später anders entscheidet.</p1><p2>Um Einrichtung, Betrieb und Support kümmern wir uns. Offen heißt, dass Sie es selbst könnten, nicht dass Sie es müssen.</p2>"
       },
       "sensors": {
         "question": "Ist das System an bestimmte Sensoren gebunden?",
