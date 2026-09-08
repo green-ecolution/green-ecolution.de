@@ -2,6 +2,8 @@
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { targetGroups } from '../../data/targetGroups'
+import { Image } from 'astro:assets'
+import fieldPhoto from '../../assets/photos/einsatz-jungbaum-tablet.jpg'
 import Arrow from '../icons/Arrow.astro'
 import Button from '../Button.astro'
 
@@ -58,18 +60,31 @@ const t = getTranslations(language, 'home')
     }
   </ul>
 
-  <p class="text-grey-900/60 leading-relaxed mt-8 text-center max-w-2xl mx-auto">
+  <div class="mt-10 lg:mt-14 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-center">
+    <Image
+      src={fieldPhoto}
+      alt={t('targetGroups.photoAlt')}
+      widths={[640, 960, 1200]}
+      sizes="(min-width: 1024px) 58vw, 100vw"
+      loading="lazy"
+      class="w-full aspect-[4/3] object-cover rounded-xl sm:aspect-[3/2] lg:col-span-7"
+    />
+
+    <div class="mt-8 lg:mt-0 lg:col-span-5">
+      <p class="text-grey-900/70 leading-relaxed mb-8">{t('targetGroups.photoLead')}</p>
+
+      <Button
+        href={`/${language}/project#requirements`}
+        ariaLabel={t('targetGroups.ctaAriaLabel')}
+        isDark
+      >
+        <span>{t('targetGroups.cta')}</span>
+        <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+      </Button>
+    </div>
+  </div>
+
+  <p class="text-grey-900/60 leading-relaxed mt-10 text-center max-w-2xl mx-auto lg:mt-14">
     {t('targetGroups.closing')}
   </p>
-
-  <div class="mt-8 flex justify-center">
-    <Button
-      href={`/${language}/project#requirements`}
-      ariaLabel={t('targetGroups.ctaAriaLabel')}
-      isDark
-    >
-      <span>{t('targetGroups.cta')}</span>
-      <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
-    </Button>
-  </div>
 </section>

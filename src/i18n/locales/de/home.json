@@ -149,7 +149,9 @@
     },
     "closing": "Mittelbar profitieren alle anderen mit: gesunde Stadtbäume kühlen das Stadtklima und fördern die biologische Vielfalt.",
     "cta": "Was Sie dafür brauchen",
-    "ctaAriaLabel": "Zu den Voraussetzungen auf der Projektseite"
+    "ctaAriaLabel": "Zu den Voraussetzungen auf der Projektseite",
+    "photoAlt": "Zwei Personen an einem jungen Baum mit Wassersack. Eine kniet und bedient ein Tablet, die andere schaut zu.",
+    "photoLead": "So sieht das im Alltag aus. Wer gießt, sieht am Baum, was dieser Standort braucht. Wer plant, sieht es am Schreibtisch. Beide arbeiten mit denselben Daten."
   },
   "features": {
     "sectionLabel": "Features",
@@ -219,7 +221,9 @@
         "label": "Temperatur",
         "description": "Erfassung der Bodentemperatur für präzise Bewässerungsempfehlungen"
       }
-    }
+    },
+    "photoAlt": "Einbau einer Bodensonde am Baumstandort: Ein Mitarbeiter in Warnkleidung öffnet mit dem Spaten das vom Erdbohrer vorbereitete Loch, daneben wird die Sonde mit ihrem Kabel bereitgehalten.",
+    "photoCaption": "Einbau gemeinsam mit dem Technischen Betriebszentrum Flensburg."
   },
   "videos": {
     "sectionLabel": "Videos",

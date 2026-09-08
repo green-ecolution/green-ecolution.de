@@ -2,6 +2,8 @@
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { productScopeColumns } from '../../data/productScope'
+import { Image } from 'astro:assets'
+import teamPhoto from '../../assets/photos/team-progeek.jpg'
 import Arrow from '../icons/Arrow.astro'
 import Button from '../Button.astro'
 
@@ -58,10 +60,23 @@ const t = getTranslations(language, 'project')
     }
   </ul>
 
-  <div class="mt-8">
-    <Button href={`/${language}/contact`} ariaLabel={t('productScope.ctaAriaLabel')} isDark>
-      <span>{t('productScope.cta')}</span>
-      <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
-    </Button>
+  <div class="mt-10 lg:mt-14 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-center">
+    <Image
+      src={teamPhoto}
+      alt={t('productScope.photoAlt')}
+      widths={[640, 960, 1200]}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      loading="lazy"
+      class="w-full aspect-[4/3] object-cover rounded-xl sm:aspect-[3/2] lg:col-span-6"
+    />
+
+    <div class="mt-8 lg:mt-0 lg:col-span-6">
+      <p class="text-grey-900/70 leading-relaxed mb-8">{t('productScope.photoLead')}</p>
+
+      <Button href={`/${language}/contact`} ariaLabel={t('productScope.ctaAriaLabel')} isDark>
+        <span>{t('productScope.cta')}</span>
+        <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+      </Button>
+    </div>
   </div>
 </section>

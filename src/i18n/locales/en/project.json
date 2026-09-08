@@ -126,7 +126,9 @@
       }
     },
     "cta": "Request a quote",
-    "ctaAriaLabel": "Go to the contact page"
+    "ctaAriaLabel": "Go to the contact page",
+    "photoAlt": "Two PROGEEK staff members looking at something on a laptop together.",
+    "photoLead": "We advise you from the first question through to day-to-day operation. At PROGEEK in Flensburg you talk directly to the people who build and run the system."
   },
   "governance": {
     "sectionLabel": "Governance",

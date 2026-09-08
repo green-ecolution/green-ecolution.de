@@ -126,7 +126,9 @@
       }
     },
     "cta": "Angebot anfragen",
-    "ctaAriaLabel": "Zur Kontaktseite"
+    "ctaAriaLabel": "Zur Kontaktseite",
+    "photoAlt": "Zwei Mitarbeitende von PROGEEK sehen sich gemeinsam etwas auf einem Laptop an.",
+    "photoLead": "Wir beraten Sie von der ersten Frage bis zum laufenden Betrieb. Bei PROGEEK in Flensburg sprechen Sie direkt mit den Leuten, die das System bauen und betreiben."
   },
   "governance": {
     "sectionLabel": "Governance",

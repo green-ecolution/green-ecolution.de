@@ -149,7 +149,9 @@
     },
     "closing": "Everyone else benefits indirectly: healthy urban trees cool the city climate and support biodiversity.",
     "cta": "What you need for it",
-    "ctaAriaLabel": "Go to the requirements on the project page"
+    "ctaAriaLabel": "Go to the requirements on the project page",
+    "photoAlt": "Two people at a young tree with a watering bag. One is crouching and using a tablet, the other is looking on.",
+    "photoLead": "This is what it looks like day to day. The person watering sees what the site needs at the tree. The person planning sees it at their desk. Both work from the same data."
   },
   "features": {
     "sectionLabel": "Features",
@@ -219,7 +221,9 @@
         "label": "Temperature",
         "description": "Measurement of soil temperature for precise irrigation recommendations"
       }
-    }
+    },
+    "photoAlt": "Installing a soil probe at a tree site: a worker in high-visibility clothing opens the hole prepared by the earth auger, with the probe and its cable held ready beside it.",
+    "photoCaption": "Installed together with the municipal service centre of Flensburg."
   },
   "videos": {
     "sectionLabel": "Videos",
