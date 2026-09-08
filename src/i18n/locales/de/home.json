@@ -86,8 +86,8 @@
     "sliderAriaLabel": "Fakten zum Grünflächenmanagement",
     "facts": {
       "sensor": {
-        "label": "Entwicklung einer Sensorlösung",
-        "description": "Daten zur Bodenfeuchte werden mithilfe von in unterschiedlicher Tiefe platzierten Sensoren geliefert."
+        "label": "Messwerte aus dem Boden",
+        "description": "Sensoren in mehreren Tiefen zeigen, wie feucht der Boden im Wurzelbereich ist."
       },
       "evaluation": {
         "label": "Auswertung der Messdaten",

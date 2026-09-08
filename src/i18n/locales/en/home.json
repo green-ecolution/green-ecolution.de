@@ -86,8 +86,8 @@
     "sliderAriaLabel": "Facts about green space management",
     "facts": {
       "sensor": {
-        "label": "Development of a sensor solution",
-        "description": "Soil moisture data is provided by sensors placed at different depths."
+        "label": "Readings from the soil",
+        "description": "Sensors at several depths show how moist the soil is in the root zone."
       },
       "evaluation": {
         "label": "Analysis of measurement data",
