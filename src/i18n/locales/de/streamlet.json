@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Tourenoptimierung mit Nachfüllstationen | Streamlet | Green Ecolution",
-    "description": "Streamlet ist ein eigenständiger Open-Source-Dienst für Tourenoptimierung mit Zeitfenstern und mehreren Nachfüllstationen. Zustandslose HTTP-API, nachvollziehbare Ergebnisse, AGPL-3.0."
+    "description": "Streamlet plant Touren mit Zeitfenstern und mehreren Nachfüllstationen. Entstanden für Green Ecolution, quelloffen und auch außerhalb einsetzbar."
   },
   "hero": {
     "sectionLabel": "Open-Source-Projekt Streamlet",
@@ -11,8 +11,6 @@
     "originRich": "Entstanden ist Streamlet für <project>Green Ecolution</project>, weil die geprüften Planungswerkzeuge dieses Problem nicht abbilden konnten. Heute liegt es in einem eigenen Repository und hat keine Abhängigkeit zu Green Ecolution. Wer dasselbe Planungsproblem hat, kann es unverändert übernehmen.",
     "repo": "Repository",
     "repoAriaLabel": "Streamlet-Repository auf GitHub öffnen",
-    "docs": "Dokumentation",
-    "docsAriaLabel": "Dokumentation von Streamlet öffnen",
     "tourAriaLabel": "Isometrisches Modell einer Tour: vom Depot über fünf Halte und eine Nachfüllstation zurück zum Depot. Das Fahrzeug hält an jedem Halt zum Gießen. Der Tankstand daneben sinkt dabei und füllt sich an der Nachfüllstation wieder.",
     "tank": "Tank"
   },
@@ -73,131 +71,18 @@
     },
     "cargo": {
       "title": "Unabhängig vom Transportgut",
-      "description": "Streamlet kennt Tankkapazität und Bedarf, nicht Bewässerung. Was du transportierst, bleibt offen. Wasser ist der erste Anwendungsfall, die API setzt ihn an keiner Stelle voraus."
+      "description": "Streamlet kennt Tankkapazität und Bedarf, nicht Bewässerung. Was du transportierst, bleibt offen. Wasser ist der erste Anwendungsfall, Streamlet setzt ihn an keiner Stelle voraus."
     }
   },
-  "techIntro": {
-    "sectionLabel": "Technische Ebene",
-    "title": "Ab hier technisch",
-    "description": "Die folgenden Abschnitte beschreiben Schnittstelle, Optimierung, Kartendaten und Betrieb. Sie richten sich an IT-Abteilungen, Integratoren und Entwickler, die Streamlet selbst einbinden oder betreiben wollen.",
-    "jumpLabel": "Direkt zu",
-    "links": {
-      "api": "Schnittstelle",
-      "solver": "Optimierung",
-      "tiles": "Kartendaten",
-      "operations": "Betrieb"
-    }
-  },
-  "api": {
-    "sectionLabel": "Schnittstelle",
-    "title": "Ein Aufruf, eine Lösung",
-    "description": "Streamlet arbeitet synchron. Du schickst das Problem, du bekommst die Routen zurück, ohne Job-Handling und ohne Polling dazwischen.",
-    "flow": {
-      "send": {
-        "label": "Problem senden",
-        "description": "Ein JSON-Body an POST /v1/solve beschreibt die Fahrzeuge mit Tankkapazität und Schichtzeitfenster, die Depots, die Halte mit Bedarf und Zeitfenster sowie die Nachfüllstationen."
-      },
-      "solve": {
-        "label": "Kosten holen und lösen",
-        "description": "Streamlet fragt die Reisezeit- und Distanzmatrix bei der Routing-Engine ab und löst das Problem im Solver."
-      },
-      "receive": {
-        "label": "Routen erhalten",
-        "description": "Die Antwort enthält für jede Route die Reihenfolge der Halte, Distanz, Fahrt- und Wartezeit sowie die Geometrie. Dazu kommt die Liste der Halte, die unbedient bleiben."
-      }
-    },
-    "endpoints": {
-      "solve": "Problem lösen und Routen zurückgeben",
-      "health": "Liveness-Prüfung",
-      "openapi": "OpenAPI-Schema der API"
-    },
-    "validation": "Streamlet prüft das Problem schon beim Einlesen. Eine Startladung über der Tankkapazität, ein Zeitfenster, das vor seinem Beginn endet, oder ein Problem ohne Fahrzeug wird mit 422 abgelehnt, statt später im Solver aufzulaufen. Fehlerantworten geben keine internen Details preis, weder Engine-URLs noch fremde Response-Bodies."
-  },
-  "solver": {
-    "sectionLabel": "Solver",
-    "title": "Nachvollziehbar statt zufällig",
-    "description": "Der Solver arbeitet in zwei Phasen und ohne Zufall. Solange das Zeitbudget nicht greift, ergibt dieselbe Eingabe dieselbe Ausgabe, das macht Ergebnisse reproduzierbar und Regressionen prüfbar.",
-    "termIntro": "Solver heißt hier der Teil, der aus Halten, Fahrzeugen und Nachfüllstationen die konkreten Routen berechnet.",
-    "priorEngine": "Bei Green Ecolution lief die Routenoptimierung vorher auf Vroom. Vroom kann mehrere Nachfüllstationen mitten in der Tour nicht abbilden, deshalb entstand Streamlet.",
-    "stages": {
-      "construction": {
-        "label": "Konstruktion",
-        "description": "Cheapest Insertion baut die erste Lösung. Reicht der Tank für den nächsten Halt nicht, fügt der Solver davor die günstigste Nachfüllstation ein."
-      },
-      "localSearch": {
-        "label": "Lokale Suche",
-        "description": "Eine VND-artige Suche verbessert die Lösung. Zuerst laufen die günstigen Züge innerhalb einer Route, danach die teureren zwischen den Routen. Findet keiner davon mehr etwas, setzt sie alle Nachfüllbesuche neu und verwirft die, die sich nicht mehr lohnen."
-      }
-    },
-    "moveEvaluation": {
-      "label": "Load- und Duration-Segmente",
-      "description": "Kapazität und Zeitfenster prüft der Solver über Load- und Duration-Segmente nach Vidal et al. (2014). Sie lassen sich in konstanter Zeit zusammenführen, bewertet wird jeder Zug an der betroffenen Route."
-    },
-    "benchmarks": {
-      "title": "Gemessen an den Solomon-Instanzen",
-      "description": "Die Regressionstests lösen bekannte Instanzen des VRPTW, also Tourenplanung mit Zeitfenstern. Sie prüfen, ob die Lösung Kapazität und Zeitfenster einhält und ob sie nah genug am Optimum liegt. Nachfüllstationen enthalten diese Instanzen nicht, gemessen wird also die Grundqualität des Solvers.",
-      "gap": "{{value}}\u00a0%",
-      "footnote": "Abstand zur besten bekannten Lösung, Schwelle 5\u00a0%"
-    }
-  },
-  "tiles": {
-    "sectionLabel": "Kartendaten",
-    "title": "Das Straßennetz an deine Flotte anpassen",
-    "fleetMismatch": "Eine gute Route nützt nichts, wenn das Straßennetz nicht zur Flotte passt. Ein Betriebsfahrzeug darf über Wirtschafts- und Dienstwege fahren, die für den allgemeinen Verkehr gesperrt sind. Eine Standardkarte weiß das nicht und lässt Ziele unerreichbar aussehen, die es nicht sind.",
-    "patcher": "Die Routing-Engine rechnet auf Tiles, die aus einem OSM-Extrakt entstehen. Zum Streamlet-Repository gehört ein CLI, das dieses Extrakt vorher über OSC-Changesets verändert, also über Änderungsdateien im OSM-Format. Damit bildest du ab, was deine Fahrzeuge tatsächlich befahren dürfen.",
-    "status": {
-      "available": "Verfügbar",
-      "inProgress": "In Entwicklung"
-    },
-    "changesets": {
-      "construction": "Markiert Straßen, die wegen Baustellen gesperrt sind, als access=no. Routen führen dann nicht mehr durch die Sperrung.",
-      "allowedPaths": "Öffnet Wege für Kraftfahrzeuge, wenn ein Zielpunkt von keiner befahrbaren Straße aus erreichbar ist. Die Zielpunkte soll der Patcher aus der API von Green Ecolution lesen."
-    },
-    "disclaimer": "Der Patcher verändert nur dein Extrakt für deine Routing-Instanz. Er beeinflusst, was die Engine für deine Fahrzeuge als befahrbar ansieht. Eine Befahrungserlaubnis erteilt er damit nicht. Wer ihn einbindet, braucht dafür eine eigene Tile-Pipeline."
-  },
-  "operations": {
-    "sectionLabel": "Betrieb",
-    "title": "Einbauen und betreiben",
-    "description": "Streamlet ist ein einzelner Dienst neben deiner Anwendung. Jeder Stand von main wird als Container-Image veröffentlicht, konfiguriert wird es über Umgebungsvariablen. Dazu brauchst du eine erreichbare Routing-Engine.",
-    "facts": {
-      "stateless": {
-        "label": "Zustandslos",
-        "description": "Keine Datenbank, keine Job-Queue. Beim Herunterfahren laufen offene Anfragen aus, statt abzubrechen."
-      },
-      "swappableEngine": {
-        "label": "Engine austauschbar",
-        "description": "Die Routing-Engine hängt hinter dem Port-Trait Router. Implementiert ist Valhalla. Eine andere Engine lässt sich dahinter setzen, ohne den Solver zu ändern."
-      },
-      "separateCrate": {
-        "label": "Solver als separate Crate",
-        "description": "Der Solver liegt in der Crate streamlet-core, ohne tokio, axum und HTTP-Code. Dazu kommen nur Serialisierung und Fehlertypen."
-      },
-      "license": {
-        "label": "AGPL-3.0",
-        "description": "Der Quellcode steht unter der GNU Affero General Public License, Version 3. Wer Streamlet verändert und als Netzwerkdienst betreibt, muss den geänderten Quellcode dessen Nutzern anbieten."
-      }
-    }
-  },
-  "status": {
-    "sectionLabel": "Stand",
-    "title": "Was heute geht und was nicht",
-    "description": "Streamlet steht am Anfang und läuft bei Green Ecolution in der Einsatzplanung. Diese Punkte stehen hier, damit niemand sie erst beim Einbauen entdeckt.",
-    "limitations": {
-      "geometry": "Die Geometrie kommt als kodierte Polyline zurück. Die Option geojson verhält sich derzeit wie polyline.",
-      "depots": "Die API nimmt mehrere Depots entgegen, jede Route kehrt aber zum ersten zurück.",
-      "missingFeatures": "Es gibt keinen GPX-Endpoint und keine eingebettete Routing-Engine."
-    },
-    "cta": {
-      "title": "Mitmachen oder selbst einsetzen",
-      "descriptionRich": "Fragen, Fehlerberichte und Erfahrungen aus anderen Anwendungsfällen sind im Repository willkommen. Wie Streamlet bei Green Ecolution eingebunden ist, beschreibt <release>Release 0.4.0</release>.",
-      "repo": "Zum Repository",
-      "repoAriaLabel": "Streamlet-Repository auf GitHub öffnen",
-      "issues": "Issues",
-      "issuesAriaLabel": "Issues von Streamlet auf GitHub öffnen",
-      "home": "Zu Green Ecolution",
-      "homeAriaLabel": "Zur Startseite von Green Ecolution",
-      "contact": "Kontakt aufnehmen",
-      "contactAriaLabel": "Zur Kontaktseite von Green Ecolution"
-    }
+  "closing": {
+    "sectionLabel": "Nächster Schritt",
+    "title": "Über den Einsatz sprechen",
+    "description": "Wenn deine Touren so aussehen, lohnt sich ein Gespräch. Der Quellcode liegt offen, du kannst Streamlet also prüfen, selbst betreiben oder über Green Ecolution mitnutzen.",
+    "contact": "Kontakt aufnehmen",
+    "contactAriaLabel": "Zur Kontaktseite von Green Ecolution",
+    "home": "Zu Green Ecolution",
+    "homeAriaLabel": "Zur Startseite von Green Ecolution",
+    "repo": "Quellcode ansehen",
+    "repoAriaLabel": "Streamlet-Repository auf GitHub öffnen"
   }
 }

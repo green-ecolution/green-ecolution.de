@@ -1,4 +1,3 @@
-import { BookOpen } from 'lucide-react'
 import { useT } from '../../../i18n/useT'
 import { Suspense, lazy, useRef, useState, type CSSProperties } from 'react'
 import GithubIcon from '../GithubIcon'
@@ -90,17 +89,6 @@ function StreamletHero({ language }: { language: string }) {
               <GithubIcon classes="w-5" />
               <span className="whitespace-nowrap">{t('hero.repo')}</span>
               <Arrow classes="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
-            </a>
-
-            <a
-              href={streamletLinks.readme}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={t('hero.docsAriaLabel')}
-              className="flex items-center justify-center gap-x-3 rounded-2xl w-max font-semibold px-5 py-2 cursor-pointer transition-all ease-in-out duration-300 text-green-dark-900 border border-green-dark-900/30 hover:border-green-dark-900 hover:bg-green-light-100/60"
-            >
-              <BookOpen className="w-5 h-5" aria-hidden="true" />
-              <span className="whitespace-nowrap">{t('hero.docs')}</span>
             </a>
           </div>
         </div>
