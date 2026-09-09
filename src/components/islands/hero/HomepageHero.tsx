@@ -43,10 +43,9 @@ function HomepageHero({ language }: { language: string }) {
     }
   }
 
-  const bodyLock = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    document.body.classList.add('overflow-hidden')
-  }
+  // The overlay is fixed and covers the viewport on its own, so there is no
+  // reason to move the reader's scroll position under it.
+  const lockScroll = () => document.body.classList.add('overflow-hidden')
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,7 +63,7 @@ function HomepageHero({ language }: { language: string }) {
 
   useEffect(() => {
     if (isOverlayVisible) {
-      bodyLock()
+      lockScroll()
     } else {
       document.body.classList.remove('overflow-hidden')
     }
@@ -75,24 +74,48 @@ function HomepageHero({ language }: { language: string }) {
 
   useEffect(() => {
     if (
-      isInitialLoadHelper() &&
-      !isOverlayVisible &&
-      window.matchMedia('(min-width: 1280px)').matches
+      !isInitialLoadHelper() ||
+      isOverlayVisible ||
+      !window.matchMedia('(min-width: 1280px)').matches
     ) {
-      // Skip animation entirely when reduced motion is preferred
-      if (reducedMotion) {
-        setInitialLoadHelper()
-        return
-      }
+      return
+    }
 
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- set initial load state
-      setIsInitialLoad(true)
-      bodyLock()
+    // Skip animation entirely when reduced motion is preferred
+    if (reducedMotion) {
+      setInitialLoadHelper()
+      return
+    }
 
-      const timer = setTimeout(() => {
-        setIsOverlayVisible(true)
-      }, 2000)
-      return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- set initial load state
+    setIsInitialLoad(true)
+
+    // Someone who has already started scrolling has chosen to read the page
+    // rather than watch the intro, and taking the viewport away from them at
+    // that point is the one thing the intro must not do. The scroll stays
+    // unlocked until the overlay is actually on screen.
+    let timer = 0
+    const cancel = () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('scroll', cancel)
+      setIsInitialLoad(false)
+      setInitialLoadHelper()
+    }
+
+    if (window.scrollY > 0) {
+      cancel()
+      return
+    }
+
+    timer = window.setTimeout(() => {
+      window.removeEventListener('scroll', cancel)
+      setIsOverlayVisible(true)
+    }, 2000)
+    window.addEventListener('scroll', cancel, { passive: true })
+
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('scroll', cancel)
     }
   }, [isOverlayVisible, reducedMotion])
 
