@@ -33,12 +33,18 @@ const ICON_COLOR_CLASSES = {
 }
 
 const FEATURES = [
-  { id: 'dashboard', Icon: LayoutDashboard, color: 'green-dark', large: true },
-  { id: 'grouping', Icon: TreeDeciduous, color: 'green-light', large: false },
-  { id: 'fleet', Icon: Truck, color: 'green-middle', large: false },
-  { id: 'tourPlanning', Icon: ClipboardList, color: 'green-middle', large: false },
-  { id: 'teamManagement', Icon: Users, color: 'green-light', large: false },
-  { id: 'analysis', Icon: BarChart3, color: 'green-dark', large: true },
+  { id: 'dashboard', Icon: LayoutDashboard, color: 'green-dark', large: true, href: null },
+  { id: 'grouping', Icon: TreeDeciduous, color: 'green-light', large: false, href: null },
+  { id: 'fleet', Icon: Truck, color: 'green-middle', large: false, href: null },
+  {
+    id: 'tourPlanning',
+    Icon: ClipboardList,
+    color: 'green-middle',
+    large: false,
+    href: 'streamlet',
+  },
+  { id: 'teamManagement', Icon: Users, color: 'green-light', large: false, href: null },
+  { id: 'analysis', Icon: BarChart3, color: 'green-dark', large: true, href: null },
 ] as const
 
 const { language } = Astro.props
@@ -96,6 +102,18 @@ const t = getTranslations(language, 'home')
               <p class="text-grey-900/70 text-sm md:text-base leading-relaxed">
                 {t(`features.items.${feature.id}.description`)}
               </p>
+              {feature.href && (
+                // Only tourPlanning carries a link, so the label keys are literal:
+                // TranslationKey is derived from the german catalog and the other
+                // features have no linkLabel.
+                <a
+                  href={`/${language}/${feature.href}`}
+                  aria-label={t('features.items.tourPlanning.linkAriaLabel')}
+                  class="mt-3 inline-block text-sm font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
+                >
+                  {t('features.items.tourPlanning.linkLabel')}
+                </a>
+              )}
             </div>
           </div>
         )

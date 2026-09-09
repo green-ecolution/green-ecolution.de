@@ -38,11 +38,15 @@ const t = getTranslations(language, 'project')
         <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
       </div>
 
-      <h2 class="font-lato font-bold text-2xl mb-4 text-white lg:text-3xl xl:text-4xl">
-        {t('governance.title')}
-      </h2>
+      <div class="lg:flex lg:justify-between lg:gap-12 xl:gap-16">
+        <h2
+          class="font-lato font-bold text-2xl mb-4 text-white lg:mb-0 lg:max-w-xs lg:shrink-0 lg:text-3xl xl:max-w-sm xl:text-4xl"
+        >
+          {t('governance.title')}
+        </h2>
 
-      <p class="text-white/60 leading-relaxed max-w-2xl">{t('governance.description')}</p>
+        <p class="text-white/60 leading-relaxed lg:max-w-2xl">{t('governance.description')}</p>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

@@ -86,8 +86,8 @@
     "sliderAriaLabel": "Fakten zum Grünflächenmanagement",
     "facts": {
       "sensor": {
-        "label": "Entwicklung einer Sensorlösung",
-        "description": "Daten zur Bodenfeuchte werden mithilfe von in unterschiedlicher Tiefe platzierten Sensoren geliefert."
+        "label": "Messwerte aus dem Boden",
+        "description": "Sensoren in mehreren Tiefen zeigen, wie feucht der Boden im Wurzelbereich ist."
       },
       "evaluation": {
         "label": "Auswertung der Messdaten",
@@ -125,6 +125,34 @@
       }
     }
   },
+  "targetGroups": {
+    "sectionLabel": "Zielgruppen",
+    "title": "Wer davon profitiert",
+    "description": "Green Ecolution ist für den kommunalen Betrieb gebaut. Je nach Rolle ist der Nutzen ein anderer.",
+    "items": {
+      "municipality": {
+        "role": "Kommunen und Stadtverwaltungen",
+        "description": "Entscheidungen über Wasser, Personal und Fahrzeuge beruhen auf Messwerten statt auf Erfahrung. Verbrauch und Einsätze sind pro Fläche und Tour dokumentiert und damit belegbar."
+      },
+      "operations": {
+        "role": "Technische Betriebszentren und Bauhöfe",
+        "description": "Einsatzpläne und Touren entstehen automatisch statt in Handarbeit. Fuhrpark, Teams und die Auswertung des tatsächlichen Verbrauchs liegen an einer Stelle."
+      },
+      "field": {
+        "role": "Die Gießkolonne",
+        "description": "Die Tour ist in der App einsehbar und lässt sich zusätzlich auf das Navigationsgerät im Fahrzeug übertragen. Ein Ampelsystem auf der Karte zeigt, welche Bäume und Gruppen Wasser brauchen."
+      },
+      "it": {
+        "role": "IT und Betrieb der Kommune",
+        "description": "Wir betreiben die Plattform, auf Wunsch auch im eigenen Kubernetes-Cluster der Kommune. Offene Schnittstellen, ein Plug-in-System und offener Quellcode halten Daten und Kontrolle im Haus."
+      }
+    },
+    "closing": "Mittelbar profitieren alle anderen mit: gesunde Stadtbäume kühlen das Stadtklima und fördern die biologische Vielfalt.",
+    "cta": "Was du dafür brauchst",
+    "ctaAriaLabel": "Zu den Voraussetzungen auf der Projektseite",
+    "photoAlt": "Zwei Personen an einem jungen Baum mit Wassersack. Eine kniet und bedient ein Tablet, die andere schaut zu.",
+    "photoLead": "So sieht das im Alltag aus. Wer gießt, sieht am Baum, was dieser Standort braucht. Wer plant, sieht es am Schreibtisch. Beide arbeiten mit denselben Daten."
+  },
   "features": {
     "sectionLabel": "Features",
     "title": "Green Ecolution im Überblick",
@@ -144,7 +172,9 @@
       },
       "tourPlanning": {
         "label": "Tour-Planung",
-        "description": "Optimierte Bewässerungspläne mit Echtzeit-Status: Von „geplant“ über „aktiv“ bis „abgeschlossen“."
+        "description": "Optimierte Bewässerungspläne mit Echtzeit-Status: Von „geplant“ über „aktiv“ bis „abgeschlossen“.",
+        "linkLabel": "Wie die Tourenoptimierung rechnet",
+        "linkAriaLabel": "Zur Seite über die Tourenoptimierung"
       },
       "teamManagement": {
         "label": "Teamverwaltung",
@@ -166,15 +196,20 @@
     "sectionLabel": "Hardware",
     "title": "Die Bodensonde",
     "description": "Konzipiert für den Einsatz im öffentlichen Raum. Sensoren in drei Tiefen (30, 60 und 90 cm) bilden das gesamte Wurzelprofil eines Baumes ab, von den oberflächennahen Feinwurzeln bis zu den tieferen Hauptwurzeln. So lässt sich erkennen, ob Wasser tatsächlich im Wurzelbereich ankommt oder nur die Oberfläche benetzt wird. Die Installation erfolgt bodenbündig mit handelsüblichen Erdbohrern. Pflegearbeiten wie Mähen werden nicht beeinträchtigt.",
+    "probeCarrier": "Die Sonde ist der Träger, nicht der Sensor. Sie nimmt mehrere Sensortypen auf, sodass sich die Bestückung an die Anforderungen anpassen lässt.",
+    "availability": "Die Sonden sind über die PROGEEK GmbH beziehbar.",
     "specs": {
       "depths": {
-        "label": "Messtiefen"
+        "label": "Messtiefen",
+        "value": "3"
       },
       "network": {
-        "label": "Funknetz"
+        "label": "Funknetz",
+        "value": "LoRaWAN oder NB-IoT"
       },
       "batteryLife": {
-        "label": "Jahre Batterie"
+        "label": "Jahre Batterie",
+        "value": "3+"
       }
     },
     "features": {
@@ -185,12 +220,10 @@
       "temperature": {
         "label": "Temperatur",
         "description": "Erfassung der Bodentemperatur für präzise Bewässerungsempfehlungen"
-      },
-      "soilTension": {
-        "label": "Bodenwasserspannung",
-        "description": "Messung der Saugspannung zur Bestimmung der Wasserverfügbarkeit"
       }
-    }
+    },
+    "photoAlt": "Einbau einer Bodensonde am Baumstandort: Ein Mitarbeiter in Warnkleidung öffnet mit dem Spaten das vom Erdbohrer vorbereitete Loch, daneben wird die Sonde mit ihrem Kabel bereitgehalten.",
+    "photoCaption": "Einbau gemeinsam mit dem Technischen Betriebszentrum Flensburg."
   },
   "videos": {
     "sectionLabel": "Videos",
@@ -222,7 +255,7 @@
       "measure": {
         "category": "Erfassen",
         "title": "Messen",
-        "description": "Bodenfeuchtesensoren erfassen Parameter wie Bodenfeuchte, Temperatur und Bodenwasserspannung in mehreren Tiefen (30/60/90 cm). Die Daten werden energieeffizient über LoRaWAN übertragen."
+        "description": "Bodenfeuchtesensoren erfassen Bodenfeuchte und Temperatur in mehreren Tiefen (30/60/90 cm). Die Daten werden energieeffizient über LoRaWAN übertragen."
       },
       "understand": {
         "category": "Analysieren",
@@ -278,23 +311,28 @@
     "items": {
       "origin": {
         "question": "Wer steckt hinter dem Projekt Green Ecolution?",
-        "answerPlain": "Das Projekt „Green Ecolution“ wurde im Rahmen eines Forschungsprojekts im Masterstudiengang „Angewandte Informatik“ an der Hochschule Flensburg ins Leben gerufen. Nach dem erfolgreichen Abschluss des Forschungsprojekts wird die Weiterentwicklung des Systems nun von PROGEEK übernommen, in enger Zusammenarbeit mit der Smarten Grenzregion und der Stadt Flensburg.",
-        "answerRich": "Das Projekt „Green Ecolution“ wurde im Rahmen eines Forschungsprojekts im Masterstudiengang „Angewandte Informatik“ an der <hsfl>Hochschule Flensburg</hsfl> ins Leben gerufen. Nach dem erfolgreichen Abschluss des Forschungsprojekts wird die Weiterentwicklung des Systems nun von <progeek>PROGEEK</progeek> übernommen, in enger Zusammenarbeit mit der <grenzregion>Smarten Grenzregion</grenzregion> und der <flensburg>Stadt Flensburg</flensburg>."
+        "answerPlain": "Green Ecolution begann als Masterprojekt der Angewandten Informatik an der Hochschule Flensburg, gemeinsam mit dem Technischen Betriebszentrum Flensburg und der Smarten Grenzregion. Zu klären war, ob sich die Bewässerung im kommunalen Alltag wirklich datenbasiert steuern lässt, mit Sensorik im Boden und Touren, die sich daraus ergeben.\n\nDie Antwort fiel deutlich aus. In Nutzertests mit dem TBZ erreichte die Anwendung einen überdurchschnittlichen Usability-Wert und wurde auch von Mitarbeitenden ohne IT-Erfahrung als übersichtlich bewertet.\n\nAuf dieser Grundlage entwickelt PROGEEK die Lösung, die Kommunen heute einsetzen können. Sensorik und Plattform sind dafür auf den Regelbetrieb ausgelegt worden.",
+        "answerRich": "<p1>Green Ecolution begann als Masterprojekt der Angewandten Informatik an der <hsfl>Hochschule Flensburg</hsfl>, gemeinsam mit dem Technischen Betriebszentrum Flensburg und der <grenzregion>Smarten Grenzregion</grenzregion>. Zu klären war, ob sich die Bewässerung im kommunalen Alltag wirklich datenbasiert steuern lässt, mit Sensorik im Boden und Touren, die sich daraus ergeben.</p1><p2>Die Antwort fiel deutlich aus. In Nutzertests mit dem TBZ erreichte die Anwendung einen überdurchschnittlichen Usability-Wert und wurde auch von Mitarbeitenden ohne IT-Erfahrung als übersichtlich bewertet.</p2><p3>Auf dieser Grundlage entwickelt <progeek>PROGEEK</progeek> die Lösung, die Kommunen heute einsetzen können. Sensorik und Plattform sind dafür auf den Regelbetrieb ausgelegt worden.</p3>"
       },
       "value": {
         "question": "Welchen Mehrwert bietet das Projekt?",
-        "answerPlain": "Das Forschungsprojekt „Green Ecolution“ hat gezeigt, wie digitale Technologien gezielt eingesetzt werden können, um die Bewässerung von Stadtbäumen effizienter, nachhaltiger und ressourcenschonender zu gestalten. Durch den Einsatz moderner Sensorik und intelligenter Datenauswertung wurde eine Grundlage geschaffen, um Wasserverbrauch und Pflegeaufwand deutlich zu reduzieren.\n\nDie gewonnenen Erkenntnisse und entwickelten Systeme leisten einen wichtigen Beitrag zur nachhaltigen Stadtentwicklung in Flensburg. Sie unterstützen eine datenbasierte Entscheidungsfindung und fördern den verantwortungsvollen Umgang mit natürlichen Ressourcen, zum Nutzen von Umwelt, Stadtverwaltung und Bürger:innen.",
-        "answerRich": "<p1>Das Forschungsprojekt „Green Ecolution“ hat gezeigt, wie digitale Technologien gezielt eingesetzt werden können, um die Bewässerung von Stadtbäumen effizienter, nachhaltiger und ressourcenschonender zu gestalten. Durch den Einsatz moderner Sensorik und intelligenter Datenauswertung wurde eine Grundlage geschaffen, um Wasserverbrauch und Pflegeaufwand deutlich zu reduzieren.</p1><p2>Die gewonnenen Erkenntnisse und entwickelten Systeme leisten einen wichtigen Beitrag zur nachhaltigen Stadtentwicklung in Flensburg. Sie unterstützen eine datenbasierte Entscheidungsfindung und fördern den verantwortungsvollen Umgang mit natürlichen Ressourcen, zum Nutzen von Umwelt, Stadtverwaltung und Bürger:innen.</p2>"
+        "answerPlain": "Green Ecolution macht die Bewässerung von Stadtbäumen nachvollziehbar. Sensordaten zeigen, welche Flächen Wasser brauchen, und die Einsatzplanung setzt das in Touren um, die ohne unnötige Fahrten auskommen. Wer so gezielt bewässert, spart Wasser, Kraftstoff und Personaleinsatz, und Entscheidungen stützen sich auf Messwerte statt auf Erfahrung.\n\nFür Kommunen heißt das: fehlendes Wasser wird früher erkennbar, der Verbrauch ist dokumentiert, und die Lösung lässt sich selbst betreiben und gemeinsam weiterentwickeln, ohne Bindung an einen Anbieter.",
+        "answerRich": "<p1>Green Ecolution macht die Bewässerung von Stadtbäumen nachvollziehbar. Sensordaten zeigen, welche Flächen Wasser brauchen, und die Einsatzplanung setzt das in Touren um, die ohne unnötige Fahrten auskommen. Wer so gezielt bewässert, spart Wasser, Kraftstoff und Personaleinsatz, und Entscheidungen stützen sich auf Messwerte statt auf Erfahrung.</p1><p2>Für Kommunen heißt das: fehlendes Wasser wird früher erkennbar, der Verbrauch ist dokumentiert, und die Lösung lässt sich selbst betreiben und gemeinsam weiterentwickeln, ohne Bindung an einen Anbieter.</p2>"
+      },
+      "requirements": {
+        "question": "Was muss eine Kommune mitbringen?",
+        "answerPlain": "Für die Einsatz- und Routenplanung genügen die Standorte der Bäume und Flächen, die vorhandenen Fahrzeuge mit ihren Wasserkapazitäten und die Nachfüllpunkte im Stadtgebiet. Sensorik ist dafür keine Voraussetzung, sie verbessert die Priorisierung. Kommen Sonden dazu, brauchen sie eine Funkanbindung: heute LoRaWAN, alternativ NB-IoT mit SIM-Karte.\n\nWelche Daten und welche Infrastruktur im Einzelnen nötig sind, steht bei den Voraussetzungen auf der Projektseite.",
+        "answerRich": "<p1>Für die Einsatz- und Routenplanung genügen die Standorte der Bäume und Flächen, die vorhandenen Fahrzeuge mit ihren Wasserkapazitäten und die Nachfüllpunkte im Stadtgebiet. Sensorik ist dafür keine Voraussetzung, sie verbessert die Priorisierung. Kommen Sonden dazu, brauchen sie eine Funkanbindung: heute LoRaWAN, alternativ NB-IoT mit SIM-Karte.</p1><p2>Welche Daten und welche Infrastruktur im Einzelnen nötig sind, steht bei den <requirements>Voraussetzungen auf der Projektseite</requirements>.</p2>"
       },
       "openSource": {
-        "question": "Was bedeutet es, dass das Projekt öffentlich zugänglich ist?",
-        "answerPlain": "Der Quellcode des Projekts ist in einem öffentlich zugänglichen GitHub-Repository verfügbar. Dadurch kann der aktuelle Entwicklungsstand jederzeit eingesehen werden, was Transparenz schafft und interessierten Personen ermöglicht, die Weiterentwicklung nachzuvollziehen oder sich aktiv einzubringen.\n\nPerspektivisch ist zudem eine Anbindung an das Open-Data-Portal des Landes Schleswig-Holstein vorgesehen, um zukünftig ausgewählte Sensordaten öffentlich zugänglich zu machen. Diese Erweiterung befindet sich derzeit in Planung.",
-        "answerRich": "<p1>Der Quellcode des Projekts ist in einem öffentlich zugänglichen <repo>GitHub-Repository</repo> verfügbar. Dadurch kann der aktuelle Entwicklungsstand jederzeit eingesehen werden, was Transparenz schafft und interessierten Personen ermöglicht, die Weiterentwicklung nachzuvollziehen oder sich aktiv einzubringen.</p1><p2>Perspektivisch ist zudem eine Anbindung an das <opendata>Open-Data-Portal</opendata> des Landes Schleswig-Holstein vorgesehen, um zukünftig ausgewählte Sensordaten öffentlich zugänglich zu machen. Diese Erweiterung befindet sich derzeit in Planung.</p2>"
+        "question": "Was bringt uns der offene Quellcode?",
+        "answerPlain": "Drei Dinge, ganz praktisch. Du kannst nachlesen und prüfen lassen, was das System mit deinen Daten macht. Es fallen keine Lizenzkosten an. Und du bist an keinen Anbieter gebunden: der Quellcode liegt öffentlich auf GitHub und bleibt der Kommune auch dann, wenn sie später anders entscheidet.\n\nUm Einrichtung, Betrieb und Support kümmern wir uns. Offen heißt, dass du es selbst könntest, nicht dass du es musst.",
+        "answerRich": "<p1>Drei Dinge, ganz praktisch. Du kannst nachlesen und prüfen lassen, was das System mit deinen Daten macht. Es fallen keine Lizenzkosten an. Und du bist an keinen Anbieter gebunden: der Quellcode liegt öffentlich auf <repo>GitHub</repo> und bleibt der Kommune auch dann, wenn sie später anders entscheidet.</p1><p2>Um Einrichtung, Betrieb und Support kümmern wir uns. Offen heißt, dass du es selbst könntest, nicht dass du es musst.</p2>"
       },
       "sensors": {
-        "question": "Welche Sensoren werden eingesetzt?",
-        "answerPlain": "Im Rahmen des Forschungsprojekts wurden folgende Sensoren eingesetzt, um präzise Daten zur Bodenfeuchte und -beschaffenheit zu erfassen. Diese Sensoren bildeten die Grundlage für die Entwicklung und Erprobung des Systems.\n\nZur Messung der Bodenwasserspannung: Watermark-Sensor. Zur Messung der Bodenfeuchte und -temperatur: SMT100-Sensor.\n\nIn zukünftigen Entwicklungsphasen kann die Sensorik je nach Anforderungen und technologischem Fortschritt weiter angepasst oder erweitert werden.",
-        "answerRich": "<p1>Im Rahmen des Forschungsprojekts wurden folgende Sensoren eingesetzt, um präzise Daten zur Bodenfeuchte und -beschaffenheit zu erfassen. Diese Sensoren bildeten die Grundlage für die Entwicklung und Erprobung des Systems.</p1><list><item1>Zur Messung der Bodenwasserspannung: <watermark>Watermark-Sensor</watermark></item1><item2>Zur Messung der Bodenfeuchte und -temperatur: <smt100>SMT100-Sensor</smt100></item2></list><p3>In zukünftigen Entwicklungsphasen kann die Sensorik je nach Anforderungen und technologischem Fortschritt weiter angepasst oder erweitert werden.</p3>"
+        "question": "Ist das System an bestimmte Sensoren gebunden?",
+        "answerPlain": "Die Bodensonde ist eine Eigenentwicklung für den Einsatz im öffentlichen Raum. Sie ist der Träger und nimmt mehrere Sensortypen in bis zu drei Tiefen auf, sodass sich das Wurzelprofil eines Baumes abbilden lässt. Welche Sensorik darin steckt, ist eine Frage der Bestückung und nicht fest vorgegeben.\n\nIm Forschungsprojekt waren es ein Watermark-Sensor für die Bodenwasserspannung und ein SMT100-Sensor für Bodenfeuchte und Temperatur. Für den kommunalen Einsatz haben wir die Bestückung seither angepasst und entwickeln sie weiter.\n\nSensoren anderer Hersteller werden unterstützt und lassen sich über das The Things Network und das Plug-in-System anbinden. Im Feld erprobt ist das bisher nicht.",
+        "answerRich": "<p1>Die Bodensonde ist eine Eigenentwicklung für den Einsatz im öffentlichen Raum. Sie ist der Träger und nimmt mehrere Sensortypen in bis zu drei Tiefen auf, sodass sich das Wurzelprofil eines Baumes abbilden lässt. Welche Sensorik darin steckt, ist eine Frage der Bestückung und nicht fest vorgegeben.</p1><p2>Im Forschungsprojekt waren es ein <watermark>Watermark-Sensor</watermark> für die Bodenwasserspannung und ein <smt100>SMT100-Sensor</smt100> für Bodenfeuchte und Temperatur. Für den kommunalen Einsatz haben wir die Bestückung seither angepasst und entwickeln sie weiter.</p2><p3>Sensoren anderer Hersteller werden unterstützt und lassen sich über das The Things Network und das Plug-in-System anbinden. Im Feld erprobt ist das bisher nicht.</p3>"
       },
       "progress": {
         "question": "Wie ist der aktuelle Fortschritt des Projekts?",

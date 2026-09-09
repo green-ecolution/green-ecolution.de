@@ -7,11 +7,19 @@ interface Props {
   language: Language
 }
 
+const { language } = Astro.props
+
 const LINK_CLASS =
   'text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900'
 
 const link = (href: string): SlotTag => ({
   open: `<a href="${href}" target="_blank" rel="noopener noreferrer" class="${LINK_CLASS}">`,
+  close: '</a>',
+})
+
+// The existing link() forces target="_blank"; that is wrong for our own pages.
+const internalLink = (href: string): SlotTag => ({
+  open: `<a href="${href}" class="${LINK_CLASS}">`,
   close: '</a>',
 })
 
@@ -21,7 +29,6 @@ const LINKS = {
   grenzregion: link('https://smarte-grenzregion.de/'),
   flensburg: link('https://www.flensburg.de/'),
   repo: link('https://github.com/green-ecolution'),
-  opendata: link('https://opendata.schleswig-holstein.de/dataset'),
   watermark: link('https://www.irrometer.com/pdf/403.pdf'),
   smt100: link('https://www.truebner.de/de/smt100.php'),
 }
@@ -35,29 +42,38 @@ const p = (className?: string): SlotTag => ({
 const ITEMS = [
   {
     id: 'origin',
-    wrap: true,
+    wrap: false,
     tags: {
+      p1: p('mb-4'),
+      p2: p('mb-4'),
+      p3: p(),
       hsfl: LINKS.hsfl,
-      progeek: LINKS.progeek,
       grenzregion: LINKS.grenzregion,
-      flensburg: LINKS.flensburg,
+      progeek: LINKS.progeek,
     },
   },
   { id: 'value', wrap: false, tags: { p1: p('mb-4'), p2: p() } },
   {
+    id: 'requirements',
+    wrap: false,
+    tags: {
+      p1: p('mb-4'),
+      p2: p(),
+      requirements: internalLink(`/${language}/project#requirements`),
+    },
+  },
+  {
     id: 'openSource',
     wrap: false,
-    tags: { p1: p('mb-4'), p2: p(), repo: LINKS.repo, opendata: LINKS.opendata },
+    tags: { p1: p('mb-4'), p2: p(), repo: LINKS.repo },
   },
   {
     id: 'sensors',
     wrap: false,
     tags: {
       p1: p('mb-4'),
-      p3: p('mt-4'),
-      list: { open: '<ul class="list-disc pl-4">', close: '</ul>' },
-      item1: { open: '<li>', close: '</li>' },
-      item2: { open: '<li>', close: '</li>' },
+      p2: p('mb-4'),
+      p3: p(),
       watermark: LINKS.watermark,
       smt100: LINKS.smt100,
     },
@@ -79,7 +95,6 @@ const ITEMS = [
   },
 ] as const
 
-const { language } = Astro.props
 const t = getTranslations(language, 'home')
 
 // Single source of truth: the JSON-LD schema reads answerPlain, the accordion

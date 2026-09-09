@@ -1,0 +1,63 @@
+---
+import Button from '../../Button.astro'
+import Github from '../../icons/Github.astro'
+import Arrow from '../../icons/Arrow.astro'
+import type { Language } from '../../../i18n/languages'
+import { getTranslations } from '../../../i18n/t'
+import { streamletLinks } from '../../../data/streamlet'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'streamlet')
+
+const SECONDARY_CTA_CLASS =
+  'flex items-center justify-center gap-x-3 rounded-2xl w-max font-semibold px-5 py-2 cursor-pointer transition-all ease-in-out duration-300 text-green-dark-900 border border-green-dark-900/30 hover:border-green-dark-900 hover:bg-white/70'
+---
+
+<section
+  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
+>
+  <div class="rounded-2xl bg-green-light-100/70 border border-green-light-900/20 p-6 lg:p-10">
+    <div class="lg:flex lg:justify-between lg:gap-12 xl:gap-16">
+      <div class="lg:max-w-xs lg:shrink-0 xl:max-w-sm">
+        <div class="inline-block mb-4">
+          <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+            {t('closing.sectionLabel')}
+          </span>
+          <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+        </div>
+
+        <h2 class="font-lato font-bold text-xl text-grey-900 mb-3 lg:mb-0 lg:text-2xl">
+          {t('closing.title')}
+        </h2>
+      </div>
+
+      <p class="text-grey-900/70 leading-relaxed lg:max-w-2xl">{t('closing.description')}</p>
+    </div>
+
+    <div class="flex flex-wrap gap-4 mt-8">
+      <Button href={`/${language}/contact`} ariaLabel={t('closing.contactAriaLabel')} isDark>
+        <span class="whitespace-nowrap">{t('closing.contact')}</span>
+        <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+      </Button>
+
+      <a href={`/${language}`} aria-label={t('closing.homeAriaLabel')} class={SECONDARY_CTA_CLASS}>
+        <span class="whitespace-nowrap">{t('closing.home')}</span>
+      </a>
+
+      <a
+        href={streamletLinks.repo}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t('closing.repoAriaLabel')}
+        class={SECONDARY_CTA_CLASS}
+      >
+        <Github class="w-5" />
+        <span class="whitespace-nowrap">{t('closing.repo')}</span>
+      </a>
+    </div>
+  </div>
+</section>

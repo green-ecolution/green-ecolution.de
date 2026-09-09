@@ -1,18 +1,16 @@
 {
   "meta": {
-    "title": "Streamlet | Vehicle routing with refill stations | Green Ecolution",
-    "description": "Streamlet is a standalone open source service for vehicle routing with time windows and multiple refill stations. Stateless HTTP API, deterministic solver, AGPL-3.0."
+    "title": "Route optimisation with refill stations | Streamlet | Green Ecolution",
+    "description": "Streamlet plans tours with time windows and multiple refill stations. Built for Green Ecolution, open source and usable elsewhere."
   },
   "hero": {
-    "sectionLabel": "Open source project",
-    "title": "Streamlet",
-    "tagline": "Route planning for vehicles whose tank does not hold enough for the whole tour.",
-    "lead": "Streamlet fixes the order of the stops and plans the refills along the way in the same pass. It runs as a standalone service behind an HTTP API.",
-    "origin": "Streamlet was built for Green Ecolution because none of the solvers we evaluated could express this problem. It now lives in a repository of its own and has no dependency on Green Ecolution. Anyone with the same planning problem can adopt it as it is.",
+    "sectionLabel": "Open source project Streamlet",
+    "title": "Route optimisation for vehicles that have to refill along the way",
+    "tagline": "The order of the stops and the refills along the way are planned together, not one after the other.",
+    "lead": "Streamlet fixes the order of the stops and plans the refills in the same pass. The result is a tour a vehicle with a limited tank can actually drive.",
+    "originRich": "Streamlet was built for <project>Green Ecolution</project> because none of the planning tools we evaluated could express this problem. It now lives in a repository of its own and has no dependency on Green Ecolution. Anyone with the same planning problem can adopt it as it is.",
     "repo": "Repository",
     "repoAriaLabel": "Open the Streamlet repository on GitHub",
-    "docs": "Documentation",
-    "docsAriaLabel": "Open the Streamlet documentation",
     "tourAriaLabel": "Isometric model of one tour: from the depot via five stops and one refill station back to the depot. The vehicle stops at every stop to water. The tank gauge beside it drops as it goes and fills up again at the refill station.",
     "tank": "Tank"
   },
@@ -20,8 +18,8 @@
     "sectionLabel": "The problem",
     "title": "Stop order and refills depend on each other",
     "coupling": "As soon as a vehicle has to refill along the way, the best order of the stops depends on when and where it refills. Deciding both at once is the heart of the problem.",
-    "workarounds": "Without a solver that takes this as input, there are two options, and both cost solution quality: plan the tour without the refills and end up with an infeasible result, or cut the tour into pieces by hand and give up optimising across the whole of it.",
-    "approach": "Streamlet plans the refill stations in the same optimisation run instead of fitting them in afterwards. At Green Ecolution route optimisation previously ran on Vroom, which could not express several refill stations in the middle of a tour.",
+    "workarounds": "Without planning that takes this as input, there are two options, and both cost solution quality: plan the tour without the refills and end up with an infeasible result, or cut the tour into pieces by hand and give up optimising across the whole of it.",
+    "approach": "Streamlet plans the refill stations in the same optimisation run instead of fitting them in afterwards. At Green Ecolution route optimisation previously ran on a standard engine that could not express several refill stations in the middle of a tour.",
     "diagram": {
       "ariaLabel": "Diagram of a tour: the vehicle's fill level drops at every stop and is topped up again at a refill station in the middle of the tour.",
       "depot": "Depot",
@@ -33,9 +31,36 @@
       "refilled": "refilled"
     }
   },
+  "benefit": {
+    "sectionLabel": "In operation",
+    "title": "What this means in day-to-day operation",
+    "description": "A tour that plans the refills along with everything else saves the trips that would otherwise happen when the tank runs dry in the middle of the area. The stops are visited in the order that fits their time windows, and at the end of the shift the vehicle is back at the depot.",
+    "needs": {
+      "title": "Three inputs are enough",
+      "stops": {
+        "label": "The stops and their demand",
+        "description": "Where water has to go and how much. In Green Ecolution this comes from the sensor readings, but it can be supplied without sensors as well."
+      },
+      "fleet": {
+        "label": "The vehicles you already have",
+        "description": "Water carts, vans and trailers with their water capacity and the time window of the shift. There is no need for a new fleet."
+      },
+      "refill": {
+        "label": "The refill points",
+        "description": "Places in the service area where the vehicle can refill along the way. Several points are explicitly supported."
+      }
+    },
+    "sensorsOptional": {
+      "label": "Sensors are not a prerequisite",
+      "description": "Route planning works without readings. Sensor data improves the prioritisation because it shows which stops actually need water."
+    },
+    "integratedRich": "In <project>Green Ecolution</project> the route optimisation is already built in. Anyone using the platform does not have to wire up Streamlet themselves.",
+    "cta": "How the system is put together",
+    "ctaAriaLabel": "Go to the architecture section on the project page"
+  },
   "fit": {
     "sectionLabel": "Where it fits",
-    "title": "Does Streamlet fit your problem?",
+    "title": "Does this fit your planning problem?",
     "description": "Streamlet is not tailored to one industry, what matters is the structure of the tour. The more of these traits your tours have, the better the fit.",
     "criteria": {
       "tankCapacity": "Vehicles with limited tank capacity",
@@ -46,113 +71,18 @@
     },
     "cargo": {
       "title": "Independent of what you carry",
-      "description": "Streamlet knows about tank capacity and demand, not about irrigation. What you transport is up to you. Water is the first use case, and nothing in the API assumes it."
+      "description": "Streamlet knows tank capacity and demand, not irrigation. What you carry stays open. Water is the first use case, and Streamlet never assumes it."
     }
   },
-  "api": {
-    "sectionLabel": "Interface",
-    "title": "One call, one solution",
-    "description": "Streamlet works synchronously. You send the problem, you get the routes back, with no job handling and no polling in between.",
-    "flow": {
-      "send": {
-        "label": "Send the problem",
-        "description": "A JSON body sent to POST /v1/solve describes the vehicles with their tank capacity and shift time window, the depots, the stops with their demand and time windows, and the refill stations."
-      },
-      "solve": {
-        "label": "Fetch costs and solve",
-        "description": "Streamlet requests the travel time and distance matrix from the routing engine and solves the problem in the solver."
-      },
-      "receive": {
-        "label": "Receive the routes",
-        "description": "For every route the response holds the order of the stops, distance, driving and waiting time, and the geometry. It also lists the stops that stay unserved."
-      }
-    },
-    "endpoints": {
-      "solve": "Solve a problem and return the routes",
-      "health": "Liveness check",
-      "openapi": "OpenAPI schema of the API"
-    },
-    "validation": "Streamlet validates the problem while reading it. An initial load above the tank capacity, a time window that ends before it starts, or a problem without a vehicle is rejected with a 422 instead of failing later in the solver. Error responses give away no internal detail, neither engine URLs nor third-party response bodies."
-  },
-  "solver": {
-    "sectionLabel": "Solver",
-    "title": "Traceable instead of random",
-    "description": "The solver works in two phases and without randomness. As long as the time budget does not cut in, the same input yields the same output, which makes results reproducible and regressions testable.",
-    "stages": {
-      "construction": {
-        "label": "Construction",
-        "description": "Cheapest insertion builds the first solution. If the tank does not hold enough for the next stop, the solver inserts the cheapest refill station before it."
-      },
-      "localSearch": {
-        "label": "Local search",
-        "description": "A VND-style search improves the solution. The cheap moves within a single route run first, the more expensive ones between routes afterwards. Once neither finds anything, it places all refill visits anew and drops the ones that no longer pay off."
-      }
-    },
-    "moveEvaluation": {
-      "label": "Load and duration segments",
-      "description": "The solver checks capacity and time windows through load and duration segments following Vidal et al. (2014). They can be merged in constant time, and every move is evaluated on the route it affects."
-    },
-    "benchmarks": {
-      "title": "Measured against the Solomon instances",
-      "description": "The regression tests solve well-known VRPTW instances, that is vehicle routing with time windows. They check whether the solution respects capacity and time windows and whether it lands close enough to the optimum. These instances contain no refill stations, so what is measured is the solver's baseline quality.",
-      "gap": "{{value}}%",
-      "footnote": "Gap to the best known solution, threshold 5%"
-    }
-  },
-  "tiles": {
-    "sectionLabel": "Map data",
-    "title": "Fitting the road network to your fleet",
-    "fleetMismatch": "A good route is worth nothing if the road network does not match the fleet. A municipal vehicle may use service and access roads that are closed to general traffic. A standard map does not know that and makes destinations look unreachable when they are not.",
-    "patcher": "The routing engine works on tiles built from an OSM extract. The Streamlet repository ships a CLI that modifies that extract beforehand through OSC changesets, that is change files in the OSM format. This is how you model what your vehicles are actually allowed to drive on.",
-    "status": {
-      "available": "Available",
-      "inProgress": "In development"
-    },
-    "changesets": {
-      "construction": "Marks roads closed for construction work as access=no. Routes then no longer lead through the closure.",
-      "allowedPaths": "Opens paths to motor vehicles when a destination cannot be reached from any drivable road. The patcher is meant to read those destinations from the Green Ecolution API."
-    },
-    "disclaimer": "The patcher only changes your extract for your routing instance. It affects what the engine considers drivable for your vehicles. It does not grant permission to drive there. Anyone adopting it needs a tile pipeline of their own."
-  },
-  "operations": {
-    "sectionLabel": "Operations",
-    "title": "Deploying and running it",
-    "description": "Streamlet is a single service alongside your application. Every state of main is published as a container image, and it is configured through environment variables. Beyond that you need a reachable routing engine.",
-    "facts": {
-      "stateless": {
-        "label": "Stateless",
-        "description": "No database, no job queue. On shutdown, open requests are allowed to finish instead of being cut off."
-      },
-      "swappableEngine": {
-        "label": "Swappable engine",
-        "description": "The routing engine sits behind the Router port trait. Valhalla is the implementation that ships. Another engine can take its place without touching the solver."
-      },
-      "separateCrate": {
-        "label": "Solver as a separate crate",
-        "description": "The solver lives in the streamlet-core crate, without tokio, axum or HTTP code. All it adds is serialisation and error types."
-      },
-      "license": {
-        "label": "AGPL-3.0",
-        "description": "The source code is licensed under the GNU Affero General Public License, version 3. Anyone who modifies Streamlet and runs it as a network service has to offer the modified source to its users."
-      }
-    }
-  },
-  "status": {
-    "sectionLabel": "Current state",
-    "title": "What works today and what does not",
-    "description": "Streamlet is early and runs in operational planning at Green Ecolution. These points are listed here so that nobody discovers them only while integrating.",
-    "limitations": {
-      "geometry": "Geometry comes back as an encoded polyline. The geojson option currently behaves like polyline.",
-      "depots": "The API accepts several depots, but every route returns to the first one.",
-      "missingFeatures": "There is no GPX endpoint and no embedded routing engine."
-    },
-    "cta": {
-      "title": "Contribute or adopt it yourself",
-      "descriptionRich": "Questions, bug reports and experience from other use cases are welcome in the repository. How Streamlet is wired into Green Ecolution is described in <release>release 0.4.0</release>.",
-      "repo": "Go to the repository",
-      "repoAriaLabel": "Open the Streamlet repository on GitHub",
-      "issues": "Issues",
-      "issuesAriaLabel": "Open the Streamlet issues on GitHub"
-    }
+  "closing": {
+    "sectionLabel": "Next step",
+    "title": "Talk about putting it to work",
+    "description": "If your tours look like this, a conversation is worth it. The source code is open: you can read how the planning works, and you are not tied to a single vendor. Setup and operation are ours to handle.",
+    "contact": "Get in touch",
+    "contactAriaLabel": "Go to the Green Ecolution contact page",
+    "home": "Go to Green Ecolution",
+    "homeAriaLabel": "Go to the Green Ecolution home page",
+    "repo": "View the source code",
+    "repoAriaLabel": "Open the Streamlet repository on GitHub"
   }
 }

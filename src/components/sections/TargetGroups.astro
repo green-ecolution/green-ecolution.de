@@ -1,0 +1,90 @@
+---
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+import { targetGroups } from '../../data/targetGroups'
+import { Image } from 'astro:assets'
+import fieldPhoto from '../../assets/photos/einsatz-jungbaum-tablet.jpg'
+import Arrow from '../icons/Arrow.astro'
+import Button from '../Button.astro'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'home')
+---
+
+<section
+  id="zielgruppen"
+  class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
+>
+  <div class="text-center mb-6 lg:mb-8">
+    <div class="inline-block">
+      <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+        {t('targetGroups.sectionLabel')}
+      </span>
+      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 mx-auto">
+      </div>
+    </div>
+  </div>
+
+  <article class="mb-8 lg:mb-14 text-center">
+    <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl">
+      {t('targetGroups.title')}
+    </h2>
+    <p class="text-grey-900/70 max-w-2xl mx-auto leading-relaxed">
+      {t('targetGroups.description')}
+    </p>
+  </article>
+
+  <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
+    {
+      targetGroups.map((group) => {
+        const Icon = group.icon
+
+        return (
+          <li class="h-full rounded-2xl border border-green-dark-900/10 bg-white p-5 lg:p-6">
+            <span class="flex w-10 h-10 rounded-lg bg-green-light-900/15 items-center justify-center mb-4">
+              <Icon className="w-5 h-5 text-green-dark-900" aria-hidden="true" />
+            </span>
+            <h3 class="font-lato font-bold text-base md:text-xl mb-2 text-grey-900">
+              {t(`targetGroups.items.${group.id}.role`)}
+            </h3>
+            <p class="text-grey-900/70 leading-relaxed">
+              {t(`targetGroups.items.${group.id}.description`)}
+            </p>
+          </li>
+        )
+      })
+    }
+  </ul>
+
+  <div class="mt-10 lg:mt-14 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-center">
+    <Image
+      src={fieldPhoto}
+      alt={t('targetGroups.photoAlt')}
+      widths={[640, 960, 1200]}
+      sizes="(min-width: 1024px) 58vw, 100vw"
+      loading="lazy"
+      class="w-full aspect-[4/3] object-cover rounded-xl sm:aspect-[3/2] lg:col-span-7"
+    />
+
+    <div class="mt-8 lg:mt-0 lg:col-span-5">
+      <p class="text-grey-900/70 leading-relaxed mb-8">{t('targetGroups.photoLead')}</p>
+
+      <Button
+        href={`/${language}/project#requirements`}
+        ariaLabel={t('targetGroups.ctaAriaLabel')}
+        isDark
+      >
+        <span>{t('targetGroups.cta')}</span>
+        <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+      </Button>
+    </div>
+  </div>
+
+  <p class="text-grey-900/60 leading-relaxed mt-10 text-center max-w-2xl mx-auto lg:mt-14">
+    {t('targetGroups.closing')}
+  </p>
+</section>

@@ -1,22 +1,20 @@
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
-const NAMESPACES = [
-  'common',
-  'home',
-  'project',
-  'streamlet',
-  'contact',
-  'releases',
-  'legal',
-  'blog',
-  'press',
-]
 const LANGUAGES = ['de', 'en']
 const REFERENCE = 'de'
 
 const localesDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'i18n', 'locales')
+
+// Derived from the catalog files rather than listed here: a namespace added to
+// the locales but forgotten in a hardcoded list would never be checked at all.
+function namespacesOf(language) {
+  return readdirSync(join(localesDir, language))
+    .filter((entry) => entry.endsWith('.json'))
+    .map((entry) => entry.slice(0, -'.json'.length))
+    .sort()
+}
 
 function flatten(value, prefix = '') {
   if (value === null || typeof value !== 'object' || Array.isArray(value)) {
@@ -34,11 +32,26 @@ function keysOf(language, namespace) {
 }
 
 const problems = []
+const referenceNamespaces = namespacesOf(REFERENCE)
+const targetLanguages = LANGUAGES.filter((entry) => entry !== REFERENCE)
 
-for (const namespace of NAMESPACES) {
-  const reference = keysOf(REFERENCE, namespace)
+for (const language of targetLanguages) {
+  const namespaces = namespacesOf(language)
 
-  for (const language of LANGUAGES.filter((entry) => entry !== REFERENCE)) {
+  for (const namespace of referenceNamespaces) {
+    if (!namespaces.includes(namespace)) {
+      problems.push(`${language}: fehlende Katalogdatei "${namespace}.json"`)
+    }
+  }
+
+  for (const namespace of namespaces) {
+    if (!referenceNamespaces.includes(namespace)) {
+      problems.push(`${language}: Katalogdatei "${namespace}.json" existiert nicht in ${REFERENCE}`)
+    }
+  }
+
+  for (const namespace of referenceNamespaces.filter((entry) => namespaces.includes(entry))) {
+    const reference = keysOf(REFERENCE, namespace)
     const target = keysOf(language, namespace)
 
     for (const key of reference) {
@@ -63,4 +76,4 @@ if (problems.length > 0) {
   process.exit(1)
 }
 
-console.log('i18n-Parity in Ordnung.')
+console.log(`i18n-Parity in Ordnung (${referenceNamespaces.length} Namespaces).`)

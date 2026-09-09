@@ -1,4 +1,3 @@
-import { BookOpen } from 'lucide-react'
 import { useT } from '../../../i18n/useT'
 import { Suspense, lazy, useRef, useState, type CSSProperties } from 'react'
 import GithubIcon from '../GithubIcon'
@@ -9,14 +8,16 @@ import { streamletLinks } from '../../../data/streamlet'
 import { staticTankLevel, tourProjectedSize } from '../../../data/streamletTour'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { supportsWebgl } from '../../../lib/webgl'
+import { splitSlot } from '../../../lib/slotText'
 
 const StreamletTour3D = lazy(() => import('./StreamletTour3D'))
 
-function StreamletHero() {
+function StreamletHero({ language }: { language: string }) {
   const t = useT()
   const prefersReducedMotion = useReducedMotion()
   const [canRenderModel] = useState(supportsWebgl)
   const tankLevel = useRef<HTMLDivElement>(null)
+  const origin = splitSlot(t('hero.originRich'), 'project')
 
   return (
     <section className="px-4 max-w-208 mx-auto pt-28 pb-14 md:px-6 lg:pt-36 lg:pb-24 lg:max-w-screen-lg xl:pt-44 xl:max-w-screen-xl">
@@ -66,7 +67,16 @@ function StreamletHero() {
         <div className="lg:col-start-1 lg:row-start-2 lg:mt-5 lg:self-start">
           <p className="text-grey-900/70 leading-relaxed mb-4">{t('hero.lead')}</p>
 
-          <p className="text-grey-900/60 leading-relaxed mb-8">{t('hero.origin')}</p>
+          <p className="text-grey-900/60 leading-relaxed mb-8">
+            {origin.before}
+            <a
+              href={`/${language}/project`}
+              className="font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
+            >
+              {origin.inner}
+            </a>
+            {origin.after}
+          </p>
 
           <div className="flex flex-wrap gap-4">
             <a
@@ -79,17 +89,6 @@ function StreamletHero() {
               <GithubIcon classes="w-5" />
               <span className="whitespace-nowrap">{t('hero.repo')}</span>
               <Arrow classes="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
-            </a>
-
-            <a
-              href={streamletLinks.readme}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={t('hero.docsAriaLabel')}
-              className="flex items-center justify-center gap-x-3 rounded-2xl w-max font-semibold px-5 py-2 cursor-pointer transition-all ease-in-out duration-300 text-green-dark-900 border border-green-dark-900/30 hover:border-green-dark-900 hover:bg-green-light-100/60"
-            >
-              <BookOpen className="w-5 h-5" aria-hidden="true" />
-              <span className="whitespace-nowrap">{t('hero.docs')}</span>
             </a>
           </div>
         </div>

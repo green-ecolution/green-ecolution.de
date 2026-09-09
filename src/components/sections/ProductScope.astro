@@ -1,0 +1,88 @@
+---
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+import { productScopeColumns } from '../../data/productScope'
+import { Image } from 'astro:assets'
+import teamPhoto from '../../assets/photos/team-progeek.jpg'
+import Arrow from '../icons/Arrow.astro'
+import Button from '../Button.astro'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'project')
+---
+
+<section
+  id="produktumfang"
+  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
+>
+  <div class="mb-10 lg:mb-14">
+    <div class="inline-block mb-4">
+      <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+        {t('productScope.sectionLabel')}
+      </span>
+      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+    </div>
+
+    <div class="lg:flex lg:justify-between lg:gap-12 xl:gap-16">
+      <h2
+        class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:mb-0 lg:max-w-xs lg:shrink-0 lg:text-3xl xl:max-w-sm xl:text-4xl"
+      >
+        {t('productScope.title')}
+      </h2>
+
+      <div class="lg:max-w-2xl">
+        <p class="text-grey-900/70 leading-relaxed mb-4">
+          {t('productScope.description')}
+        </p>
+
+        <p class="text-grey-900/60 leading-relaxed">{t('productScope.framing')}</p>
+      </div>
+    </div>
+  </div>
+
+  <ul class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-5">
+    {
+      productScopeColumns.map((column) => {
+        const Icon = column.icon
+
+        return (
+          <li class="h-full rounded-2xl border border-green-dark-900/10 bg-white p-5 lg:p-6">
+            <span class="flex w-10 h-10 rounded-lg bg-green-light-900/15 items-center justify-center mb-4">
+              <Icon className="w-5 h-5 text-green-dark-900" aria-hidden="true" />
+            </span>
+            <h3 class="font-lato font-semibold text-grey-900 mb-2">
+              {t(`productScope.columns.${column.id}.label`)}
+            </h3>
+            <p class="text-grey-900/70 leading-relaxed">
+              {t(`productScope.columns.${column.id}.description`)}
+            </p>
+          </li>
+        )
+      })
+    }
+  </ul>
+
+  <div class="mt-10 lg:mt-14 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-center">
+    <Image
+      src={teamPhoto}
+      alt={t('productScope.photoAlt')}
+      widths={[640, 960, 1200]}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      loading="lazy"
+      class="w-full aspect-[4/3] object-cover rounded-xl sm:aspect-[3/2] lg:col-span-6"
+    />
+
+    <div class="mt-8 lg:mt-0 lg:col-span-6">
+      <p class="text-grey-900/70 leading-relaxed mb-8">{t('productScope.photoLead')}</p>
+
+      <Button href={`/${language}/contact`} ariaLabel={t('productScope.ctaAriaLabel')} isDark>
+        <span>{t('productScope.cta')}</span>
+        <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+      </Button>
+    </div>
+  </div>
+</section>
