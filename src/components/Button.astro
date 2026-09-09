@@ -10,14 +10,17 @@ interface Props {
 // this building block to know about languages.
 const { href, ariaLabel, isExternalLink = false, isDark = false } = Astro.props
 
+// Touch never fires hover, so every state that only lives there is invisible on
+// a phone. The active state is what actually answers the press, and it has to
+// land faster than the hover it interrupts.
 const baseClasses =
-  'flex items-center justify-center gap-x-4 rounded-2xl w-max font-semibold px-5 py-2 group cursor-pointer transition-all ease-in-out duration-300 text-white'
+  'flex items-center justify-center gap-x-4 rounded-2xl w-max font-semibold px-5 py-2 group cursor-pointer transition-all ease-out duration-200 text-white active:scale-[0.97] active:duration-75'
 
 const darkClasses =
-  'bg-green-dark-900 hover:bg-green-light-900 hover:shadow-lg hover:shadow-green-light-900/40 hover:-translate-y-0.5'
+  'bg-green-dark-900 hover:bg-green-light-900 hover:shadow-lg hover:shadow-green-light-900/40 hover:-translate-y-0.5 active:bg-green-light-900 active:translate-y-0'
 
 const lightClasses =
-  'bg-transparent border border-white hover:bg-green-light-900 hover:border-green-light-900 hover:shadow-lg hover:shadow-green-light-900/30'
+  'bg-transparent border border-white hover:bg-green-light-900 hover:border-green-light-900 hover:shadow-lg hover:shadow-green-light-900/30 active:bg-green-light-900 active:border-green-light-900'
 ---
 
 <a
