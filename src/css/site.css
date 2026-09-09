@@ -26,29 +26,43 @@
   --font-lato: var(--font-lato-face);
   --font-nunito-sans: var(--font-nunito-sans-face);
 
-  /* Font sizes */
+  /* Font sizes. Tracking and leading belong to the size, not to the element:
+     letters drift apart as type grows and have to be pulled back in, while
+     small type needs the opposite. Anything that overrides tracking locally
+     (uppercase eyebrows) still wins, because utilities come after the size. */
   --text-xxs: 0.625rem;
   --text-xxs--line-height: 1;
+  --text-xxs--letter-spacing: 0.02em;
   --text-xs: 0.75rem;
   --text-xs--line-height: 1.2;
+  --text-xs--letter-spacing: 0.012em;
   --text-sm: 0.875rem;
   --text-sm--line-height: 1.4;
+  --text-sm--letter-spacing: 0.006em;
   --text-base: 1rem;
   --text-base--line-height: 1.5;
+  --text-base--letter-spacing: 0em;
   --text-lg: 1.125rem;
   --text-lg--line-height: 1.55;
+  --text-lg--letter-spacing: 0em;
   --text-xl: 1.25rem;
   --text-xl--line-height: 1.55;
+  --text-xl--letter-spacing: -0.006em;
   --text-2xl: 1.5rem;
-  --text-2xl--line-height: 1.35;
+  --text-2xl--line-height: 1.32;
+  --text-2xl--letter-spacing: -0.011em;
   --text-3xl: 1.75rem;
-  --text-3xl--line-height: 1.43;
+  --text-3xl--line-height: 1.3;
+  --text-3xl--letter-spacing: -0.015em;
   --text-4xl: 2rem;
-  --text-4xl--line-height: 1.33;
+  --text-4xl--line-height: 1.22;
+  --text-4xl--letter-spacing: -0.019em;
   --text-5xl: 2.25rem;
-  --text-5xl--line-height: 1.33;
+  --text-5xl--line-height: 1.15;
+  --text-5xl--letter-spacing: -0.022em;
   --text-6xl: 3rem;
-  --text-6xl--line-height: 1.25;
+  --text-6xl--line-height: 1.08;
+  --text-6xl--letter-spacing: -0.026em;
 
   /* Breakpoints */
   --breakpoint-xs: 400px;
@@ -61,6 +75,9 @@
 
   /* Shadows */
   --shadow-main-nav: -4px 0px 20px 8px rgba(0, 0, 0, 0.1);
+  /* Diffuse enough to read as the edge of a floating layer rather than as a
+     card sitting on the page. */
+  --shadow-header-edge: 0 1px 24px -10px rgba(0, 0, 0, 0.28);
 
   /* Animations */
   --animate-move: move 35s linear infinite;

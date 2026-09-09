@@ -12,3 +12,43 @@ textarea:focus-visible,
 summary:focus-visible {
   @apply outline outline-2 outline-offset-4 outline-green-light-900;
 }
+
+/* The drawer is positioned at its open place and pushed out with a transform,
+   so the gesture can write a px offset every frame without touching layout.
+   --drawer-x lives on the root because the scrim reads the same progress.
+   Above lg the markup is a plain nav bar and must not be moved at all. */
+.main-navigation {
+  /* The origin is the right edge, so the overshoot stretch pulls the panel open
+     to the left without ever unsticking it from the side of the screen. */
+  transform: translateX(var(--drawer-x, 100%)) scaleX(calc(1 + var(--drawer-stretch, 0)));
+  transform-origin: 100% 50%;
+}
+
+@media (min-width: 1024px) {
+  .main-navigation {
+    transform: none;
+  }
+}
+
+/* Translucent surfaces carry their hierarchy through the blur, so when the
+   reader asks for less transparency there is nothing left to soften: the layer
+   has to become opaque instead. */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  [data-material] {
+    background-color: var(--color-white) !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Opacity is left alone: on some scrims it is what the enter animation
+     drives. */
+  [data-scrim] {
+    background-color: color-mix(in oklab, var(--color-grey-900) 92%, transparent) !important;
+    backdrop-filter: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  [data-material] {
+    border-color: color-mix(in oklab, var(--color-grey-900) 40%, transparent) !important;
+  }
+}

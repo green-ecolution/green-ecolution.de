@@ -30,7 +30,8 @@
     },
     "next": "Weiter",
     "discover": "Entdecken",
-    "closeAriaLabel": "Popup schließen"
+    "closeAriaLabel": "Popup schließen",
+    "ariaLabel": "Interaktive Einführung"
   },
   "welcomeCard": {
     "greeting": "Willkommen bei",
