@@ -1,12 +1,12 @@
 {
   "meta": {
     "title": "Presse | Green Ecolution",
-    "description": "Pressematerial zu Green Ecolution: Logos in hoher Auflösung, Pitch Deck, Kurzbeschreibungen zum Zitieren und Pressekontakt."
+    "description": "Pressematerial zu Green Ecolution: Logos und Bilder in hoher Auflösung, Pitch Deck, Kurzbeschreibungen zum Zitieren und Pressekontakt."
   },
   "hero": {
     "label": "Presse",
     "headline": "Material für die Berichterstattung",
-    "description": "Hier findet ihr alles, was für einen Beitrag über Green Ecolution nützlich ist: Logos in hoher Auflösung, das Pitch Deck zum Projekt und Kurzbeschreibungen, die sich direkt übernehmen lassen."
+    "description": "Hier findet ihr alles, was für einen Beitrag über Green Ecolution nützlich ist: Logos und Bilder in hoher Auflösung, das Pitch Deck zum Projekt und Kurzbeschreibungen, die sich direkt übernehmen lassen."
   },
   "contact": {
     "sectionLabel": "Kontakt",
@@ -76,10 +76,60 @@
       "outro": "Für Verwendungen außerhalb der Berichterstattung sprecht uns bitte vorher an."
     }
   },
+  "images": {
+    "sectionLabel": "Bildmaterial",
+    "title": "Bilder in voller Auflösung",
+    "description": "Aufnahmen aus dem Projekt in Originalauflösung, geeignet für Print und Online. Auflösung und Dateigröße stehen an jedem Bild.",
+    "fileFacts": "JPG, {{size}}",
+    "download": "Herunterladen",
+    "downloadAriaLabel": "{{image}} in Originalauflösung herunterladen",
+    "items": {
+      "fieldWork": {
+        "title": "Kontrolle am Jungbaum",
+        "description": "Zwei Projektbeteiligte an einem jungen Baum mit Wassersack. Die Aufnahme zeigt die Situation, um die es im Projekt geht: Der Bedarf entsteht am Standort.",
+        "alt": "Zwei Personen an einem jungen Baum mit Wassersack. Eine kniet und bedient ein Tablet, die andere schaut zu."
+      },
+      "watering": {
+        "title": "Bewässerung eines Jungbaums",
+        "description": "Ein Mitarbeiter des Technischen Betriebszentrums wässert einen Jungbaum mit dem Schlauch.",
+        "alt": "Ein Mitarbeiter in orangefarbener Warnkleidung wässert mit einem Schlauch einen jungen Baum, der von einem Holzgerüst gestützt wird."
+      },
+      "sensorInstall": {
+        "title": "Einbau einer Bodensonde",
+        "description": "Ein Mitarbeiter des Technischen Betriebszentrums öffnet das vom Erdbohrer vorbereitete Loch, daneben wird die Sonde bereitgehalten.",
+        "alt": "Einbau einer Bodensonde am Baumstandort: Ein Mitarbeiter in Warnkleidung öffnet mit dem Spaten das vom Erdbohrer vorbereitete Loch, daneben wird die Sonde mit ihrem Kabel bereitgehalten."
+      },
+      "treePit": {
+        "title": "Minibagger an der Baumscheibe",
+        "description": "Der Bagger des Technischen Betriebszentrums öffnet eine Baumscheibe im Straßenraum.",
+        "alt": "Ein Minibagger des Technischen Betriebszentrums Flensburg an einer Baumscheibe in einer Straße, daneben zwei Personen."
+      },
+      "team": {
+        "title": "Das Team bei der Arbeit",
+        "description": "Zwei Mitarbeitende von PROGEEK am Laptop.",
+        "alt": "Zwei Mitarbeitende von PROGEEK sehen sich gemeinsam etwas auf einem Laptop an."
+      }
+    },
+    "zip": {
+      "label": "Alle Bilder als ZIP",
+      "description": "Enthält alle Bilder dieser Seite in Originalauflösung, rund {{size}}.",
+      "ariaLabel": "Alle Pressebilder als ZIP-Archiv herunterladen"
+    },
+    "usage": {
+      "title": "Nutzungshinweise",
+      "text": "Die Bilder stehen für die Berichterstattung über Green Ecolution zur Verfügung. Zuschnitt und Anpassung der Helligkeit sind in Ordnung, Veränderungen am Inhalt der Aufnahme nicht. Für Verwendungen außerhalb der Berichterstattung sprecht uns bitte vorher an."
+    }
+  },
   "pitchDeck": {
     "sectionLabel": "Präsentation",
     "title": "Pitch Deck",
-    "description": "Die Präsentation zum Projekt: Ausgangslage, Lösungsansatz, Technik und aktueller Stand, aufbereitet als Foliensatz.",
+    "description": "Die Präsentation zum Projekt: Ausgangslage, Lösungsansatz, Technik und aktueller Stand, aufbereitet als Foliensatz. Alle Folien lassen sich hier vorab durchsehen.",
+    "slides": {
+      "position": "{{page}} / {{total}}",
+      "stripLabel": "Folienvorschau des Pitch Decks. Die vollständige Fassung steht als PDF zum Download.",
+      "previous": "Eine Folie zurück",
+      "next": "Eine Folie weiter"
+    },
     "fileLabel": "PDF",
     "download": "Pitch Deck herunterladen",
     "downloadAriaLabel": "Pitch Deck als PDF herunterladen"

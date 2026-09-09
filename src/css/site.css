@@ -73,6 +73,36 @@
   --spacing-100: 25rem;
   --spacing-208: 52rem;
 
+  /* Easings. Sampled from a critically damped spring (response 0.35s), so the
+     value settles without overshoot: a tap carries no momentum to bounce off. */
+  --ease-spring-settle: linear(
+    0,
+    0.0576,
+    0.1806,
+    0.3213,
+    0.4558,
+    0.5736,
+    0.6717,
+    0.7507,
+    0.8127,
+    0.8606,
+    0.897,
+    0.9243,
+    0.9447,
+    0.9598,
+    0.9709,
+    0.979,
+    0.9849,
+    0.9892,
+    0.9923,
+    0.9945,
+    0.9961,
+    0.9972,
+    0.998,
+    0.9986,
+    0.999
+  );
+
   /* Shadows */
   --shadow-main-nav: -4px 0px 20px 8px rgba(0, 0, 0, 0.1);
   /* Diffuse enough to read as the edge of a floating layer rather than as a

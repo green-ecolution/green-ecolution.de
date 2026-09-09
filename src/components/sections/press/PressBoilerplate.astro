@@ -1,6 +1,7 @@
 ---
 import { Copy } from 'lucide-react'
 import PressSection from './PressSection.astro'
+import ActionButton from '../../ActionButton.astro'
 import type { Language } from '../../../i18n/languages'
 import { getTranslations } from '../../../i18n/t'
 
@@ -27,16 +28,15 @@ const t = getTranslations(language, 'press')
           <li class="bg-green-light-100 border border-green-dark-900/20 rounded-2xl p-5 lg:p-6">
             <div class="flex items-start justify-between gap-4 mb-4">
               <h3 class="font-lato font-semibold text-lg text-grey-900">{label}</h3>
-              <button
-                type="button"
+              <ActionButton
                 data-copy={`boilerplate-${variant}`}
                 data-copied-label={t('boilerplate.copied')}
-                aria-label={t('boilerplate.copyAriaLabel', { variant: label })}
-                class="flex-shrink-0 flex items-center gap-2 rounded-xl border border-green-dark-900/20 bg-white px-3 py-1.5 text-sm font-semibold text-green-dark-900 cursor-pointer transition-all ease-in-out duration-300 hover:bg-green-dark-900 hover:text-white"
+                ariaLabel={t('boilerplate.copyAriaLabel', { variant: label })}
+                class="flex-shrink-0"
               >
                 <Copy className="w-4 h-4" aria-hidden="true" />
                 <span data-copy-label>{t('boilerplate.copy')}</span>
-              </button>
+              </ActionButton>
             </div>
             <p
               id={`boilerplate-${variant}`}

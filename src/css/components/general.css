@@ -9,8 +9,62 @@ input[type='text']:focus-visible,
 input[type='checkbox']:focus-visible,
 input[type='date']:focus-visible,
 textarea:focus-visible,
-summary:focus-visible {
+summary:focus-visible,
+[tabindex]:focus-visible {
   @apply outline outline-2 outline-offset-4 outline-green-light-900;
+}
+
+/* A snapping strip already shows it can move: the next item is cut off at the
+   edge and the arrows say the rest out loud. The native bar only adds a chunky
+   band under the content. */
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* data-draggable is set by the script, so the invitation to grab only appears
+   once dragging actually works. Touch scrolls the strip natively and has no
+   cursor to show, hence the pointer query. */
+@media (hover: hover) and (pointer: fine) {
+  [data-slide-strip][data-draggable] {
+    cursor: grab;
+  }
+
+  [data-slide-strip][data-dragging] {
+    cursor: grabbing;
+  }
+}
+
+/* Press feedback for download controls. The scale lands on pointer-down so the
+   surface answers the finger before the click resolves, and the release settles
+   on a spring rather than an eased ramp. Uses the individual scale property, so
+   a hover translate on the same element still composes.
+   Elements carrying this must not also carry a tailwind transition utility:
+   those are emitted after this file and would replace the timings below. */
+.press-spring {
+  transition:
+    scale 515ms var(--ease-spring-settle),
+    translate 300ms ease-out,
+    box-shadow 300ms ease-out,
+    background-color 300ms ease-out,
+    color 300ms ease-out;
+}
+
+.press-spring:active {
+  scale: 0.96;
+  transition-duration: 60ms;
+  transition-timing-function: ease-out;
+}
+
+/* The global reduced-motion rule only collapses durations, which would leave
+   the scale snapping. Drop the movement and keep the colour response. */
+@media (prefers-reduced-motion: reduce) {
+  .press-spring:active {
+    scale: 1;
+  }
 }
 
 /* The drawer is positioned at its open place and pushed out with a transform,

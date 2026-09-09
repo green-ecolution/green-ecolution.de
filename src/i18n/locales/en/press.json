@@ -1,12 +1,12 @@
 {
   "meta": {
     "title": "Press | Green Ecolution",
-    "description": "Press material on Green Ecolution: high-resolution logos, the pitch deck, ready-to-quote project descriptions and the press contact."
+    "description": "Press material on Green Ecolution: high-resolution logos and photos, the pitch deck, ready-to-quote project descriptions and the press contact."
   },
   "hero": {
     "label": "Press",
     "headline": "Material for your coverage",
-    "description": "Everything you need for a piece about Green Ecolution: logos in high resolution, the project pitch deck, and short descriptions you can quote as they are."
+    "description": "Everything you need for a piece about Green Ecolution: logos and photos in high resolution, the project pitch deck, and short descriptions you can quote as they are."
   },
   "contact": {
     "sectionLabel": "Contact",
@@ -76,10 +76,60 @@
       "outro": "For any use beyond editorial coverage, please talk to us first."
     }
   },
+  "images": {
+    "sectionLabel": "Photography",
+    "title": "Photos at full resolution",
+    "description": "Photographs from the project at their original resolution, suitable for print and online. Resolution and file size are listed with each photo.",
+    "fileFacts": "JPG, {{size}}",
+    "download": "Download",
+    "downloadAriaLabel": "Download {{image}} at full resolution",
+    "items": {
+      "fieldWork": {
+        "title": "Checking a young tree",
+        "description": "Two people from the project at a young tree with a watering bag. The photo shows what the project is about: demand arises at the site.",
+        "alt": "Two people at a young tree with a watering bag. One is crouching and using a tablet, the other is looking on."
+      },
+      "watering": {
+        "title": "Watering a young tree",
+        "description": "A worker from the municipal operations centre waters a young tree with a hose.",
+        "alt": "A worker in orange high-visibility clothing waters a young tree supported by a wooden frame, using a hose."
+      },
+      "sensorInstall": {
+        "title": "Installing a soil probe",
+        "description": "A worker from the municipal operations centre opens the hole prepared by the earth auger while the probe is held ready beside it.",
+        "alt": "Installing a soil probe at a tree site: a worker in high-visibility clothing opens the hole prepared by the earth auger, with the probe and its cable held ready beside it."
+      },
+      "treePit": {
+        "title": "Excavator at a tree pit",
+        "description": "The municipal operations centre's excavator opens a tree pit on a city street.",
+        "alt": "A mini excavator belonging to the Flensburg municipal operations centre at a tree pit on a street, with two people standing beside it."
+      },
+      "team": {
+        "title": "The team at work",
+        "description": "Two PROGEEK staff at a laptop.",
+        "alt": "Two PROGEEK staff looking at something on a laptop together."
+      }
+    },
+    "zip": {
+      "label": "All photos as a ZIP",
+      "description": "Contains every photo on this page at full resolution, around {{size}}.",
+      "ariaLabel": "Download all press photos as a ZIP archive"
+    },
+    "usage": {
+      "title": "How to use the photos",
+      "text": "The photos are available for coverage of Green Ecolution. Cropping and brightness adjustments are fine, changes to the content of the photograph are not. For any use beyond coverage, please get in touch with us first."
+    }
+  },
   "pitchDeck": {
     "sectionLabel": "Presentation",
     "title": "Pitch deck",
-    "description": "The project presentation: the starting point, the approach, the technology and the current state, laid out as a slide deck.",
+    "description": "The project presentation: the starting point, the approach, the technology and the current state, laid out as a slide deck. Every slide can be previewed here before downloading.",
+    "slides": {
+      "position": "{{page}} / {{total}}",
+      "stripLabel": "Slide preview of the pitch deck. The complete version is available as a PDF download.",
+      "previous": "Previous slide",
+      "next": "Next slide"
+    },
     "fileLabel": "PDF",
     "download": "Download the pitch deck",
     "downloadAriaLabel": "Download the pitch deck as a PDF"

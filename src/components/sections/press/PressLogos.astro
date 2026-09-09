@@ -3,6 +3,7 @@ import type { ImageMetadata } from 'astro'
 import { ASSET_BASE_URL } from 'astro:env/server'
 import { Download, FileArchive } from 'lucide-react'
 import PressSection from './PressSection.astro'
+import ActionButton from '../../ActionButton.astro'
 import iconColor from '../../../assets/press/green-ecolution-icon-color.svg'
 import iconWhite from '../../../assets/press/green-ecolution-icon-white.svg'
 import logoColor from '../../../assets/press/green-ecolution-logo-color.svg'
@@ -33,9 +34,6 @@ const USAGE_HINTS = ['proportions', 'colors', 'spacing', 'combination'] as const
 
 const { language } = Astro.props
 const t = getTranslations(language, 'press')
-
-const downloadClasses =
-  'inline-flex items-center gap-1.5 rounded-xl border border-green-dark-900/20 bg-white px-3 py-1.5 text-sm font-semibold text-green-dark-900 transition-all ease-in-out duration-300 hover:bg-green-dark-900 hover:text-white'
 ---
 
 <PressSection
@@ -72,18 +70,17 @@ const downloadClasses =
 
               <div class="mt-auto flex flex-wrap gap-2">
                 {variant.downloads.map((download) => (
-                  <a
+                  <ActionButton
                     href={pressAssetUrl(ASSET_BASE_URL, download.path)}
                     download
-                    aria-label={t('logos.downloadAriaLabel', {
+                    ariaLabel={t('logos.downloadAriaLabel', {
                       variant: label,
                       format: download.label,
                     })}
-                    class={downloadClasses}
                   >
                     <Download className="w-4 h-4" aria-hidden="true" />
                     {download.label}
-                  </a>
+                  </ActionButton>
                 ))}
               </div>
             </div>
@@ -97,7 +94,7 @@ const downloadClasses =
     href={pressAssetUrl(ASSET_BASE_URL, LOGO_ZIP_PATH)}
     download
     aria-label={t('logos.zip.ariaLabel')}
-    class="group mt-4 flex items-center gap-4 rounded-2xl border border-green-dark-900/20 bg-green-light-100 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-sm lg:mt-6 lg:p-6"
+    class="press-spring group mt-4 flex items-center gap-4 rounded-2xl border border-green-dark-900/20 bg-green-light-100 p-5 hover:-translate-y-1 hover:shadow-sm lg:mt-6 lg:p-6"
   >
     <span
       class="flex-shrink-0 w-12 h-12 rounded-xl bg-green-dark-900/10 flex items-center justify-center transition-colors group-hover:bg-green-dark-900"

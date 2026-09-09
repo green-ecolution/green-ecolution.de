@@ -1,0 +1,66 @@
+---
+interface Props {
+  ariaLabel: string
+  // Omit to render a <button>, pass a path to render a link.
+  href?: string
+  tone?: 'onLight' | 'onDark' | 'solid'
+  size?: 'sm' | 'md'
+  download?: boolean
+  // Buttons a script has to bring to life start hidden, so no-javascript never
+  // shows a control that cannot do anything.
+  hidden?: boolean
+  disabled?: boolean
+  class?: string
+  [key: `data-${string}`]: string | undefined
+}
+
+const {
+  ariaLabel,
+  href,
+  tone = 'onLight',
+  size = 'sm',
+  download = false,
+  hidden = false,
+  disabled = false,
+  class: className,
+  ...rest
+} = Astro.props
+
+const base =
+  'press-spring inline-flex items-center justify-center gap-2 rounded-xl font-semibold cursor-pointer'
+
+const SIZES = {
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-5 py-2.5',
+} as const
+
+const TONES = {
+  // On light cards the border carries the edge; the fill inverts on hover.
+  onLight:
+    'border border-green-dark-900/20 bg-white text-green-dark-900 hover:bg-green-dark-900 hover:text-white',
+  // On the dark plates a white fill is the only thing that reads as raised.
+  onDark: 'bg-white text-green-dark-900 hover:bg-green-light-900 hover:text-grey-900',
+  solid: 'bg-green-dark-900 text-white hover:bg-green-light-900 hover:text-grey-900',
+} as const
+
+const classes = [base, SIZES[size], TONES[tone], className]
+---
+
+{
+  href ? (
+    <a href={href} aria-label={ariaLabel} download={download || undefined} class:list={classes}>
+      <slot />
+    </a>
+  ) : (
+    <button
+      type="button"
+      aria-label={ariaLabel}
+      hidden={hidden}
+      disabled={disabled}
+      class:list={classes}
+      {...rest}
+    >
+      <slot />
+    </button>
+  )
+}
