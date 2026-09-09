@@ -12,3 +12,26 @@ textarea:focus-visible,
 summary:focus-visible {
   @apply outline outline-2 outline-offset-4 outline-green-light-900;
 }
+
+/* Translucent surfaces carry their hierarchy through the blur, so when the
+   reader asks for less transparency there is nothing left to soften: the layer
+   has to become opaque instead. */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  [data-material] {
+    background-color: var(--color-white) !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Opacity is left alone: on some scrims it is what the enter animation
+     drives. */
+  [data-scrim] {
+    background-color: color-mix(in oklab, var(--color-grey-900) 92%, transparent) !important;
+    backdrop-filter: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  [data-material] {
+    border-color: color-mix(in oklab, var(--color-grey-900) 40%, transparent) !important;
+  }
+}

@@ -75,6 +75,9 @@
 
   /* Shadows */
   --shadow-main-nav: -4px 0px 20px 8px rgba(0, 0, 0, 0.1);
+  /* Diffuse enough to read as the edge of a floating layer rather than as a
+     card sitting on the page. */
+  --shadow-header-edge: 0 1px 24px -10px rgba(0, 0, 0, 0.28);
 
   /* Animations */
   --animate-move: move 35s linear infinite;

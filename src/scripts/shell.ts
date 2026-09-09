@@ -29,11 +29,14 @@ export function setup() {
 
     if (header) {
       const scrolled = scrollTop > HEADER_SCROLLED_PX
-      header.classList.toggle('bg-white/95', scrolled)
-      header.classList.toggle('backdrop-blur-sm', scrolled)
-      header.classList.toggle('shadow-lg', scrolled)
-      header.classList.toggle('shadow-grey-900/5', scrolled)
+      header.classList.toggle('bg-white/80', scrolled)
+      header.classList.toggle('backdrop-blur-xl', scrolled)
+      header.classList.toggle('backdrop-saturate-150', scrolled)
+      header.classList.toggle('shadow-header-edge', scrolled)
       header.classList.toggle('bg-transparent', !scrolled)
+      // Marks the bar as a translucent layer; general.css turns it solid again
+      // for readers who asked for less transparency.
+      header.toggleAttribute('data-material', scrolled)
 
       // The iOS status bar picks up this colour, so it has to follow the header.
       document
