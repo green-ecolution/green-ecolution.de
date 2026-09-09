@@ -13,14 +13,20 @@ interface Props {
 
 function Banner({ votingUrl, deadline }: Omit<Props, 'strings'>) {
   const t = useT()
-  const [isVisible, setIsVisible] = useState(false)
+  // Starts visible so the server already reserves the space. Mounting it the
+  // other way round pushed the whole page down one frame after hydration, and
+  // the page that has not been dismissed is by far the common case. The build
+  // skips the island entirely once the deadline has passed.
+  const [isVisible, setIsVisible] = useState(true)
   const bannerRef = useRef<HTMLElement>(null)
 
   // Both checks belong on the client: there is no localStorage on the server, and
   // Date.now() during render would be impure and could differ between the two.
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- both inputs only exist in the browser
-    setIsVisible(!isVotingBannerDismissed() && Date.now() <= new Date(deadline).getTime())
+    if (isVotingBannerDismissed() || Date.now() > new Date(deadline).getTime()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- both inputs only exist in the browser
+      setIsVisible(false)
+    }
   }, [deadline])
 
   // Header and page content are pushed down by this, so the height must stay in sync
@@ -44,9 +50,26 @@ function Banner({ votingUrl, deadline }: Omit<Props, 'strings'>) {
     }
   }, [isVisible])
 
+  // Dropping the banner from the tree would snap the whole page up by its
+  // height. It collapses along the axis it occupies instead, so the content
+  // arrives where the reader can follow it.
   const handleDismiss = () => {
+    const banner = bannerRef.current
     dismissVotingBanner()
-    setIsVisible(false)
+
+    if (!banner || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setIsVisible(false)
+      return
+    }
+
+    // The ResizeObserver above keeps --voting-banner-height on the collapsing
+    // height, so header and content ride it down instead of snapping.
+    banner.addEventListener('transitionend', () => setIsVisible(false), { once: true })
+    banner.style.height = `${banner.offsetHeight}px`
+    requestAnimationFrame(() => {
+      banner.style.height = '0px'
+      banner.style.opacity = '0'
+    })
   }
 
   if (!isVisible) return null
@@ -55,14 +78,14 @@ function Banner({ votingUrl, deadline }: Omit<Props, 'strings'>) {
     <aside
       ref={bannerRef}
       aria-label={t('banner.ariaLabel')}
-      className="fixed inset-x-0 top-0 z-40 bg-green-dark-900 text-white"
+      className="fixed inset-x-0 top-0 z-40 overflow-hidden bg-green-dark-900 text-white transition-[height,opacity] ease-out duration-300"
     >
       <div className="relative mx-auto max-w-screen-lg px-4 md:px-6 xl:max-w-screen-xl">
         <a
           href={votingUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="group flex items-center gap-x-3 py-2.5 pr-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:justify-center sm:gap-x-4 sm:py-2 md:pr-10"
+          className="group flex items-center gap-x-3 py-2.5 pr-8 transition-opacity ease-out duration-100 active:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:justify-center sm:gap-x-4 sm:py-2 md:pr-10"
         >
           <Trophy className="w-4 h-4 shrink-0 text-green-light-900" aria-hidden />
 
@@ -84,7 +107,7 @@ function Banner({ votingUrl, deadline }: Omit<Props, 'strings'>) {
           type="button"
           onClick={handleDismiss}
           aria-label={t('banner.dismissAriaLabel')}
-          className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer rounded-lg p-1 text-white/70 transition-colors ease-in-out duration-300 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white md:right-4"
+          className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer rounded-lg p-1 text-white/70 transition-colors ease-out duration-150 hover:bg-white/10 hover:text-white active:bg-white/20 active:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white md:right-4"
         >
           <X className="w-4 h-4" />
         </button>
