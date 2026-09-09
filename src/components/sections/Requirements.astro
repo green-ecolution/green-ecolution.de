@@ -28,11 +28,15 @@ const tourLink = splitSlot(t('requirements.tourLinkRich'), 'streamlet')
       <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
     </div>
 
-    <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
-      {t('requirements.title')}
-    </h2>
+    <div class="lg:flex lg:justify-between lg:gap-12 xl:gap-16">
+      <h2
+        class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:mb-0 lg:max-w-xs lg:shrink-0 lg:text-3xl xl:max-w-sm xl:text-4xl"
+      >
+        {t('requirements.title')}
+      </h2>
 
-    <p class="text-grey-900/70 leading-relaxed max-w-2xl">{t('requirements.lead')}</p>
+      <p class="text-grey-900/70 leading-relaxed lg:max-w-2xl">{t('requirements.lead')}</p>
+    </div>
   </div>
 
   <div class="mb-8 rounded-2xl bg-green-light-100/70 border border-green-light-900/20 p-6 lg:p-8">
