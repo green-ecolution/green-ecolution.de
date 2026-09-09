@@ -18,17 +18,11 @@ function HomepageHero({ language }: { language: string }) {
   const t = useT()
   const [isOverlayVisible, setIsOverlayVisible] = useState(false)
   const [isInitialLoad, setIsInitialLoad] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
   const reducedMotion = useReducedMotion()
   // Reading the flag straight from localStorage during render leaves the replay
   // button hidden forever: the server renders without xl:flex, hydration keeps
   // the stale class, and later renders never produce a differing virtual dom.
   const initialLoad = useSyncExternalStore(subscribeToStorage, isInitialLoadHelper, () => true)
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- trigger animation on mount
-    setIsVisible(true)
-  }, [])
 
   const handleOpenOverlay = () => {
     setIsOverlayVisible(true)
@@ -143,12 +137,10 @@ function HomepageHero({ language }: { language: string }) {
           <div className="max-w-[30rem] 2xl:max-w-[40rem]">
             {/* Animated label */}
             <div
-              className={`
-                inline-flex items-center gap-2 px-3 py-1.5 mb-6
+              className="
+                hero-rise inline-flex items-center gap-2 px-3 py-1.5 mb-6
                 bg-green-light-100 rounded-full border border-green-light-900/20
-                ${reducedMotion ? '' : 'transition-all duration-700'}
-                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-              `}
+              "
             >
               <span className="w-2 h-2 bg-green-light-900 rounded-full animate-pulse" />
               <span className="text-xs font-semibold text-green-dark-900 tracking-wide uppercase">
@@ -158,23 +150,15 @@ function HomepageHero({ language }: { language: string }) {
 
             {/* Headline with stagger */}
             <h1
-              className={`
-                font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-4xl xl:text-5xl
-                ${reducedMotion ? '' : 'transition-all duration-700'}
-                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-              `}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '150ms' }}
+              className="hero-rise font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-4xl xl:text-5xl"
+              style={{ '--rise-delay': '150ms' } as React.CSSProperties}
             >
               {t('hero.headlinePrefix')}
               <span className="relative inline-block">
                 <span className="relative z-10">{t('hero.headlineHighlight')}</span>
                 <span
-                  className={`
-                    absolute -bottom-1 left-0 h-3 bg-green-light-900/30 -z-0 rounded-xs
-                    ${reducedMotion ? 'w-full' : 'transition-all duration-700 ease-out'}
-                    ${isVisible ? 'w-full' : 'w-0'}
-                  `}
-                  style={{ transitionDelay: reducedMotion ? '0ms' : '600ms' }}
+                  className="hero-underline absolute -bottom-1 left-0 h-3 bg-green-light-900/30 -z-0 rounded-xs"
+                  style={{ '--rise-delay': '600ms' } as React.CSSProperties}
                 />
               </span>
               {t('hero.headlineSuffix')}
@@ -182,36 +166,22 @@ function HomepageHero({ language }: { language: string }) {
 
             {/* Motto tagline */}
             <p
-              className={`
-                mb-4 font-lato text-sm tracking-widest uppercase text-green-middle-900 lg:text-base
-                ${reducedMotion ? '' : 'transition-all duration-700'}
-                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-              `}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '250ms' }}
+              className="hero-rise mb-4 font-lato text-sm tracking-widest uppercase text-green-middle-900 lg:text-base"
+              style={{ '--rise-delay': '250ms' } as React.CSSProperties}
             >
               {t('hero.tagline')}
             </p>
 
             {/* Description with stagger */}
             <p
-              className={`
-                mb-6 text-grey-900/80 leading-relaxed lg:mb-8 lg:text-lg
-                ${reducedMotion ? '' : 'transition-all duration-700'}
-                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-              `}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '350ms' }}
+              className="hero-rise mb-6 text-grey-900/80 leading-relaxed lg:mb-8 lg:text-lg"
+              style={{ '--rise-delay': '350ms' } as React.CSSProperties}
             >
               {t('hero.description')}
             </p>
 
             {/* Button with stagger */}
-            <div
-              className={`
-                ${reducedMotion ? '' : 'transition-all duration-700'}
-                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-              `}
-              style={{ transitionDelay: reducedMotion ? '0ms' : '500ms' }}
-            >
+            <div className="hero-rise" style={{ '--rise-delay': '500ms' } as React.CSSProperties}>
               <button
                 type="button"
                 className={`
@@ -219,9 +189,10 @@ function HomepageHero({ language }: { language: string }) {
                   font-semibold px-6 py-3 group cursor-pointer
                   bg-gradient-to-r from-green-dark-900 to-green-middle-900
                   text-white shadow-lg shadow-green-dark-900/25
-                  transition-all duration-300
+                  transition-all ease-out duration-200
                   hover:shadow-xl hover:shadow-green-dark-900/30 hover:-translate-y-0.5
                   hover:gap-x-4
+                  active:scale-[0.97] active:translate-y-0 active:duration-75
                   ${!initialLoad && !reducedMotion ? 'xl:flex' : ''}
                 `}
                 onClick={handleOpenOverlay}

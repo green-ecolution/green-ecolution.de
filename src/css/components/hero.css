@@ -1,0 +1,31 @@
+/* The stagger used to be react state flipped in a mount effect, which meant the
+   server shipped the whole hero at opacity 0 and anyone without javascript kept
+   staring at an empty screen. @starting-style turns it around: the markup is
+   already in its final state and the browser animates in from the start value.
+   Where it is unsupported the text is simply there, which is the right
+   fallback. */
+.hero-rise {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 700ms ease-out var(--rise-delay, 0ms),
+    translate 700ms ease-out var(--rise-delay, 0ms);
+}
+
+@starting-style {
+  .hero-rise {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}
+
+.hero-underline {
+  width: 100%;
+  transition: width 700ms ease-out var(--rise-delay, 0ms);
+}
+
+@starting-style {
+  .hero-underline {
+    width: 0;
+  }
+}
