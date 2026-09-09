@@ -1,7 +1,10 @@
 ---
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
 import { ASSET_BASE_URL } from 'astro:env/server'
-import { FileText } from 'lucide-react'
+import { ChevronLeft, ChevronRight, FileText } from 'lucide-react'
 import PressSection from './PressSection.astro'
+import ActionButton from '../../ActionButton.astro'
 import type { Language } from '../../../i18n/languages'
 import { getTranslations } from '../../../i18n/t'
 import { PITCH_DECK_PATH, pressAssetUrl } from '../../../lib/pressKit'
@@ -9,6 +12,19 @@ import { PITCH_DECK_PATH, pressAssetUrl } from '../../../lib/pressKit'
 interface Props {
   language: Language
 }
+
+const STRIP_ID = 'pitch-deck-slides'
+
+// Rendered by scripts/render-pitch-deck.mjs from the same PDF the button links
+// to. Globbed rather than listed, so a deck that gains or loses a page needs no
+// change here.
+const slides = Object.entries(
+  import.meta.glob<{ default: ImageMetadata }>('../../../assets/press/pitch-deck/slide-*.jpg', {
+    eager: true,
+  }),
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, module]) => module.default)
 
 const { language } = Astro.props
 const t = getTranslations(language, 'press')
@@ -18,11 +34,67 @@ const t = getTranslations(language, 'press')
   label={t('pitchDeck.sectionLabel')}
   title={t('pitchDeck.title')}
   description={t('pitchDeck.description')}
+  wide
 >
+  <div class="mx-auto max-w-screen-lg">
+    <div class="mb-4 flex items-end justify-between gap-4 lg:mb-6">
+      <p class="text-sm text-grey-900/70 tabular-nums">
+        <span data-slide-position={STRIP_ID}>
+          {t('pitchDeck.slides.position', { page: 1, total: slides.length })}
+        </span>
+      </p>
+
+      <div class="flex flex-shrink-0 gap-2">
+        <ActionButton
+          data-slide-strip-control="previous"
+          data-for={STRIP_ID}
+          ariaLabel={t('pitchDeck.slides.previous')}
+          hidden
+          class="disabled:pointer-events-none disabled:opacity-40"
+        >
+          <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+        </ActionButton>
+        <ActionButton
+          data-slide-strip-control="next"
+          data-for={STRIP_ID}
+          ariaLabel={t('pitchDeck.slides.next')}
+          hidden
+          class="disabled:pointer-events-none disabled:opacity-40"
+        >
+          <ChevronRight className="w-4 h-4" aria-hidden="true" />
+        </ActionButton>
+      </div>
+    </div>
+
+    <ol
+      id={STRIP_ID}
+      data-slide-strip
+      role="group"
+      tabindex="0"
+      aria-label={t('pitchDeck.slides.stripLabel')}
+      class="scrollbar-none flex snap-x snap-mandatory overflow-x-auto"
+    >
+      {
+        slides.map((slide) => (
+          <li data-slide class="w-full flex-shrink-0 snap-start">
+            <Image
+              src={slide}
+              alt=""
+              widths={[640, 1024, 1280]}
+              sizes="(min-width: 1024px) 64rem, 100vw"
+              loading="lazy"
+              class="w-full rounded-xl border border-green-dark-900/20"
+            />
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
   <a
     href={pressAssetUrl(ASSET_BASE_URL, PITCH_DECK_PATH)}
     aria-label={t('pitchDeck.downloadAriaLabel')}
-    class="group flex flex-col gap-6 rounded-2xl border border-green-dark-900/20 bg-green-light-100 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-sm sm:flex-row sm:items-center sm:justify-between lg:p-8"
+    class="press-spring group mx-auto mt-8 flex max-w-screen-lg flex-col gap-6 rounded-2xl border border-green-dark-900/20 bg-green-light-100 p-6 hover:-translate-y-1 hover:shadow-sm sm:flex-row sm:items-center sm:justify-between lg:mt-10 lg:p-8"
   >
     <span class="flex items-center gap-4 min-w-0">
       <span
@@ -41,9 +113,13 @@ const t = getTranslations(language, 'press')
     </span>
 
     <span
-      class="flex-shrink-0 self-start rounded-2xl bg-green-dark-900 px-5 py-2.5 font-semibold text-white transition-all duration-300 group-hover:bg-green-light-900 sm:self-auto"
+      class="flex-shrink-0 self-start rounded-xl bg-green-dark-900 px-5 py-2.5 font-semibold text-white transition-colors duration-300 group-hover:bg-green-light-900 group-hover:text-grey-900 sm:self-auto"
     >
       {t('pitchDeck.download')}
     </span>
   </a>
 </PressSection>
+
+<script>
+  import '../../../scripts/slideStrip'
+</script>
