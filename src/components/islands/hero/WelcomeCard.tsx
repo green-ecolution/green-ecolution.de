@@ -48,6 +48,7 @@ const WelcomeCard: React.FC<WelcomeCardProps> = ({
   return (
     <article
       ref={ref}
+      inert={!isVisible}
       className={`absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 transition-all ease-out duration-500
                 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
     >
@@ -60,6 +61,7 @@ const WelcomeCard: React.FC<WelcomeCardProps> = ({
 
         {/* Main card */}
         <div
+          data-material
           className="relative text-center bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl px-10 py-8 border border-green-light-900/10 w-[28rem]"
           onMouseDown={(e) => e.stopPropagation()}
         >
@@ -84,7 +86,7 @@ const WelcomeCard: React.FC<WelcomeCardProps> = ({
 
           <button
             type="button"
-            className="mx-auto flex items-center justify-center gap-x-3 rounded-xl w-full font-semibold px-6 py-3 group cursor-pointer bg-gradient-to-r from-green-dark-900 to-green-middle-900 text-white shadow-lg shadow-green-dark-900/20 transition-all duration-300 hover:shadow-xl hover:shadow-green-dark-900/30 hover:gap-x-4"
+            className="mx-auto flex items-center justify-center gap-x-3 rounded-xl w-full font-semibold px-6 py-3 group cursor-pointer bg-gradient-to-r from-green-dark-900 to-green-middle-900 text-white shadow-lg shadow-green-dark-900/20 transition-all ease-out duration-200 hover:shadow-xl hover:shadow-green-dark-900/30 hover:gap-x-4 active:scale-[0.97] active:duration-75"
             onClick={handleHideWelcomeCard}
           >
             {t('welcomeCard.cta')}

@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useT } from '../../../i18n/useT'
+import { useDialogFocus } from '../../../hooks/useDialogFocus'
 import { splitSlot } from '../../../lib/slotText'
 import Arrow from '../Arrow'
 import HomepageOverlayIcons from './HomepageOverlayIcons'
@@ -31,6 +32,8 @@ const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
   const recommendation = splitSlot(t('overlay.popups.recommendation.description'), 'Link')
   const [currentPopupIndex, setCurrentPopupIndex] = useState(0)
   const [isPopupVisible, setIsPopupVisible] = useState(false)
+  const dialogRef = useRef<HTMLElement>(null)
+  const nextButtonRef = useRef<HTMLButtonElement>(null)
   const currentPopup = popups[currentPopupIndex]
   const delay = 1500
 
@@ -65,10 +68,46 @@ const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
     }
   }
 
+  useEffect(() => {
+    if (!isOverlayVisible) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [isOverlayVisible, onClose])
+
+  useDialogFocus(dialogRef, isOverlayVisible)
+
+  // The welcome card goes inert the moment the popups take over, so whoever was
+  // on its button would be left with focus on nothing.
+  useEffect(() => {
+    if (
+      isPopupVisible &&
+      isOverlayVisible &&
+      !dialogRef.current?.contains(document.activeElement)
+    ) {
+      nextButtonRef.current?.focus()
+    }
+  }, [isPopupVisible, isOverlayVisible])
+
   return (
-    <section className={`hidden fixed inset-0 xl:block ${isOverlayVisible ? 'z-[100]' : '-z-10'}`}>
-      {/* Layered background */}
+    // Closed it keeps its box so the fade can run, which would otherwise leave
+    // three invisible buttons in the tab order; inert takes them back out.
+    <section
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={t('overlay.ariaLabel')}
+      inert={!isOverlayVisible}
+      className={`hidden fixed inset-0 xl:block ${isOverlayVisible ? 'z-[100]' : '-z-10'}`}
+    >
+      {/* Layered background. Dismissing by clicking it is a pointer shortcut for
+          the close button, so it stays out of the accessibility tree. */}
       <div
+        aria-hidden="true"
+        onClick={onClose}
+        data-scrim
         className={`
           absolute inset-0 bg-grey-900
           transition-opacity duration-700
@@ -100,6 +139,7 @@ const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
         />
 
         <article
+          inert={!(isPopupVisible && isOverlayVisible)}
           className={`
             absolute top-1/2 -translate-y-2/3 right-[15%]
             transition-all duration-500
@@ -115,7 +155,10 @@ const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
             />
 
             {/* Main card */}
-            <div className="relative bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl p-6 border border-green-light-900/10 w-[22.5rem] 2xl:p-8 2xl:w-[32rem]">
+            <div
+              data-material
+              className="relative bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl p-6 border border-green-light-900/10 w-[22.5rem] 2xl:p-8 2xl:w-[32rem]"
+            >
               {/* Step indicator */}
               <div className="flex items-center gap-2 mb-4">
                 {popups.map((popup, i) => (
@@ -162,13 +205,15 @@ const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
               {/* Enhanced button */}
               <button
                 type="button"
+                ref={nextButtonRef}
                 className="
                   flex items-center justify-center gap-x-3 rounded-xl w-full
                   font-semibold px-5 py-3 group cursor-pointer
                   bg-gradient-to-r from-green-dark-900 to-green-middle-900
                   text-white shadow-lg shadow-green-dark-900/20
-                  transition-all duration-300
+                  transition-all ease-out duration-200
                   hover:shadow-xl hover:gap-x-4
+                  active:scale-[0.97] active:duration-75
                 "
                 onClick={handleNextClick}
               >
@@ -192,8 +237,9 @@ const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
                 bg-white shadow-lg border border-grey-100
                 flex items-center justify-center
                 text-grey-900/60
-                transition-all duration-300
+                transition-all ease-out duration-200
                 hover:bg-green-light-100 hover:text-green-dark-900 hover:scale-110
+                active:scale-95 active:duration-75
               "
             >
               <svg

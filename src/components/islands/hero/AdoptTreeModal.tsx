@@ -2,6 +2,7 @@ import { useEffect, useCallback } from 'react'
 import { useT } from '../../../i18n/useT'
 import { createPortal } from 'react-dom'
 import { useOutsideClick } from '../../../hooks/useOutsideClick'
+import { useDialogFocus } from '../../../hooks/useDialogFocus'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import type { AdoptionData } from './adoptTreeData'
 
@@ -44,7 +45,9 @@ function TreeIllustration({ variant }: { variant: TreeVariant }) {
 function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
   const t = useT()
   const reducedMotion = useReducedMotion()
-  const ref = useOutsideClick(onClose) as React.RefObject<HTMLDivElement>
+  const ref = useOutsideClick(onClose)
+
+  useDialogFocus(ref, data !== null)
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -73,10 +76,10 @@ function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
         ${reducedMotion ? '' : 'animate-adopt-fade-in'}
       `}
     >
-      <div className="absolute inset-0 bg-grey-900/60 backdrop-blur-xs" />
+      <div data-scrim className="absolute inset-0 bg-grey-900/60 backdrop-blur-xs" />
 
       <div
-        ref={ref}
+        ref={ref as React.RefObject<HTMLDivElement>}
         role="dialog"
         aria-modal="true"
         aria-label={t('adoptModal.ariaLabel', { fullName })}
@@ -165,9 +168,9 @@ function AdoptTreeModal({ data, onClose }: AdoptTreeModalProps) {
               w-full py-3 rounded-xl font-semibold text-sm cursor-pointer
               bg-gradient-to-r from-green-dark-900 to-green-middle-900
               text-white shadow-lg shadow-green-dark-900/20
-              transition-all duration-300
+              transition-all ease-out duration-200
               hover:shadow-xl hover:shadow-green-dark-900/30 hover:-translate-y-0.5
-              active:translate-y-0
+              active:translate-y-0 active:scale-[0.97] active:duration-75
             "
           >
             {t('adoptModal.thanks', { name: data.tree.name })}
