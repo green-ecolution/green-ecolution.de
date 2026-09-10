@@ -3,10 +3,6 @@ import type { ComponentType } from 'react'
 
 type Icon = ComponentType<{ className?: string }>
 
-export const streamletLinks = {
-  repo: 'https://github.com/green-ecolution/streamlet',
-} as const
-
 export type FitCriterionId =
   'tankCapacity' | 'timeWindows' | 'midTourRefill' | 'multipleStations' | 'depotReturn'
 

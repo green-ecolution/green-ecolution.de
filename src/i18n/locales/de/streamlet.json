@@ -1,16 +1,16 @@
 {
   "meta": {
     "title": "Tourenoptimierung mit Nachfüllstationen | Streamlet | Green Ecolution",
-    "description": "Streamlet plant Touren mit Zeitfenstern und mehreren Nachfüllstationen. Entstanden für Green Ecolution, quelloffen und auch außerhalb einsetzbar."
+    "description": "Streamlet plant Touren mit Zeitfenstern und mehreren Nachfüllstationen. Kein Planungswerkzeug von der Stange kann das. Wir richten es für dein Einsatzgebiet ein."
   },
   "hero": {
-    "sectionLabel": "Open-Source-Projekt Streamlet",
+    "sectionLabel": "Tourenoptimierung Streamlet",
     "title": "Tourenoptimierung für Fahrzeuge, die unterwegs nachfüllen müssen",
-    "tagline": "Die Reihenfolge der Halte und das Nachfüllen unterwegs werden zusammen geplant, nicht nacheinander.",
-    "lead": "Streamlet legt die Reihenfolge der Halte fest und plant das Nachfüllen gleich mit. So entstehen Touren, die ein Fahrzeug mit begrenztem Tank tatsächlich fahren kann.",
-    "originRich": "Entstanden ist Streamlet für <project>Green Ecolution</project>, weil die geprüften Planungswerkzeuge dieses Problem nicht abbilden konnten. Heute liegt es in einem eigenen Repository und hat keine Abhängigkeit zu Green Ecolution. Wer dasselbe Planungsproblem hat, kann es unverändert übernehmen.",
-    "repo": "Repository",
-    "repoAriaLabel": "Streamlet-Repository auf GitHub öffnen",
+    "tagline": "Streamlet plant die Reihenfolge der Halte und das Nachfüllen unterwegs zusammen, nicht nacheinander.",
+    "lead": "Wer mit einem begrenzten Tank plant, kennt das Ergebnis: Touren, die auf dem Papier stimmen und im Feld nicht aufgehen. Streamlet rechnet den Tankstand mit und liefert eine Tour, die das Fahrzeug wirklich fahren kann.",
+    "originRich": "Entstanden ist Streamlet für <project>Green Ecolution</project>, weil keines der geprüften Planungswerkzeuge dieses Problem abbilden konnte. Heute plant es dort die Bewässerungstouren. Wenn deine Touren dieselbe Struktur haben, rechnen wir es für dein Einsatzgebiet durch.",
+    "contact": "Kontakt aufnehmen",
+    "contactAriaLabel": "Zur Kontaktseite von Green Ecolution",
     "tourAriaLabel": "Isometrisches Modell einer Tour: vom Depot über fünf Halte und eine Nachfüllstation zurück zum Depot. Das Fahrzeug hält an jedem Halt zum Gießen. Der Tankstand daneben sinkt dabei und füllt sich an der Nachfüllstation wieder.",
     "tank": "Tank"
   },
@@ -18,8 +18,8 @@
     "sectionLabel": "Das Problem",
     "title": "Reihenfolge und Nachfüllen hängen voneinander ab",
     "coupling": "Sobald ein Fahrzeug unterwegs nachfüllen muss, hängt die beste Reihenfolge der Halte davon ab, wann und wo nachgefüllt wird. Beides zugleich zu entscheiden, ist der Kern des Problems.",
-    "workarounds": "Wer das der Planung nicht mitgeben kann, hat zwei Möglichkeiten, und beide kosten Lösungsqualität: die Tour ohne das Nachfüllen planen und ein unzulässiges Ergebnis bekommen, oder die Tour von Hand in Teilstücke schneiden und damit die Optimierung über das Ganze aufgeben.",
-    "approach": "Streamlet plant die Nachfüllstationen im selben Optimierungslauf und rechnet sie nicht hinterher hinein. Bei Green Ecolution lief die Routenoptimierung vorher auf einer Standard-Engine, die mehrere Nachfüllstationen mitten in der Tour nicht abbilden konnte.",
+    "workarounds": "Wer das der Planung nicht mitgeben kann, hat zwei Möglichkeiten, und beide kosten. Die Tour ohne das Nachfüllen zu planen liefert ein Ergebnis, das im Feld nicht fährt. Die Tour von Hand in Teilstücke zu schneiden gibt die Optimierung über das Ganze auf und macht die Arbeit zur wöchentlichen Handarbeit.",
+    "approach": "Streamlet plant die Nachfüllstationen im selben Optimierungslauf und rechnet sie nicht hinterher hinein. Bei Green Ecolution lief die Routenoptimierung vorher auf einer Standard-Engine, die mehrere Nachfüllstationen mitten in der Tour nicht abbilden konnte. Deshalb haben wir Streamlet selbst gebaut.",
     "diagram": {
       "ariaLabel": "Diagramm einer Tour: Der Füllstand des Fahrzeugs sinkt an jedem Halt und wird an einer Nachfüllstation mitten in der Tour wieder aufgefüllt.",
       "depot": "Depot",
@@ -34,7 +34,7 @@
   "benefit": {
     "sectionLabel": "Im Betrieb",
     "title": "Was das im Betrieb bedeutet",
-    "description": "Eine Tour, die das Nachfüllen mitplant, spart die Fahrten, die sonst entstehen, wenn der Tank mitten im Gebiet leer ist. Die Halte werden in der Reihenfolge angefahren, die zu den Zeitfenstern passt, und am Schichtende steht das Fahrzeug wieder im Depot.",
+    "description": "Eine Tour, die das Nachfüllen mitplant, spart die Fahrten, die sonst entstehen, wenn der Tank mitten im Gebiet leer ist. Das Fahrzeug fährt die Halte in der Reihenfolge an, die zu den Zeitfenstern passt, und steht am Schichtende wieder im Depot.",
     "needs": {
       "title": "Drei Angaben genügen",
       "stops": {
@@ -61,7 +61,7 @@
   "fit": {
     "sectionLabel": "Einsatzfeld",
     "title": "Passt das zu deinem Planungsproblem?",
-    "description": "Streamlet ist nicht auf eine Branche zugeschnitten, entscheidend ist die Struktur der Tour. Je mehr dieser Merkmale auf deine Touren zutreffen, desto eher passt es.",
+    "description": "Streamlet ist auf keine Branche zugeschnitten, es kommt auf die Struktur der Tour an. Je mehr dieser Merkmale auf deine Touren zutreffen, desto eher lohnt sich ein Gespräch.",
     "criteria": {
       "tankCapacity": "Fahrzeuge mit begrenzter Tankkapazität",
       "timeWindows": "Halte mit Zeitfenstern",
@@ -76,13 +76,11 @@
   },
   "closing": {
     "sectionLabel": "Nächster Schritt",
-    "title": "Über den Einsatz sprechen",
-    "description": "Wenn deine Touren so aussehen, lohnt sich ein Gespräch. Der Quellcode liegt offen: du kannst nachlesen, wie geplant wird, und bist an keinen Anbieter gebunden. Um Einrichtung und Betrieb kümmern wir uns.",
+    "title": "Über deine Touren sprechen",
+    "description": "Wenn deine Touren so aussehen, lohnt sich ein Gespräch. Wir sehen uns dein Einsatzgebiet, deine Fahrzeuge und deine Nachfüllpunkte an und rechnen durch, was eine mitgeplante Nachfüllung bei dir ändert. Selbst zu bauen heißt, ein Optimierungsprojekt aufzusetzen und dauerhaft zu betreuen. Bei uns ist es ein Dienst, um dessen Einrichtung und Betrieb wir uns kümmern.",
     "contact": "Kontakt aufnehmen",
     "contactAriaLabel": "Zur Kontaktseite von Green Ecolution",
     "home": "Zu Green Ecolution",
-    "homeAriaLabel": "Zur Startseite von Green Ecolution",
-    "repo": "Quellcode ansehen",
-    "repoAriaLabel": "Streamlet-Repository auf GitHub öffnen"
+    "homeAriaLabel": "Zur Startseite von Green Ecolution"
   }
 }

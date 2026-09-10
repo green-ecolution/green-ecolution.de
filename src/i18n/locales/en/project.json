@@ -59,7 +59,7 @@
     "sectionLabel": "System Architecture",
     "title": "The path of the data",
     "description": "This is how the readings travel from the tree to the optimized irrigation route through the Green Ecolution system.",
-    "streamletRich": "Route optimisation in the backend is handled by <streamlet>Streamlet</streamlet>, a separate open source project that can also be used outside Green Ecolution.",
+    "streamletRich": "Route optimisation in the backend is handled by <streamlet>Streamlet</streamlet>, a separate service of ours that can also be used outside Green Ecolution.",
     "steps": {
       "sensor": {
         "label": "Sensor",
@@ -114,7 +114,7 @@
     "columns": {
       "software": {
         "label": "Software",
-        "description": "The platform with its map and dashboard, grouping into irrigation units, fleet and team management, the user and role model, route optimisation with refill stations, the mobile app and the review of consumption. The source code is open and there are no licence fees for municipalities."
+        "description": "The platform with its map and dashboard, grouping into irrigation units, fleet and team management, the user and role model, the mobile app and the review of consumption. The source code is open and there are no licence fees for municipalities. Route optimisation with refill stations comes via Streamlet and is agreed separately."
       },
       "hardware": {
         "label": "Hardware",
