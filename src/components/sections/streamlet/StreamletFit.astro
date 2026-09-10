@@ -29,13 +29,13 @@ const t = getTranslations(language, 'streamlet')
     <p class="text-grey-900/70 leading-relaxed lg:max-w-2xl lg:mx-auto">{t('fit.description')}</p>
   </div>
 
-  <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
+  <ul class="mx-auto max-w-2xl divide-y divide-green-dark-900/10">
     {
       fitCriteria.map((criterion) => {
         const Icon = criterion.icon
 
         return (
-          <li class="flex items-start gap-4 rounded-2xl border border-green-dark-900/10 bg-white p-5 transition-colors duration-300 hover:border-green-light-900/60">
+          <li class="flex items-center gap-4 py-4">
             <span class="flex-shrink-0 w-10 h-10 rounded-lg bg-green-light-900/15 flex items-center justify-center">
               <Icon className="w-5 h-5 text-green-dark-900" aria-hidden="true" />
             </span>
@@ -48,7 +48,7 @@ const t = getTranslations(language, 'streamlet')
     }
   </ul>
 
-  <div class="mt-8 rounded-2xl bg-green-light-100/70 border border-green-light-900/20 p-6 lg:p-8">
+  <div class="mx-auto max-w-2xl mt-10 border-l-2 border-green-light-900/30 pl-6 lg:mt-12">
     <h3 class="font-lato font-semibold text-grey-900 mb-2">{t('fit.cargo.title')}</h3>
     <p class="text-grey-900/70 leading-relaxed">{t('fit.cargo.description')}</p>
   </div>
