@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.13.1...v1.14.0) (2026-09-10)
+
+
+### Features
+
+* **content:** address green space operators instead of developers ([#477](https://github.com/green-ecolution/green-ecolution.de/issues/477)) ([7d565d7](https://github.com/green-ecolution/green-ecolution.de/commit/7d565d71f9891de0862b6b1c854f9087e3b1cf55))
+* **press:** add photo downloads and a pitch deck slide preview ([#480](https://github.com/green-ecolution/green-ecolution.de/issues/480)) ([ab9e69a](https://github.com/green-ecolution/green-ecolution.de/commit/ab9e69a174773e0c33266ee77b76bd86bb925e22))
+* **ui:** make the interface answer what people actually do ([#479](https://github.com/green-ecolution/green-ecolution.de/issues/479)) ([abf5f87](https://github.com/green-ecolution/green-ecolution.de/commit/abf5f87d3da559591ab900ee2e8388408d100680))
+
 ## [1.13.1](https://github.com/green-ecolution/green-ecolution.de/compare/v1.13.0...v1.13.1) (2026-09-03)
 
 
