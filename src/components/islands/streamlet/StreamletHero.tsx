@@ -1,10 +1,8 @@
 import { useT } from '../../../i18n/useT'
 import { Suspense, lazy, useRef, useState, type CSSProperties } from 'react'
-import GithubIcon from '../GithubIcon'
 import Arrow from '../Arrow'
 import StreamletTankGauge from './StreamletTankGauge'
 import StreamletTourSketch from './StreamletTourSketch'
-import { streamletLinks } from '../../../data/streamlet'
 import { staticTankLevel, tourProjectedSize } from '../../../data/streamletTour'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { supportsWebgl } from '../../../lib/webgl'
@@ -80,14 +78,11 @@ function StreamletHero({ language }: { language: string }) {
 
           <div className="flex flex-wrap gap-4">
             <a
-              href={streamletLinks.repo}
-              aria-label={t('hero.repoAriaLabel')}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`/${language}/contact`}
+              aria-label={t('hero.contactAriaLabel')}
               className="flex items-center justify-center gap-x-4 rounded-2xl w-max font-semibold px-5 py-2 group cursor-pointer transition-all ease-in-out duration-300 text-white bg-green-dark-900 hover:bg-green-light-900 hover:shadow-lg hover:shadow-green-light-900/40 hover:-translate-y-0.5"
             >
-              <GithubIcon classes="w-5" />
-              <span className="whitespace-nowrap">{t('hero.repo')}</span>
+              <span className="whitespace-nowrap">{t('hero.contact')}</span>
               <Arrow classes="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
             </a>
           </div>

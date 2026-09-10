@@ -1,10 +1,8 @@
 ---
 import Button from '../../Button.astro'
-import Github from '../../icons/Github.astro'
 import Arrow from '../../icons/Arrow.astro'
 import type { Language } from '../../../i18n/languages'
 import { getTranslations } from '../../../i18n/t'
-import { streamletLinks } from '../../../data/streamlet'
 
 interface Props {
   language: Language
@@ -46,17 +44,6 @@ const SECONDARY_CTA_CLASS =
 
       <a href={`/${language}`} aria-label={t('closing.homeAriaLabel')} class={SECONDARY_CTA_CLASS}>
         <span class="whitespace-nowrap">{t('closing.home')}</span>
-      </a>
-
-      <a
-        href={streamletLinks.repo}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={t('closing.repoAriaLabel')}
-        class={SECONDARY_CTA_CLASS}
-      >
-        <Github class="w-5" />
-        <span class="whitespace-nowrap">{t('closing.repo')}</span>
       </a>
     </div>
   </div>

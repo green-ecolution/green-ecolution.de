@@ -59,7 +59,7 @@
     "sectionLabel": "System-Architektur",
     "title": "Der Weg der Daten",
     "description": "So gelangen die Messwerte vom Baum bis zur optimierten Bewässerungsroute durch das Green Ecolution System.",
-    "streamletRich": "Die Routenoptimierung im Backend übernimmt <streamlet>Streamlet</streamlet>, ein eigenes Open-Source-Projekt, das sich auch außerhalb von Green Ecolution einsetzen lässt.",
+    "streamletRich": "Die Routenoptimierung im Backend übernimmt <streamlet>Streamlet</streamlet>, ein eigener Dienst von uns, der sich auch außerhalb von Green Ecolution einsetzen lässt.",
     "steps": {
       "sensor": {
         "label": "Sensor",
@@ -114,7 +114,7 @@
     "columns": {
       "software": {
         "label": "Software",
-        "description": "Die Plattform mit Karte und Dashboard, die Gruppierung zu Bewässerungseinheiten, Fuhrpark- und Teamverwaltung, das Benutzer- und Rollenkonzept, die Tourenoptimierung mit Nachfüllstationen, die Mobile App und die Auswertung des Verbrauchs. Der Quellcode ist offen, für Kommunen fallen keine Lizenzkosten an."
+        "description": "Die Plattform mit Karte und Dashboard, die Gruppierung zu Bewässerungseinheiten, Fuhrpark- und Teamverwaltung, das Benutzer- und Rollenkonzept, die Mobile App und die Auswertung des Verbrauchs. Der Quellcode ist offen, für Kommunen fallen keine Lizenzkosten an. Die Tourenoptimierung mit Nachfüllstationen kommt über Streamlet dazu und wird separat vereinbart."
       },
       "hardware": {
         "label": "Hardware",

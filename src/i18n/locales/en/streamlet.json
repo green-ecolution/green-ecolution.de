@@ -1,16 +1,16 @@
 {
   "meta": {
     "title": "Route optimisation with refill stations | Streamlet | Green Ecolution",
-    "description": "Streamlet plans tours with time windows and multiple refill stations. Built for Green Ecolution, open source and usable elsewhere."
+    "description": "Streamlet plans tours with time windows and multiple refill stations. No off-the-shelf planning tool can do it. We set it up for your service area."
   },
   "hero": {
-    "sectionLabel": "Open source project Streamlet",
+    "sectionLabel": "Route optimisation Streamlet",
     "title": "Route optimisation for vehicles that have to refill along the way",
-    "tagline": "The order of the stops and the refills along the way are planned together, not one after the other.",
-    "lead": "Streamlet fixes the order of the stops and plans the refills in the same pass. The result is a tour a vehicle with a limited tank can actually drive.",
-    "originRich": "Streamlet was built for <project>Green Ecolution</project> because none of the planning tools we evaluated could express this problem. It now lives in a repository of its own and has no dependency on Green Ecolution. Anyone with the same planning problem can adopt it as it is.",
-    "repo": "Repository",
-    "repoAriaLabel": "Open the Streamlet repository on GitHub",
+    "tagline": "Streamlet plans the order of the stops and the refills along the way together, not one after the other.",
+    "lead": "Anyone planning around a limited tank knows how it ends: tours that add up on paper and fall apart in the field. Streamlet keeps track of the tank level and gives you a tour the vehicle can actually drive.",
+    "originRich": "Streamlet was built for <project>Green Ecolution</project> because none of the planning tools we evaluated could express this problem. It plans the irrigation tours there today. If your tours have the same structure, we will work it through for your service area.",
+    "contact": "Get in touch",
+    "contactAriaLabel": "Go to the Green Ecolution contact page",
     "tourAriaLabel": "Isometric model of one tour: from the depot via five stops and one refill station back to the depot. The vehicle stops at every stop to water. The tank gauge beside it drops as it goes and fills up again at the refill station.",
     "tank": "Tank"
   },
@@ -18,8 +18,8 @@
     "sectionLabel": "The problem",
     "title": "Stop order and refills depend on each other",
     "coupling": "As soon as a vehicle has to refill along the way, the best order of the stops depends on when and where it refills. Deciding both at once is the heart of the problem.",
-    "workarounds": "Without planning that takes this as input, there are two options, and both cost solution quality: plan the tour without the refills and end up with an infeasible result, or cut the tour into pieces by hand and give up optimising across the whole of it.",
-    "approach": "Streamlet plans the refill stations in the same optimisation run instead of fitting them in afterwards. At Green Ecolution route optimisation previously ran on a standard engine that could not express several refill stations in the middle of a tour.",
+    "workarounds": "Without planning that takes this as input, there are two options, and both cost you. Planning the tour without the refills gives you a result that will not drive in the field. Cutting the tour into pieces by hand gives up optimising across the whole of it and turns the job into weekly manual work.",
+    "approach": "Streamlet plans the refill stations in the same optimisation run instead of fitting them in afterwards. At Green Ecolution route optimisation previously ran on a standard engine that could not express several refill stations in the middle of a tour. That is why we built Streamlet ourselves.",
     "diagram": {
       "ariaLabel": "Diagram of a tour: the vehicle's fill level drops at every stop and is topped up again at a refill station in the middle of the tour.",
       "depot": "Depot",
@@ -34,7 +34,7 @@
   "benefit": {
     "sectionLabel": "In operation",
     "title": "What this means in day-to-day operation",
-    "description": "A tour that plans the refills along with everything else saves the trips that would otherwise happen when the tank runs dry in the middle of the area. The stops are visited in the order that fits their time windows, and at the end of the shift the vehicle is back at the depot.",
+    "description": "A tour that plans the refills along with everything else saves the trips that would otherwise happen when the tank runs dry in the middle of the area. The vehicle visits the stops in the order that fits their time windows and is back at the depot at the end of the shift.",
     "needs": {
       "title": "Three inputs are enough",
       "stops": {
@@ -61,7 +61,7 @@
   "fit": {
     "sectionLabel": "Where it fits",
     "title": "Does this fit your planning problem?",
-    "description": "Streamlet is not tailored to one industry, what matters is the structure of the tour. The more of these traits your tours have, the better the fit.",
+    "description": "Streamlet is tailored to no single industry, what matters is the structure of the tour. The more of these traits your tours have, the more a conversation is worth it.",
     "criteria": {
       "tankCapacity": "Vehicles with limited tank capacity",
       "timeWindows": "Stops with time windows",
@@ -76,13 +76,11 @@
   },
   "closing": {
     "sectionLabel": "Next step",
-    "title": "Talk about putting it to work",
-    "description": "If your tours look like this, a conversation is worth it. The source code is open: you can read how the planning works, and you are not tied to a single vendor. Setup and operation are ours to handle.",
+    "title": "Talk about your tours",
+    "description": "If your tours look like this, a conversation is worth it. We look at your service area, your vehicles and your refill points and work out what planning the refills along with the tour changes for you. Building it yourself means setting up an optimisation project and keeping it running. With us it is a service, and setup and operation are ours to handle.",
     "contact": "Get in touch",
     "contactAriaLabel": "Go to the Green Ecolution contact page",
     "home": "Go to Green Ecolution",
-    "homeAriaLabel": "Go to the Green Ecolution home page",
-    "repo": "View the source code",
-    "repoAriaLabel": "Open the Streamlet repository on GitHub"
+    "homeAriaLabel": "Go to the Green Ecolution home page"
   }
 }
