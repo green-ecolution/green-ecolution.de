@@ -56,6 +56,7 @@ export default defineConfig({
   },
   fonts: [
     localFont('Lato', '--font-lato-face', {
+      300: 'lato-300.woff2',
       400: 'lato-400.woff2',
       600: 'lato-600.woff2',
       700: 'lato-700.woff2',
@@ -79,8 +80,12 @@ export default defineConfig({
     mdx(),
     sitemap({
       // The root page only redirects and is marked noindex; listing it next to
-      // the pages it points to would hand crawlers a duplicate.
-      filter: (page) => new URL(page).pathname !== '/',
+      // the pages it points to would hand crawlers a duplicate. The showcase is
+      // a booth loop, not a page of the site.
+      filter: (page) => {
+        const { pathname } = new URL(page)
+        return pathname !== '/' && !pathname.endsWith('/showcase')
+      },
       i18n: { defaultLocale: 'de', locales: { de: 'de-DE', en: 'en-GB' } },
     }),
   ],

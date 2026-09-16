@@ -1,0 +1,61 @@
+import type { ReactNode } from 'react'
+import { useT } from '../../../i18n/useT'
+import type { Scene } from '../../../data/showcase'
+import { optionalText } from '../../../lib/showcase/text'
+import { delay } from '../../../lib/showcase/delay'
+
+interface Props {
+  scene: Scene
+  dark: boolean
+  children?: ReactNode
+}
+
+export default function ExhibitScene({ scene, dark, children }: Props) {
+  const t = useT()
+  const visualFirst = scene.side !== 'right'
+  const source = optionalText(t(`scenes.${scene.id}.source`))
+
+  return (
+    <div
+      className={`grid h-full w-full items-center ${
+        visualFirst ? 'grid-cols-[1.9fr_1fr]' : 'grid-cols-[1fr_1.9fr]'
+      }`}
+    >
+      <div className={`h-full w-full overflow-hidden ${visualFirst ? 'order-1' : 'order-2'}`}>
+        {children}
+      </div>
+      {/* Left edge on the same line as the corner wordmark, so the text column
+          is anchored to something rather than floating in its third. */}
+      <div className={`pr-12 pl-24 ${visualFirst ? 'order-2' : 'order-1'}`}>
+        {scene.opensStep && (
+          <p
+            className="showcase-rise font-lato text-sm font-bold tracking-[0.2em] uppercase"
+            style={{ color: dark ? '#E8EBCC99' : '#4C7741' }}
+          >
+            {t(`scenes.${scene.id}.eyebrow`)}
+          </p>
+        )}
+        <p
+          className="showcase-rise mt-5 font-lato text-[3.5rem] leading-[1.1] font-light tracking-[-0.022em]"
+          style={{ ...delay(80), color: dark ? '#E8EBCC' : '#2D4A27' }}
+        >
+          {t(`scenes.${scene.id}.statement`)}
+        </p>
+        <p
+          className="showcase-rise mt-6 max-w-[42ch] font-nunito-sans text-[1.375rem] leading-relaxed"
+          style={{ ...delay(160), color: dark ? '#E8EBCCB0' : '#1F1F1F' }}
+        >
+          {t(`scenes.${scene.id}.body`)}
+        </p>
+        {source && (
+          <p
+            className="showcase-rise mt-6 font-nunito-sans text-base"
+            style={{ ...delay(240), color: dark ? '#E8EBCC70' : '#8B7355' }}
+          >
+            {source}
+          </p>
+        )}
+      </div>
+    </div>
+  )
+}

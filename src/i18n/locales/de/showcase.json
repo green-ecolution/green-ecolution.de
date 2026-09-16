@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "title": "Green Ecolution",
+    "description": "Smartes Grünflächenmanagement für lebenswerte Städte."
+  },
+  "steps": {
+    "messen": "Messen",
+    "verstehen": "Verstehen",
+    "handeln": "Handeln"
+  },
+  "demo": {
+    "label": "Live-Demo ausprobieren",
+    "url": "demo.green-ecolution.de"
+  },
+  "gauge": {
+    "tankLabel": "Tank"
+  },
+  "contact": {
+    "website": { "label": "Website", "value": "green-ecolution.de" },
+    "email": { "label": "E-Mail", "value": "info@green-ecolution.de" },
+    "github": { "label": "GitHub", "value": "github.com/green-ecolution" },
+    "demo": { "label": "Demo", "value": "demo.green-ecolution.de" }
+  },
+  "scenes": {
+    "title": {
+      "statement": "für lebenswerte\nStädte",
+      "body": "Messen. Verstehen. Handeln."
+    },
+    "quote": {
+      "statement": "Es wird auf gut Glück bewässert.",
+      "body": "TBZ-Mitarbeiter, Flensburg"
+    },
+    "water": {
+      "statement": "50.000 Liter Wasser pro Jahr",
+      "body": "bringt Flensburg jährlich für seine Stadtbäume auf, ganz ohne Datengrundlage und mit viel Handarbeit vor Ort.",
+      "source": "Quelle: TBZ Flensburg"
+    },
+    "sensor": {
+      "eyebrow": "01 · Messen",
+      "statement": "Der Boden sagt, wann gegossen wird.",
+      "body": "Kapazitive Sensoren messen Bodenfeuchte und Temperatur in zwei Tiefen, in 40 und 80 Zentimetern."
+    },
+    "lorawan": {
+      "statement": "Energieeffizient über LoRaWAN",
+      "body": "Green Ecolution setzt auf das landesweite Netz Schleswig-Holsteins mit über 420 Gateways, statt eigene Netze zu betreiben.",
+      "source": "3+ Jahre Batterielaufzeit"
+    },
+    "map": {
+      "eyebrow": "02 · Verstehen",
+      "statement": "Ein Blick auf die Karte genügt.",
+      "body": "Ein Ampelsystem zeigt, welche Grünflächen Wasser brauchen."
+    },
+    "history": {
+      "statement": "Zeitverläufe statt Bauchgefühl",
+      "body": "Echte Messwerte aus dem Boden, seit Mai 2026 an zehn Standorten in Flensburg."
+    },
+    "planning": {
+      "eyebrow": "03 · Handeln",
+      "statement": "Einsätze zusammenstellen",
+      "body": "Fahrzeuge, Teams und Gruppen zu einem Einsatzplan verbinden."
+    },
+    "tour": {
+      "statement": "Optimierte Bewässerungstouren",
+      "body": "Wasserkapazität, Nachfüllpunkte und Zufahrtsrestriktionen fließen in die Route ein. Export als GPX fürs Navigationsgerät.",
+      "source": "Routenoptimierung mit Streamlet"
+    },
+    "inspection": {
+      "statement": "Der Zustand jedes Baums, direkt vor Ort.",
+      "body": "Mitarbeitende sehen am Tablet, welcher Baum Wasser braucht, und dokumentieren die Bewässerung sofort."
+    },
+    "team": {
+      "statement": "Entstanden an der Hochschule Flensburg.",
+      "body": "Koordiniert von der Smarten Grenzregion, weiterentwickelt zur Produktionsreife durch die PROGEEK GmbH."
+    },
+    "open-source": {
+      "statement": "100 % Open Source unter AGPL-3.0",
+      "body": "Finanziert vom Land Schleswig-Holstein aus „Offene Innovation: Open Source made in SH“. Im Pilotbetrieb mit dem TBZ Flensburg."
+    },
+    "demo": {
+      "statement": "Probier es selbst aus.",
+      "body": "Alles davon live im Browser."
+    },
+    "closing": {
+      "statement": "Lass uns gemeinsam grüner werden!",
+      "body": "Für eine nachhaltige, datenbasierte Grünflächenpflege."
+    }
+  }
+}
