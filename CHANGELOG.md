@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.1](https://github.com/green-ecolution/green-ecolution.de/compare/v1.16.0...v1.16.1) (2026-09-16)
+
+
+### Features
+
+* **press:** point to the booth loop from the press page ([cbb095f](https://github.com/green-ecolution/green-ecolution.de/commit/cbb095f3f33e85929564468bfa9b96fa528959bf))
+* **showcase:** hold the booth loop back on screens too small for it ([65fa9fd](https://github.com/green-ecolution/green-ecolution.de/commit/65fa9fd8328deef0e77980b2c4e27842f19f02e6))
+
 ## [1.16.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.15.0...v1.16.0) (2026-09-16)
 
 
