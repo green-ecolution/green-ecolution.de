@@ -70,6 +70,14 @@
     showcase-lift 700ms var(--ease-spring-settle) var(--showcase-outro-at, 1000000s) forwards !important;
 }
 
+/* The hint that stands in front of the loop on a screen too small for it is the
+   one view here with a real viewer, so it builds without the important
+   shorthand above and the reduced-motion reset reaches it. It also never
+   leaves, so it needs no outro. */
+.showcase-hint-rise {
+  animation: showcase-rise 620ms var(--ease-spring-settle) var(--showcase-delay, 0ms) both;
+}
+
 /* The opening slide reveals its headline line by line from behind its own
    baseline, so the type builds instead of fading in as one block. Each line
    needs an overflow-hidden wrapper for the mask to have an edge. */

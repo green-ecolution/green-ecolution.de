@@ -3,6 +3,13 @@
     "title": "Green Ecolution",
     "description": "Smartes Grünflächenmanagement für lebenswerte Städte."
   },
+  "tooSmall": {
+    "eyebrow": "Messetafel",
+    "statement": "Für den großen\nBildschirm gebaut",
+    "body": "Die Dauerschleife ist auf 16:9 bei 1920 × 1080 ausgelegt, so wie sie am Messestand läuft. Auf diesem Bildschirm stehen Text und Szenen zu eng.",
+    "viewport": "Dieser Bildschirm: {{width}} × {{height}}",
+    "continue": "Trotzdem ansehen"
+  },
   "steps": {
     "messen": "Messen",
     "verstehen": "Verstehen",

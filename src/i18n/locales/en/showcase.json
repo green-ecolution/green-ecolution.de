@@ -3,6 +3,13 @@
     "title": "Green Ecolution",
     "description": "Smart green space management for liveable cities."
   },
+  "tooSmall": {
+    "eyebrow": "Booth board",
+    "statement": "Built for the\nbig screen",
+    "body": "The loop is laid out for 16:9 at 1920 × 1080, the way it runs at the trade-show booth. On this screen the type and the scenes are too cramped to read.",
+    "viewport": "This screen: {{width}} × {{height}}",
+    "continue": "View anyway"
+  },
   "steps": {
     "messen": "Measure",
     "verstehen": "Understand",

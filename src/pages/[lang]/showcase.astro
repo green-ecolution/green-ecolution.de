@@ -1,6 +1,6 @@
 ---
 import ShowcaseLayout from '../../layouts/ShowcaseLayout.astro'
-import ShowcaseLoop from '../../components/islands/showcase/ShowcaseLoop'
+import ShowcaseGate from '../../components/islands/showcase/ShowcaseGate'
 import { getTranslations, type TranslationKey } from '../../i18n/t'
 import { currentLanguage } from '../../i18n/languages'
 import { languagePaths } from '../../lib/languagePaths'
@@ -25,6 +25,11 @@ const keys = [
   'steps.handeln',
   'demo.label',
   'demo.url',
+  'tooSmall.eyebrow',
+  'tooSmall.statement',
+  'tooSmall.body',
+  'tooSmall.viewport',
+  'tooSmall.continue',
   'gauge.tankLabel',
   ...['website', 'email', 'github', 'demo'].flatMap((contact) => [
     `contact.${contact}.label`,
@@ -37,6 +42,6 @@ const strings = withoutMissing(pickStrings(language, 'showcase', keys))
 
 <ShowcaseLayout title={t('meta.title')} description={t('meta.description')} language={language}>
   <main class="h-full w-full">
-    <ShowcaseLoop client:only="react" strings={strings} />
+    <ShowcaseGate client:only="react" strings={strings} />
   </main>
 </ShowcaseLayout>

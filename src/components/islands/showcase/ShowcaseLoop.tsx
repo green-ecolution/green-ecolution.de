@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react'
-import { TranslationProvider } from '../../../i18n/TranslationProvider'
 import {
   isDarkAct,
   showcaseScenes,
@@ -26,10 +25,6 @@ import ShowcaseScene from './ShowcaseScene'
 import FordeScene3D from './FordeScene3D'
 import ShowcaseTour from './ShowcaseTour'
 import TourPath from './TourPath'
-
-interface Props {
-  strings: Record<string, string>
-}
 
 const ACT_BACKGROUND: Record<Act, string> = {
   lage: '#2D4A27',
@@ -195,14 +190,14 @@ function LoopBody({ elapsedMs }: { elapsedMs: number }) {
   )
 }
 
-export default function ShowcaseLoop({ strings }: Props) {
+// Mounted by ShowcaseGate, which owns the translation context both it and the
+// hint in front of it read from.
+export default function ShowcaseLoop() {
   const elapsedMs = useShowcaseClock(timeline)
 
   return (
     <ShowcaseBoundary sceneId={sceneAt(timeline, elapsedMs).scene.id}>
-      <TranslationProvider strings={strings}>
-        <LoopBody elapsedMs={elapsedMs} />
-      </TranslationProvider>
+      <LoopBody elapsedMs={elapsedMs} />
     </ShowcaseBoundary>
   )
 }
