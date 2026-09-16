@@ -61,7 +61,7 @@
     },
     "tour": {
       "statement": "Optimised watering routes",
-      "body": "Water capacity, refill points, vehicle size and access restrictions all feed into the route. Export as GPX for standard navigation devices.",
+      "body": "Water capacity, refill points and access restrictions all feed into the route. Export as GPX for the navigation device.",
       "source": "Route optimisation with Streamlet"
     },
     "inspection": {
@@ -74,8 +74,7 @@
     },
     "open-source": {
       "statement": "100% open source under AGPL-3.0",
-      "body": "Funded by the state of Schleswig-Holstein through “Offene Innovation: Open Source made in SH”. In pilot operation with TBZ Flensburg.",
-      "source": "Flensburg University of Applied Sciences · PROGEEK · Smarte Grenzregion · City of Flensburg"
+      "body": "Funded by the state of Schleswig-Holstein through “Offene Innovation: Open Source made in SH”. In pilot operation with TBZ Flensburg."
     },
     "demo": {
       "statement": "Try it yourself.",

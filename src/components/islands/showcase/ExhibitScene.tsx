@@ -24,7 +24,9 @@ export default function ExhibitScene({ scene, dark, children }: Props) {
       <div className={`h-full w-full overflow-hidden ${visualFirst ? 'order-1' : 'order-2'}`}>
         {children}
       </div>
-      <div className={`px-20 ${visualFirst ? 'order-2' : 'order-1'}`}>
+      {/* Left edge on the same line as the corner wordmark, so the text column
+          is anchored to something rather than floating in its third. */}
+      <div className={`pr-12 pl-24 ${visualFirst ? 'order-2' : 'order-1'}`}>
         {scene.opensStep && (
           <p
             className="showcase-rise font-lato text-sm font-bold tracking-[0.2em] uppercase"
@@ -34,13 +36,13 @@ export default function ExhibitScene({ scene, dark, children }: Props) {
           </p>
         )}
         <p
-          className="showcase-rise mt-5 font-lato text-5xl leading-[1.1] font-light tracking-[-0.022em]"
+          className="showcase-rise mt-5 font-lato text-[3.5rem] leading-[1.1] font-light tracking-[-0.022em]"
           style={{ ...delay(80), color: dark ? '#E8EBCC' : '#2D4A27' }}
         >
           {t(`scenes.${scene.id}.statement`)}
         </p>
         <p
-          className="showcase-rise mt-6 max-w-[46ch] font-nunito-sans text-xl leading-relaxed"
+          className="showcase-rise mt-6 max-w-[42ch] font-nunito-sans text-[1.375rem] leading-relaxed"
           style={{ ...delay(160), color: dark ? '#E8EBCCB0' : '#1F1F1F' }}
         >
           {t(`scenes.${scene.id}.body`)}
