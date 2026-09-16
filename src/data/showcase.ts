@@ -1,6 +1,6 @@
 export type Act = 'lage' | 'boden' | 'software' | 'fahrt'
 export type Step = 'messen' | 'verstehen' | 'handeln'
-export type Layout = 'title' | 'statement' | 'exhibit' | 'photo' | 'demo'
+export type Layout = 'title' | 'statement' | 'exhibit' | 'photo' | 'demo' | 'closing'
 
 // The four Ken Burns directions a full-bleed photo can carry: 'in' grows the
 // crop over the scene, 'out' shrinks it back toward the resting scale, and
@@ -22,6 +22,7 @@ export type SceneId =
   | 'team'
   | 'open-source'
   | 'demo'
+  | 'closing'
 
 export type Visual =
   | { kind: 'image'; asset: string; pan?: PanVariant }
@@ -29,8 +30,8 @@ export type Visual =
   | { kind: 'tour' }
   | { kind: 'partners' }
   | { kind: 'forde' }
-  | { kind: 'demo' }
   | { kind: 'coverage' }
+  | { kind: 'none' }
 
 export type ChromeElement = 'logo' | 'qr' | 'tour'
 
@@ -50,8 +51,8 @@ export interface Scene {
    */
   side?: 'left' | 'right'
   /**
-   * Persistent elements to hide for this scene. The closing slide replaces the
-   * QR corner and tour path with its own centered call to action.
+   * Persistent elements to hide for this scene. The two closing slides carry
+   * their own, larger copy of what the corners hold, so the corners step back.
    */
   hideChrome?: ChromeElement[]
   /**
@@ -202,9 +203,19 @@ export const showcaseScenes: Scene[] = [
     id: 'demo',
     act: 'fahrt',
     layout: 'demo',
-    seconds: 14,
+    seconds: 10,
+    // The corner QR fades out as the large one arrives over it, so the two
+    // read as one code growing rather than as a second, competing target.
     hideChrome: ['qr', 'tour'],
-    visual: { kind: 'demo' },
+    visual: { kind: 'none' },
+  },
+  {
+    id: 'closing',
+    act: 'fahrt',
+    layout: 'closing',
+    seconds: 9,
+    hideChrome: ['logo', 'qr', 'tour'],
+    visual: { kind: 'none' },
   },
 ]
 

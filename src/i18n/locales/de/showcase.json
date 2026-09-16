@@ -15,6 +15,12 @@
   "gauge": {
     "tankLabel": "Tank"
   },
+  "contact": {
+    "website": { "label": "Website", "value": "green-ecolution.de" },
+    "email": { "label": "E-Mail", "value": "info@green-ecolution.de" },
+    "github": { "label": "GitHub", "value": "github.com/green-ecolution" },
+    "demo": { "label": "Demo", "value": "demo.green-ecolution.de" }
+  },
   "scenes": {
     "title": {
       "statement": "für lebenswerte\nStädte",
@@ -73,8 +79,11 @@
     },
     "demo": {
       "statement": "Probier es selbst aus.",
-      "body": "Karte, Sensorverläufe und Einsatzplanung warten auf der Demo-Instanz.",
-      "siteUrl": "green-ecolution.de"
+      "body": "Alles davon live im Browser."
+    },
+    "closing": {
+      "statement": "Lass uns gemeinsam grüner werden!",
+      "body": "Für eine nachhaltige, datenbasierte Grünflächenpflege."
     }
   }
 }

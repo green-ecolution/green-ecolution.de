@@ -25,8 +25,11 @@ const keys = [
   'steps.handeln',
   'demo.label',
   'demo.url',
-  'scenes.demo.siteUrl',
   'gauge.tankLabel',
+  ...['website', 'email', 'github', 'demo'].flatMap((contact) => [
+    `contact.${contact}.label`,
+    `contact.${contact}.value`,
+  ]),
 ] as TranslationKey<'showcase'>[]
 
 const strings = withoutMissing(pickStrings(language, 'showcase', keys))

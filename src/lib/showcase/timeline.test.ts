@@ -20,9 +20,13 @@ const timeline = buildTimeline(showcaseScenes)
 // not about where the boundary happens to fall.
 const handover = timeline[1].startMs
 
+// Read from the data as well: these cases are about wrapping around, not about
+// how long a run happens to be.
+const loop = totalDurationMs(showcaseScenes)
+
 describe('totalDurationMs', () => {
-  it('summiert die Schleife auf exakt 182 Sekunden', () => {
-    expect(totalDurationMs(showcaseScenes)).toBe(182_000)
+  it('summiert die Schleife auf exakt 187 Sekunden', () => {
+    expect(totalDurationMs(showcaseScenes)).toBe(187_000)
   })
 })
 
@@ -35,7 +39,7 @@ describe('buildTimeline', () => {
 
   it('beginnt bei null und endet bei der Gesamtdauer', () => {
     expect(timeline[0].startMs).toBe(0)
-    expect(timeline[timeline.length - 1].endMs).toBe(182_000)
+    expect(timeline[timeline.length - 1].endMs).toBe(loop)
   })
 })
 
@@ -50,12 +54,12 @@ describe('sceneAt', () => {
   })
 
   it('beginnt nach einem vollen Durchlauf von vorn', () => {
-    expect(sceneAt(timeline, 182_000).scene.id).toBe('title')
-    expect(sceneAt(timeline, 182_000 + handover + 1).scene.id).toBe('quote')
+    expect(sceneAt(timeline, loop).scene.id).toBe('title')
+    expect(sceneAt(timeline, loop + handover + 1).scene.id).toBe('quote')
   })
 
   it('bleibt auch nach vielen Durchläufen synchron', () => {
-    expect(sceneAt(timeline, 300 * 182_000 + handover + 500).scene.id).toBe('quote')
+    expect(sceneAt(timeline, 300 * loop + handover + 500).scene.id).toBe('quote')
   })
 })
 
@@ -129,7 +133,7 @@ describe('previousOf', () => {
   })
 
   it('liefert am Anfang die letzte Szene, damit die Schleife überblendet', () => {
-    expect(previousOf(timeline, timeline[0]).scene.id).toBe('demo')
+    expect(previousOf(timeline, timeline[0]).scene.id).toBe('closing')
   })
 })
 
@@ -139,7 +143,7 @@ describe('msIntoScene', () => {
   })
 
   it('zählt auch nach vielen Durchläufen ab dem Szenenbeginn', () => {
-    expect(msIntoScene(timeline, timeline[1], 300 * 182_000 + handover + 400)).toBe(400)
+    expect(msIntoScene(timeline, timeline[1], 300 * loop + handover + 400)).toBe(400)
   })
 })
 
@@ -154,10 +158,10 @@ describe('inLastMs', () => {
     expect(inLastMs(timeline, current, handover - 800, 800)).toBe(true)
   })
 
-  it('rechnet am Schleifenende gegen das Ende der Demo-Szene', () => {
-    const current = sceneAt(timeline, 181_900)
-    expect(inLastMs(timeline, current, 181_900, 800)).toBe(true)
-    expect(inLastMs(timeline, current, 181_000, 800)).toBe(false)
+  it('rechnet am Schleifenende gegen das Ende der letzten Szene', () => {
+    const current = sceneAt(timeline, loop - 100)
+    expect(inLastMs(timeline, current, loop - 100, 800)).toBe(true)
+    expect(inLastMs(timeline, current, loop - 1000, 800)).toBe(false)
   })
 })
 
@@ -172,9 +176,9 @@ describe('leavingOf', () => {
     expect(leavingOf(timeline, current, handover + 100, 600)?.scene.id).toBe('title')
   })
 
-  it('hat am Schleifenübergang die Demo-Szene ausgehend, anders als beim Kaltstart', () => {
-    const current = sceneAt(timeline, 182_100)
-    expect(leavingOf(timeline, current, 182_100, 600)?.scene.id).toBe('demo')
+  it('hat am Schleifenübergang die letzte Szene ausgehend, anders als beim Kaltstart', () => {
+    const current = sceneAt(timeline, loop + 100)
+    expect(leavingOf(timeline, current, loop + 100, 600)?.scene.id).toBe('closing')
   })
 
   it('hat mitten in einer Szene, wenn since größer als fadeMs ist, nichts Ausgehendes', () => {

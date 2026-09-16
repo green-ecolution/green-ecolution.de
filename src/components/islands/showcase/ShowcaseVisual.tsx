@@ -183,9 +183,9 @@ export default function ShowcaseVisual({ visual, seconds }: { visual: Visual; se
       // Mounted once for the whole run by ShowcaseLoop, not per scene.
       return null
 
-    case 'demo':
-      // DemoScene draws its own QR code and addresses; there is no
-      // per-scene media to route through this slot.
+    case 'none':
+      // The two closing slides draw their own QR code, wordmark and addresses;
+      // there is no per-scene media to route through this slot.
       return null
   }
 }

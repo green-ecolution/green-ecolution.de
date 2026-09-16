@@ -15,6 +15,12 @@
   "gauge": {
     "tankLabel": "Tank"
   },
+  "contact": {
+    "website": { "label": "Website", "value": "green-ecolution.de" },
+    "email": { "label": "Email", "value": "info@green-ecolution.de" },
+    "github": { "label": "GitHub", "value": "github.com/green-ecolution" },
+    "demo": { "label": "Demo", "value": "demo.green-ecolution.de" }
+  },
   "scenes": {
     "title": {
       "statement": "for liveable\ncities",
@@ -73,8 +79,11 @@
     },
     "demo": {
       "statement": "Try it yourself.",
-      "body": "Map, sensor history and planning are waiting on the demo instance.",
-      "siteUrl": "green-ecolution.de"
+      "body": "All of it live in your browser."
+    },
+    "closing": {
+      "statement": "Let's grow greener together!",
+      "body": "For sustainable, data-driven green space care."
     }
   }
 }

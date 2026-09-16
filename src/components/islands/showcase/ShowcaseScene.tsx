@@ -1,5 +1,6 @@
 import { memo } from 'react'
 import { isDarkAct, type Scene } from '../../../data/showcase'
+import ClosingScene from './ClosingScene'
 import DemoScene from './DemoScene'
 import ExhibitScene from './ExhibitScene'
 import PhotoScene from './PhotoScene'
@@ -33,6 +34,8 @@ function ShowcaseScene({ scene }: { scene: Scene }) {
       return <PhotoScene scene={scene}>{visual}</PhotoScene>
     case 'demo':
       return <DemoScene scene={scene} />
+    case 'closing':
+      return <ClosingScene scene={scene} />
   }
 }
 
