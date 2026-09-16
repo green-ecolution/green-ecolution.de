@@ -134,6 +134,13 @@
     "download": "Pitch Deck herunterladen",
     "downloadAriaLabel": "Pitch Deck als PDF herunterladen"
   },
+  "showcase": {
+    "sectionLabel": "Für den Bildschirm",
+    "title": "Die Projektschleife",
+    "description": "Eine Endlosschleife erzählt Green Ecolution in kurzen Szenen, ohne Ton und ohne Bedienung. Wir zeigen sie auf Messen auf einem Monitor am Stand, sie eignet sich aber ebenso als schneller Überblick über das Projekt.",
+    "buttonLabel": "Schleife öffnen",
+    "buttonAriaLabel": "Die Projektschleife in einem neuen Tab öffnen"
+  },
   "mentions": {
     "sectionLabel": "Pressespiegel",
     "title": "Bisherige Veröffentlichungen",

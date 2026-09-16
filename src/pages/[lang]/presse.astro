@@ -8,6 +8,7 @@ import PressImages from '../../components/sections/press/PressImages.astro'
 import PressLogos from '../../components/sections/press/PressLogos.astro'
 import PressMentions from '../../components/sections/press/PressMentions.astro'
 import PressPitchDeck from '../../components/sections/press/PressPitchDeck.astro'
+import PressShowcase from '../../components/sections/press/PressShowcase.astro'
 import { getTranslations } from '../../i18n/t'
 import { languagePaths } from '../../lib/languagePaths'
 import { currentLanguage } from '../../i18n/languages'
@@ -46,6 +47,7 @@ const tc = getTranslations(language, 'common')
     <PressLogos language={language} />
     <PressImages language={language} />
     <PressPitchDeck language={language} />
+    <PressShowcase language={language} />
     <PressBoilerplate language={language} />
     <PressMentions language={language} />
   </main>

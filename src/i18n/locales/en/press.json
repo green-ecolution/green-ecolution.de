@@ -134,6 +134,13 @@
     "download": "Download the pitch deck",
     "downloadAriaLabel": "Download the pitch deck as a PDF"
   },
+  "showcase": {
+    "sectionLabel": "For the screen",
+    "title": "The project loop",
+    "description": "A continuous loop tells the story of Green Ecolution in short scenes, without sound and without anything to operate. We run it on a monitor at trade fair stands, and it works just as well as a quick overview of the project.",
+    "buttonLabel": "Open the loop",
+    "buttonAriaLabel": "Open the project loop in a new tab"
+  },
   "mentions": {
     "sectionLabel": "Press coverage",
     "title": "Published so far",
