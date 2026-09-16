@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import CoverageMap from './CoverageMap'
 import { showcaseClipBaseUrl } from '../../../lib/runtimeEnv'
-import { panOver } from '../../../lib/showcase/delay'
+import { delay, panOver } from '../../../lib/showcase/delay'
 import type { PanVariant, Visual } from '../../../data/showcase'
 
 const photos = import.meta.glob<{ default: { src: string } }>(
@@ -83,17 +83,22 @@ const logos = import.meta.glob<{ default: { src: string } }>('../../../assets/lo
   eager: true,
 })
 
+// Optically matched rather than set to one height: the four marks carry very
+// different amounts of white space and tagline around them.
 const PARTNERS = [
-  { file: 'progeek.svg', height: 'h-20' },
-  { file: 'smarte-grenzregion.png', height: 'h-14' },
-  { file: 'hochschule-flensburg.png', height: 'h-16' },
-  { file: 'tbz.svg', height: 'h-14' },
+  { file: 'progeek.svg', height: 'h-28' },
+  { file: 'smarte-grenzregion.png', height: 'h-20' },
+  { file: 'hochschule-flensburg.png', height: 'h-24' },
+  { file: 'tbz.svg', height: 'h-20' },
 ] as const
 
+// The slide names who built the thing, so the marks lead and the sentence
+// follows. They arrive one after another, which is the one moment of movement
+// the scene has: four institutions assembling, not a logo bar fading in.
 function PartnerLogos() {
   return (
-    <div className="mb-14 flex items-center justify-center gap-16">
-      {PARTNERS.map(({ file, height }) => {
+    <div className="mb-20 flex items-center justify-center gap-24">
+      {PARTNERS.map(({ file, height }, index) => {
         const entry = logos[`../../../assets/logos/${file}`]
 
         if (!entry) {
@@ -106,7 +111,8 @@ function PartnerLogos() {
             src={entry.default.src}
             alt=""
             // The logos are dark artwork on a dark act, so they run inverted.
-            className={`${height} w-auto opacity-90 brightness-0 invert`}
+            className={`showcase-rise ${height} w-auto brightness-0 invert`}
+            style={delay(index * 140)}
           />
         )
       })}
