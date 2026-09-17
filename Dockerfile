@@ -4,7 +4,9 @@
 FROM node:26-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+# Node >= 25 no longer ships corepack, so install it from npm before enabling it.
+RUN npm install -g corepack@latest && corepack enable
 COPY . /app
 WORKDIR /app
 
