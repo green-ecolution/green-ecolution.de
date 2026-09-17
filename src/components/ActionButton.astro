@@ -46,21 +46,19 @@ const TONES = {
 const classes = [base, SIZES[size], TONES[tone], className]
 ---
 
-{
-  href ? (
-    <a href={href} aria-label={ariaLabel} download={download || undefined} class:list={classes}>
-      <slot />
-    </a>
-  ) : (
-    <button
-      type="button"
-      aria-label={ariaLabel}
-      hidden={hidden}
-      disabled={disabled}
-      class:list={classes}
-      {...rest}
-    >
-      <slot />
-    </button>
-  )
-}
+{href ? (
+  <a href={href} aria-label={ariaLabel} download={download || undefined} class:list={classes}>
+    <slot />
+  </a>
+) : (
+  <button
+    type="button"
+    aria-label={ariaLabel}
+    hidden={hidden}
+    disabled={disabled}
+    class:list={classes}
+    {...rest}
+  >
+    <slot />
+  </button>
+)}

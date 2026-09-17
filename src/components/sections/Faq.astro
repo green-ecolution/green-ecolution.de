@@ -123,15 +123,13 @@ const answers = ITEMS.map((item) => {
 ---
 
 <section class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 xl:my-36 xl:max-w-screen-lg">
-  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
-
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)}></script>
   <div class="mb-6 lg:mb-8 flex justify-center">
     <div class="inline-block">
       <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
         {t('faq.sectionLabel')}
       </span>
-      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 mx-auto">
-      </div>
+      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 mx-auto"></div>
     </div>
   </div>
 
@@ -140,40 +138,38 @@ const answers = ITEMS.map((item) => {
   </h2>
 
   <ul class="flex flex-col gap-y-4 md:gap-y-5">
-    {
-      answers.map((answer) => (
-        <li>
-          <details class="accordion border bg-white rounded-2xl transition-all duration-300 border-green-dark-900/30 shadow-md hover:shadow-lg hover:border-green-dark-900/50 open:border-green-light-900 open:shadow-lg open:shadow-green-light-900/20">
-            <summary class="w-full px-4 py-4 cursor-pointer flex items-center justify-between gap-x-4 font-semibold font-lato text-grey-900 transition-all ease-out duration-150 md:px-6 md:py-5 rounded-2xl hover:bg-green-dark-900/5 active:bg-green-dark-900/10 open:bg-green-light-900/10 open:rounded-t-2xl">
-              <span class="w-[85%] text-left lg:text-lg">{answer.question}</span>
-              <span
-                aria-hidden="true"
-                class="accordion-chevron w-8 h-8 rounded-full text-white flex items-center justify-center transition-all ease-in-out duration-300 bg-green-dark-900 shrink-0"
+    {answers.map((answer) => (
+      <li>
+        <details class="accordion border bg-white rounded-2xl transition-all duration-300 border-green-dark-900/30 shadow-md hover:shadow-lg hover:border-green-dark-900/50 open:border-green-light-900 open:shadow-lg open:shadow-green-light-900/20">
+          <summary class="w-full px-4 py-4 cursor-pointer flex items-center justify-between gap-x-4 font-semibold font-lato text-grey-900 transition-all ease-out duration-150 md:px-6 md:py-5 rounded-2xl hover:bg-green-dark-900/5 active:bg-green-dark-900/10 open:bg-green-light-900/10 open:rounded-t-2xl">
+            <span class="w-[85%] text-left lg:text-lg">{answer.question}</span>
+            <span
+              aria-hidden="true"
+              class="accordion-chevron w-8 h-8 rounded-full text-white flex items-center justify-center transition-all ease-in-out duration-300 bg-green-dark-900 shrink-0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
-              </span>
-            </summary>
-            <div
-              class="accordion-panel text-base text-grey-900/80 leading-relaxed px-4 border-t border-t-green-light-900/30 pt-3 pb-4 md:px-6 md:pb-6"
-              set:html={answer.html}
-            />
-          </details>
-        </li>
-      ))
-    }
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                />
+              </svg>
+            </span>
+          </summary>
+          <div
+            class="accordion-panel text-base text-grey-900/80 leading-relaxed px-4 border-t border-t-green-light-900/30 pt-3 pb-4 md:px-6 md:pb-6"
+            set:html={answer.html}
+          />
+        </details>
+      </li>
+    ))}
   </ul>
 </section>
 

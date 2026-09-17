@@ -19,9 +19,7 @@ const moreHref = `/${language}/project#process`
 const lastIndex = workflowSteps.length - 1
 ---
 
-<section
-  class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
->
+<section class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
   <div class="flex items-end justify-between mb-8 lg:mb-12">
     <div>
       <div class="inline-block mb-4">
@@ -48,35 +46,33 @@ const lastIndex = workflowSteps.length - 1
 
   <div class="bg-green-light-100/40 rounded-2xl lg:rounded-3xl p-6 md:p-8 lg:p-10 xl:p-12">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0">
-      {
-        workflowSteps.map((step, index) => {
-          const Icon = step.icon
+      {workflowSteps.map((step, index) => {
+        const Icon = step.icon
 
-          return (
-            <article
-              class:list={[
-                index < lastIndex && 'md:border-r md:border-green-dark-900/10 md:pr-8 lg:pr-10',
-                index > 0 && 'md:pl-8 lg:pl-10',
-                index > 0 && 'border-t border-green-dark-900/10 pt-8 md:border-t-0 md:pt-0',
-              ]}
-            >
-              <Icon className="w-8 h-8 text-green-dark-900/40 mb-5 lg:w-10 lg:h-10" />
+        return (
+          <article
+            class:list={[
+              index < lastIndex && 'md:border-r md:border-green-dark-900/10 md:pr-8 lg:pr-10',
+              index > 0 && 'md:pl-8 lg:pl-10',
+              index > 0 && 'border-t border-green-dark-900/10 pt-8 md:border-t-0 md:pt-0',
+            ]}
+          >
+            <Icon className="w-8 h-8 text-green-dark-900/40 mb-5 lg:w-10 lg:h-10" />
 
-              <span class="text-xs font-semibold tracking-widest uppercase text-green-dark-900/60 block mb-2">
-                {step.number} · {t(`workflow.steps.${step.id}.category`)}
-              </span>
+            <span class="text-xs font-semibold tracking-widest uppercase text-green-dark-900/60 block mb-2">
+              {step.number} · {t(`workflow.steps.${step.id}.category`)}
+            </span>
 
-              <h3 class="font-lato font-bold text-xl text-grey-900 mb-3 lg:text-2xl">
-                {t(`workflow.steps.${step.id}.title`)}
-              </h3>
+            <h3 class="font-lato font-bold text-xl text-grey-900 mb-3 lg:text-2xl">
+              {t(`workflow.steps.${step.id}.title`)}
+            </h3>
 
-              <p class="text-grey-600 text-sm leading-relaxed">
-                {t(`workflow.steps.${step.id}.description`)}
-              </p>
-            </article>
-          )
-        })
-      }
+            <p class="text-grey-600 text-sm leading-relaxed">
+              {t(`workflow.steps.${step.id}.description`)}
+            </p>
+          </article>
+        )
+      })}
     </div>
   </div>
 
@@ -95,9 +91,7 @@ const lastIndex = workflowSteps.length - 1
         class="w-full aspect-[4/3] object-cover rounded-xl sm:aspect-[3/2]"
       />
 
-      <figcaption class="mt-3 text-sm text-grey-900/60">
-        {t('workflow.photoCaption')}
-      </figcaption>
+      <figcaption class="mt-3 text-sm text-grey-900/60">{t('workflow.photoCaption')}</figcaption>
     </figure>
   </div>
 

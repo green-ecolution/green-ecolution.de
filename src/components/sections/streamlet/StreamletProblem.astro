@@ -32,9 +32,7 @@ function markerFor(stop: (typeof STOPS)[number]): string {
 }
 ---
 
-<section
-  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
->
+<section class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
   <div class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16 lg:items-center">
     <div>
       <div class="inline-block mb-6">
@@ -54,45 +52,48 @@ function markerFor(stop: (typeof STOPS)[number]): string {
     </div>
 
     <div class="mt-10 lg:mt-0">
-      <div
-        class="relative bg-gradient-to-b from-green-light-100/60 to-white rounded-2xl p-4 lg:p-6 border border-green-dark-900/5 shadow-sm"
-      >
+      <div class="relative bg-gradient-to-b from-green-light-100/60 to-white rounded-2xl p-4 lg:p-6 border border-green-dark-900/5 shadow-sm">
         <svg
           viewBox="0 0 380 210"
           class="w-full"
           role="img"
           aria-label={t('problem.diagram.ariaLabel')}
         >
-          <line x1="40" y1="60" x2="340" y2="60" stroke="#4C7741" stroke-width="2" opacity="0.35"
+          <line
+            x1="40"
+            y1="60"
+            x2="340"
+            y2="60"
+            stroke="#4C7741"
+            stroke-width="2"
+            opacity="0.35"
           ></line>
 
-          {
-            STOPS.map((stop) => (
-              <g>
-                {stop.type === 'depot' ? (
-                  <rect x={stop.x - 9} y="51" width="18" height="18" rx="4" fill="#3D5F35" />
-                ) : (
-                  <circle
-                    cx={stop.x}
-                    cy="60"
-                    r="9"
-                    fill={stop.type === 'refill' ? '#ACB63B' : '#658A58'}
-                  />
-                )}
-                <text
-                  x={stop.x}
-                  y="64"
-                  text-anchor="middle"
-                  fill="#ffffff"
-                  font-size="9"
-                  style="font-family: var(--font-lato)"
-                  font-weight="700"
-                >
-                  {markerFor(stop)}
-                </text>
-              </g>
-            ))
-          }
+          {STOPS.map((stop) => (
+            <g>
+              {stop.type === 'depot' ? (
+                <rect x={stop.x - 9} y="51" width="18" height="18" rx="4" fill="#3D5F35" />
+              ) : (
+                <circle
+                  cx={stop.x}
+                  cy="60"
+                  r="9"
+                  fill={stop.type === 'refill' ? '#ACB63B' : '#658A58'}
+                />
+              )}
+              <text
+                x={stop.x}
+                y="64"
+                text-anchor="middle"
+                fill="#ffffff"
+                font-size="9"
+                style="font-family: var(--font-lato)"
+                font-weight="700"
+              >
+                {markerFor(stop)}
+              </text>
+            </g>
+          ))}
 
           <text
             x="40"
@@ -115,7 +116,14 @@ function markerFor(stop: (typeof STOPS)[number]): string {
             {t('problem.diagram.refillStation')}
           </text>
 
-          <line x1="40" y1="110" x2="340" y2="110" stroke="#8B7355" stroke-width="0.5" opacity="0.3"
+          <line
+            x1="40"
+            y1="110"
+            x2="340"
+            y2="110"
+            stroke="#8B7355"
+            stroke-width="0.5"
+            opacity="0.3"
           ></line>
           <text
             x="40"
@@ -135,7 +143,8 @@ function markerFor(stop: (typeof STOPS)[number]): string {
             stroke="#8B7355"
             stroke-width="0.5"
             stroke-dasharray="4 3"
-            opacity="0.4"></line>
+            opacity="0.4"
+          ></line>
           <text
             x="40"
             y="207"
@@ -152,7 +161,8 @@ function markerFor(stop: (typeof STOPS)[number]): string {
             fill="none"
             stroke="#4C7741"
             stroke-width="2.5"
-            stroke-linejoin="round"></polyline>
+            stroke-linejoin="round"
+          ></polyline>
           <circle cx="220" cy="168" r="3" fill="#ACB63B"></circle>
           <circle cx="220" cy="110" r="3" fill="#ACB63B"></circle>
           <text

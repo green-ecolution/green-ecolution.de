@@ -41,19 +41,14 @@ const videos = VIDEOS.map((video) => ({
 const ndrPosterImage = await getImage({ src: ndrPlayerPoster, width: 1280, format: 'webp' })
 ---
 
-<section
-  class="relative overflow-hidden px-4 mx-auto md:px-6 py-20 lg:py-28 xl:py-36 before:bg-cover before:bg-background-light-dot before:w-[90%] before:h-[80%] before:absolute before:-right-4 before:top-12 before:-z-10 before:bg-no-repeat xl:before:bg-contain xl:before:top-20 xl:before:left-[10%] 3xl:before:left-[20%]"
->
+<section class="relative overflow-hidden px-4 mx-auto md:px-6 py-20 lg:py-28 xl:py-36 before:bg-cover before:bg-background-light-dot before:w-[90%] before:h-[80%] before:absolute before:-right-4 before:top-12 before:-z-10 before:bg-no-repeat xl:before:bg-contain xl:before:top-20 xl:before:left-[10%] 3xl:before:left-[20%]">
   <article class="mx-auto mb-8 lg:mb-14 lg:text-center xl:max-w-screen-lg">
     <div class="mb-6 lg:mb-8 lg:flex lg:justify-center">
       <div class="inline-block">
         <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
           {t('videos.sectionLabel')}
         </span>
-        <div
-          class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 lg:mx-auto"
-        >
-        </div>
+        <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 lg:mx-auto"></div>
       </div>
     </div>
 
@@ -62,27 +57,23 @@ const ndrPosterImage = await getImage({ src: ndrPlayerPoster, width: 1280, forma
   </article>
 
   <div class="mx-auto grid grid-cols-1 gap-6 lg:grid-cols-2 xl:max-w-screen-xl">
-    {
-      videos.map((video) => (
-        <div>
-          <article class="group video__player h-full bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300">
-            <div class="aspect-video w-full h-auto overflow-hidden rounded-xl">
-              <VideoPlayer client:visible path={video.path} thumbnailPath={video.thumbnailPath} />
-            </div>
-            <h3 class="mt-8 mb-4 font-lato text-xl text-grey-900 lg:text-2xl">
-              <strong>{video.title}</strong>&nbsp;|&nbsp;
-              <span class="text-base lg:text-lg text-grey-900/60">{video.duration}</span>
-            </h3>
-            <p class="text-grey-900/80 leading-relaxed">{video.description}</p>
-          </article>
-        </div>
-      ))
-    }
+    {videos.map((video) => (
+      <div>
+        <article class="group video__player h-full bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300">
+          <div class="aspect-video w-full h-auto overflow-hidden rounded-xl">
+            <VideoPlayer client:visible path={video.path} thumbnailPath={video.thumbnailPath} />
+          </div>
+          <h3 class="mt-8 mb-4 font-lato text-xl text-grey-900 lg:text-2xl">
+            <strong>{video.title}</strong>&nbsp;|&nbsp;
+            <span class="text-base lg:text-lg text-grey-900/60">{video.duration}</span>
+          </h3>
+          <p class="text-grey-900/80 leading-relaxed">{video.description}</p>
+        </article>
+      </div>
+    ))}
 
     <div class="lg:col-span-2">
-      <article
-        class="h-full bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center"
-      >
+      <article class="h-full bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
         <div class="overflow-hidden rounded-xl">
           <ConsentEmbed
             client:visible

@@ -60,8 +60,7 @@ const t = getTranslations(language, 'home')
       <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
         {t('features.sectionLabel')}
       </span>
-      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 mx-auto">
-      </div>
+      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 mx-auto"></div>
     </div>
   </div>
 
@@ -73,51 +72,49 @@ const t = getTranslations(language, 'home')
   </article>
 
   <div class="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4 lg:grid-rows-2">
-    {
-      FEATURES.map((feature, index) => {
-        const Icon = feature.Icon
+    {FEATURES.map((feature, index) => {
+      const Icon = feature.Icon
 
-        return (
-          <div class:list={[feature.large && 'col-span-2', index === 0 && 'lg:row-span-1']}>
-            <div
+      return (
+        <div class:list={[feature.large && 'col-span-2', index === 0 && 'lg:row-span-1']}>
+          <div
+            class:list={[
+              'group h-full rounded-xl p-4 md:rounded-2xl md:p-6 lg:p-8 border transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5',
+              BORDER_CLASSES[feature.color],
+              COLOR_CLASSES[feature.color],
+            ]}
+          >
+            <figure
               class:list={[
-                'group h-full rounded-xl p-4 md:rounded-2xl md:p-6 lg:p-8 border transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5',
-                BORDER_CLASSES[feature.color],
-                COLOR_CLASSES[feature.color],
+                'w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4 transition-all duration-300 group-hover:scale-105',
+                ICON_COLOR_CLASSES[feature.color],
               ]}
             >
-              <figure
-                class:list={[
-                  'w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4 transition-all duration-300 group-hover:scale-105',
-                  ICON_COLOR_CLASSES[feature.color],
-                ]}
+              <span class="[&>svg]:w-5 [&>svg]:h-5 md:[&>svg]:w-6 md:[&>svg]:h-6 lg:[&>svg]:w-8 lg:[&>svg]:h-8">
+                <Icon />
+              </span>
+            </figure>
+            <h3 class="font-lato font-bold text-base md:text-xl mb-1 md:mb-2 text-grey-900">
+              {t(`features.items.${feature.id}.label`)}
+            </h3>
+            <p class="text-grey-900/70 text-sm md:text-base leading-relaxed">
+              {t(`features.items.${feature.id}.description`)}
+            </p>
+            {feature.href && (
+              // Only tourPlanning carries a link, so the label keys are literal:
+              // TranslationKey is derived from the german catalog and the other
+              // features have no linkLabel.
+              <a
+                href={`/${language}/${feature.href}`}
+                aria-label={t('features.items.tourPlanning.linkAriaLabel')}
+                class="mt-3 inline-block text-sm font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
               >
-                <span class="[&>svg]:w-5 [&>svg]:h-5 md:[&>svg]:w-6 md:[&>svg]:h-6 lg:[&>svg]:w-8 lg:[&>svg]:h-8">
-                  <Icon />
-                </span>
-              </figure>
-              <h3 class="font-lato font-bold text-base md:text-xl mb-1 md:mb-2 text-grey-900">
-                {t(`features.items.${feature.id}.label`)}
-              </h3>
-              <p class="text-grey-900/70 text-sm md:text-base leading-relaxed">
-                {t(`features.items.${feature.id}.description`)}
-              </p>
-              {feature.href && (
-                // Only tourPlanning carries a link, so the label keys are literal:
-                // TranslationKey is derived from the german catalog and the other
-                // features have no linkLabel.
-                <a
-                  href={`/${language}/${feature.href}`}
-                  aria-label={t('features.items.tourPlanning.linkAriaLabel')}
-                  class="mt-3 inline-block text-sm font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
-                >
-                  {t('features.items.tourPlanning.linkLabel')}
-                </a>
-              )}
-            </div>
+                {t('features.items.tourPlanning.linkLabel')}
+              </a>
+            )}
           </div>
-        )
-      })
-    }
+        </div>
+      )
+    })}
   </div>
 </section>

@@ -31,28 +31,20 @@ const tc = getTranslations(language, 'common')
       label={t('impressum.hero.label')}
     />
 
-    <section
-      class="px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl mt-16 mb-28 lg:mb-36 xl:mb-52"
-    >
+    <section class="px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl mt-16 mb-28 lg:mb-36 xl:mb-52">
       <div class="space-y-12">
-        {
-          language !== DEFAULT_LANGUAGE && (
-            <p class="text-sm text-grey-900/70 bg-grey-100/50 border border-grey-200/50 rounded-xl p-4">
-              {t('translationNotice')}
-            </p>
-          )
-        }
+        {language !== DEFAULT_LANGUAGE && (
+          <p class="text-sm text-grey-900/70 bg-grey-100/50 border border-grey-200/50 rounded-xl p-4">
+            {t('translationNotice')}
+          </p>
+        )}
 
         {/* Kontakt */}
         <div>
-          <h2
-            class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900"
-          >
+          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
             {t('impressum.sections.contact.title')}
           </h2>
-          <address
-            class="not-italic space-y-1 bg-grey-100/50 rounded-xl p-6 border border-grey-200/50"
-          >
+          <address class="not-italic space-y-1 bg-grey-100/50 rounded-xl p-6 border border-grey-200/50">
             <p class="font-bold">PROGEEK GmbH</p>
             <p>Lise-Meitner-Str. 2</p>
             <p>24941 Flensburg</p>
@@ -79,9 +71,7 @@ const tc = getTranslations(language, 'common')
 
         {/* Handelsregister */}
         <div>
-          <h2
-            class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900"
-          >
+          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
             {t('impressum.sections.commercialRegister.title')}
           </h2>
           <ul class="space-y-1">
@@ -104,9 +94,7 @@ const tc = getTranslations(language, 'common')
               15/295/02186
             </li>
             <li>
-              <span class="font-bold">
-                {t('impressum.sections.commercialRegister.vatIdLabel')}
-              </span>{' '}
+              <span class="font-bold">{t('impressum.sections.commercialRegister.vatIdLabel')}</span>{' '}
               DE351061751
             </li>
             <li>
@@ -120,9 +108,7 @@ const tc = getTranslations(language, 'common')
 
         {/* Haftung für Inhalte */}
         <div>
-          <h2
-            class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900"
-          >
+          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
             {t('impressum.sections.liabilityContent.title')}
           </h2>
           <p class="mb-4">{t('impressum.sections.liabilityContent.paragraph1')}</p>
@@ -131,9 +117,7 @@ const tc = getTranslations(language, 'common')
 
         {/* Haftung für Links */}
         <div>
-          <h2
-            class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900"
-          >
+          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
             {t('impressum.sections.liabilityLinks.title')}
           </h2>
           <p class="mb-4">{t('impressum.sections.liabilityLinks.paragraph1')}</p>
@@ -142,9 +126,7 @@ const tc = getTranslations(language, 'common')
 
         {/* Urheberrecht */}
         <div>
-          <h2
-            class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900"
-          >
+          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
             {t('impressum.sections.copyright.title')}
           </h2>
           <p class="mb-4">{t('impressum.sections.copyright.paragraph1')}</p>

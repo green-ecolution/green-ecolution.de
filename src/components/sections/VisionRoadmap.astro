@@ -23,14 +23,9 @@ const { language } = Astro.props
 const t = getTranslations(language, 'project')
 ---
 
-<section
-  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
->
-  <div
-    class="relative bg-green-light-100/50 rounded-2xl lg:rounded-3xl p-6 md:p-10 lg:p-12 xl:p-16 overflow-hidden"
-  >
-    <div class="absolute -top-10 -right-10 w-40 h-40 bg-green-light-900/8 rounded-full blur-2xl">
-    </div>
+<section class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
+  <div class="relative bg-green-light-100/50 rounded-2xl lg:rounded-3xl p-6 md:p-10 lg:p-12 xl:p-16 overflow-hidden">
+    <div class="absolute -top-10 -right-10 w-40 h-40 bg-green-light-900/8 rounded-full blur-2xl"></div>
     <div class="lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-12 xl:gap-16">
       <div class="mb-10 lg:mb-0">
         <div class="inline-block mb-6">
@@ -56,60 +51,53 @@ const t = getTranslations(language, 'project')
         </h3>
 
         <div class="space-y-0">
-          {
-            roadmapItems.map((item) => {
-              const style = STATUS_STYLES[item.status]
+          {roadmapItems.map((item) => {
+            const style = STATUS_STYLES[item.status]
 
-              return (
-                <div class="group relative flex gap-4">
-                  <div class="flex flex-col items-center">
-                    <div
-                      class:list={[
-                        'w-3.5 h-3.5 rounded-full flex-shrink-0 mt-1.5 ring-4 ring-white/60 transition-transform duration-300 group-hover:scale-125',
-                        style.dot,
-                      ]}
-                    />
-                    <div class="w-0.5 flex-1 bg-gradient-to-b from-green-light-900/30 to-grey-900/10 my-1" />
-                  </div>
-
-                  <div class="pb-6">
-                    <div class="flex items-center gap-2 mb-1">
-                      <h4 class="font-lato font-semibold text-grey-900 group-hover:text-green-dark-900 transition-colors">
-                        {t(`roadmap.items.${item.id}.title`)}
-                      </h4>
-                      <span
-                        class:list={[
-                          'text-[10px] font-semibold tracking-wider uppercase',
-                          style.labelColor,
-                        ]}
-                      >
-                        {t(`roadmap.status.${STATUS_LABEL_KEYS[item.status]}`)}
-                      </span>
-                    </div>
-                    <p class="text-sm text-grey-600 leading-relaxed">
-                      {t(`roadmap.items.${item.id}.description`)}
-                    </p>
-                  </div>
+            return (
+              <div class="group relative flex gap-4">
+                <div class="flex flex-col items-center">
+                  <div
+                    class:list={[
+                      'w-3.5 h-3.5 rounded-full flex-shrink-0 mt-1.5 ring-4 ring-white/60 transition-transform duration-300 group-hover:scale-125',
+                      style.dot,
+                    ]}
+                  />
+                  <div class="w-0.5 flex-1 bg-gradient-to-b from-green-light-900/30 to-grey-900/10 my-1" />
                 </div>
-              )
-            })
-          }
+
+                <div class="pb-6">
+                  <div class="flex items-center gap-2 mb-1">
+                    <h4 class="font-lato font-semibold text-grey-900 group-hover:text-green-dark-900 transition-colors">
+                      {t(`roadmap.items.${item.id}.title`)}
+                    </h4>
+                    <span
+                      class:list={[
+                        'text-[10px] font-semibold tracking-wider uppercase',
+                        style.labelColor,
+                      ]}
+                    >
+                      {t(`roadmap.status.${STATUS_LABEL_KEYS[item.status]}`)}
+                    </span>
+                  </div>
+                  <p class="text-sm text-grey-600 leading-relaxed">
+                    {t(`roadmap.items.${item.id}.description`)}
+                  </p>
+                </div>
+              </div>
+            )
+          })}
 
           <div class="relative flex gap-4" aria-label={t('roadmap.moreIdeasAriaLabel')}>
             <div class="flex flex-col items-center" style="width: 0.875rem;" aria-hidden="true">
               <div class="w-2 h-2 rounded-full bg-green-light-900/35 mt-1"></div>
-              <div
-                class="w-px h-2.5 bg-gradient-to-b from-green-light-900/25 to-green-light-900/10"
-              >
-              </div>
+              <div class="w-px h-2.5 bg-gradient-to-b from-green-light-900/25 to-green-light-900/10"></div>
               <div class="w-1.5 h-1.5 rounded-full bg-green-light-900/20"></div>
               <div class="w-px h-2 bg-gradient-to-b from-green-light-900/15 to-transparent"></div>
               <div class="w-1 h-1 rounded-full bg-green-light-900/15 animate-pulse"></div>
             </div>
 
-            <p
-              class="font-lato italic text-[13px] text-grey-600/60 leading-relaxed tracking-wide pt-0.5 self-center"
-            >
+            <p class="font-lato italic text-[13px] text-grey-600/60 leading-relaxed tracking-wide pt-0.5 self-center">
               <span class="mr-1 text-green-light-900/50 not-italic tracking-widest">···</span>
               {t('roadmap.moreInPlanningLabel')}
             </p>

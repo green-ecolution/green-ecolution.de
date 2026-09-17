@@ -19,63 +19,59 @@ const releases = await getReleases(language)
 const latest = releases[0]
 ---
 
-{
-  latest && (
-    <section class="px-4 max-w-screen-lg mx-auto mt-20 lg:mt-28 xl:mt-36 md:px-6 xl:max-w-screen-xl">
-      <div class="md:grid md:grid-cols-2 md:gap-x-10 md:items-center">
-        <div class="mb-8 md:mb-0">
-          <div class="mb-6 lg:mb-8">
-            <div class="inline-block">
-              <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-                {t('latest.eyebrow')}
-              </span>
-              <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
-            </div>
-          </div>
-
-          <h2 class="font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-3xl">
-            {t('latest.title')}
-          </h2>
-          <p class="mb-6 text-grey-900/80 leading-relaxed">{t('latest.description')}</p>
-          <div>
-            <Button href={`/${language}/releases`} ariaLabel={t('latest.viewAllAriaLabel')} isDark>
-              <span>{t('latest.viewAll')}</span>
-              <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
-            </Button>
+{latest && (
+  <section class="px-4 max-w-screen-lg mx-auto mt-20 lg:mt-28 xl:mt-36 md:px-6 xl:max-w-screen-xl">
+    <div class="md:grid md:grid-cols-2 md:gap-x-10 md:items-center">
+      <div class="mb-8 md:mb-0">
+        <div class="mb-6 lg:mb-8">
+          <div class="inline-block">
+            <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+              {t('latest.eyebrow')}
+            </span>
+            <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
           </div>
         </div>
 
+        <h2 class="font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-3xl">
+          {t('latest.title')}
+        </h2>
+        <p class="mb-6 text-grey-900/80 leading-relaxed">{t('latest.description')}</p>
         <div>
-          <a
-            href={`/${language}/releases/${releaseSlug(latest)}`}
-            class="group block bg-gradient-to-br from-green-dark-900 to-green-middle-900 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-          >
-            <div class="flex items-center gap-3 mb-3">
-              <span class="bg-white/20 text-white px-3 py-1 rounded-full text-sm font-bold">
-                v{latest.data.version}
-              </span>
-              <span class="bg-green-light-900/30 text-white px-3 py-1 rounded-full text-sm font-bold">
-                {t('badge.current')}
-              </span>
-            </div>
-            <time datetime={isoDate(latest.data.date)} class="text-white/60 text-sm block mb-2">
-              {formatLongDate(latest.data.date, language)}
-            </time>
-            <h3 class="font-lato font-bold text-xl text-white mb-2 group-hover:underline">
-              {latest.data.title}
-            </h3>
-            {latest.data.summary && (
-              <p class="text-white/80 text-sm leading-relaxed line-clamp-2">
-                {latest.data.summary}
-              </p>
-            )}
-            <div class="flex items-center gap-2 text-white/70 group-hover:text-white group-hover:gap-3 transition-all duration-300 mt-4">
-              <span class="text-sm font-medium">{t('latest.viewDetails')}</span>
-              <span>→</span>
-            </div>
-          </a>
+          <Button href={`/${language}/releases`} ariaLabel={t('latest.viewAllAriaLabel')} isDark>
+            <span>{t('latest.viewAll')}</span>
+            <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+          </Button>
         </div>
       </div>
-    </section>
-  )
-}
+
+      <div>
+        <a
+          href={`/${language}/releases/${releaseSlug(latest)}`}
+          class="group block bg-gradient-to-br from-green-dark-900 to-green-middle-900 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+        >
+          <div class="flex items-center gap-3 mb-3">
+            <span class="bg-white/20 text-white px-3 py-1 rounded-full text-sm font-bold">
+              v{latest.data.version}
+            </span>
+            <span class="bg-green-light-900/30 text-white px-3 py-1 rounded-full text-sm font-bold">
+              {t('badge.current')}
+            </span>
+          </div>
+          <time datetime={isoDate(latest.data.date)} class="text-white/60 text-sm block mb-2">
+            {formatLongDate(latest.data.date, language)}
+          </time>
+          <h3 class="font-lato font-bold text-xl text-white mb-2 group-hover:underline">
+            {latest.data.title}
+          </h3>
+          {latest.data.summary && (
+            <p class="text-white/80 text-sm leading-relaxed line-clamp-2">{latest.data.summary}</p>
+          )}
+          <div class="flex items-center gap-2 text-white/70 group-hover:text-white group-hover:gap-3 transition-all duration-300 mt-4">
+            <span class="text-sm font-medium">{t('latest.viewDetails')}</span>
+            <span>→</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+)}

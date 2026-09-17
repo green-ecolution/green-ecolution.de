@@ -8,9 +8,7 @@ interface Props {
 const { headline, description, label } = Astro.props
 ---
 
-<section
-  class="mt-28 px-4 max-w-208 mx-auto md:px-6 lg:mt-36 lg:max-w-screen-lg xl:mt-52 xl:max-w-screen-xl"
->
+<section class="mt-28 px-4 max-w-208 mx-auto md:px-6 lg:mt-36 lg:max-w-screen-lg xl:mt-52 xl:max-w-screen-xl">
   <div class="lg:text-center">
     <div class="inline-block mb-6 lg:mx-auto">
       <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
@@ -19,22 +17,16 @@ const { headline, description, label } = Astro.props
       <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
     </div>
 
-    <h1
-      class="font-lato font-bold text-3xl mb-6 text-grey-900 leading-tight md:text-4xl lg:text-5xl xl:text-6xl"
-    >
+    <h1 class="font-lato font-bold text-3xl mb-6 text-grey-900 leading-tight md:text-4xl lg:text-5xl xl:text-6xl">
       {headline}
     </h1>
 
-    <p class="text-grey-600 leading-relaxed max-w-3xl lg:mx-auto lg:text-lg">
-      {description}
-    </p>
+    <p class="text-grey-600 leading-relaxed max-w-3xl lg:mx-auto lg:text-lg">{description}</p>
 
-    {
-      Astro.slots.has('default') && (
-        <div class="mt-8">
-          <slot />
-        </div>
-      )
-    }
+    {Astro.slots.has('default') && (
+      <div class="mt-8">
+        <slot />
+      </div>
+    )}
   </div>
 </section>

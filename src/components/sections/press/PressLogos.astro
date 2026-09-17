@@ -43,51 +43,49 @@ const t = getTranslations(language, 'press')
   wide
 >
   <ul class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
-    {
-      LOGO_VARIANTS.map((variant) => {
-        const label = t(`logos.variants.${variant.id}.label`)
-        return (
-          <li class="flex h-full flex-col bg-green-light-100 border border-green-dark-900/20 rounded-2xl overflow-hidden">
-            <div
-              class:list={[
-                'flex items-center justify-center px-8 py-10',
-                variant.onDark ? 'bg-green-dark-900' : 'bg-white',
-              ]}
-            >
-              <img
-                src={PREVIEWS[variant.id].src}
-                alt=""
-                loading="lazy"
-                class="max-h-20 w-auto max-w-full"
-              />
-            </div>
+    {LOGO_VARIANTS.map((variant) => {
+      const label = t(`logos.variants.${variant.id}.label`)
+      return (
+        <li class="flex h-full flex-col bg-green-light-100 border border-green-dark-900/20 rounded-2xl overflow-hidden">
+          <div
+            class:list={[
+              'flex items-center justify-center px-8 py-10',
+              variant.onDark ? 'bg-green-dark-900' : 'bg-white',
+            ]}
+          >
+            <img
+              src={PREVIEWS[variant.id].src}
+              alt=""
+              loading="lazy"
+              class="max-h-20 w-auto max-w-full"
+            />
+          </div>
 
-            <div class="flex flex-1 flex-col p-5 lg:p-6">
-              <h3 class="font-lato font-semibold text-lg text-grey-900 mb-2">{label}</h3>
-              <p class="text-grey-600 text-sm leading-relaxed mb-5">
-                {t(`logos.variants.${variant.id}.description`)}
-              </p>
+          <div class="flex flex-1 flex-col p-5 lg:p-6">
+            <h3 class="font-lato font-semibold text-lg text-grey-900 mb-2">{label}</h3>
+            <p class="text-grey-600 text-sm leading-relaxed mb-5">
+              {t(`logos.variants.${variant.id}.description`)}
+            </p>
 
-              <div class="mt-auto flex flex-wrap gap-2">
-                {variant.downloads.map((download) => (
-                  <ActionButton
-                    href={pressAssetUrl(ASSET_BASE_URL, download.path)}
-                    download
-                    ariaLabel={t('logos.downloadAriaLabel', {
-                      variant: label,
-                      format: download.label,
-                    })}
-                  >
-                    <Download className="w-4 h-4" aria-hidden="true" />
-                    {download.label}
-                  </ActionButton>
-                ))}
-              </div>
+            <div class="mt-auto flex flex-wrap gap-2">
+              {variant.downloads.map((download) => (
+                <ActionButton
+                  href={pressAssetUrl(ASSET_BASE_URL, download.path)}
+                  download
+                  ariaLabel={t('logos.downloadAriaLabel', {
+                    variant: label,
+                    format: download.label,
+                  })}
+                >
+                  <Download className="w-4 h-4" aria-hidden="true" />
+                  {download.label}
+                </ActionButton>
+              ))}
             </div>
-          </li>
-        )
-      })
-    }
+          </div>
+        </li>
+      )
+    })}
   </ul>
 
   <a
@@ -96,17 +94,11 @@ const t = getTranslations(language, 'press')
     aria-label={t('logos.zip.ariaLabel')}
     class="press-spring group mt-4 flex items-center gap-4 rounded-2xl border border-green-dark-900/20 bg-green-light-100 p-5 hover:-translate-y-1 hover:shadow-sm lg:mt-6 lg:p-6"
   >
-    <span
-      class="flex-shrink-0 w-12 h-12 rounded-xl bg-green-dark-900/10 flex items-center justify-center transition-colors group-hover:bg-green-dark-900"
-    >
-      <FileArchive
-        className="w-6 h-6 text-green-dark-900 transition-colors group-hover:text-white"
-      />
+    <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-green-dark-900/10 flex items-center justify-center transition-colors group-hover:bg-green-dark-900">
+      <FileArchive className="w-6 h-6 text-green-dark-900 transition-colors group-hover:text-white" />
     </span>
     <span class="min-w-0">
-      <span
-        class="block font-lato font-semibold text-lg text-grey-900 group-hover:text-green-dark-900 transition-colors"
-      >
+      <span class="block font-lato font-semibold text-lg text-grey-900 group-hover:text-green-dark-900 transition-colors">
         {t('logos.zip.label')}
       </span>
       <span class="block text-grey-600 text-sm">{t('logos.zip.description')}</span>
@@ -117,14 +109,12 @@ const t = getTranslations(language, 'press')
     <h3 class="font-lato font-semibold text-lg text-grey-900 mb-3">{t('logos.usage.title')}</h3>
     <p class="text-grey-900/80 leading-relaxed">{t('logos.usage.intro')}</p>
     <ul class="mt-4 space-y-2">
-      {
-        USAGE_HINTS.map((hint) => (
-          <li class="flex gap-3 text-grey-900/80 leading-relaxed">
-            <span class="mt-2.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-green-light-900" />
-            <span>{t(`logos.usage.${hint}`)}</span>
-          </li>
-        ))
-      }
+      {USAGE_HINTS.map((hint) => (
+        <li class="flex gap-3 text-grey-900/80 leading-relaxed">
+          <span class="mt-2.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-green-light-900" />
+          <span>{t(`logos.usage.${hint}`)}</span>
+        </li>
+      ))}
     </ul>
     <p class="mt-4 text-grey-900/80 leading-relaxed">{t('logos.usage.outro')}</p>
   </div>

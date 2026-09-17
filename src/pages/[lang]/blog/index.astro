@@ -32,20 +32,16 @@ const articles = await getArticles(language)
     id="main-content"
     class="relative overflow-hidden flex-grow before:bg-cover before:bg-background-light-dot before:w-4/5 before:h-[100vh] before:max-h-[45rem] before:absolute before:-right-4 before:-top-16 before:-z-10 before:bg-no-repeat sm:before:-right-10 lg:before:max-h-[55rem] xl:before:w-[70rem] xl:before:-right-40 2xl:before:right-[10%] 2xl:before:bg-contain"
   >
-    <section
-      class="px-4 max-w-208 mx-auto mt-28 pb-16 md:px-6 lg:mt-36 lg:pb-24 lg:max-w-screen-lg xl:mt-52 xl:max-w-screen-xl"
-    >
+    <section class="px-4 max-w-208 mx-auto mt-28 pb-16 md:px-6 lg:mt-36 lg:pb-24 lg:max-w-screen-lg xl:mt-52 xl:max-w-screen-xl">
       <header class="lg:text-center mb-12 lg:mb-16">
         <div class="inline-block mb-4 lg:mx-auto">
-          <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase"
-            >{t('overview.eyebrow')}</span
-          >
+          <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+            {t('overview.eyebrow')}
+          </span>
           <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
         </div>
 
-        <h1
-          class="font-lato font-bold text-3xl mb-4 text-grey-900 leading-tight md:text-4xl lg:text-5xl xl:text-6xl"
-        >
+        <h1 class="font-lato font-bold text-3xl mb-4 text-grey-900 leading-tight md:text-4xl lg:text-5xl xl:text-6xl">
           {t('overview.title')}
         </h1>
 
@@ -54,17 +50,15 @@ const articles = await getArticles(language)
         </p>
       </header>
 
-      {
-        articles.length > 0 ? (
-          <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {articles.map((entry) => (
-              <ArticleCard entry={entry} language={language} />
-            ))}
-          </div>
-        ) : (
-          <p class="text-grey-900/60 lg:text-center">{t('overview.empty')}</p>
-        )
-      }
+      {articles.length > 0 ? (
+        <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {articles.map((entry) => (
+            <ArticleCard entry={entry} language={language} />
+          ))}
+        </div>
+      ) : (
+        <p class="text-grey-900/60 lg:text-center">{t('overview.empty')}</p>
+      )}
     </section>
   </main>
 </BaseLayout>

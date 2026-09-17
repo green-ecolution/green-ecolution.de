@@ -21,39 +21,37 @@ const t = getTranslations(language, 'press')
   wide
 >
   <ul class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
-    {
-      pressMentions.map((mention) => (
-        <li>
-          <a
-            href={mention.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group block h-full bg-green-light-100 border border-green-dark-900/20 rounded-2xl p-5 lg:p-6 shadow-xs hover:shadow-sm transition-all duration-300 hover:-translate-y-1"
-          >
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex-1 min-w-0">
-                <p class="text-xs font-semibold tracking-widest text-green-light-900 uppercase mb-2">
-                  {mention.outlet}
-                </p>
-                <h3 class="font-lato font-semibold text-lg text-grey-900 mb-2 group-hover:text-green-dark-900 transition-colors">
-                  {t(`mentions.items.${mention.id}.title`)}
-                </h3>
-                <p class="text-grey-600 text-sm leading-relaxed">
-                  {t(`mentions.items.${mention.id}.description`)}
-                </p>
-                {mention.date && (
-                  <time datetime={isoDate(mention.date)} class="mt-3 block text-grey-600 text-sm">
-                    {formatLongDate(mention.date, language)}
-                  </time>
-                )}
-              </div>
-              <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-green-dark-900/10 flex items-center justify-center group-hover:bg-green-dark-900 transition-colors">
-                <ArrowUpRight className="w-5 h-5 text-green-dark-900 group-hover:text-white transition-colors" />
-              </div>
+    {pressMentions.map((mention) => (
+      <li>
+        <a
+          href={mention.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group block h-full bg-green-light-100 border border-green-dark-900/20 rounded-2xl p-5 lg:p-6 shadow-xs hover:shadow-sm transition-all duration-300 hover:-translate-y-1"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1 min-w-0">
+              <p class="text-xs font-semibold tracking-widest text-green-light-900 uppercase mb-2">
+                {mention.outlet}
+              </p>
+              <h3 class="font-lato font-semibold text-lg text-grey-900 mb-2 group-hover:text-green-dark-900 transition-colors">
+                {t(`mentions.items.${mention.id}.title`)}
+              </h3>
+              <p class="text-grey-600 text-sm leading-relaxed">
+                {t(`mentions.items.${mention.id}.description`)}
+              </p>
+              {mention.date && (
+                <time datetime={isoDate(mention.date)} class="mt-3 block text-grey-600 text-sm">
+                  {formatLongDate(mention.date, language)}
+                </time>
+              )}
             </div>
-          </a>
-        </li>
-      ))
-    }
+            <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-green-dark-900/10 flex items-center justify-center group-hover:bg-green-dark-900 transition-colors">
+              <ArrowUpRight className="w-5 h-5 text-green-dark-900 group-hover:text-white transition-colors" />
+            </div>
+          </div>
+        </a>
+      </li>
+    ))}
   </ul>
 </PressSection>

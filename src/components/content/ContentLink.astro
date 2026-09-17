@@ -22,14 +22,12 @@ const target = isRootRelative && !alreadyPrefixed ? `/${language}${href}` : href
 const isExternal = /^https?:\/\//.test(href)
 ---
 
-{
-  isExternal ? (
-    <a href={target} target="_blank" rel="noopener noreferrer">
-      <slot />
-    </a>
-  ) : (
-    <a href={target}>
-      <slot />
-    </a>
-  )
-}
+{isExternal ? (
+  <a href={target} target="_blank" rel="noopener noreferrer">
+    <slot />
+  </a>
+) : (
+  <a href={target}>
+    <slot />
+  </a>
+)}

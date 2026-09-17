@@ -74,20 +74,18 @@ const t = getTranslations(language, 'press')
       aria-label={t('pitchDeck.slides.stripLabel')}
       class="scrollbar-none flex snap-x snap-mandatory overflow-x-auto"
     >
-      {
-        slides.map((slide) => (
-          <li data-slide class="w-full flex-shrink-0 snap-start">
-            <Image
-              src={slide}
-              alt=""
-              widths={[640, 1024, 1280]}
-              sizes="(min-width: 1024px) 64rem, 100vw"
-              loading="lazy"
-              class="w-full rounded-xl border border-green-dark-900/20"
-            />
-          </li>
-        ))
-      }
+      {slides.map((slide) => (
+        <li data-slide class="w-full flex-shrink-0 snap-start">
+          <Image
+            src={slide}
+            alt=""
+            widths={[640, 1024, 1280]}
+            sizes="(min-width: 1024px) 64rem, 100vw"
+            loading="lazy"
+            class="w-full rounded-xl border border-green-dark-900/20"
+          />
+        </li>
+      ))}
     </ol>
   </div>
 
@@ -97,12 +95,8 @@ const t = getTranslations(language, 'press')
     class="press-spring group mx-auto mt-8 flex max-w-screen-lg flex-col gap-6 rounded-2xl border border-green-dark-900/20 bg-green-light-100 p-6 hover:-translate-y-1 hover:shadow-sm sm:flex-row sm:items-center sm:justify-between lg:mt-10 lg:p-8"
   >
     <span class="flex items-center gap-4 min-w-0">
-      <span
-        class="flex-shrink-0 w-12 h-12 rounded-xl bg-green-dark-900/10 flex items-center justify-center transition-colors group-hover:bg-green-dark-900"
-      >
-        <FileText
-          className="w-6 h-6 text-green-dark-900 transition-colors group-hover:text-white"
-        />
+      <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-green-dark-900/10 flex items-center justify-center transition-colors group-hover:bg-green-dark-900">
+        <FileText className="w-6 h-6 text-green-dark-900 transition-colors group-hover:text-white" />
       </span>
       <span class="min-w-0">
         <span class="block font-lato font-semibold text-lg text-grey-900">
@@ -112,9 +106,7 @@ const t = getTranslations(language, 'press')
       </span>
     </span>
 
-    <span
-      class="flex-shrink-0 self-start rounded-xl bg-green-dark-900 px-5 py-2.5 font-semibold text-white transition-colors duration-300 group-hover:bg-green-light-900 group-hover:text-grey-900 sm:self-auto"
-    >
+    <span class="flex-shrink-0 self-start rounded-xl bg-green-dark-900 px-5 py-2.5 font-semibold text-white transition-colors duration-300 group-hover:bg-green-light-900 group-hover:text-grey-900 sm:self-auto">
       {t('pitchDeck.download')}
     </span>
   </a>

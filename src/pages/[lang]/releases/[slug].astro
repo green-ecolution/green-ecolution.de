@@ -72,9 +72,7 @@ const tocEntries = sections.map((heading) => ({ id: heading.slug, label: heading
     id="main-content"
     class="relative overflow-x-clip flex-grow before:bg-cover before:bg-background-yellow-dot before:w-4/5 before:h-[100vh] before:max-h-[45rem] before:absolute before:-right-4 before:-top-16 before:-z-10 before:bg-no-repeat sm:before:-right-10 lg:before:max-h-[55rem] xl:before:w-[70rem] xl:before:-right-40 2xl:before:right-[10%] 2xl:before:bg-contain"
   >
-    <article
-      class="px-4 max-w-208 mx-auto mt-20 pb-16 md:px-6 lg:mt-24 lg:pb-24 lg:max-w-screen-lg xl:mt-32 xl:max-w-screen-xl"
-    >
+    <article class="px-4 max-w-208 mx-auto mt-20 pb-16 md:px-6 lg:mt-24 lg:pb-24 lg:max-w-screen-lg xl:mt-32 xl:max-w-screen-xl">
       <a
         href={`/${language}/releases`}
         aria-label={t('detail.backToOverviewAriaLabel')}
@@ -91,25 +89,22 @@ const tocEntries = sections.map((heading) => ({ id: heading.slug, label: heading
 
       <header class="mb-10">
         <div class="inline-block mb-4">
-          <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase"
-            >{t('detail.eyebrow')}</span
-          >
+          <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+            {t('detail.eyebrow')}
+          </span>
           <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
         </div>
 
         <div class="flex flex-col gap-3 mb-4 sm:flex-row sm:flex-wrap sm:items-center">
           <div class="flex flex-wrap items-center gap-3">
-            <span
-              class="bg-green-dark-900 text-white px-4 py-1.5 rounded-full text-sm font-lato font-bold shadow-xs"
-              >v{data.version}</span
-            >
-            {
-              isLatest && (
-                <span class="inline-flex items-center bg-green-light-900 text-white px-4 py-1.5 rounded-full text-sm font-lato font-bold shadow-xs">
-                  {t('badge.current')}
-                </span>
-              )
-            }
+            <span class="bg-green-dark-900 text-white px-4 py-1.5 rounded-full text-sm font-lato font-bold shadow-xs">
+              v{data.version}
+            </span>
+            {isLatest && (
+              <span class="inline-flex items-center bg-green-light-900 text-white px-4 py-1.5 rounded-full text-sm font-lato font-bold shadow-xs">
+                {t('badge.current')}
+              </span>
+            )}
           </div>
           <span class="text-grey-900/30 hidden sm:inline">|</span>
           <div class="flex items-center gap-3">
@@ -138,27 +133,25 @@ const tocEntries = sections.map((heading) => ({ id: heading.slug, label: heading
           {data.title}
         </h1>
 
-        {
-          data.highlights.length > 0 && (
-            <div class="flex flex-wrap gap-2">
-              {data.highlights.map((highlight) => (
-                <span class="bg-green-dark-900/10 text-green-dark-900 px-3 py-1.5 rounded-full text-sm font-medium">
-                  {highlight}
-                </span>
-              ))}
-            </div>
-          )
-        }
+        {data.highlights.length > 0 && (
+          <div class="flex flex-wrap gap-2">
+            {data.highlights.map((highlight) => (
+              <span class="bg-green-dark-900/10 text-green-dark-900 px-3 py-1.5 rounded-full text-sm font-medium">
+                {highlight}
+              </span>
+            ))}
+          </div>
+        )}
 
-        {
-          data.summary && (
-            <p class="mt-4 text-lg text-grey-900/80 leading-relaxed lg:text-xl">{data.summary}</p>
-          )
-        }
+        {data.summary && (
+          <p class="mt-4 text-lg text-grey-900/80 leading-relaxed lg:text-xl">{data.summary}</p>
+        )}
 
         <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
           <AuthorByline author={author} language={language} />
-          <span class="text-grey-900/25" aria-hidden="true">|</span>
+          <span class="text-grey-900/25" aria-hidden="true">
+            |
+          </span>
           <p class="text-sm text-grey-900/55">
             <time datetime={isoDate(data.date)}>
               {t('detail.publishedOn', { date: formatLongDate(data.date, language) })}
@@ -173,93 +166,89 @@ const tocEntries = sections.map((heading) => ({ id: heading.slug, label: heading
             <Content components={{ ...contentComponents, h2: SectionHeading }} />
           </div>
 
-          {
-            data.changelog.length > 0 && (
-              <div class="mt-8">
-                <ReleaseChangelog
-                  version={data.version}
-                  entries={data.changelog}
-                  repository={repository}
-                  language={language}
-                />
-              </div>
-            )
-          }
+          {data.changelog.length > 0 && (
+            <div class="mt-8">
+              <ReleaseChangelog
+                version={data.version}
+                entries={data.changelog}
+                repository={repository}
+                language={language}
+              />
+            </div>
+          )}
         </div>
 
-        {
-          showToc && (
-            <aside class="hidden xl:block">
-              <ReleaseToc entries={tocEntries} strings={tocStrings} client:visible />
-            </aside>
-          )
-        }
+        {showToc && (
+          <aside class="hidden xl:block">
+            <ReleaseToc entries={tocEntries} strings={tocStrings} client:visible />
+          </aside>
+        )}
       </div>
 
       <nav
         aria-label={t('detail.navAriaLabel')}
         class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4"
       >
-        {
-          prev ? (
-            <a
-              href={`/${language}/releases/${releaseSlug(prev)}`}
-              class="group p-5 rounded-2xl border border-grey-200 bg-white hover:border-green-dark-900/30 hover:shadow-lg transition-all"
-            >
-              <span class="text-xs text-grey-500 uppercase tracking-wide font-semibold">
-                {t('detail.newerVersion')}
+        {prev ? (
+          <a
+            href={`/${language}/releases/${releaseSlug(prev)}`}
+            class="group p-5 rounded-2xl border border-grey-200 bg-white hover:border-green-dark-900/30 hover:shadow-lg transition-all"
+          >
+            <span class="text-xs text-grey-500 uppercase tracking-wide font-semibold">
+              {t('detail.newerVersion')}
+            </span>
+            <div class="flex items-center gap-3 mt-2">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-grey-100 text-grey-400 group-hover:bg-green-dark-900 group-hover:text-white transition-all flex-shrink-0">
+                <ArrowLeft className="w-4 h-4" aria-hidden="true" />
               </span>
-              <div class="flex items-center gap-3 mt-2">
-                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-grey-100 text-grey-400 group-hover:bg-green-dark-900 group-hover:text-white transition-all flex-shrink-0">
-                  <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+              <div class="min-w-0">
+                <span class="font-lato font-bold text-grey-900 group-hover:text-green-dark-900 transition-colors">
+                  v{prev.data.version}
                 </span>
-                <div class="min-w-0">
-                  <span class="font-lato font-bold text-grey-900 group-hover:text-green-dark-900 transition-colors">
-                    v{prev.data.version}
-                  </span>
-                  <p class="text-sm text-grey-600 line-clamp-1">{prev.data.title}</p>
-                </div>
+                <p class="text-sm text-grey-600 line-clamp-1">{prev.data.title}</p>
               </div>
-            </a>
-          ) : (
-            <div />
-          )
-        }
-        {
-          next ? (
-            <a
-              href={`/${language}/releases/${releaseSlug(next)}`}
-              class="group p-5 rounded-2xl border border-grey-200 bg-white hover:border-green-dark-900/30 hover:shadow-lg transition-all sm:text-right"
-            >
-              <span class="text-xs text-grey-500 uppercase tracking-wide font-semibold">
-                {t('detail.olderVersion')}
+            </div>
+          </a>
+        ) : (
+          <div />
+        )}
+        {next ? (
+          <a
+            href={`/${language}/releases/${releaseSlug(next)}`}
+            class="group p-5 rounded-2xl border border-grey-200 bg-white hover:border-green-dark-900/30 hover:shadow-lg transition-all sm:text-right"
+          >
+            <span class="text-xs text-grey-500 uppercase tracking-wide font-semibold">
+              {t('detail.olderVersion')}
+            </span>
+            <div class="flex items-center gap-3 mt-2 sm:justify-end">
+              <div class="min-w-0">
+                <span class="font-lato font-bold text-grey-900 group-hover:text-green-dark-900 transition-colors">
+                  v{next.data.version}
+                </span>
+                <p class="text-sm text-grey-600 line-clamp-1">{next.data.title}</p>
+              </div>
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-grey-100 text-grey-400 group-hover:bg-green-dark-900 group-hover:text-white transition-all flex-shrink-0">
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </span>
-              <div class="flex items-center gap-3 mt-2 sm:justify-end">
-                <div class="min-w-0">
-                  <span class="font-lato font-bold text-grey-900 group-hover:text-green-dark-900 transition-colors">
-                    v{next.data.version}
-                  </span>
-                  <p class="text-sm text-grey-600 line-clamp-1">{next.data.title}</p>
-                </div>
-                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-grey-100 text-grey-400 group-hover:bg-green-dark-900 group-hover:text-white transition-all flex-shrink-0">
-                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                </span>
-              </div>
-            </a>
-          ) : (
-            <div />
-          )
-        }
+            </div>
+          </a>
+        ) : (
+          <div />
+        )}
       </nav>
 
       <div class="mt-10 pt-6 border-t border-grey-100 text-center">
         <p class="text-grey-900/60 text-sm">
-          {feedback.before}<a
+          {feedback.before}
+          <a
             href={`${repository}/issues/new`}
             target="_blank"
             rel="noopener noreferrer"
-            class="text-green-dark-900 hover:underline font-medium">{feedback.inner}</a
-          >{feedback.after}
+            class="text-green-dark-900 hover:underline font-medium"
+          >
+            {feedback.inner}
+          </a>
+          {feedback.after}
         </p>
       </div>
     </article>

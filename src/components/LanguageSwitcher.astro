@@ -15,27 +15,25 @@ const restOfPath = Astro.url.pathname.split('/').slice(2).join('/')
 
 <nav aria-label={t('language.switchTo')}>
   <ul class="flex items-center gap-x-2 lg:gap-x-1">
-    {
-      SUPPORTED_LANGUAGES.map((entry) => (
-        <li>
-          <a
-            href={restOfPath ? `/${entry}/${restOfPath}` : `/${entry}`}
-            hreflang={entry}
-            lang={entry}
-            data-lang-switch={entry}
-            aria-current={entry === language ? 'page' : undefined}
-            class:list={[
-              'px-2 py-1 text-sm font-semibold rounded transition-colors ease-in-out duration-300 lg:px-1.5 lg:text-xs',
-              entry === language
-                ? 'text-white underline underline-offset-4 lg:text-green-dark-900'
-                : 'text-white/60 hover:text-green-light-900 lg:text-grey-900/60 lg:hover:text-green-middle-900',
-            ]}
-          >
-            <span class="sr-only">{t(`language.${entry}`)}</span>
-            <span aria-hidden="true">{t(`language.${entry}Short`)}</span>
-          </a>
-        </li>
-      ))
-    }
+    {SUPPORTED_LANGUAGES.map((entry) => (
+      <li>
+        <a
+          href={restOfPath ? `/${entry}/${restOfPath}` : `/${entry}`}
+          hreflang={entry}
+          lang={entry}
+          data-lang-switch={entry}
+          aria-current={entry === language ? 'page' : undefined}
+          class:list={[
+            'px-2 py-1 text-sm font-semibold rounded transition-colors ease-in-out duration-300 lg:px-1.5 lg:text-xs',
+            entry === language
+              ? 'text-white underline underline-offset-4 lg:text-green-dark-900'
+              : 'text-white/60 hover:text-green-light-900 lg:text-grey-900/60 lg:hover:text-green-middle-900',
+          ]}
+        >
+          <span class="sr-only">{t(`language.${entry}`)}</span>
+          <span aria-hidden="true">{t(`language.${entry}Short`)}</span>
+        </a>
+      </li>
+    ))}
   </ul>
 </nav>

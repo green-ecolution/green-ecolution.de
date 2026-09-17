@@ -17,12 +17,8 @@ const metaLinkClasses =
   'relative font-bold transition-all ease-in-out duration-300 hover:text-green-light-900 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-green-light-900 after:transition-all after:duration-300 hover:after:w-full'
 ---
 
-<footer
-  class="py-10 bg-background-footer-mobile bg-no-repeat bg-cover text-white md:pt-16 lg:bg-background-footer-desktop lg:bg-[35%] xl:bg-[55%] 3xl:bg-contain 3xl:bg-center hyphens-auto"
->
-  <div
-    class="px-4 max-w-screen-lg mx-auto md:px-6 md:flex md:items-end md:justify-between md:gap-x-6 xl:max-w-screen-xl"
-  >
+<footer class="py-10 bg-background-footer-mobile bg-no-repeat bg-cover text-white md:pt-16 lg:bg-background-footer-desktop lg:bg-[35%] xl:bg-[55%] 3xl:bg-contain 3xl:bg-center hyphens-auto">
+  <div class="px-4 max-w-screen-lg mx-auto md:px-6 md:flex md:items-end md:justify-between md:gap-x-6 xl:max-w-screen-xl">
     <div class="pb-10 border-b border-b-white/20 md:border-none md:pb-0">
       <a href={`/${language}`} aria-label={t('footer.logoAriaLabel')} class="group">
         <img
@@ -53,13 +49,19 @@ const metaLinkClasses =
       <nav aria-label={t('footer.metaNavAriaLabel')}>
         <ul class="flex items-center justify-center gap-x-6 sm:justify-start md:justify-end">
           <li>
-            <a href={`/${language}/presse`} class={metaLinkClasses}>{t('footer.press')}</a>
+            <a href={`/${language}/presse`} class={metaLinkClasses}>
+              {t('footer.press')}
+            </a>
           </li>
           <li>
-            <a href={`/${language}/impressum`} class={metaLinkClasses}>{t('footer.imprint')}</a>
+            <a href={`/${language}/impressum`} class={metaLinkClasses}>
+              {t('footer.imprint')}
+            </a>
           </li>
           <li>
-            <a href={`/${language}/datenschutz`} class={metaLinkClasses}>{t('footer.privacy')}</a>
+            <a href={`/${language}/datenschutz`} class={metaLinkClasses}>
+              {t('footer.privacy')}
+            </a>
           </li>
         </ul>
       </nav>

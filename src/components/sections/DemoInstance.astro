@@ -16,22 +16,13 @@ const STRIPES =
   'repeating-linear-gradient(135deg, white 0px, white 1px, transparent 1px, transparent 12px)'
 ---
 
-<section
-  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
->
-  <div
-    class="relative bg-gradient-to-tr from-green-dark-900 via-green-middle-900/80 to-green-dark-900 rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl ring-1 ring-white/5"
-  >
+<section class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
+  <div class="relative bg-gradient-to-tr from-green-dark-900 via-green-middle-900/80 to-green-dark-900 rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl ring-1 ring-white/5">
     <div class="absolute inset-0 opacity-[0.025]" style={`background-image: ${STRIPES};`}></div>
 
-    <div
-      class="absolute top-1/2 right-0 w-[30rem] h-[30rem] bg-green-light-900/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"
-    >
-    </div>
+    <div class="absolute top-1/2 right-0 w-[30rem] h-[30rem] bg-green-light-900/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
 
-    <div
-      class="relative z-10 p-6 md:p-10 lg:p-12 xl:p-16 lg:grid lg:grid-cols-[1fr_1.2fr] lg:gap-12 lg:items-center"
-    >
+    <div class="relative z-10 p-6 md:p-10 lg:p-12 xl:p-16 lg:grid lg:grid-cols-[1fr_1.2fr] lg:gap-12 lg:items-center">
       <div class="mb-8 lg:mb-0">
         <div class="inline-block mb-6">
           <span class="text-xs font-bold tracking-widest text-white uppercase">
@@ -55,27 +46,21 @@ const STRIPES =
             class="group inline-flex items-center justify-center gap-x-3 rounded-xl font-semibold px-8 py-4 bg-white text-green-dark-900 transition-all duration-300 hover:bg-green-light-100 hover:shadow-lg hover:shadow-black/20 hover:scale-105 active:scale-100"
           >
             <span>{t('demo.cta')}</span>
-            <ExternalLink
-              className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
+            <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
       </div>
 
       <div class="hidden md:block">
         <div class="bg-white rounded-xl lg:rounded-2xl shadow-2xl overflow-hidden">
-          <div
-            class="flex items-center gap-2 px-3 py-2.5 sm:px-4 sm:py-3 bg-grey-900/5 border-b border-grey-900/10"
-          >
+          <div class="flex items-center gap-2 px-3 py-2.5 sm:px-4 sm:py-3 bg-grey-900/5 border-b border-grey-900/10">
             <div class="flex gap-1.5">
               <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#f87171]"></div>
               <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#fbbf24]"></div>
               <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#4ade80]"></div>
             </div>
             <div class="flex-1 mx-2 sm:mx-4">
-              <div
-                class="h-5 sm:h-6 bg-grey-900/10 rounded-md max-w-xs mx-auto flex items-center justify-center"
-              >
+              <div class="h-5 sm:h-6 bg-grey-900/10 rounded-md max-w-xs mx-auto flex items-center justify-center">
                 <span class="text-[10px] sm:text-xs text-grey-600/60">demo.green-ecolution.de</span>
               </div>
             </div>
