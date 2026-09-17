@@ -50,23 +50,17 @@ const serverLogFileItemIds = [
       label={t('datenschutz.hero.label')}
     />
 
-    <section
-      class="px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl mt-16 mb-28 lg:mb-36 xl:mb-52"
-    >
+    <section class="px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl mt-16 mb-28 lg:mb-36 xl:mb-52">
       <div class="space-y-12">
-        {
-          language !== DEFAULT_LANGUAGE && (
-            <p class="text-sm text-grey-900/70 bg-grey-100/50 border border-grey-200/50 rounded-xl p-4">
-              {t('translationNotice')}
-            </p>
-          )
-        }
+        {language !== DEFAULT_LANGUAGE && (
+          <p class="text-sm text-grey-900/70 bg-grey-100/50 border border-grey-200/50 rounded-xl p-4">
+            {t('translationNotice')}
+          </p>
+        )}
 
         {/* Section 1: Datenschutz auf einen Blick */}
         <div>
-          <h2
-            class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900"
-          >
+          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
             {t('datenschutz.sections.overview.title')}
           </h2>
 
@@ -108,9 +102,7 @@ const serverLogFileItemIds = [
 
         {/* Section 2: Hosting */}
         <div>
-          <h2
-            class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900"
-          >
+          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
             {t('datenschutz.sections.hosting.title')}
           </h2>
 
@@ -120,9 +112,7 @@ const serverLogFileItemIds = [
           <p class="mb-4">{t('datenschutz.sections.hosting.externalHosting.paragraph1')}</p>
           <p class="mb-4">{t('datenschutz.sections.hosting.externalHosting.paragraph2')}</p>
           <p class="mb-4">{t('datenschutz.sections.hosting.externalHosting.paragraph3')}</p>
-          <p class="font-bold">
-            {t('datenschutz.sections.hosting.externalHosting.hostersIntro')}
-          </p>
+          <p class="font-bold">{t('datenschutz.sections.hosting.externalHosting.hostersIntro')}</p>
           <address class="not-italic mt-2 bg-grey-100/50 rounded-xl p-6 border border-grey-200/50">
             <p>Digitalocean LLC</p>
             <p>101 Avenue of the Americas</p>
@@ -133,36 +123,31 @@ const serverLogFileItemIds = [
 
         {/* Section 3: Allgemeine Hinweise und Pflichtinformationen */}
         <div>
-          <h2
-            class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900"
-          >
+          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
             {t('datenschutz.sections.generalInfo.title')}
           </h2>
 
           <h3 class="font-lato font-bold text-xl mb-3 mt-6 text-grey-900">
             {t('datenschutz.sections.generalInfo.dataProtection.title')}
           </h3>
-          <p class="mb-4">
-            {t('datenschutz.sections.generalInfo.dataProtection.paragraph1')}
-          </p>
-          <p class="mb-4">
-            {t('datenschutz.sections.generalInfo.dataProtection.paragraph2')}
-          </p>
+          <p class="mb-4">{t('datenschutz.sections.generalInfo.dataProtection.paragraph1')}</p>
+          <p class="mb-4">{t('datenschutz.sections.generalInfo.dataProtection.paragraph2')}</p>
           <p>{t('datenschutz.sections.generalInfo.dataProtection.paragraph3')}</p>
 
           <h3 class="font-lato font-bold text-xl mb-3 mt-6 text-grey-900">
             {t('datenschutz.sections.generalInfo.responsibleParty.title')}
           </h3>
-          <p class="mb-4">
-            {t('datenschutz.sections.generalInfo.responsibleParty.paragraph1')}
-          </p>
+          <p class="mb-4">{t('datenschutz.sections.generalInfo.responsibleParty.paragraph1')}</p>
           <address class="not-italic mb-4 bg-grey-100/50 rounded-xl p-6 border border-grey-200/50">
             <p class="font-bold">PROGEEK GmbH</p>
             <p>Lise-Meitner-Str. 2</p>
             <p>24941 Flensburg</p>
             <p class="mt-2">
               {t('datenschutz.sections.generalInfo.responsibleParty.emailLabel')}{' '}
-              <a href="mailto:info@progeek.de" class={linkClasses}> info@progeek.de </a>
+              <a href="mailto:info@progeek.de" class={linkClasses}>
+                {' '}
+                info@progeek.de{' '}
+              </a>
             </p>
           </address>
           <p>{t('datenschutz.sections.generalInfo.responsibleParty.paragraph2')}</p>
@@ -215,24 +200,18 @@ const serverLogFileItemIds = [
           <h3 class="font-lato font-bold text-xl mb-3 mt-6 text-grey-900">
             {t('datenschutz.sections.generalInfo.processingRestriction.title')}
           </h3>
-          <p class="mb-4">
-            {t('datenschutz.sections.generalInfo.processingRestriction.intro')}
-          </p>
+          <p class="mb-4">{t('datenschutz.sections.generalInfo.processingRestriction.intro')}</p>
           <ul class="list-disc list-inside space-y-2 mb-4">
-            {
-              processingRestrictionItemIds.map((id) => (
-                <li>{t(`datenschutz.sections.generalInfo.processingRestriction.items.${id}`)}</li>
-              ))
-            }
+            {processingRestrictionItemIds.map((id) => (
+              <li>{t(`datenschutz.sections.generalInfo.processingRestriction.items.${id}`)}</li>
+            ))}
           </ul>
           <p>{t('datenschutz.sections.generalInfo.processingRestriction.outro')}</p>
         </div>
 
         {/* Section 4: Datenerfassung auf dieser Website */}
         <div>
-          <h2
-            class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900"
-          >
+          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
             {t('datenschutz.sections.dataCollection.title')}
           </h2>
 
@@ -250,31 +229,23 @@ const serverLogFileItemIds = [
           </h3>
           <p class="mb-4">{t('datenschutz.sections.dataCollection.serverLogFiles.intro')}</p>
           <ul class="list-disc list-inside space-y-1 mb-4">
-            {
-              serverLogFileItemIds.map((id) => (
-                <li>{t(`datenschutz.sections.dataCollection.serverLogFiles.items.${id}`)}</li>
-              ))
-            }
+            {serverLogFileItemIds.map((id) => (
+              <li>{t(`datenschutz.sections.dataCollection.serverLogFiles.items.${id}`)}</li>
+            ))}
           </ul>
           <p>{t('datenschutz.sections.dataCollection.serverLogFiles.outro')}</p>
 
           <h3 class="font-lato font-bold text-xl mb-3 mt-6 text-grey-900">
             {t('datenschutz.sections.dataCollection.contactForm.title')}
           </h3>
-          <p class="mb-4">
-            {t('datenschutz.sections.dataCollection.contactForm.paragraph1')}
-          </p>
-          <p class="mb-4">
-            {t('datenschutz.sections.dataCollection.contactForm.paragraph2')}
-          </p>
+          <p class="mb-4">{t('datenschutz.sections.dataCollection.contactForm.paragraph1')}</p>
+          <p class="mb-4">{t('datenschutz.sections.dataCollection.contactForm.paragraph2')}</p>
           <p>{t('datenschutz.sections.dataCollection.contactForm.paragraph3')}</p>
         </div>
 
         {/* Section 5: Plugins und Tools */}
         <div>
-          <h2
-            class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900"
-          >
+          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
             {t('datenschutz.sections.pluginsAndTools.title')}
           </h2>
 
@@ -294,7 +265,8 @@ const serverLogFileItemIds = [
               class={linkClasses}
             >
               {t('datenschutz.sections.pluginsAndTools.ndrMediathek.privacyPolicyLinkLabel')}
-            </a>.
+            </a>
+            .
           </p>
         </div>
 

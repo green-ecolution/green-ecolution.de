@@ -81,16 +81,12 @@ const feeds = [
     {description && <meta name="twitter:description" content={description} />}
     {canonical && <meta property="og:url" content={canonical} />}
     {canonical && <link rel="canonical" href={canonical} />}
-    {
-      alternates.map((alternate) => (
-        <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
-      ))
-    }
-    {
-      feeds.map((feed) => (
-        <link rel="alternate" type="application/rss+xml" title={feed.title} href={feed.href} />
-      ))
-    }
+    {alternates.map((alternate) => (
+      <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
+    ))}
+    {feeds.map((feed) => (
+      <link rel="alternate" type="application/rss+xml" title={feed.title} href={feed.href} />
+    ))}
     <meta name="author" content="Green Ecolution" />
     <meta property="og:site_name" content="Green Ecolution" />
     <meta property="og:image" content={ogImage} />
@@ -122,22 +118,23 @@ const feeds = [
     />
     <meta name="msapplication-TileColor" content="#4C7741" />
 
-    <script type="application/ld+json" is:inline set:html={JSON.stringify(organizationSchema)} />
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(organizationSchema)}
+    ></script>
     <!-- The analytics client is injected by src/scripts/analytics.ts, and only
     on the public site. -->
 
     <ClientRouter />
   </head>
-  <body
-    class="bg-white antialiased font-nunito-sans text-base text-grey-900 w-full overflow-x-hidden lg:text-lg selection:bg-green-light-900/20 selection:text-grey-900"
-  >
+  <body class="bg-white antialiased font-nunito-sans text-base text-grey-900 w-full overflow-x-hidden lg:text-lg selection:bg-green-light-900/20 selection:text-grey-900">
     <div class="fixed top-0 left-0 right-0 h-1 z-[60] bg-transparent">
       <div
         id="scroll-progress"
         class="h-full w-full origin-left bg-gradient-to-r from-green-dark-900 via-green-middle-900 to-green-light-900"
         style="transform: scaleX(0); will-change: transform;"
-      >
-      </div>
+      ></div>
     </div>
 
     <Header language={language} />

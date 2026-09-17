@@ -35,17 +35,15 @@ const ADVANTAGES = [
       <p class="text-grey-600 leading-relaxed">{t('advantages.description')}</p>
     </article>
 
-    {
-      ADVANTAGES.map((advantage) => (
-        <article class="mb-4 last:mb-0 md:mb-0">
-          <AdvantageCard
-            label={t(`advantages.items.${advantage.id}.title`)}
-            icon={advantage.icon}
-            description={t(`advantages.items.${advantage.id}.description`)}
-            accentColor={advantage.accentColor}
-          />
-        </article>
-      ))
-    }
+    {ADVANTAGES.map((advantage) => (
+      <article class="mb-4 last:mb-0 md:mb-0">
+        <AdvantageCard
+          label={t(`advantages.items.${advantage.id}.title`)}
+          icon={advantage.icon}
+          description={t(`advantages.items.${advantage.id}.description`)}
+          accentColor={advantage.accentColor}
+        />
+      </article>
+    ))}
   </div>
 </section>

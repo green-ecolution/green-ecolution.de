@@ -27,22 +27,13 @@ const t = getTranslations(language, 'contact')
     <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
   </div>
 
-  <div
-    class="relative bg-gradient-to-br from-green-dark-900 via-green-dark-900 to-green-middle-900 rounded-2xl lg:rounded-3xl p-6 md:p-10 lg:p-12 shadow-xl overflow-hidden"
-  >
-    <div
-      class="absolute top-0 right-0 w-96 h-96 bg-green-light-900/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"
-    >
-    </div>
-    <div
-      class="absolute bottom-0 left-0 w-64 h-64 bg-green-middle-900/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"
-    >
-    </div>
+  <div class="relative bg-gradient-to-br from-green-dark-900 via-green-dark-900 to-green-middle-900 rounded-2xl lg:rounded-3xl p-6 md:p-10 lg:p-12 shadow-xl overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-green-light-900/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-green-middle-900/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
     <div
       class="absolute inset-0 opacity-5"
       style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"
-    >
-    </div>
+    ></div>
 
     <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:gap-12">
       <div class="flex-1 text-center lg:text-left">
@@ -83,11 +74,9 @@ const t = getTranslations(language, 'contact')
 
           <div class="absolute bottom-4 left-0 right-0 h-1.5 bg-white/25 rounded-full"></div>
           <div class="absolute bottom-5 left-0 right-0 flex justify-around opacity-20">
-            {
-              Array.from({ length: 12 }).map(() => (
-                <div class="w-0.5 h-2 bg-white/40 rounded-full" />
-              ))
-            }
+            {Array.from({ length: 12 }).map(() => (
+              <div class="w-0.5 h-2 bg-white/40 rounded-full" />
+            ))}
           </div>
 
           <svg class="absolute bottom-4 right-4 w-16 h-28" viewBox="0 0 64 112">

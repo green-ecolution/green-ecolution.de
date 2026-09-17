@@ -54,16 +54,14 @@ const leaves = [
 ---
 
 <div class="relative mt-12 lg:mt-16">
-  {
-    leaves.map((leaf) => (
-      <div
-        class:list={['absolute pointer-events-none floating-leaf', leaf.class]}
-        style={`animation-delay: ${leaf.delay}`}
-      >
-        <Leaf className="w-6 h-6 text-green-light-900/20 rotate-45" />
-      </div>
-    ))
-  }
+  {leaves.map((leaf) => (
+    <div
+      class:list={['absolute pointer-events-none floating-leaf', leaf.class]}
+      style={`animation-delay: ${leaf.delay}`}
+    >
+      <Leaf className="w-6 h-6 text-green-light-900/20 rotate-45" />
+    </div>
+  ))}
 
   <div class="text-center mb-10 lg:mb-12">
     <div class="inline-flex items-center gap-2 px-4 py-2 bg-green-light-100 rounded-full mb-4">
@@ -75,68 +73,66 @@ const leaves = [
   </div>
 
   <div class="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
-    {
-      cards.map((card) => (
-        <div>
-          <a
-            href={card.href}
-            target={card.isExternal ? '_blank' : undefined}
-            rel={card.isExternal ? 'noopener noreferrer' : undefined}
-            class:list={[
-              'group relative flex flex-col items-center text-center p-6 md:p-8 h-full bg-gradient-to-br border-2 rounded-3xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1',
-              card.accent.bg,
-              card.accent.border,
-              card.accent.hover,
-            ]}
-          >
-            <div class="absolute -top-3 -right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div
-                class:list={[
-                  'w-8 h-8 rounded-full flex items-center justify-center shadow-lg',
-                  card.accent.icon,
-                ]}
-              >
-                <Leaf className="w-4 h-4 text-white" />
-              </div>
-            </div>
-
+    {cards.map((card) => (
+      <div>
+        <a
+          href={card.href}
+          target={card.isExternal ? '_blank' : undefined}
+          rel={card.isExternal ? 'noopener noreferrer' : undefined}
+          class:list={[
+            'group relative flex flex-col items-center text-center p-6 md:p-8 h-full bg-gradient-to-br border-2 rounded-3xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1',
+            card.accent.bg,
+            card.accent.border,
+            card.accent.hover,
+          ]}
+        >
+          <div class="absolute -top-3 -right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div
               class:list={[
-                'w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300',
+                'w-8 h-8 rounded-full flex items-center justify-center shadow-lg',
                 card.accent.icon,
               ]}
             >
-              {card.image ? (
-                <img
-                  src={card.image}
-                  class="w-7 h-7 md:w-8 md:h-8 brightness-0 invert"
-                  alt=""
-                  loading="lazy"
-                />
-              ) : (
-                <Mail className="w-7 h-7 md:w-8 md:h-8 text-white" />
-              )}
+              <Leaf className="w-4 h-4 text-white" />
             </div>
+          </div>
 
-            <h3 class="font-lato font-bold text-xl md:text-2xl text-grey-900 mb-2">{card.title}</h3>
-            <p class="text-grey-900/80 text-sm md:text-base leading-relaxed mb-6 flex-grow">
-              {card.description}
-            </p>
+          <div
+            class:list={[
+              'w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300',
+              card.accent.icon,
+            ]}
+          >
+            {card.image ? (
+              <img
+                src={card.image}
+                class="w-7 h-7 md:w-8 md:h-8 brightness-0 invert"
+                alt=""
+                loading="lazy"
+              />
+            ) : (
+              <Mail className="w-7 h-7 md:w-8 md:h-8 text-white" />
+            )}
+          </div>
 
-            <div class="flex items-center justify-center gap-2 text-green-dark-900 font-semibold group-hover:gap-3 transition-all duration-300">
-              <span>{card.cta}</span>
-              {card.isExternal ? (
-                <ExternalLink className="w-4 h-4" />
-              ) : (
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-              )}
-            </div>
+          <h3 class="font-lato font-bold text-xl md:text-2xl text-grey-900 mb-2">{card.title}</h3>
+          <p class="text-grey-900/80 text-sm md:text-base leading-relaxed mb-6 flex-grow">
+            {card.description}
+          </p>
 
-            <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/20" />
-          </a>
-        </div>
-      ))
-    }
+          <div class="flex items-center justify-center gap-2 text-green-dark-900 font-semibold group-hover:gap-3 transition-all duration-300">
+            <span>{card.cta}</span>
+            {card.isExternal ? (
+              <ExternalLink className="w-4 h-4" />
+            ) : (
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+            )}
+          </div>
+
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/20" />
+        </a>
+      </div>
+    ))}
   </div>
 
   <div class="flex justify-center mt-12 lg:mt-16">

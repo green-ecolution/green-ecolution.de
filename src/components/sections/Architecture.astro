@@ -61,163 +61,162 @@ const lastIndex = architectureSteps.length - 1
   </article>
 
   <div class="hidden lg:flex items-start justify-center">
-    {
-      architectureSteps.map((step, index) => {
-        const config = CARD_CONFIGS[index]
-        const Icon = step.icon
+    {architectureSteps.map((step, index) => {
+      const config = CARD_CONFIGS[index]
+      const Icon = step.icon
 
-        return (
-          <div class="flex items-center">
-            <div class="group relative">
+      return (
+        <div class="flex items-center">
+          <div class="group relative">
+            <div
+              class:list={[
+                'relative bg-gradient-to-br rounded-2xl p-5 lg:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ring-1 ring-white/10 overflow-hidden w-full lg:w-40 xl:w-48',
+                config.gradient,
+                config.glow,
+              ]}
+            >
+              <div class="absolute top-3 right-4 text-5xl lg:text-6xl font-lato font-bold text-white/15 select-none pointer-events-none leading-none">
+                {config.number}
+              </div>
               <div
-                class:list={[
-                  'relative bg-gradient-to-br rounded-2xl p-5 lg:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ring-1 ring-white/10 overflow-hidden w-full lg:w-40 xl:w-48',
-                  config.gradient,
-                  config.glow,
-                ]}
-              >
-                <div class="absolute top-3 right-4 text-5xl lg:text-6xl font-lato font-bold text-white/15 select-none pointer-events-none leading-none">
-                  {config.number}
+                class="absolute inset-0 opacity-5"
+                style={`background-image: ${GRID_PATTERN}; background-size: 20px 20px;`}
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-white/0 via-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div class="relative z-10">
+                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 ring-1 ring-white/20">
+                  <Icon className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
                 </div>
-                <div
-                  class="absolute inset-0 opacity-5"
-                  style={`background-image: ${GRID_PATTERN}; background-size: 20px 20px;`}
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-white/0 via-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div class="relative z-10">
-                  <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 ring-1 ring-white/20">
-                    <Icon className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
-                  </div>
-                  <h3 class="font-lato font-bold text-lg lg:text-xl text-white mb-1">
-                    {t(`architecture.steps.${step.id}.label`)}
-                  </h3>
-                  <p class="text-white/70 text-sm leading-relaxed">
-                    {t(`architecture.steps.${step.id}.description`)}
-                  </p>
-                </div>
+                <h3 class="font-lato font-bold text-lg lg:text-xl text-white mb-1">
+                  {t(`architecture.steps.${step.id}.label`)}
+                </h3>
+                <p class="text-white/70 text-sm leading-relaxed">
+                  {t(`architecture.steps.${step.id}.description`)}
+                </p>
               </div>
             </div>
-
-            {index < lastIndex && (
-              <div class="hidden lg:flex items-center justify-center w-20 xl:w-28">
-                <svg viewBox="0 0 100 40" class="w-full h-10" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id={`lineGrad${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#4C7741" stop-opacity="0.6" />
-                      <stop offset="50%" stop-color="#ACB63B" stop-opacity="0.8" />
-                      <stop offset="100%" stop-color="#4C7741" stop-opacity="0.6" />
-                    </linearGradient>
-                    {/* Unique per line: the react version reused one id across all
-                        three, so every mpath resolved to the first path. */}
-                    <path id={`flowPath${index}`} d={FLOW_PATH} />
-                  </defs>
-
-                  <path
-                    d={FLOW_PATH}
-                    fill="none"
-                    stroke="rgba(76, 119, 65, 0.2)"
-                    stroke-width="2"
-                    stroke-dasharray="4 4"
-                  />
-                  <path
-                    d={FLOW_PATH}
-                    fill="none"
-                    stroke={`url(#lineGrad${index})`}
-                    stroke-width="2"
-                  />
-
-                  {[0, 0.7, 1.4].map((offset) => (
-                    <circle r="3" fill="#ACB63B" opacity="0.9" class="motion-only">
-                      <animate
-                        attributeName="opacity"
-                        values="0;1;1;0"
-                        dur="2s"
-                        begin={`${offset + index * 0.3}s`}
-                        repeatCount="indefinite"
-                      />
-                      <animateMotion
-                        dur="2s"
-                        begin={`${offset + index * 0.3}s`}
-                        repeatCount="indefinite"
-                      >
-                        <mpath href={`#flowPath${index}`} />
-                      </animateMotion>
-                    </circle>
-                  ))}
-
-                  <polygon points="92,20 100,17 100,23" fill="#ACB63B" />
-                </svg>
-              </div>
-            )}
           </div>
-        )
-      })
-    }
+
+          {index < lastIndex && (
+            <div class="hidden lg:flex items-center justify-center w-20 xl:w-28">
+              <svg viewBox="0 0 100 40" class="w-full h-10" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id={`lineGrad${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#4C7741" stop-opacity="0.6" />
+                    <stop offset="50%" stop-color="#ACB63B" stop-opacity="0.8" />
+                    <stop offset="100%" stop-color="#4C7741" stop-opacity="0.6" />
+                  </linearGradient>
+                  {/* Unique per line: the react version reused one id across all
+                        three, so every mpath resolved to the first path. */}
+                  <path id={`flowPath${index}`} d={FLOW_PATH} />
+                </defs>
+
+                <path
+                  d={FLOW_PATH}
+                  fill="none"
+                  stroke="rgba(76, 119, 65, 0.2)"
+                  stroke-width="2"
+                  stroke-dasharray="4 4"
+                />
+                <path
+                  d={FLOW_PATH}
+                  fill="none"
+                  stroke={`url(#lineGrad${index})`}
+                  stroke-width="2"
+                />
+
+                {[0, 0.7, 1.4].map((offset) => (
+                  <circle r="3" fill="#ACB63B" opacity="0.9" class="motion-only">
+                    <animate
+                      attributeName="opacity"
+                      values="0;1;1;0"
+                      dur="2s"
+                      begin={`${offset + index * 0.3}s`}
+                      repeatCount="indefinite"
+                    />
+                    <animateMotion
+                      dur="2s"
+                      begin={`${offset + index * 0.3}s`}
+                      repeatCount="indefinite"
+                    >
+                      <mpath href={`#flowPath${index}`} />
+                    </animateMotion>
+                  </circle>
+                ))}
+
+                <polygon points="92,20 100,17 100,23" fill="#ACB63B" />
+              </svg>
+            </div>
+          )}
+        </div>
+      )
+    })}
   </div>
 
   <div class="lg:hidden flex flex-col items-center max-w-sm mx-auto">
-    {
-      architectureSteps.map((step, index) => {
-        const config = CARD_CONFIGS[index]
-        const Icon = step.icon
+    {architectureSteps.map((step, index) => {
+      const config = CARD_CONFIGS[index]
+      const Icon = step.icon
 
-        return (
-          <div class="w-full">
-            <div class="group relative">
+      return (
+        <div class="w-full">
+          <div class="group relative">
+            <div
+              class:list={[
+                'relative bg-gradient-to-br rounded-2xl p-5 lg:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ring-1 ring-white/10 overflow-hidden w-full lg:w-40 xl:w-48',
+                config.gradient,
+                config.glow,
+              ]}
+            >
+              <div class="absolute top-3 right-4 text-5xl lg:text-6xl font-lato font-bold text-white/15 select-none pointer-events-none leading-none">
+                {config.number}
+              </div>
               <div
-                class:list={[
-                  'relative bg-gradient-to-br rounded-2xl p-5 lg:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ring-1 ring-white/10 overflow-hidden w-full lg:w-40 xl:w-48',
-                  config.gradient,
-                  config.glow,
-                ]}
-              >
-                <div class="absolute top-3 right-4 text-5xl lg:text-6xl font-lato font-bold text-white/15 select-none pointer-events-none leading-none">
-                  {config.number}
+                class="absolute inset-0 opacity-5"
+                style={`background-image: ${GRID_PATTERN}; background-size: 20px 20px;`}
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-white/0 via-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div class="relative z-10">
+                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 ring-1 ring-white/20">
+                  <Icon className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
                 </div>
-                <div
-                  class="absolute inset-0 opacity-5"
-                  style={`background-image: ${GRID_PATTERN}; background-size: 20px 20px;`}
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-white/0 via-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div class="relative z-10">
-                  <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 ring-1 ring-white/20">
-                    <Icon className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
-                  </div>
-                  <h3 class="font-lato font-bold text-lg lg:text-xl text-white mb-1">
-                    {t(`architecture.steps.${step.id}.label`)}
-                  </h3>
-                  <p class="text-white/70 text-sm leading-relaxed">
-                    {t(`architecture.steps.${step.id}.description`)}
-                  </p>
-                </div>
+                <h3 class="font-lato font-bold text-lg lg:text-xl text-white mb-1">
+                  {t(`architecture.steps.${step.id}.label`)}
+                </h3>
+                <p class="text-white/70 text-sm leading-relaxed">
+                  {t(`architecture.steps.${step.id}.description`)}
+                </p>
               </div>
             </div>
-
-            {index < lastIndex && (
-              <div class="flex lg:hidden justify-center py-3">
-                <svg viewBox="0 0 24 24" class="w-5 h-5 text-green-dark-900/40">
-                  <path
-                    d="M6 9 L12 15 L18 9"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-            )}
           </div>
-        )
-      })
-    }
+
+          {index < lastIndex && (
+            <div class="flex lg:hidden justify-center py-3">
+              <svg viewBox="0 0 24 24" class="w-5 h-5 text-green-dark-900/40">
+                <path
+                  d="M6 9 L12 15 L18 9"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          )}
+        </div>
+      )
+    })}
   </div>
 
   <p class="text-sm text-grey-900/70 leading-relaxed max-w-2xl mx-auto mt-10 lg:text-center">
-    {streamlet.before}<a
+    {streamlet.before}
+    <a
       href={`/${language}/streamlet`}
       class="font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
-      >{streamlet.inner}</a
-    >{streamlet.after}
+    >
+      {streamlet.inner}
+    </a>
+    {streamlet.after}
   </p>
 </section>

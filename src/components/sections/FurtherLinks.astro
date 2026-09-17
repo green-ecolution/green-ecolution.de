@@ -31,9 +31,7 @@ const LINKS = [
 ] as const
 ---
 
-<section
-  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
->
+<section class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
   <article class="mb-8 lg:mb-12 lg:text-center">
     <div class="inline-block mb-4 lg:mx-auto">
       <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
@@ -45,31 +43,29 @@ const LINKS = [
   </article>
 
   <ul class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-    {
-      LINKS.map((link) => (
-        <li>
-          <a
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group block h-full bg-green-light-100 border border-green-dark-900/20 rounded-2xl p-5 lg:p-6 shadow-xs hover:shadow-sm transition-all duration-300 hover:-translate-y-1"
-          >
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex-1 min-w-0">
-                <h3 class="font-lato font-semibold text-lg text-grey-900 mb-2 group-hover:text-green-dark-900 transition-colors">
-                  {t(`resources.items.${link.id}.label`)}
-                </h3>
-                <p class="text-grey-600 text-sm leading-relaxed">
-                  {t(`resources.items.${link.id}.description`)}
-                </p>
-              </div>
-              <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-green-dark-900/10 flex items-center justify-center group-hover:bg-green-dark-900 transition-colors">
-                <ArrowUpRight className="w-5 h-5 text-green-dark-900 group-hover:text-white transition-colors" />
-              </div>
+    {LINKS.map((link) => (
+      <li>
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group block h-full bg-green-light-100 border border-green-dark-900/20 rounded-2xl p-5 lg:p-6 shadow-xs hover:shadow-sm transition-all duration-300 hover:-translate-y-1"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1 min-w-0">
+              <h3 class="font-lato font-semibold text-lg text-grey-900 mb-2 group-hover:text-green-dark-900 transition-colors">
+                {t(`resources.items.${link.id}.label`)}
+              </h3>
+              <p class="text-grey-600 text-sm leading-relaxed">
+                {t(`resources.items.${link.id}.description`)}
+              </p>
             </div>
-          </a>
-        </li>
-      ))
-    }
+            <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-green-dark-900/10 flex items-center justify-center group-hover:bg-green-dark-900 transition-colors">
+              <ArrowUpRight className="w-5 h-5 text-green-dark-900 group-hover:text-white transition-colors" />
+            </div>
+          </div>
+        </a>
+      </li>
+    ))}
   </ul>
 </section>

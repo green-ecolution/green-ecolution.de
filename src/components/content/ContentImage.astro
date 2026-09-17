@@ -15,12 +15,10 @@ const imageClass = 'mx-auto h-auto max-w-full rounded-xl shadow-lg border border
 ---
 
 <span class="content-figure block">
-  {
-    typeof src === 'string' ? (
-      <img src={src} alt={alt} class={imageClass} loading="lazy" decoding="async" />
-    ) : (
-      <Image src={src} alt={alt} class={imageClass} />
-    )
-  }
+  {typeof src === 'string' ? (
+    <img src={src} alt={alt} class={imageClass} loading="lazy" decoding="async" />
+  ) : (
+    <Image src={src} alt={alt} class={imageClass} />
+  )}
   {alt && <span class="mt-2 block text-center text-sm text-grey-900/60">{alt}</span>}
 </span>

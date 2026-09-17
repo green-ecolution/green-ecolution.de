@@ -13,9 +13,7 @@ const { language } = Astro.props
 const t = getTranslations(language, 'project')
 ---
 
-<section
-  class="my-20 px-4 max-w-208 mx-auto md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
->
+<section class="my-20 px-4 max-w-208 mx-auto md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
   <article class="mb-10 lg:mb-14 lg:text-center">
     <div class="inline-block mb-4 lg:mx-auto">
       <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
@@ -35,26 +33,17 @@ const t = getTranslations(language, 'project')
   </article>
 
   <figure class="relative">
-    <div
-      class="absolute inset-0 bg-gradient-to-b from-green-light-900/10 via-green-dark-900/5 to-transparent rounded-3xl blur-3xl scale-110"
-    >
-    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-green-light-900/10 via-green-dark-900/5 to-transparent rounded-3xl blur-3xl scale-110"></div>
 
-    <div
-      class="relative bg-white rounded-2xl lg:rounded-3xl shadow-xl border border-grey-900/10 overflow-hidden"
-    >
-      <div
-        class="flex items-center gap-2 px-2 py-2 sm:px-4 sm:py-3 bg-grey-900/5 border-b border-grey-900/10"
-      >
+    <div class="relative bg-white rounded-2xl lg:rounded-3xl shadow-xl border border-grey-900/10 overflow-hidden">
+      <div class="flex items-center gap-2 px-2 py-2 sm:px-4 sm:py-3 bg-grey-900/5 border-b border-grey-900/10">
         <div class="flex gap-1 sm:gap-1.5">
           <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#f87171]"></div>
           <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#fbbf24]"></div>
           <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#4ade80]"></div>
         </div>
         <div class="flex-1 mx-2 sm:mx-4">
-          <div
-            class="h-5 sm:h-6 bg-grey-900/10 rounded-md max-w-md mx-auto flex items-center justify-center"
-          >
+          <div class="h-5 sm:h-6 bg-grey-900/10 rounded-md max-w-md mx-auto flex items-center justify-center">
             <span class="text-[10px] sm:text-xs text-grey-600/60">app.green-ecolution.de</span>
           </div>
         </div>
@@ -68,9 +57,7 @@ const t = getTranslations(language, 'project')
           sizes="(min-width: 1280px) 1280px, 100vw"
           class="w-full h-auto"
         />
-        <div
-          class="hidden md:block absolute top-[25%] right-[3%] w-[42%] pointer-events-none bg-white"
-        >
+        <div class="hidden md:block absolute top-[25%] right-[3%] w-[42%] pointer-events-none bg-white">
           <DashboardAnimation client:visible />
         </div>
       </div>
