@@ -174,7 +174,7 @@ function LoopBody({ elapsedMs }: { elapsedMs: number }) {
           </p>
         </div>
         <img
-          src="/assets/showcase/qr-demo.svg"
+          src="/assets/showcase/qr-demo.png"
           alt=""
           className="h-24 w-24 rounded bg-white p-1.5 ring-1 ring-black/10"
         />
