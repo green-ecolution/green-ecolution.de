@@ -3,9 +3,9 @@ import { useT } from '../../../i18n/useT'
 import type { Scene } from '../../../data/showcase'
 import { delay } from '../../../lib/showcase/delay'
 
-// Four addresses, four kinds of address: the labels say which is which, because
-// two of the four are green-ecolution.de with something in front of it.
-const CONTACTS = ['website', 'email', 'github', 'demo'] as const
+// Five addresses, five kinds of address: the labels say which is which, because
+// three of the five are green-ecolution.de with something in front of it.
+const CONTACTS = ['website', 'email', 'github', 'demo', 'instagram'] as const
 
 const RULE = '#E8EBCC33'
 
@@ -55,9 +55,9 @@ export default function ClosingScene({ scene }: { scene: Scene }) {
         {t(`scenes.${scene.id}.body`)}
       </p>
 
-      {/* Even gaps, not even columns: the four addresses differ in width by half
-          again, and a four-column grid turns that into four different gaps. */}
-      <div className="mt-20 flex items-start justify-center gap-24">
+      {/* Even gaps, not even columns: the five addresses differ in width by half
+          again, and a five-column grid turns that into five different gaps. */}
+      <div className="mt-20 flex items-start justify-center gap-20">
         {CONTACTS.map((contact, index) => (
           <div
             key={contact}
