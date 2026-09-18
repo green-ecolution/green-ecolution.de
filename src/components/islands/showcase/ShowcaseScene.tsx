@@ -3,6 +3,7 @@ import { isDarkAct, type Scene } from '../../../data/showcase'
 import ClosingScene from './ClosingScene'
 import DemoScene from './DemoScene'
 import ExhibitScene from './ExhibitScene'
+import MoreScene from './MoreScene'
 import PhotoScene from './PhotoScene'
 import ShowcaseVisual from './ShowcaseVisual'
 import StatementScene from './StatementScene'
@@ -32,6 +33,8 @@ function ShowcaseScene({ scene }: { scene: Scene }) {
       )
     case 'photo':
       return <PhotoScene scene={scene}>{visual}</PhotoScene>
+    case 'more':
+      return <MoreScene scene={scene} />
     case 'demo':
       return <DemoScene scene={scene} />
     case 'closing':

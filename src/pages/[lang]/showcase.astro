@@ -31,7 +31,8 @@ const keys = [
   'tooSmall.viewport',
   'tooSmall.continue',
   'gauge.tankLabel',
-  ...['website', 'email', 'github', 'demo'].flatMap((contact) => [
+  ...['website', 'instagram'].flatMap((link) => [`links.${link}.label`, `links.${link}.value`]),
+  ...['website', 'email', 'github', 'demo', 'instagram'].flatMap((contact) => [
     `contact.${contact}.label`,
     `contact.${contact}.value`,
   ]),

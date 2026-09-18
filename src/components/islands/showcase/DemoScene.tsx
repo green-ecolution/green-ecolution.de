@@ -37,7 +37,7 @@ export default function DemoScene({ scene }: { scene: Scene }) {
           className="showcase-rise rounded-[1.5rem] bg-white p-6"
           style={{ ...delay(240), boxShadow: '0 2rem 4.5rem -1.75rem rgba(0,0,0,0.35)' }}
         >
-          <img src="/assets/showcase/qr-demo.svg" alt="" className="block h-[26rem] w-[26rem]" />
+          <img src="/assets/showcase/qr-demo.png" alt="" className="block h-[26rem] w-[26rem]" />
         </div>
         <p
           className="showcase-rise mt-10 font-lato text-5xl font-light tracking-[-0.022em]"

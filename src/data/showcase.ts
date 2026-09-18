@@ -1,6 +1,6 @@
 export type Act = 'lage' | 'boden' | 'software' | 'fahrt'
 export type Step = 'messen' | 'verstehen' | 'handeln'
-export type Layout = 'title' | 'statement' | 'exhibit' | 'photo' | 'demo' | 'closing'
+export type Layout = 'title' | 'statement' | 'exhibit' | 'photo' | 'more' | 'demo' | 'closing'
 
 // The four Ken Burns directions a full-bleed photo can carry: 'in' grows the
 // crop over the scene, 'out' shrinks it back toward the resting scale, and
@@ -21,6 +21,7 @@ export type SceneId =
   | 'inspection'
   | 'team'
   | 'open-source'
+  | 'more'
   | 'demo'
   | 'closing'
 
@@ -198,6 +199,17 @@ export const showcaseScenes: Scene[] = [
     layout: 'statement',
     seconds: 14,
     visual: { kind: 'partners' },
+  },
+  {
+    id: 'more',
+    act: 'fahrt',
+    layout: 'more',
+    seconds: 12,
+    // The corner code sits directly under the two large ones. Three scan
+    // targets at once is one too many, so it steps back a slide early and
+    // stays out over the demo slide that follows.
+    hideChrome: ['qr', 'tour'],
+    visual: { kind: 'none' },
   },
   {
     id: 'demo',

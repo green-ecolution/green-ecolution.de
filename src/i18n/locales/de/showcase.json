@@ -22,11 +22,16 @@
   "gauge": {
     "tankLabel": "Tank"
   },
+  "links": {
+    "website": { "label": "Website", "value": "green-ecolution.de" },
+    "instagram": { "label": "Instagram", "value": "@green.ecolution" }
+  },
   "contact": {
     "website": { "label": "Website", "value": "green-ecolution.de" },
     "email": { "label": "E-Mail", "value": "info@green-ecolution.de" },
     "github": { "label": "GitHub", "value": "github.com/green-ecolution" },
-    "demo": { "label": "Demo", "value": "demo.green-ecolution.de" }
+    "demo": { "label": "Demo", "value": "demo.green-ecolution.de" },
+    "instagram": { "label": "Instagram", "value": "@green.ecolution" }
   },
   "scenes": {
     "title": {
@@ -82,6 +87,10 @@
     "open-source": {
       "statement": "100 % Open Source unter AGPL-3.0",
       "body": "Finanziert vom Land Schleswig-Holstein aus „Offene Innovation: Open Source made in SH“. Im Pilotbetrieb mit dem TBZ Flensburg."
+    },
+    "more": {
+      "statement": "Bleib auf dem Laufenden.",
+      "body": "Auf Instagram melden wir uns aus dem laufenden Pilotbetrieb. Auf der Website stehen Projekt, Blog und alle Releases."
     },
     "demo": {
       "statement": "Probier es selbst aus.",

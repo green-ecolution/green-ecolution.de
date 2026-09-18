@@ -25,8 +25,8 @@ const handover = timeline[1].startMs
 const loop = totalDurationMs(showcaseScenes)
 
 describe('totalDurationMs', () => {
-  it('summiert die Schleife auf exakt 187 Sekunden', () => {
-    expect(totalDurationMs(showcaseScenes)).toBe(187_000)
+  it('summiert die Schleife auf exakt 199 Sekunden', () => {
+    expect(totalDurationMs(showcaseScenes)).toBe(199_000)
   })
 })
 
