@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.17.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.16.2...v1.17.0) (2026-09-24)
+
+
+### Features
+
+* announce the Digitalisierungspreis 2026 Green Coding special prize ([#508](https://github.com/green-ecolution/green-ecolution.de/issues/508)) ([f66f7d4](https://github.com/green-ecolution/green-ecolution.de/commit/f66f7d4755137329589ece71c0617fcdc8652db5))
+
 ## [1.16.2](https://github.com/green-ecolution/green-ecolution.de/compare/v1.16.1...v1.16.2) (2026-09-20)
 
 
