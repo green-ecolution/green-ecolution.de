@@ -68,7 +68,7 @@ function ExhibitMedia({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-full w-full items-center justify-center p-10">
       <div
-        className="relative w-full max-w-[68rem] rounded-[1.5rem] bg-white p-3 ring-1 ring-[#2D4A27]/10"
+        className="showcase-media-card relative w-full max-w-[68rem] rounded-[1.5rem] bg-white p-3 ring-1 ring-[#2D4A27]/10"
         style={{ boxShadow: '0 2rem 4.5rem -1.75rem rgba(45,74,39,0.4)' }}
       >
         <div className="showcase-media-out aspect-video w-full overflow-hidden rounded-[1.05rem]">
@@ -145,10 +145,16 @@ function ShowcaseVideo({
     )
   }
 
+  // A media fragment rather than a seek once metadata is in: the element then
+  // starts loading at the offset and its first painted frame is already the
+  // right one. Seeking after autoplay would show the clip's opening frames and
+  // jump out of them, which on a six second scene is a fifth of the scene.
+  const fragment = visual.startAt ? `#t=${visual.startAt}` : ''
+
   return (
     <ExhibitMedia>
       <video
-        src={`${showcaseClipBaseUrl()}/${visual.clip}`}
+        src={`${showcaseClipBaseUrl()}/${visual.clip}${fragment}`}
         poster={assetUrl(visual.poster)}
         autoPlay
         muted

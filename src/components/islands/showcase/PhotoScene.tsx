@@ -20,7 +20,10 @@ export default function PhotoScene({ scene, children }: { scene: Scene; children
             'linear-gradient(to top, rgba(45,74,39,0.98) 0%, rgba(45,74,39,0.86) 45%, rgba(45,74,39,0) 100%)',
         }}
       />
-      <div className="absolute inset-x-0 bottom-0 px-24 pb-20">
+      {/* How high the block sits is the run's call too: the booth board fills
+          the frame down to the edge, the spot has to clear the step path that
+          runs under it for most of its thirty seconds. */}
+      <div className="absolute inset-x-0 bottom-0 px-24 pb-[var(--showcase-text-bottom,5rem)]">
         {scene.opensStep && (
           <p className="showcase-rise font-lato text-sm font-bold tracking-[0.2em] text-[#E8EBCC99] uppercase">
             {t(`scenes.${scene.id}.eyebrow`)}
@@ -32,8 +35,11 @@ export default function PhotoScene({ scene, children }: { scene: Scene; children
         >
           {t(`scenes.${scene.id}.statement`)}
         </p>
+        {/* The gap under the headline is set by the run, not by the layout: the
+            spot keeps the pair tight enough to be read as one block in the
+            second a passer-by gives it, the booth board can let them breathe. */}
         <p
-          className="showcase-rise mt-5 max-w-[60ch] font-nunito-sans text-xl leading-relaxed text-[#E8EBCCB0]"
+          className="showcase-rise mt-[var(--showcase-body-gap,1.25rem)] max-w-[60ch] font-nunito-sans text-xl leading-relaxed text-[#E8EBCCB0]"
           style={delay(160)}
         >
           {t(`scenes.${scene.id}.body`)}

@@ -1,11 +1,11 @@
 import logoWhite from '../../../assets/press/green-ecolution-logo-white.svg'
 import { useT } from '../../../i18n/useT'
-import type { Scene } from '../../../data/showcase'
+import type { ContactId, Scene } from '../../../data/showcase'
 import { delay } from '../../../lib/showcase/delay'
 
 // Five addresses, five kinds of address: the labels say which is which, because
 // three of the five are green-ecolution.de with something in front of it.
-const CONTACTS = ['website', 'email', 'github', 'demo', 'instagram'] as const
+const CONTACTS: ContactId[] = ['website', 'email', 'github', 'demo', 'instagram']
 
 const RULE = '#E8EBCC33'
 
@@ -32,6 +32,7 @@ function CornerFrame() {
 // it started instead of just stopping.
 export default function ClosingScene({ scene }: { scene: Scene }) {
   const t = useT()
+  const contacts = scene.contacts ?? CONTACTS
 
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center">
@@ -58,7 +59,7 @@ export default function ClosingScene({ scene }: { scene: Scene }) {
       {/* Even gaps, not even columns: the five addresses differ in width by half
           again, and a five-column grid turns that into five different gaps. */}
       <div className="mt-20 flex items-start justify-center gap-20">
-        {CONTACTS.map((contact, index) => (
+        {contacts.map((contact, index) => (
           <div
             key={contact}
             className="showcase-rise flex flex-col items-center gap-3"

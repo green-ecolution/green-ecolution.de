@@ -1,11 +1,12 @@
 ---
 import ShowcaseLayout from '../../layouts/ShowcaseLayout.astro'
 import ShowcaseGate from '../../components/islands/showcase/ShowcaseGate'
-import { getTranslations, type TranslationKey } from '../../i18n/t'
+import { getTranslations } from '../../i18n/t'
 import { currentLanguage } from '../../i18n/languages'
 import { languagePaths } from '../../lib/languagePaths'
 import { pickStrings } from '../../i18n/pick'
 import { showcaseScenes } from '../../data/showcase'
+import { showcaseStringKeys } from '../../lib/showcase/strings'
 import { withoutMissing } from '../../lib/showcase/text'
 
 export const getStaticPaths = languagePaths
@@ -13,32 +14,9 @@ export const getStaticPaths = languagePaths
 const language = currentLanguage(Astro.params.lang)
 const t = getTranslations(language, 'showcase')
 
-const SCENE_FIELDS = ['statement', 'body', 'source', 'eyebrow'] as const
-
-// Every key a scene might read, whether or not that scene defines it: a missing
-// key renders as a visible marker rather than throwing, and the catalog decides
-// which fields actually exist.
-const keys = [
-  ...showcaseScenes.flatMap((scene) => SCENE_FIELDS.map((field) => `scenes.${scene.id}.${field}`)),
-  'steps.messen',
-  'steps.verstehen',
-  'steps.handeln',
-  'demo.label',
-  'demo.url',
-  'tooSmall.eyebrow',
-  'tooSmall.statement',
-  'tooSmall.body',
-  'tooSmall.viewport',
-  'tooSmall.continue',
-  'gauge.tankLabel',
-  ...['website', 'instagram'].flatMap((link) => [`links.${link}.label`, `links.${link}.value`]),
-  ...['website', 'email', 'github', 'demo', 'instagram'].flatMap((contact) => [
-    `contact.${contact}.label`,
-    `contact.${contact}.value`,
-  ]),
-] as TranslationKey<'showcase'>[]
-
-const strings = withoutMissing(pickStrings(language, 'showcase', keys))
+const strings = withoutMissing(
+  pickStrings(language, 'showcase', showcaseStringKeys(showcaseScenes)),
+)
 ---
 
 <ShowcaseLayout title={t('meta.title')} description={t('meta.description')} language={language}>

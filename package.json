@@ -15,6 +15,7 @@
     "test": "vitest run",
     "showcase:clips": "node scripts/fetch-showcase-clips.mjs",
     "showcase:build": "VIDEO_BASE_URL=/showcase-clips astro check && VIDEO_BASE_URL=/showcase-clips astro build && node scripts/check-build-output.mjs",
+    "showcase:spot": "node scripts/render-spot.mjs",
     "showcase:kiosk": "bash scripts/showcase-kiosk.sh"
   },
   "dependencies": {

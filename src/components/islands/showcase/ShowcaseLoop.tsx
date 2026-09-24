@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import { useMemo, type CSSProperties } from 'react'
 import {
   isDarkAct,
   showcaseScenes,
@@ -11,12 +11,14 @@ import {
   buildTimeline,
   inLastMs,
   leavingOf,
+  nextOf,
   previousOf,
   sceneAt,
   stepProgress,
+  stepStops,
   type TimelineEntry,
 } from '../../../lib/showcase/timeline'
-import { useShowcaseClock } from '../../../lib/showcase/useShowcaseClock'
+import { useShowcaseClock, type Playback } from '../../../lib/showcase/useShowcaseClock'
 import { useT } from '../../../i18n/useT'
 import logoColor from '../../../assets/press/green-ecolution-logo-color.svg'
 import logoWhite from '../../../assets/press/green-ecolution-logo-white.svg'
@@ -33,30 +35,63 @@ const ACT_BACKGROUND: Record<Act, string> = {
   fahrt: '#2D4A27',
 }
 
-const timeline = buildTimeline(showcaseScenes)
+interface Props {
+  /** The booth board's running order unless another cut asks for its own. */
+  scenes?: Scene[]
+  /** Persistent elements no scene of this run shows, on top of each scene's own. */
+  hideChrome?: ChromeElement[]
+  /**
+   * How a photo scene sets its text: `gap` between headline and the line under
+   * it, `bottom` for how far the block stands off the lower edge. Both default
+   * to the booth board's own values.
+   */
+  photoText?: { gap?: string; bottom?: string }
+  playback?: Playback
+}
 
 // Read by the scene's build animations through inherited custom properties.
 // Constant for the scene's lifetime on purpose: a delay that changes under a
 // running css animation makes it jump. A scene that dips lifts its text before
 // the canvas goes, so the model stands bare for a beat.
-function layerTiming(scene: Scene): CSSProperties {
+function layerTiming(scene: Scene, photoText?: Props['photoText']): CSSProperties {
   const dip = scene.exit === 'dip' ? TRANSITION.dipMs : 0
   return {
     '--showcase-layer-delay': `${TRANSITION.enterHoldMs}ms`,
     '--showcase-outro-at': `${scene.seconds * 1000 - dip - TRANSITION.outroMs}ms`,
+    ...(photoText?.gap ? { '--showcase-body-gap': photoText.gap } : {}),
+    ...(photoText?.bottom ? { '--showcase-text-bottom': photoText.bottom } : {}),
   } as CSSProperties
 }
 
-function layerClass(isLeaving: boolean, entersFromPlate: boolean): string {
+function layerClass(isLeaving: boolean, entersFromPlate: boolean, cardLeaves: boolean): string {
+  const card = cardLeaves ? ' showcase-card-out' : ''
   if (isLeaving) {
-    return 'showcase-leave absolute inset-0'
+    return `showcase-leave absolute inset-0${card}`
   }
-  return entersFromPlate ? 'showcase-enter absolute inset-0' : 'absolute inset-0'
+  return entersFromPlate ? `showcase-enter absolute inset-0${card}` : `absolute inset-0${card}`
+}
+
+// A scene shows the white exhibit card only for a recording, and only the next
+// scene can say whether that card is handed on or has to go: one that stands in
+// the same place keeps it, anything else — a full-bleed photo, a canvas, the
+// same layout with the frame on the other side — would have it dissolve over
+// its own picture.
+function showsCard(scene: Scene): boolean {
+  return scene.layout === 'exhibit' && scene.visual.kind === 'video'
+}
+
+function cardLeavesWith(timeline: TimelineEntry[], entry: TimelineEntry): boolean {
+  const next = nextOf(timeline, entry).scene
+  return showsCard(entry.scene) && !(showsCard(next) && next.side === entry.scene.side)
 }
 
 // Which webgl canvas is on screen: a canvas is shown while its scene runs,
 // minus the dip at the end for a scene that leaves that way.
-function canvasOnScreen(current: TimelineEntry, elapsedMs: number): 'forde' | 'tour' | null {
+function canvasOnScreen(
+  timeline: TimelineEntry[],
+  current: TimelineEntry,
+  elapsedMs: number,
+): 'forde' | 'tour' | null {
   const kind = current.scene.visual.kind
   if (kind !== 'forde' && kind !== 'tour') {
     return null
@@ -66,7 +101,15 @@ function canvasOnScreen(current: TimelineEntry, elapsedMs: number): 'forde' | 't
   return dipping ? null : kind
 }
 
-function LoopBody({ elapsedMs }: { elapsedMs: number }) {
+interface BodyProps {
+  scenes: Scene[]
+  timeline: TimelineEntry[]
+  hideChrome: ChromeElement[]
+  photoText?: Props['photoText']
+  elapsedMs: number
+}
+
+function LoopBody({ scenes, timeline, hideChrome, photoText, elapsedMs }: BodyProps) {
   const t = useT()
   const current = sceneAt(timeline, elapsedMs)
   // The scene that just left keeps rendering until its fade is done, so the
@@ -85,10 +128,14 @@ function LoopBody({ elapsedMs }: { elapsedMs: number }) {
   // rather than from `leaving`, which goes away mid-scene and would strip the
   // class from under a finished animation.
   const entersFromPlate = previousOf(timeline, current).scene.exit === 'dip'
-  const shownCanvas = canvasOnScreen(current, elapsedMs)
+  const shownCanvas = canvasOnScreen(timeline, current, elapsedMs)
+  const usesCanvas = (kind: 'forde' | 'tour') => scenes.some((scene) => scene.visual.kind === kind)
+  // A run without a single stepped scene has no path to draw, and asking for
+  // its stops would look for a window that is not there.
+  const stepped = scenes.some((scene) => scene.step)
   // Faded, not unmounted: a corner that pops in at a scene boundary is the
   // one cut left in a loop that otherwise dissolves everything.
-  const hiddenChrome = new Set(current.scene.hideChrome ?? [])
+  const hiddenChrome = new Set([...hideChrome, ...(current.scene.hideChrome ?? [])])
   // The tour path belongs to the three steps and to nothing else. On the
   // harbour, the photographs and the closing slide there is no step to be at,
   // so it fades out rather than parking its point past the last station.
@@ -107,10 +154,15 @@ function LoopBody({ elapsedMs }: { elapsedMs: number }) {
         className="showcase-act-fade absolute inset-0 transition-colors duration-[1200ms]"
         style={{ backgroundColor: ACT_BACKGROUND[current.scene.act] }}
       />
-      <FordeScene3D shown={shownCanvas === 'forde'} />
-      <div className="absolute inset-y-0 right-0 w-[65.5%]">
-        <ShowcaseTour shown={shownCanvas === 'tour'} />
-      </div>
+      {/* Mounted for the whole run so the context is built once, but only for a
+          run that actually has a scene on it: the 30-second cut has neither,
+          and two idle webgl canvases would cost it frames during the capture. */}
+      {usesCanvas('forde') && <FordeScene3D shown={shownCanvas === 'forde'} />}
+      {usesCanvas('tour') && (
+        <div className="absolute inset-y-0 right-0 w-[65.5%]">
+          <ShowcaseTour shown={shownCanvas === 'tour'} />
+        </div>
+      )}
       {/* One keyed array, not two slots: React matches array children by key,
           so the node a scene built in as current is the very node that leaves.
           The video, Ken Burns pan and Lottie play on from where they were
@@ -122,8 +174,12 @@ function LoopBody({ elapsedMs }: { elapsedMs: number }) {
           .map((entry) => (
             <div
               key={entry.scene.id}
-              className={layerClass(entry === leaving, entersFromPlate)}
-              style={layerTiming(entry.scene)}
+              className={layerClass(
+                entry === leaving,
+                entersFromPlate,
+                cardLeavesWith(timeline, entry),
+              )}
+              style={layerTiming(entry.scene, photoText)}
             >
               <ShowcaseScene scene={entry.scene} />
             </div>
@@ -180,24 +236,42 @@ function LoopBody({ elapsedMs }: { elapsedMs: number }) {
         />
       </div>
 
-      <div
-        className="showcase-act-fade transition-opacity duration-[1200ms]"
-        style={chromeFade('tour')}
-      >
-        <TourPath progress={stepProgress(showcaseScenes, elapsedMs)} dark={onDarkPlate} />
-      </div>
+      {stepped && (
+        <div
+          className="showcase-act-fade transition-opacity duration-[1200ms]"
+          style={chromeFade('tour')}
+        >
+          <TourPath
+            progress={stepProgress(scenes, elapsedMs)}
+            stops={stepStops(scenes)}
+            dark={onDarkPlate}
+          />
+        </div>
+      )}
     </div>
   )
 }
 
 // Mounted by ShowcaseGate, which owns the translation context both it and the
 // hint in front of it read from.
-export default function ShowcaseLoop() {
-  const elapsedMs = useShowcaseClock(timeline)
+export default function ShowcaseLoop({
+  scenes = showcaseScenes,
+  hideChrome = [],
+  photoText,
+  playback,
+}: Props) {
+  const timeline = useMemo(() => buildTimeline(scenes), [scenes])
+  const elapsedMs = useShowcaseClock(timeline, playback)
 
   return (
     <ShowcaseBoundary sceneId={sceneAt(timeline, elapsedMs).scene.id}>
-      <LoopBody elapsedMs={elapsedMs} />
+      <LoopBody
+        scenes={scenes}
+        timeline={timeline}
+        hideChrome={hideChrome}
+        photoText={photoText}
+        elapsedMs={elapsedMs}
+      />
     </ShowcaseBoundary>
   )
 }

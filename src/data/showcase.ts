@@ -24,10 +24,23 @@ export type SceneId =
   | 'more'
   | 'demo'
   | 'closing'
+  | SpotSceneId
+
+// The 30-second cut for an advertising wall, see src/data/showcaseSpot.ts. Its
+// own ids because its scenes carry their own, much shorter texts.
+export type SpotSceneId =
+  'spot-problem' | 'spot-sensor' | 'spot-map' | 'spot-planning' | 'spot-origin' | 'spot-closing'
+
+export type ContactId = 'website' | 'email' | 'github' | 'demo' | 'instagram'
 
 export type Visual =
   | { kind: 'image'; asset: string; pan?: PanVariant }
-  | { kind: 'video'; clip: string; poster: string }
+  /**
+   * `startAt` seeks into the clip before it plays. The recordings open with a
+   * slow approach and are cut to the length of their booth scene, so a scene
+   * shorter than the recording would show nothing but that approach.
+   */
+  | { kind: 'video'; clip: string; poster: string; startAt?: number }
   | { kind: 'tour' }
   | { kind: 'partners' }
   | { kind: 'forde' }
@@ -64,6 +77,12 @@ export interface Scene {
    * ends.
    */
   exit?: 'dip'
+  /**
+   * Which addresses the closing layout lists. The booth board has a visitor
+   * standing in front of it and can carry all five; a spot on a wall people
+   * walk past has seconds, so it names two.
+   */
+  contacts?: ContactId[]
   visual: Visual
 }
 

@@ -274,6 +274,17 @@
   animation: showcase-media-dim 700ms ease-in var(--showcase-outro-at, 1000000s) forwards !important;
 }
 
+/* The white card is the exhibit's own furniture, and two recordings in a row
+   keep it in place: that standing rect is what makes their hand-over read as a
+   change of content rather than of picture. Handing over to anything else it
+   has to leave with the recording — a card that is still there when the layer
+   dissolves draws its outline and its shadow over the next picture for a full
+   second. The layer sets the class, because only the running order knows what
+   comes next. */
+.showcase-card-out .showcase-media-card {
+  animation: showcase-media-dim 700ms ease-in var(--showcase-outro-at, 1000000s) forwards !important;
+}
+
 /* The scene layers themselves. The leaving one dissolves on top of the new
    one. Pure opacity, no travel: a photo that moves exposes its edge, and the
    text has already lifted off on its own. A scene following one of the webgl
@@ -370,4 +381,14 @@
 
 .showcase-canvas-fade {
   transition-duration: 800ms !important;
+}
+
+/* The 30-second cut stands on its first frame until the screen recorder
+   releases it. Its clock can hold, but a css animation runs from the moment
+   its element is mounted: without this the opening scene would have built in
+   and lifted off again before ffmpeg has filmed a single frame. */
+.showcase-held *,
+.showcase-held *::before,
+.showcase-held *::after {
+  animation-play-state: paused !important;
 }

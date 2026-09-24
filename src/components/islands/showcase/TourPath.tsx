@@ -1,17 +1,18 @@
 import { useT } from '../../../i18n/useT'
-import { showcaseScenes, STEP_ORDER } from '../../../data/showcase'
-import { stepStops } from '../../../lib/showcase/timeline'
+import { STEP_ORDER, type Step } from '../../../data/showcase'
 
 interface Props {
   progress: number
+  /**
+   * Where each step's scenes actually run on the timeline, not a hand-picked
+   * guess: a changed scene duration moves the stop with it. Passed in because
+   * the booth loop and the 30-second spot stop at different places.
+   */
+  stops: Record<Step, number>
   dark: boolean
 }
 
-// Where each step's scenes actually run on the timeline, not a hand-picked
-// guess: a changed scene duration moves the stop with it.
-const STOP_AT = stepStops(showcaseScenes)
-
-export default function TourPath({ progress, dark }: Props) {
+export default function TourPath({ progress, stops, dark }: Props) {
   const t = useT()
   const line = dark ? '#E8EBCC40' : '#8B735540'
   const active = dark ? '#E8EBCC' : '#4C7741'
@@ -33,12 +34,12 @@ export default function TourPath({ progress, dark }: Props) {
         {STEP_ORDER.map((step) => {
           // Same source as the point's own position, so a station can never light
           // up before the point that is supposed to be reaching it.
-          const done = progress >= STOP_AT[step]
+          const done = progress >= stops[step]
           return (
             <div
               key={step}
               className="absolute -translate-x-1/2"
-              style={{ left: `${STOP_AT[step] * 100}%`, top: '-4px' }}
+              style={{ left: `${stops[step] * 100}%`, top: '-4px' }}
             >
               <div
                 className="h-2 w-2 rounded-full transition-colors duration-500"

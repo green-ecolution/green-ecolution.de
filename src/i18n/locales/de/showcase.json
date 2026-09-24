@@ -99,6 +99,34 @@
     "closing": {
       "statement": "Lass uns gemeinsam grüner werden!",
       "body": "Für eine nachhaltige, datenbasierte Grünflächenpflege."
+    },
+    "spot-problem": {
+      "statement": "50.000 Liter im Jahr, auf gut Glück verteilt.",
+      "body": "So viel Wasser bringt Flensburg für seine Stadtbäume auf, gegossen nach Erfahrungswerten und Gefühl.",
+      "source": "Quelle: TBZ Flensburg"
+    },
+    "spot-sensor": {
+      "eyebrow": "01 · Messen",
+      "statement": "Der Boden sagt, wann gegossen wird.",
+      "body": "Sensoren messen die Feuchte in 40 und 80 Zentimetern Tiefe."
+    },
+    "spot-map": {
+      "eyebrow": "02 · Verstehen",
+      "statement": "Ein Blick auf die Karte genügt.",
+      "body": "Ein Ampelsystem zeigt, welcher Baum Wasser braucht."
+    },
+    "spot-planning": {
+      "eyebrow": "03 · Handeln",
+      "statement": "Gegossen wird, wo es nötig ist.",
+      "body": "Einsätze zusammenstellen und Touren optimieren."
+    },
+    "spot-origin": {
+      "statement": "Aus Flensburg, vollständig Open Source.",
+      "body": "Entstanden an der Hochschule Flensburg, weiterentwickelt von PROGEEK, koordiniert von der Smarten Grenzregion."
+    },
+    "spot-closing": {
+      "statement": "Lass uns gemeinsam grüner werden!",
+      "body": "Mehr zum Projekt:"
     }
   }
 }

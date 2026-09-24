@@ -57,6 +57,11 @@ export function previousOf(timeline: TimelineEntry[], entry: TimelineEntry): Tim
   return timeline[(index - 1 + timeline.length) % timeline.length]
 }
 
+export function nextOf(timeline: TimelineEntry[], entry: TimelineEntry): TimelineEntry {
+  const index = timeline.indexOf(entry)
+  return timeline[(index + 1) % timeline.length]
+}
+
 export function msIntoScene(
   timeline: TimelineEntry[],
   entry: TimelineEntry,

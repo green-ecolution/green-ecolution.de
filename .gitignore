@@ -18,6 +18,9 @@ tsconfig.tsbuildinfo
 # Fetched by `pnpm showcase:clips`, not committed
 public/showcase-clips/
 
+# Rendered by `pnpm showcase:spot`, belongs in the bucket rather than in git
+out/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

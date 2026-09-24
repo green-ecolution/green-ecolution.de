@@ -5,6 +5,7 @@ import {
   inLastMs,
   leavingOf,
   msIntoScene,
+  nextOf,
   previousOf,
   sceneAt,
   stepProgress,
@@ -134,6 +135,16 @@ describe('previousOf', () => {
 
   it('liefert am Anfang die letzte Szene, damit die Schleife überblendet', () => {
     expect(previousOf(timeline, timeline[0]).scene.id).toBe('closing')
+  })
+})
+
+describe('nextOf', () => {
+  it('liefert die Szene danach', () => {
+    expect(nextOf(timeline, timeline[3]).scene.id).toBe('lorawan')
+  })
+
+  it('liefert am Ende die erste Szene, damit die Schleife überblendet', () => {
+    expect(nextOf(timeline, timeline[timeline.length - 1]).scene.id).toBe('title')
   })
 })
 

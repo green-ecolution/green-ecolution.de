@@ -99,6 +99,34 @@
     "closing": {
       "statement": "Let's grow greener together!",
       "body": "For sustainable, data-driven green space care."
+    },
+    "spot-problem": {
+      "statement": "50,000 litres a year, spread on a hunch.",
+      "body": "That is what Flensburg's urban trees get, watered by experience and gut feeling.",
+      "source": "Source: TBZ Flensburg"
+    },
+    "spot-sensor": {
+      "eyebrow": "01 · Measure",
+      "statement": "The soil says when to water.",
+      "body": "Sensors measure moisture at 40 and 80 centimetres."
+    },
+    "spot-map": {
+      "eyebrow": "02 · Understand",
+      "statement": "One look at the map is enough.",
+      "body": "Traffic-light colours show which tree needs water."
+    },
+    "spot-planning": {
+      "eyebrow": "03 · Act",
+      "statement": "Water goes where it is needed.",
+      "body": "Put assignments together and optimise the routes."
+    },
+    "spot-origin": {
+      "statement": "From Flensburg, fully open source.",
+      "body": "Born at Hochschule Flensburg, developed further by PROGEEK, coordinated by Smarte Grenzregion."
+    },
+    "spot-closing": {
+      "statement": "Let's grow greener together!",
+      "body": "More about the project:"
     }
   }
 }
