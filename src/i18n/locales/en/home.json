@@ -4,7 +4,7 @@
     "description": "Green Ecolution enables smart irrigation of green spaces through sensor-based monitoring and data-driven recommendations."
   },
   "hero": {
-    "badge": "Smart Irrigation",
+    "badge": "Digitalisierungspreis 2026 · Green Coding special prize",
     "headlinePrefix": "We enable ",
     "headlineHighlight": "smart irrigation",
     "headlineSuffix": " of green spaces!",
@@ -12,6 +12,14 @@
     "description": "Sensor-based monitoring of green spaces transmits data over the LoRaWAN network for analysis, so that irrigation recommendations can be provided.",
     "playAnimation": "Play animation",
     "adoptTreeAriaLabel": "Adopt a tree"
+  },
+  "award": {
+    "sectionLabel": "Award",
+    "title": "Winner of the 2026 Digitalisierungspreis of Schleswig-Holstein",
+    "category": "Green Coding special prize",
+    "description": "In September 2026 the state of Schleswig-Holstein honoured Green Ecolution for resource-efficient software and demand-based irrigation. Digital minister Dirk Schrödter presented the prize in Kiel.",
+    "cta": "Read about the award ceremony",
+    "imageAlt": "Digital minister Dirk Schrödter applauds two PROGEEK representatives holding trophy and certificate on stage, behind them a screen reading Green Ecolution"
   },
   "overlay": {
     "popups": {

@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets'
+import { ArrowRight, Trophy } from 'lucide-react'
+import ceremony from '../../assets/blog/digitalisierungspreis-2026-buehne.jpg'
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'home')
+---
+
+<section
+  aria-labelledby="award-title"
+  class="relative px-4 max-w-208 mx-auto mt-24 md:px-6 md:mt-32 lg:mt-12 lg:max-w-screen-lg xl:max-w-screen-xl"
+>
+  <div class="overflow-hidden bg-white rounded-2xl shadow-xl ring-1 ring-grey-900/5 md:grid md:grid-cols-[2fr_3fr] lg:rounded-3xl">
+    <Image
+      src={ceremony}
+      alt={t('award.imageAlt')}
+      widths={[480, 800, 1200]}
+      sizes="(min-width: 768px) 40vw, 100vw"
+      class="w-full h-56 object-cover object-[55%_25%] sm:h-72 md:h-full"
+    />
+
+    <div class="p-6 md:p-10 xl:p-12">
+      <div class="inline-block mb-4">
+        <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+          {t('award.sectionLabel')}
+        </span>
+        <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+      </div>
+
+      <h2
+        id="award-title"
+        class="font-lato font-bold text-xl mb-3 text-grey-900 md:text-2xl xl:text-3xl"
+      >
+        {t('award.title')}
+      </h2>
+
+      <p class="inline-flex items-center gap-2 px-3 py-1.5 mb-5 bg-green-light-100 rounded-full border border-green-light-900/20 text-xs font-semibold text-green-dark-900 tracking-wide uppercase">
+        <Trophy aria-hidden="true" className="w-3.5 h-3.5 shrink-0" />
+        {t('award.category')}
+      </p>
+
+      <p class="text-grey-900/80 leading-relaxed mb-6">{t('award.description')}</p>
+
+      <a
+        href={`/${language}/blog/digitalisierungspreis-2026`}
+        class="group inline-flex items-center gap-2 text-green-dark-900 font-semibold hover:gap-3 transition-all"
+      >
+        <span class="group-hover:underline">{t('award.cta')}</span>
+        <span
+          aria-hidden="true"
+          class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-green-dark-900/10 group-hover:bg-green-dark-900 group-hover:text-white transition-all"
+        >
+          <ArrowRight className="w-4 h-4" />
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
