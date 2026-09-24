@@ -1,4 +1,5 @@
 import { useState, useEffect, useSyncExternalStore } from 'react'
+import { Trophy } from 'lucide-react'
 import { useT } from '../../../i18n/useT'
 import Arrow from '../Arrow'
 import HomepageOverlay from './HomepageOverlay'
@@ -136,17 +137,19 @@ function HomepageHero({ language }: { language: string }) {
         >
           <div className="max-w-[30rem] 2xl:max-w-[40rem]">
             {/* Animated label */}
-            <div
+            <a
+              href={`/${language}/blog/digitalisierungspreis-2026`}
               className="
-                hero-rise inline-flex items-center gap-2 px-3 py-1.5 mb-6
+                hero-rise group inline-flex items-center gap-2 px-3 py-1.5 mb-6
                 bg-green-light-100 rounded-full border border-green-light-900/20
+                transition-colors hover:border-green-light-900/50
               "
             >
-              <span className="w-2 h-2 bg-green-light-900 rounded-full animate-pulse" />
-              <span className="text-xs font-semibold text-green-dark-900 tracking-wide uppercase">
+              <Trophy aria-hidden="true" className="w-3.5 h-3.5 shrink-0 text-green-dark-900" />
+              <span className="text-xs font-semibold text-green-dark-900 tracking-wide uppercase group-hover:underline">
                 {t('hero.badge')}
               </span>
-            </div>
+            </a>
 
             {/* Headline with stagger */}
             <h1
