@@ -1,8 +1,9 @@
 ---
 import { getImage } from 'astro:assets'
-import VideoPlayer from '../islands/VideoPlayer'
 import ConsentEmbed from '../islands/ConsentEmbed'
+import awardVideoPoster from '../../assets/blog/digitalisierungspreis-2026-video-poster.webp'
 import ndrPlayerPoster from '../../assets/blog/ndr-shmag-stadtbaeume-poster.webp'
+import { awardVideo } from '../../data/awardVideo'
 import { ndrFeature } from '../../data/ndrFeature'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
@@ -15,29 +16,8 @@ interface Props {
 const { language } = Astro.props
 const t = getTranslations(language, 'home')
 
-// Paths only. The island prepends the base url, which nginx injects at serve
-// time, so it must not be baked in here.
-const VIDEOS = [
-  {
-    key: 'short',
-    path: '/project-video/short/green-ecolution-short.m3u8',
-    thumbnailPath: '/project-video/short/green-ecolution-thumbnail.png',
-  },
-  {
-    key: 'long',
-    path: '/project-video/long/green-ecolution-long.m3u8',
-    thumbnailPath: '/project-video/long/green-ecolution-thumbnail.png',
-  },
-] as const
-
-const videos = VIDEOS.map((video) => ({
-  ...video,
-  title: t(`videos.${video.key}.title`),
-  description: t(`videos.${video.key}.description`),
-  duration: t(`videos.${video.key}.duration`),
-}))
-
-// The island cannot use <Image>, so the optimised url is resolved here.
+// The island cannot use <Image>, so the optimised urls are resolved here.
+const awardPosterImage = await getImage({ src: awardVideoPoster, width: 1280, format: 'webp' })
 const ndrPosterImage = await getImage({ src: ndrPlayerPoster, width: 1280, format: 'webp' })
 ---
 
@@ -56,43 +36,45 @@ const ndrPosterImage = await getImage({ src: ndrPlayerPoster, width: 1280, forma
     <p class="text-grey-900/80 leading-relaxed">{t('videos.description')}</p>
   </article>
 
-  <div class="mx-auto grid grid-cols-1 gap-6 lg:grid-cols-2 xl:max-w-screen-xl">
-    {videos.map((video) => (
-      <div>
-        <article class="group video__player h-full bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300">
-          <div class="aspect-video w-full h-auto overflow-hidden rounded-xl">
-            <VideoPlayer client:visible path={video.path} thumbnailPath={video.thumbnailPath} />
-          </div>
-          <h3 class="mt-8 mb-4 font-lato text-xl text-grey-900 lg:text-2xl">
-            <strong>{video.title}</strong>&nbsp;|&nbsp;
-            <span class="text-base lg:text-lg text-grey-900/60">{video.duration}</span>
-          </h3>
-          <p class="text-grey-900/80 leading-relaxed">{video.description}</p>
-        </article>
+  <div class="mx-auto grid grid-cols-1 gap-6 xl:max-w-screen-xl">
+    <article class="bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300">
+      <div class="overflow-hidden rounded-xl">
+        <ConsentEmbed
+          client:visible
+          src={awardVideo.playerUrl}
+          title={awardVideo.title}
+          posterSrc={awardPosterImage.src}
+          posterAlt={t('videos.award.posterAlt')}
+          {...consentEmbedStrings(language, awardVideo.provider)}
+        />
       </div>
-    ))}
+      <h3 class="mt-8 mb-4 font-lato text-xl text-grey-900 lg:text-2xl">
+        <strong>{t('videos.award.title')}</strong>&nbsp;|&nbsp;
+        <span class="text-base lg:text-lg text-grey-900/60">{t('videos.award.duration')}</span>
+      </h3>
+      <p class="text-grey-900/80 leading-relaxed">{t('videos.award.description')}</p>
+      <p class="mt-4 text-sm text-grey-900/60">{awardVideo.attribution}</p>
+    </article>
 
-    <div class="lg:col-span-2">
-      <article class="h-full bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
-        <div class="overflow-hidden rounded-xl">
-          <ConsentEmbed
-            client:visible
-            src={ndrFeature.playerUrl}
-            title={ndrFeature.title}
-            posterSrc={ndrPosterImage.src}
-            posterAlt={t('videos.ndr.posterAlt')}
-            {...consentEmbedStrings(language, ndrFeature.provider)}
-          />
-        </div>
-        <div class="mt-8 lg:mt-0">
-          <h3 class="mb-4 font-lato text-xl text-grey-900 lg:text-2xl">
-            <strong>{t('videos.ndr.title')}</strong>&nbsp;|&nbsp;
-            <span class="text-base lg:text-lg text-grey-900/60">{t('videos.ndr.duration')}</span>
-          </h3>
-          <p class="text-grey-900/80 leading-relaxed">{t('videos.ndr.description')}</p>
-          <p class="mt-4 text-sm text-grey-900/60">{ndrFeature.attribution}</p>
-        </div>
-      </article>
-    </div>
+    <article class="h-full bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
+      <div class="overflow-hidden rounded-xl">
+        <ConsentEmbed
+          client:visible
+          src={ndrFeature.playerUrl}
+          title={ndrFeature.title}
+          posterSrc={ndrPosterImage.src}
+          posterAlt={t('videos.ndr.posterAlt')}
+          {...consentEmbedStrings(language, ndrFeature.provider)}
+        />
+      </div>
+      <div class="mt-8 lg:mt-0">
+        <h3 class="mb-4 font-lato text-xl text-grey-900 lg:text-2xl">
+          <strong>{t('videos.ndr.title')}</strong>&nbsp;|&nbsp;
+          <span class="text-base lg:text-lg text-grey-900/60">{t('videos.ndr.duration')}</span>
+        </h3>
+        <p class="text-grey-900/80 leading-relaxed">{t('videos.ndr.description')}</p>
+        <p class="mt-4 text-sm text-grey-900/60">{ndrFeature.attribution}</p>
+      </div>
+    </article>
   </div>
 </section>

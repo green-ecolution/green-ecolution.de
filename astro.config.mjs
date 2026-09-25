@@ -107,10 +107,6 @@ export default defineConfig({
       proxy: {
         // The bucket answers CORS only for the production origin, so hls.js
         // cannot fetch from localhost; dev serves the videos same-origin instead.
-        '/project-video': {
-          target: 'https://green-ecolution-public-videos.s3.de.io.cloud.ovh.net',
-          changeOrigin: true,
-        },
         '/blog-video': {
           target: 'https://green-ecolution-public-videos.s3.de.io.cloud.ovh.net',
           changeOrigin: true,
