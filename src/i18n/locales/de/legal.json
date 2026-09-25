@@ -186,6 +186,15 @@
           "paragraph4": "Rechtsgrundlage für das Nachladen des Players ist Ihre Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO, die Sie mit dem Klick auf den Play-Button erteilen. Sie können sie jederzeit widerrufen, indem Sie die Seite neu laden und den Player nicht erneut starten.",
           "paragraph5": "Nähere Informationen zum Umgang mit Nutzerdaten finden Sie in der",
           "privacyPolicyLinkLabel": "Datenschutzerklärung des NDR"
+        },
+        "youtube": {
+          "title": "YouTube",
+          "paragraph1": "Auf dieser Website binden wir ein Video der Plattform YouTube ein. Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Wir nutzen dafür den erweiterten Datenschutzmodus unter youtube-nocookie.com.",
+          "paragraph2": "Der Player wird nicht automatisch geladen. Solange Sie ihn nicht selbst starten, wird keine Verbindung zu den Servern von YouTube aufgebaut und es werden keine Daten dorthin übertragen. Das Vorschaubild wird von unserem eigenen Server ausgeliefert.",
+          "paragraph3": "Erst wenn Sie das Video über den Play-Button starten, wird der Player von YouTube nachgeladen. Dabei erfährt Google unter anderem Ihre IP-Adresse und kann Cookies oder vergleichbare Technologien einsetzen. Sind Sie in Ihrem Google-Konto angemeldet, kann Google das Abspielen Ihrem Konto zuordnen. Eine Übermittlung von Daten in die USA ist dabei nicht auszuschließen; Google ist nach dem EU-US Data Privacy Framework zertifiziert. Auf Art und Umfang dieser Verarbeitung haben wir keinen Einfluss.",
+          "paragraph4": "Rechtsgrundlage für das Nachladen des Players ist Ihre Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO, die Sie mit dem Klick auf den Play-Button erteilen. Sie können sie jederzeit widerrufen, indem Sie die Seite neu laden und den Player nicht erneut starten.",
+          "paragraph5": "Nähere Informationen zum Umgang mit Nutzerdaten finden Sie in der",
+          "privacyPolicyLinkLabel": "Datenschutzerklärung von Google"
         }
       }
     },

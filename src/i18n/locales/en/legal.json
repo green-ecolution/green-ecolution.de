@@ -186,6 +186,15 @@
           "paragraph4": "The legal basis for loading the player is your consent under Art. 6(1)(a) GDPR, which you give by clicking the play button. You can revoke it at any time by reloading the page and not starting the player again.",
           "paragraph5": "Further information on how user data is handled can be found in the",
           "privacyPolicyLinkLabel": "NDR privacy policy"
+        },
+        "youtube": {
+          "title": "YouTube",
+          "paragraph1": "This website embeds a video from the YouTube platform. The provider is Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland. We use YouTube's privacy-enhanced mode at youtube-nocookie.com.",
+          "paragraph2": "The player does not load automatically. As long as you do not start it yourself, no connection to YouTube's servers is established and no data is transferred to them. The preview image is served from our own server.",
+          "paragraph3": "Only when you start the video via the play button is YouTube's player loaded. Google then learns your IP address, among other things, and may use cookies or comparable technologies. If you are signed in to your Google account, Google can associate the playback with your account. A transfer of data to the USA cannot be ruled out; Google is certified under the EU-US Data Privacy Framework. We have no influence on the nature or extent of this processing.",
+          "paragraph4": "The legal basis for loading the player is your consent under Art. 6(1)(a) GDPR, which you give by clicking the play button. You can revoke it at any time by reloading the page and not starting the player again.",
+          "paragraph5": "Further information on how user data is handled can be found in the",
+          "privacyPolicyLinkLabel": "Google privacy policy"
         }
       }
     },

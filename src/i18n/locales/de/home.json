@@ -237,16 +237,12 @@
   "videos": {
     "sectionLabel": "Videos",
     "title": "Lerne das Projekt per Video kennen",
-    "description": "Im Rahmen des Forschungsprojekts sind neben der Sensorlösung und der Software auch zwei Videos entstanden. Sie stellen das Projekt vor: die Zielsetzung, die Problemstellung und die entwickelte Lösung. Dazu kommt der Fernsehbeitrag, den der NDR über das Projekt gedreht hat.",
-    "short": {
-      "title": "Kurzvideo",
-      "description": "Ein kurzer Einstieg in das Projekt. In rund einer halben Minute erfährst du, worum es bei Green Ecolution geht.",
-      "duration": "ca. 30 Sekunden"
-    },
-    "long": {
-      "title": "Langvideo",
-      "description": "Das ausführliche Video geht tiefer und erklärt die wichtigsten Hintergründe, Details und die nächsten Schritte des Projekts.",
-      "duration": "ca. 4 Minuten"
+    "description": "Zwei Filme zeigen, woran wir arbeiten: das Video des Landes Schleswig-Holstein zur Auszeichnung beim Digitalisierungspreis 2026 und der Fernsehbeitrag, den der NDR über das Projekt gedreht hat.",
+    "award": {
+      "title": "Digitalisierungspreis 2026",
+      "description": "Green Ecolution wurde beim Digitalisierungspreis 2026 des Landes Schleswig-Holstein mit dem Sonderpreis für Green Coding ausgezeichnet. Das Video des Landes stellt das Projekt und die Open-Source-Lösung für die bedarfsgerechte Bewässerung vor.",
+      "duration": "ca. 1,5 Minuten",
+      "posterAlt": "Ein Projektmitarbeiter hält einen Bodenfeuchtesensor in der Hand, im Hintergrund ein junger Straßenbaum und ein Pritschenwagen mit Wassertank"
     },
     "ndr": {
       "title": "NDR-Beitrag",

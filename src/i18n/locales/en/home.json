@@ -237,16 +237,12 @@
   "videos": {
     "sectionLabel": "Videos",
     "title": "Get to know the project through video",
-    "description": "As part of the research project, two videos were produced alongside the sensor solution and the software. They introduce the project: its objective, the problem, and the solution developed. On top of that comes the television piece public broadcaster NDR filmed about the project.",
-    "short": {
-      "title": "Short video",
-      "description": "A brief introduction to the project. In about half a minute, you'll learn what Green Ecolution is about.",
-      "duration": "approx. 30 seconds"
-    },
-    "long": {
-      "title": "Long video",
-      "description": "The detailed video goes deeper and explains the key background, details, and next steps of the project.",
-      "duration": "approx. 4 minutes"
+    "description": "Two films show what we are working on: the State of Schleswig-Holstein's video on our Digitalisierungspreis 2026 award and the television piece public broadcaster NDR filmed about the project.",
+    "award": {
+      "title": "Digitalisierungspreis 2026",
+      "description": "Green Ecolution received the Green Coding special prize at the State of Schleswig-Holstein's Digitalisierungspreis 2026. The state's video introduces the project and the open source solution for needs-based irrigation. It is in German.",
+      "duration": "approx. 1.5 minutes",
+      "posterAlt": "A project member holding a soil moisture sensor, with a young street tree and a flatbed truck with a water tank in the background"
     },
     "ndr": {
       "title": "NDR feature",
