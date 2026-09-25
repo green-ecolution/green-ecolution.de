@@ -29,7 +29,6 @@
     "lucide-react": "^1.47.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-player": "^3.4.0",
     "three": "^0.186.0"
   },
   "devDependencies": {
