@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.17.1](https://github.com/green-ecolution/green-ecolution.de/compare/v1.17.0...v1.17.1) (2026-09-25)
+
+
+### Features
+
+* **video:** replace project videos with award video ([#510](https://github.com/green-ecolution/green-ecolution.de/issues/510)) ([adb041c](https://github.com/green-ecolution/green-ecolution.de/commit/adb041c2dbaf17bb7ee4ceec215e423bcf064af8))
+
 ## [1.17.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.16.2...v1.17.0) (2026-09-24)
 
 
