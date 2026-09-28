@@ -22,7 +22,7 @@
     "@astrojs/react": "^6.0.6",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "@react-three/fiber": "^9.7.0",
+    "@react-three/fiber": "^9.8.1",
     "@splidejs/react-splide": "^0.7.12",
     "astro": "^7.3.3",
     "lottie-react": "^2.4.1",
