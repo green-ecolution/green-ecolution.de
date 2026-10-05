@@ -84,7 +84,8 @@
           "paragraph1": "This website is hosted by an external service provider (host). The personal data collected on this website is stored on the host's servers. This may include, in particular, IP addresses, contact requests, meta and communication data, contract data, contact details, names, website access data, and other data generated through a website.",
           "paragraph2": "The host is used for the purpose of fulfilling contracts with our potential and existing customers (Art. 6(1)(b) GDPR) and in the interest of a secure, fast, and efficient provision of our online services by a professional provider (Art. 6(1)(f) GDPR). Insofar as corresponding consent has been requested, processing is carried out exclusively on the basis of Art. 6(1)(a) GDPR and Section 25(1) TTDSG (German Telecommunications-Telemedia Data Protection Act), insofar as the consent includes the storage of cookies or access to information in the user's terminal device (e.g. device fingerprinting) within the meaning of the TTDSG. Consent can be revoked at any time.",
           "paragraph3": "Our host will only process your data to the extent necessary to fulfill its performance obligations and will follow our instructions with regard to this data.",
-          "hostersIntro": "We use the following host:"
+          "hostersIntro": "We use the following host:",
+          "hosterCountry": "Germany"
         }
       },
       "generalInfo": {
