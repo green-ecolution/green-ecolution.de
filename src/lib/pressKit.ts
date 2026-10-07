@@ -115,6 +115,8 @@ export function formatDimensions(image: PressImage): string {
 
 export const PITCH_DECK_PATH = 'press/pitch-deck/green-ecolution-pitch-deck.pdf'
 
+export const PITCH_DECK_MANIFEST_PATH = 'press/pitch-deck/slides.json'
+
 export function pressAssetUrl(baseUrl: string, path: string): string {
   return `${baseUrl.replace(/\/+$/, '')}/${path}`
 }

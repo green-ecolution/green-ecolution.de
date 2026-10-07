@@ -38,6 +38,10 @@ new pitch deck is a bucket upload, not a deploy.
 `ASSET_BASE_URL` in `astro.config.mjs` points at the bucket and is the only
 place to change when the files move.
 
+The slide preview of the pitch deck is loaded from the bucket at runtime via
+`press/pitch-deck/slides.json`. `just publish-pitch-deck` in the presentations
+repo builds the deck, renders the slides and uploads PDF, slides and manifest.
+
 The SVG sources carry 8% clear space around the artwork, and the icon sits on a
 square canvas. Replacing a source means keeping that framing, otherwise the
 downloads and the preview on the press page stop matching.

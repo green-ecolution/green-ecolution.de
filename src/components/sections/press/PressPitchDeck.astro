@@ -1,13 +1,11 @@
 ---
-import type { ImageMetadata } from 'astro'
-import { Image } from 'astro:assets'
 import { ASSET_BASE_URL } from 'astro:env/server'
 import { ChevronLeft, ChevronRight, FileText } from 'lucide-react'
 import PressSection from './PressSection.astro'
 import ActionButton from '../../ActionButton.astro'
 import type { Language } from '../../../i18n/languages'
 import { getTranslations } from '../../../i18n/t'
-import { PITCH_DECK_PATH, pressAssetUrl } from '../../../lib/pressKit'
+import { PITCH_DECK_MANIFEST_PATH, PITCH_DECK_PATH, pressAssetUrl } from '../../../lib/pressKit'
 
 interface Props {
   language: Language
@@ -15,16 +13,9 @@ interface Props {
 
 const STRIP_ID = 'pitch-deck-slides'
 
-// Rendered by scripts/render-pitch-deck.mjs from the same PDF the button links
-// to. Globbed rather than listed, so a deck that gains or loses a page needs no
-// change here.
-const slides = Object.entries(
-  import.meta.glob<{ default: ImageMetadata }>('../../../assets/press/pitch-deck/slide-*.jpg', {
-    eager: true,
-  }),
-)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([, module]) => module.default)
+// Same-origin in dev: the vite proxy forwards /press to the bucket, which
+// answers CORS only for the production origin.
+const slideBaseUrl = import.meta.env.DEV ? '' : ASSET_BASE_URL
 
 const { language } = Astro.props
 const t = getTranslations(language, 'press')
@@ -36,12 +27,17 @@ const t = getTranslations(language, 'press')
   description={t('pitchDeck.description')}
   wide
 >
-  <div class="mx-auto max-w-screen-lg">
+  <div
+    class="mx-auto max-w-screen-lg"
+    data-pitch-deck-preview
+    data-manifest-url={pressAssetUrl(slideBaseUrl, PITCH_DECK_MANIFEST_PATH)}
+    data-asset-base={slideBaseUrl}
+    data-sizes="(min-width: 1024px) 64rem, 100vw"
+    hidden
+  >
     <div class="mb-4 flex items-end justify-between gap-4 lg:mb-6">
       <p class="text-sm text-grey-900/70 tabular-nums">
-        <span data-slide-position={STRIP_ID}>
-          {t('pitchDeck.slides.position', { page: 1, total: slides.length })}
-        </span>
+        <span data-slide-position={STRIP_ID} data-template={t('pitchDeck.slides.position')}></span>
       </p>
 
       <div class="flex flex-shrink-0 gap-2">
@@ -74,18 +70,9 @@ const t = getTranslations(language, 'press')
       aria-label={t('pitchDeck.slides.stripLabel')}
       class="scrollbar-none flex snap-x snap-mandatory overflow-x-auto"
     >
-      {slides.map((slide) => (
-        <li data-slide class="w-full flex-shrink-0 snap-start">
-          <Image
-            src={slide}
-            alt=""
-            widths={[640, 1024, 1280]}
-            sizes="(min-width: 1024px) 64rem, 100vw"
-            loading="lazy"
-            class="w-full rounded-xl border border-green-dark-900/20"
-          />
-        </li>
-      ))}
+      <li data-slide-placeholder class="w-full flex-shrink-0">
+        <div class="aspect-video w-full animate-pulse rounded-xl border border-green-dark-900/20 bg-green-light-100"></div>
+      </li>
     </ol>
   </div>
 
@@ -113,5 +100,5 @@ const t = getTranslations(language, 'press')
 </PressSection>
 
 <script>
-  import '../../../scripts/slideStrip'
+  import '../../../scripts/pitchDeckSlides'
 </script>
