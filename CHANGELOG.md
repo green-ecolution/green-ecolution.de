@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.17.4](https://github.com/green-ecolution/green-ecolution.de/compare/v1.17.3...v1.17.4) (2026-10-11)
+
+
+### Documentation
+
+* **releases:** add the release note for v0.8.0 ([9ac0844](https://github.com/green-ecolution/green-ecolution.de/commit/9ac0844e28e5fa2e6f531772ee52a11cdffa7ed7))
+
 ## [1.17.3](https://github.com/green-ecolution/green-ecolution.de/compare/v1.17.2...v1.17.3) (2026-10-07)
 
 
