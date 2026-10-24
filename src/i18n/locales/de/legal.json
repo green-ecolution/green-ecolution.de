@@ -7,37 +7,32 @@
     "hero": {
       "label": "Rechtliches",
       "headline": "Impressum",
-      "description": "Angaben gemäß § 5 TMG"
+      "description": "Angaben gemäß § 5 DDG"
     },
     "sections": {
-      "contact": {
-        "title": "Kontakt",
-        "phoneLabel": "Telefon:",
-        "emailLabel": "E-Mail:"
+      "details": {
+        "title": "Pflichtangaben",
+        "managingDirectorLabel": "Geschäftsführung",
+        "phoneLabel": "Telefon",
+        "emailLabel": "E-Mail",
+        "registerLabel": "Handelsregister",
+        "registerPending": "Die Eintragung steht noch aus.",
+        "editorialLabel": "Redaktionell verantwortlich",
+        "editorialBasis": "nach § 18 Abs. 2 MStV",
+        "editorialAddress": "Anschrift wie oben"
       },
-      "commercialRegister": {
-        "title": "Handelsregister",
-        "registryCourtLabel": "Registergericht:",
-        "registryNumberLabel": "Registernummer:",
-        "taxNumberLabel": "Steuernummer:",
-        "vatIdLabel": "USt-IdNr.:",
-        "managingDirectorsLabel": "Geschäftsführer:",
-        "managingDirectors": "Boris Dudelsack und Dmitri Hammernik"
-      },
-      "liabilityContent": {
-        "title": "Haftung für Inhalte",
-        "paragraph1": "Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.",
-        "paragraph2": "Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen."
-      },
-      "liabilityLinks": {
-        "title": "Haftung für Links",
-        "paragraph1": "Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.",
-        "paragraph2": "Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen."
+      "liability": {
+        "title": "Haftung für Inhalte und Links",
+        "paragraph1": "Wir erstellen die Inhalte dieser Website mit Sorgfalt, können für ihre Richtigkeit, Vollständigkeit und Aktualität aber keine Gewähr übernehmen. Für eigene Inhalte sind wir nach den allgemeinen Gesetzen verantwortlich.",
+        "paragraph2": "Diese Website enthält Links zu Angeboten Dritter, auf deren Inhalte wir keinen Einfluss haben. Für diese Inhalte ist der jeweilige Anbieter verantwortlich. Erfahren wir von rechtswidrigen Inhalten auf unseren Seiten oder hinter einem unserer Links, entfernen wir den Inhalt oder den Link umgehend."
       },
       "copyright": {
-        "title": "Urheberrecht",
-        "paragraph1": "Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.",
-        "paragraph2": "Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet."
+        "title": "Urheberrecht und Nutzung",
+        "paragraph1": "Texte, Bilder und Grafiken auf dieser Website sind urheberrechtlich geschützt. Eine Verwendung, die über die gesetzlich erlaubte Nutzung hinausgeht, bedarf der Zustimmung der jeweiligen Rechteinhaber.",
+        "pressText": "Für Bilder und Logos aus dem Pressebereich gelten die Nutzungshinweise auf der",
+        "pressLinkLabel": "Presseseite",
+        "openSourceText": "Die Software von Green Ecolution ist Open Source. Für den Quellcode gelten die Lizenzen der einzelnen Repositories in der",
+        "openSourceLinkLabel": "GitHub-Organisation von Green Ecolution"
       }
     }
   },
@@ -82,7 +77,7 @@
         "externalHosting": {
           "title": "Externes Hosting",
           "paragraph1": "Diese Website wird bei einem externen Dienstleister gehostet (Hoster). Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann es v.a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten, Vertragsdaten, Kontaktdaten, Namen, Websitezugriffe und sonstige Daten, die über eine Website generiert werden, handeln.",
-          "paragraph2": "Der Einsatz des Hosters erfolgt zum Zwecke der Vertragserfüllung gegenüber unseren potenziellen und bestehenden Kunden (Art. 6 Abs. 1 lit. b DSGVO) und im Interesse einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots durch einen professionellen Anbieter (Art. 6 Abs. 1 lit. f DSGVO). Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TTDSG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z.B. Device-Fingerprinting) im Sinne des TTDSG umfasst. Die Einwilligung ist jederzeit widerrufbar.",
+          "paragraph2": "Der Einsatz des Hosters erfolgt zum Zwecke der Vertragserfüllung gegenüber unseren potenziellen und bestehenden Kunden (Art. 6 Abs. 1 lit. b DSGVO) und im Interesse einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots durch einen professionellen Anbieter (Art. 6 Abs. 1 lit. f DSGVO). Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z.B. Device-Fingerprinting) im Sinne des TDDDG umfasst. Die Einwilligung ist jederzeit widerrufbar.",
           "paragraph3": "Unser Hoster wird Ihre Daten nur insoweit verarbeiten, wie dies zur Erfüllung seiner Leistungspflichten erforderlich ist und unsere Weisungen in Bezug auf diese Daten befolgen.",
           "hostersIntro": "Wir nutzen folgenden Hoster:",
           "hosterCountry": "Deutschland"
@@ -169,6 +164,13 @@
             "ipAddress": "IP-Adresse"
           },
           "outro": "Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an der technisch fehlerfreien Darstellung und der Optimierung seiner Website – hierzu müssen die Server-Log-Files erfasst werden."
+        },
+        "analytics": {
+          "title": "Reichweitenmessung",
+          "paragraph1": "Um zu verstehen, wie diese Website genutzt wird, setzen wir die Webanalyse Geeky Analytics ein. Sie wird in unserem Auftrag von der PROGEEK GmbH, Birkenbogen 8, 24999 Wees, betrieben. Server und Datenbank stehen bei der OVH GmbH in Deutschland.",
+          "paragraph2": "Bei jedem Seitenaufruf übermittelt ein kleines Skript die Adresse der aufgerufenen Seite, die Adresse der zuvor besuchten Seite, die Bildschirmgröße und die eingestellte Browsersprache an den Analyseserver. Außerdem verarbeitet der Server Ihre IP-Adresse und die Browserkennung (User-Agent), die Ihr Browser bei jeder Anfrage mitsendet. Aus der Browserkennung werden Browser, Betriebssystem und Gerätetyp abgeleitet.",
+          "paragraph3": "Aus der vollständigen IP-Adresse wird zunächst das Land ermittelt. Anschließend wird sie gekürzt, bei IPv4 wird das letzte Oktett auf null gesetzt und bei IPv6 bleiben nur die ersten vier Blöcke erhalten. Gespeichert wird ausschließlich die gekürzte IP-Adresse. Damit mehrere Seitenaufrufe eines Besuchs zusammengefasst werden können, bildet der Server aus gekürzter IP-Adresse, Browserkennung und Domain zusammen mit einem täglich neu erzeugten Zufallswert einen Hashwert. Dieser Hashwert ändert sich jeden Tag. Cookies oder andere Speicher auf Ihrem Endgerät werden nicht verwendet, ein Nutzungsprofil wird nicht erstellt.",
+          "paragraph4": "Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der statistischen Auswertung der Websitenutzung, um das Angebot zu verbessern. Die Daten werden gespeichert, solange sie für diese Auswertung erforderlich sind. Sie können der Verarbeitung nach Art. 21 DSGVO jederzeit widersprechen."
         },
         "contactForm": {
           "title": "Kontaktformular",
