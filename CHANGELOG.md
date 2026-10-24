@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.18.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.17.4...v1.18.0) (2026-10-24)
+
+
+### Features
+
+* **authors:** update Cedrik Hoffmann's role to CEO & Lead Developer ([ca40912](https://github.com/green-ecolution/green-ecolution.de/commit/ca4091287bfed9af284be84817bf9d8e4a460e05))
+* **blog:** add post on nordisch.digital and FutureTec 2026 ([a990196](https://github.com/green-ecolution/green-ecolution.de/commit/a9901962c559686d8b45bd7cb209fe5eea367194))
+* **blog:** add programme details to the nordisch.digital post ([a990196](https://github.com/green-ecolution/green-ecolution.de/commit/a9901962c559686d8b45bd7cb209fe5eea367194))
+* **blog:** rework title, intro, closing and cover of the nordisch.digital post ([a990196](https://github.com/green-ecolution/green-ecolution.de/commit/a9901962c559686d8b45bd7cb209fe5eea367194))
+* **blog:** rewrite image captions in the nordisch.digital post ([a990196](https://github.com/green-ecolution/green-ecolution.de/commit/a9901962c559686d8b45bd7cb209fe5eea367194))
+* **legal:** name Green Ecolution UG i.G. as site operator ([#546](https://github.com/green-ecolution/green-ecolution.de/issues/546)) ([89e35ae](https://github.com/green-ecolution/green-ecolution.de/commit/89e35ae2337d02ef5be1adec819bc50dbb2931a1))
+
+
+### Bug Fixes
+
+* **blog:** polish blog posts ([98e2f82](https://github.com/green-ecolution/green-ecolution.de/commit/98e2f82a1b665e40986d88d9fcacb4e80bfd52cd))
+
 ## [1.17.4](https://github.com/green-ecolution/green-ecolution.de/compare/v1.17.3...v1.17.4) (2026-10-11)
 
 
