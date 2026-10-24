@@ -7,37 +7,32 @@
     "hero": {
       "label": "Legal",
       "headline": "Legal Notice",
-      "description": "Information pursuant to Sec. 5 TMG (German Telemedia Act)"
+      "description": "Information pursuant to Sec. 5 DDG (German Digital Services Act)"
     },
     "sections": {
-      "contact": {
-        "title": "Contact",
-        "phoneLabel": "Phone:",
-        "emailLabel": "Email:"
+      "details": {
+        "title": "Required information",
+        "managingDirectorLabel": "Managing director",
+        "phoneLabel": "Phone",
+        "emailLabel": "Email",
+        "registerLabel": "Commercial register",
+        "registerPending": "Registration is still pending.",
+        "editorialLabel": "Editorial responsibility",
+        "editorialBasis": "pursuant to Sec. 18(2) MStV",
+        "editorialAddress": "address as above"
       },
-      "commercialRegister": {
-        "title": "Commercial Register",
-        "registryCourtLabel": "Court of registration:",
-        "registryNumberLabel": "Registration number:",
-        "taxNumberLabel": "Tax number:",
-        "vatIdLabel": "VAT ID:",
-        "managingDirectorsLabel": "Managing Directors:",
-        "managingDirectors": "Boris Dudelsack and Dmitri Hammernik"
-      },
-      "liabilityContent": {
-        "title": "Liability for Content",
-        "paragraph1": "As a service provider, we are responsible for our own content on these pages in accordance with general laws pursuant to Section 7(1) TMG. However, pursuant to Sections 8 to 10 TMG, we as a service provider are not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.",
-        "paragraph2": "Obligations to remove or block the use of information under general law remain unaffected. However, liability in this regard is only possible from the point in time at which a specific infringement becomes known. If we become aware of any such infringements, we will remove the content in question immediately."
-      },
-      "liabilityLinks": {
-        "title": "Liability for Links",
-        "paragraph1": "Our website contains links to external third-party websites, the content of which we have no influence over. Therefore, we cannot accept any liability for this external content. The respective provider or operator of the linked pages is always responsible for their content.",
-        "paragraph2": "The linked pages were checked for possible legal violations at the time of linking. No illegal content was identifiable at the time of linking. However, permanent monitoring of the content of linked pages is not reasonable without concrete evidence of a violation. If we become aware of any infringements, we will remove such links immediately."
+      "liability": {
+        "title": "Liability for Content and Links",
+        "paragraph1": "We create the content of this website with care, but cannot guarantee that it is accurate, complete, or up to date. We are responsible for our own content in accordance with general law.",
+        "paragraph2": "This website contains links to third-party websites whose content we have no influence on. The respective provider is responsible for that content. If we become aware of unlawful content on our pages or behind one of our links, we will remove the content or the link immediately."
       },
       "copyright": {
-        "title": "Copyright",
-        "paragraph1": "The content and works created by the site operators on these pages are subject to German copyright law. Duplication, processing, distribution, and any form of exploitation beyond the limits of copyright law require the written consent of the respective author or creator.",
-        "paragraph2": "Downloads and copies of this page are only permitted for private, non-commercial use. Insofar as the content on this page was not created by the operator, the copyrights of third parties are respected. In particular, third-party content is identified as such."
+        "title": "Copyright and Use",
+        "paragraph1": "Texts, images, and graphics on this website are protected by copyright. Any use beyond what is permitted by law requires the consent of the respective rights holders.",
+        "pressText": "Images and logos from the press section are subject to the usage notes on the",
+        "pressLinkLabel": "press page",
+        "openSourceText": "The Green Ecolution software is open source. The source code is subject to the licenses of the individual repositories in the",
+        "openSourceLinkLabel": "Green Ecolution GitHub organization"
       }
     }
   },

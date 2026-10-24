@@ -5,12 +5,23 @@ import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro'
 import { getTranslations } from '../../i18n/t'
 import { languagePaths } from '../../lib/languagePaths'
 import { DEFAULT_LANGUAGE, currentLanguage } from '../../i18n/languages'
+import { company } from '../../data/company'
 
 export const getStaticPaths = languagePaths
 
 const language = currentLanguage(Astro.params.lang)
 const t = getTranslations(language, 'legal')
 const tc = getTranslations(language, 'common')
+
+const headingClasses =
+  'font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900'
+const linkClasses =
+  'text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900'
+const cardLinkClasses =
+  'font-semibold underline decoration-green-light-900/70 underline-offset-4 transition-colors duration-300 hover:decoration-green-light-900'
+const rowClasses = 'grid gap-y-0.5 sm:grid-cols-[12rem_1fr] sm:items-baseline sm:gap-x-6'
+const labelClasses = 'text-sm text-white/70 sm:text-base'
+const paperGrain = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`
 ---
 
 <BaseLayout title={t('impressum.meta.title')} language={language} path="/impressum">
@@ -31,108 +42,196 @@ const tc = getTranslations(language, 'common')
       label={t('impressum.hero.label')}
     />
 
-    <section class="px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl mt-16 mb-28 lg:mb-36 xl:mb-52">
-      <div class="space-y-12">
-        {language !== DEFAULT_LANGUAGE && (
-          <p class="text-sm text-grey-900/70 bg-grey-100/50 border border-grey-200/50 rounded-xl p-4">
-            {t('translationNotice')}
-          </p>
-        )}
+    <div class="px-4 max-w-3xl mx-auto md:px-6 mt-16 mb-28 lg:mb-36 xl:mb-52 space-y-14">
+      {language !== DEFAULT_LANGUAGE && (
+        <p class="text-sm text-grey-900/70 border border-green-dark-900/15 rounded-xl p-4">
+          {t('translationNotice')}
+        </p>
+      )}
 
-        {/* Kontakt */}
-        <div>
-          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
-            {t('impressum.sections.contact.title')}
-          </h2>
-          <address class="not-italic space-y-1 bg-grey-100/50 rounded-xl p-6 border border-grey-200/50">
-            <p class="font-bold">PROGEEK GmbH</p>
-            <p>Birkenbogen 8</p>
-            <p>24999 Wees</p>
-            <p class="mt-4">
-              {t('impressum.sections.contact.phoneLabel')}{' '}
-              <a
-                href="tel:+494617933068"
-                class="text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900"
-              >
-                +49 461 793 306 80
-              </a>
-            </p>
-            <p>
-              {t('impressum.sections.contact.emailLabel')}{' '}
-              <a
-                href="mailto:info@progeek.de"
-                class="text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900"
-              >
-                info@progeek.de
-              </a>
-            </p>
-          </address>
-        </div>
+      <div data-card-stage class="[perspective:1200px]">
+        <section
+          data-card
+          aria-labelledby="impressum-details"
+          class="impressum-card relative isolate overflow-hidden rounded-2xl text-white"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 -z-10 opacity-[0.08] mix-blend-overlay"
+            style={{ backgroundImage: paperGrain }}
+          ></div>
+          <div aria-hidden="true" class="impressum-card__light absolute inset-0 -z-10"></div>
+          <div aria-hidden="true" class="impressum-card__edge absolute inset-0 rounded-2xl"></div>
 
-        {/* Handelsregister */}
-        <div>
-          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
-            {t('impressum.sections.commercialRegister.title')}
-          </h2>
-          <ul class="space-y-1">
-            <li>
-              <span class="font-bold">
-                {t('impressum.sections.commercialRegister.registryCourtLabel')}
-              </span>{' '}
-              Amtsgericht Flensburg
-            </li>
-            <li>
-              <span class="font-bold">
-                {t('impressum.sections.commercialRegister.registryNumberLabel')}
-              </span>{' '}
-              HRB 15596 FL
-            </li>
-            <li>
-              <span class="font-bold">
-                {t('impressum.sections.commercialRegister.taxNumberLabel')}
-              </span>{' '}
-              15/295/02186
-            </li>
-            <li>
-              <span class="font-bold">{t('impressum.sections.commercialRegister.vatIdLabel')}</span>{' '}
-              DE351061751
-            </li>
-            <li>
-              <span class="font-bold">
-                {t('impressum.sections.commercialRegister.managingDirectorsLabel')}
-              </span>{' '}
-              {t('impressum.sections.commercialRegister.managingDirectors')}
-            </li>
-          </ul>
-        </div>
+          <div class="flex h-full flex-col justify-between gap-10 px-6 py-8 sm:px-10 sm:py-10 md:aspect-[85/55] md:px-12">
+            <h2 id="impressum-details" class="sr-only">
+              {t('impressum.sections.details.title')}
+            </h2>
 
-        {/* Haftung für Inhalte */}
-        <div>
-          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
-            {t('impressum.sections.liabilityContent.title')}
-          </h2>
-          <p class="mb-4">{t('impressum.sections.liabilityContent.paragraph1')}</p>
-          <p>{t('impressum.sections.liabilityContent.paragraph2')}</p>
-        </div>
+            <div class="flex items-start justify-between gap-6">
+              <address class="not-italic">
+                <p class="font-lato font-bold text-2xl leading-tight md:text-3xl">{company.name}</p>
+                <p class="mt-3 text-white/80">
+                  {company.street}, {company.postalCodeAndCity}
+                </p>
+              </address>
+              <img
+                src="/assets/svg/logo/logo-icon-white.svg"
+                alt=""
+                aria-hidden="true"
+                class="mt-1 w-9 shrink-0 opacity-90 md:w-11"
+              />
+            </div>
 
-        {/* Haftung für Links */}
-        <div>
-          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
-            {t('impressum.sections.liabilityLinks.title')}
-          </h2>
-          <p class="mb-4">{t('impressum.sections.liabilityLinks.paragraph1')}</p>
-          <p>{t('impressum.sections.liabilityLinks.paragraph2')}</p>
-        </div>
-
-        {/* Urheberrecht */}
-        <div>
-          <h2 class="font-lato font-bold text-2xl mb-4 lg:text-3xl text-grey-900 pl-4 border-l-4 border-green-light-900">
-            {t('impressum.sections.copyright.title')}
-          </h2>
-          <p class="mb-4">{t('impressum.sections.copyright.paragraph1')}</p>
-          <p>{t('impressum.sections.copyright.paragraph2')}</p>
-        </div>
+            <dl class="space-y-4">
+              <div class={rowClasses}>
+                <dt class={labelClasses}>
+                  {t('impressum.sections.details.managingDirectorLabel')}
+                </dt>
+                <dd>{company.managingDirector}</dd>
+              </div>
+              <div class="space-y-3 sm:space-y-1">
+                <div class={rowClasses}>
+                  <dt class={labelClasses}>{t('impressum.sections.details.phoneLabel')}</dt>
+                  <dd>
+                    <a href={company.phone.href} class={cardLinkClasses}>
+                      {company.phone.display}
+                    </a>
+                  </dd>
+                </div>
+                <div class={rowClasses}>
+                  <dt class={labelClasses}>{t('impressum.sections.details.emailLabel')}</dt>
+                  <dd>
+                    <a href={`mailto:${company.email}`} class={cardLinkClasses}>
+                      {company.email}
+                    </a>
+                  </dd>
+                </div>
+              </div>
+              <div class={rowClasses}>
+                <dt class={labelClasses}>{t('impressum.sections.details.registerLabel')}</dt>
+                <dd>{t('impressum.sections.details.registerPending')}</dd>
+              </div>
+              <div class={rowClasses}>
+                <dt class={labelClasses}>
+                  {t('impressum.sections.details.editorialLabel')}
+                  <span class="block text-xs text-white/60 sm:text-sm">
+                    {t('impressum.sections.details.editorialBasis')}
+                  </span>
+                </dt>
+                <dd>
+                  {company.managingDirector}, {t('impressum.sections.details.editorialAddress')}
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </section>
       </div>
-    </section>
+
+      <section class="max-w-2xl">
+        <h2 class={headingClasses}>{t('impressum.sections.liability.title')}</h2>
+        <p class="mb-4">{t('impressum.sections.liability.paragraph1')}</p>
+        <p>{t('impressum.sections.liability.paragraph2')}</p>
+      </section>
+
+      <section class="max-w-2xl">
+        <h2 class={headingClasses}>{t('impressum.sections.copyright.title')}</h2>
+        <p class="mb-4">{t('impressum.sections.copyright.paragraph1')}</p>
+        <p class="mb-4">
+          {t('impressum.sections.copyright.pressText')}{' '}
+          <a href={`/${language}/presse`} class={linkClasses}>
+            {t('impressum.sections.copyright.pressLinkLabel')}
+          </a>
+          .
+        </p>
+        <p>
+          {t('impressum.sections.copyright.openSourceText')}{' '}
+          <a href={company.githubUrl} target="_blank" rel="noreferrer noopener" class={linkClasses}>
+            {t('impressum.sections.copyright.openSourceLinkLabel')}
+          </a>
+          .
+        </p>
+      </section>
+    </div>
   </main>
 </BaseLayout>
+
+<style>
+  .impressum-card {
+    --light-x: 78%;
+    --light-y: 12%;
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    background: linear-gradient(150deg, oklch(37% 0.07 148), oklch(27% 0.055 152));
+    box-shadow:
+      inset 0 1px 0 oklch(100% 0 0 / 0.12),
+      0 1px 2px oklch(0% 0 0 / 0.2),
+      0 32px 64px -28px oklch(25% 0.07 150 / 0.65);
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    transition: transform 700ms var(--ease-spring-settle);
+  }
+
+  .impressum-card[data-tracking] {
+    transition: transform 120ms ease-out;
+  }
+
+  .impressum-card__light {
+    background: radial-gradient(
+      36rem circle at var(--light-x) var(--light-y),
+      oklch(100% 0 0 / 0.13),
+      transparent 55%
+    );
+  }
+
+  /* Only a 1px ring is left visible, so the edge lights up where the light hits it. */
+  .impressum-card__edge {
+    pointer-events: none;
+    padding: 1px;
+    background: radial-gradient(
+      22rem circle at var(--light-x) var(--light-y),
+      oklch(100% 0 0 / 0.45),
+      transparent 70%
+    );
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .impressum-card {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const MAX_TILT_DEG = 4
+
+  function bindCardLight() {
+    const stage = document.querySelector<HTMLElement>('[data-card-stage]')
+    const card = stage?.querySelector<HTMLElement>('[data-card]')
+    if (!stage || !card) return
+
+    // Measured on the untilted stage, the card's own rect shifts as it tilts.
+    stage.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse') return
+      const rect = stage.getBoundingClientRect()
+      const x = (event.clientX - rect.left) / rect.width
+      const y = (event.clientY - rect.top) / rect.height
+      card.dataset.tracking = ''
+      card.style.setProperty('--light-x', `${x * 100}%`)
+      card.style.setProperty('--light-y', `${y * 100}%`)
+      card.style.setProperty('--tilt-x', `${(0.5 - y) * MAX_TILT_DEG}deg`)
+      card.style.setProperty('--tilt-y', `${(x - 0.5) * MAX_TILT_DEG}deg`)
+    })
+
+    stage.addEventListener('pointerleave', () => {
+      delete card.dataset.tracking
+      card.style.setProperty('--tilt-x', '0deg')
+      card.style.setProperty('--tilt-y', '0deg')
+    })
+  }
+
+  document.addEventListener('astro:page-load', bindCardLight)
+</script>
