@@ -165,6 +165,13 @@
           },
           "outro": "This data is not merged with other data sources. The collection of this data is based on Art. 6(1)(f) GDPR. The website operator has a legitimate interest in the technically error-free presentation and optimization of its website – the server log files must be recorded for this purpose."
         },
+        "analytics": {
+          "title": "Audience Measurement",
+          "paragraph1": "To understand how this website is used, we use the web analytics tool Geeky Analytics. It is operated on our behalf by PROGEEK GmbH, Birkenbogen 8, 24999 Wees, Germany. Server and database are hosted by OVH GmbH in Germany.",
+          "paragraph2": "On every page view, a small script transmits the address of the page viewed, the address of the previously visited page, the screen size, and the browser language to the analytics server. In addition, the server processes your IP address and the browser identifier (user agent) that your browser sends with every request. Browser, operating system, and device type are derived from the user agent.",
+          "paragraph3": "The full IP address is first used to determine the country. It is then truncated: for IPv4 the last octet is set to zero, for IPv6 only the first four blocks are kept. Only the truncated IP address is stored. To group several page views of one visit, the server computes a hash from the truncated IP address, the user agent, and the domain together with a random value that is newly generated every day. This hash changes every day. No cookies or other storage on your device are used, and no usage profile is created.",
+          "paragraph4": "Processing is based on Art. 6(1)(f) GDPR. Our legitimate interest lies in the statistical analysis of website usage in order to improve our services. The data is stored for as long as it is required for this analysis. You may object to the processing at any time pursuant to Art. 21 GDPR."
+        },
         "contactForm": {
           "title": "Contact Form",
           "paragraph1": "If you send us inquiries via the contact form, the information you provide in the inquiry form, including the contact details you provide there, will be stored by us for the purpose of processing the inquiry and in case of follow-up questions. We do not share this data without your consent.",

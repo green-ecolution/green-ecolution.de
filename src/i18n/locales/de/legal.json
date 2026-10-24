@@ -165,6 +165,13 @@
           },
           "outro": "Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an der technisch fehlerfreien Darstellung und der Optimierung seiner Website – hierzu müssen die Server-Log-Files erfasst werden."
         },
+        "analytics": {
+          "title": "Reichweitenmessung",
+          "paragraph1": "Um zu verstehen, wie diese Website genutzt wird, setzen wir die Webanalyse Geeky Analytics ein. Sie wird in unserem Auftrag von der PROGEEK GmbH, Birkenbogen 8, 24999 Wees, betrieben. Server und Datenbank stehen bei der OVH GmbH in Deutschland.",
+          "paragraph2": "Bei jedem Seitenaufruf übermittelt ein kleines Skript die Adresse der aufgerufenen Seite, die Adresse der zuvor besuchten Seite, die Bildschirmgröße und die eingestellte Browsersprache an den Analyseserver. Außerdem verarbeitet der Server Ihre IP-Adresse und die Browserkennung (User-Agent), die Ihr Browser bei jeder Anfrage mitsendet. Aus der Browserkennung werden Browser, Betriebssystem und Gerätetyp abgeleitet.",
+          "paragraph3": "Aus der vollständigen IP-Adresse wird zunächst das Land ermittelt. Anschließend wird sie gekürzt, bei IPv4 wird das letzte Oktett auf null gesetzt und bei IPv6 bleiben nur die ersten vier Blöcke erhalten. Gespeichert wird ausschließlich die gekürzte IP-Adresse. Damit mehrere Seitenaufrufe eines Besuchs zusammengefasst werden können, bildet der Server aus gekürzter IP-Adresse, Browserkennung und Domain zusammen mit einem täglich neu erzeugten Zufallswert einen Hashwert. Dieser Hashwert ändert sich jeden Tag. Cookies oder andere Speicher auf Ihrem Endgerät werden nicht verwendet, ein Nutzungsprofil wird nicht erstellt.",
+          "paragraph4": "Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der statistischen Auswertung der Websitenutzung, um das Angebot zu verbessern. Die Daten werden gespeichert, solange sie für diese Auswertung erforderlich sind. Sie können der Verarbeitung nach Art. 21 DSGVO jederzeit widersprechen."
+        },
         "contactForm": {
           "title": "Kontaktformular",
           "paragraph1": "Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.",
