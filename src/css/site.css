@@ -113,7 +113,6 @@
   --animate-move: move 35s linear infinite;
   --animate-shimmer: shimmer 1.5s ease-in-out infinite;
   --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
-  --animate-shadow-glow-pulse: shadow-glow-pulse 2s ease-in-out infinite;
   --animate-adopt-fade-in: adopt-fade-in 300ms ease-out both;
   --animate-adopt-scale-in: adopt-scale-in 500ms ease-out both;
   --animate-adopt-tree-pop: adopt-tree-pop 700ms 200ms ease-out both;
@@ -160,16 +159,6 @@
   50% {
     transform: scale(1.15);
     opacity: 1;
-  }
-}
-
-@keyframes shadow-glow-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 40px rgba(172, 182, 59, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 60px rgba(172, 182, 59, 0.9);
   }
 }
 

@@ -19,16 +19,8 @@ function write(key: string, value: string): void {
   try {
     localStorage.setItem(key, value)
   } catch {
-    // Private mode can refuse writes; the visitor simply sees the intro again.
+    // Private mode can refuse writes; the stored value is only a convenience.
   }
-}
-
-export function setInitialLoad() {
-  write('green_ecolution_initial_load', 'false')
-}
-
-export function isInitialLoad(): boolean {
-  return read('green_ecolution_initial_load') !== 'false'
 }
 
 export function setStoredLanguage(language: string) {

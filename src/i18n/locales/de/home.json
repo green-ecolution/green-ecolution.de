@@ -10,8 +10,9 @@
     "headlineSuffix": " von Grünflächen!",
     "tagline": "Messen. Verstehen. Handeln.",
     "description": "Sensoren im Boden zeigen, welche Bäume Wasser brauchen. Die Einsatzplanung schickt dein Team gezielt dorthin. Die Bewässerung ist dabei erst der Anfang.",
-    "playAnimation": "Animation abspielen",
-    "adoptTreeAriaLabel": "Baum adoptieren"
+    "adoptTreeAriaLabel": "Baum adoptieren",
+    "ctaContact": "Kontakt aufnehmen",
+    "ctaProduct": "Produkt entdecken"
   },
   "award": {
     "sectionLabel": "Auszeichnung",
@@ -20,32 +21,6 @@
     "description": "Das Land Schleswig-Holstein hat Green Ecolution im September 2026 für ressourcenschonende Software und bedarfsgerechte Bewässerung ausgezeichnet. Überreicht hat den Preis Digitalisierungsminister Dirk Schrödter in Kiel.",
     "cta": "Zum Beitrag über die Preisverleihung",
     "imageAlt": "Digitalisierungsminister Dirk Schrödter applaudiert auf der Bühne zwei Vertretern von PROGEEK mit Trophäe und Urkunde, dahinter die Leinwand mit der Aufschrift Green Ecolution"
-  },
-  "overlay": {
-    "popups": {
-      "moisture": {
-        "label": "Messung des Bewässerungszustandes",
-        "description": "Die Bodenfeuchte wird in Abhängigkeit der Vegetationsform in unterschiedlichen Bodentiefen gemessen, um Daten über verschiedene Bodenschichten zu erhalten."
-      },
-      "transmission": {
-        "label": "Übertragung der Daten",
-        "description": "Die Sensordaten werden über ein öffentliches LoRaWAN-Netzwerk an ein Backend zur weiteren Verarbeitung übermittelt. LoRaWAN benötigt wenig Energie und besitzt eine hohe Reichweite, was zu einer großen Flächenabdeckung und einem geringen Wartungsaufwand führt."
-      },
-      "recommendation": {
-        "label": "Handlungsempfehlungen",
-        "description": "Die übermittelten Sensordaten werden anhand wissenschaftlicher und mathematischer Methoden ausgewertet. Auf einem Dashboard wird grafisch dargestellt, ob eine Bewässerung in nächster Zeit notwendig ist. <Link>Zu den Vorteilen</Link>"
-      }
-    },
-    "next": "Weiter",
-    "discover": "Entdecken",
-    "closeAriaLabel": "Popup schließen",
-    "ariaLabel": "Interaktive Einführung"
-  },
-  "welcomeCard": {
-    "greeting": "Willkommen bei",
-    "tagline": "Smartes Grünflächenmanagement",
-    "description": "Erfahre, wie wir mit smarter Sensorik und datengestützten Analysen die Bewässerung städtischer Grünflächen optimieren, für gesündere Bäume, Beete und Parks bei effizientem Ressourceneinsatz.",
-    "cta": "Jetzt entdecken"
   },
   "adoptModal": {
     "ariaLabel": "Adoptionsurkunde für {{fullName}}",

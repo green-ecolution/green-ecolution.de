@@ -10,8 +10,9 @@
     "headlineSuffix": " of green spaces!",
     "tagline": "Measure. Understand. Act.",
     "description": "Sensors in the soil show which trees need water, and route planning sends your team straight there. Irrigation is only the beginning.",
-    "playAnimation": "Play animation",
-    "adoptTreeAriaLabel": "Adopt a tree"
+    "adoptTreeAriaLabel": "Adopt a tree",
+    "ctaContact": "Get in touch",
+    "ctaProduct": "Explore the product"
   },
   "award": {
     "sectionLabel": "Award",
@@ -20,32 +21,6 @@
     "description": "In September 2026 the state of Schleswig-Holstein honoured Green Ecolution for resource-efficient software and demand-based irrigation. Digital minister Dirk Schrödter presented the prize in Kiel.",
     "cta": "Read about the award ceremony",
     "imageAlt": "Digital minister Dirk Schrödter applauds two PROGEEK representatives holding trophy and certificate on stage, behind them a screen reading Green Ecolution"
-  },
-  "overlay": {
-    "popups": {
-      "moisture": {
-        "label": "Measuring irrigation status",
-        "description": "Soil moisture is measured at different soil depths depending on the vegetation type, providing data across different soil layers."
-      },
-      "transmission": {
-        "label": "Data transmission",
-        "description": "The sensor data is transmitted via a public LoRaWAN network to a backend for further processing. LoRaWAN requires little energy and has a long range, resulting in wide area coverage and low maintenance effort."
-      },
-      "recommendation": {
-        "label": "Recommendations",
-        "description": "The transmitted sensor data is analyzed using scientific and mathematical methods. A dashboard graphically shows whether irrigation will be needed soon. <Link>See the benefits</Link>"
-      }
-    },
-    "next": "Next",
-    "discover": "Discover",
-    "closeAriaLabel": "Close popup",
-    "ariaLabel": "Interactive introduction"
-  },
-  "welcomeCard": {
-    "greeting": "Welcome to",
-    "tagline": "Smart green space management",
-    "description": "Learn how we use smart sensors and data-driven analysis to optimize the irrigation of urban green spaces, for healthier trees, beds and parks with efficient use of resources.",
-    "cta": "Discover now"
   },
   "adoptModal": {
     "ariaLabel": "Adoption certificate for {{fullName}}",

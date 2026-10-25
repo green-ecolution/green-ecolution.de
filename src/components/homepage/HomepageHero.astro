@@ -38,8 +38,6 @@ const SPECIES_IDS = [
   'poplar',
 ] as const
 
-const POPUP_IDS = ['moisture', 'transmission', 'recommendation'] as const
-
 // Spelled out rather than passing the namespace: the island renders every one of
 // these, and an explicit list is what keeps the payload from growing with the
 // catalog.
@@ -50,16 +48,9 @@ const KEYS = [
   'hero.headlineSuffix',
   'hero.tagline',
   'hero.description',
-  'hero.playAnimation',
+  'hero.ctaContact',
+  'hero.ctaProduct',
   'hero.adoptTreeAriaLabel',
-  'overlay.ariaLabel',
-  'overlay.closeAriaLabel',
-  'overlay.discover',
-  'overlay.next',
-  'welcomeCard.greeting',
-  'welcomeCard.tagline',
-  'welcomeCard.description',
-  'welcomeCard.cta',
   'adoptModal.ariaLabel',
   'adoptModal.certificateLabel',
   'adoptModal.certificateNumber',
@@ -71,7 +62,6 @@ const KEYS = [
   'adoptModal.waitingIn',
   ...FACT_IDS.map((id) => `adoptTree.facts.${id}`),
   ...SPECIES_IDS.map((id) => `adoptTree.species.${id}`),
-  ...POPUP_IDS.flatMap((id) => [`overlay.popups.${id}.label`, `overlay.popups.${id}.description`]),
 ] as TranslationKey<'home'>[]
 
 const { language } = Astro.props
