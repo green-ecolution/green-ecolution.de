@@ -46,6 +46,8 @@ const authors = defineCollection({
       // the byline should still read english on /en.
       role: z.object({ de: z.string(), en: z.string() }),
       image: image().optional(),
+      // Public profiles of the person, emitted as schema.org sameAs.
+      sameAs: z.array(z.url()).optional(),
     }),
 })
 
