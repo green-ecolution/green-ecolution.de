@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Über uns | Green Ecolution",
-    "description": "Green Ecolution ist ein Unternehmen aus Flensburg. Wie aus einer Frage der Stadt Flensburg eine Firma wurde, wofür wir stehen und wer dahintersteht."
+    "description": "Green Ecolution ist ein Unternehmen aus Flensburg, gegründet von {{director}} zusammen mit der {{group}}. Wie aus einer Frage der Stadt Flensburg eine Firma wurde und wofür wir stehen."
   },
   "hero": {
     "label": "Über uns",

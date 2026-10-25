@@ -21,7 +21,10 @@ const tc = getTranslations(language, 'common')
 
 <BaseLayout
   title={t('meta.title')}
-  description={t('meta.description')}
+  description={t('meta.description', {
+    director: company.managingDirector,
+    group: company.parentOrganization,
+  })}
   language={language}
   path="/about"
 >
