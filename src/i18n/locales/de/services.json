@@ -36,7 +36,7 @@
       },
       "tourOptimization": {
         "label": "Tourenoptimierung",
-        "description": "Die Einsatz- und Routenplanung mit Nachfüllstationen kommt über Streamlet dazu und wird separat vereinbart.",
+        "description": "Die Tourenoptimierung mit Nachfüllstationen kommt über Streamlet dazu und wird separat vereinbart.",
         "linkLabel": "Wie die Tourenoptimierung rechnet"
       }
     },

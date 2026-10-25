@@ -36,7 +36,7 @@
       },
       "tourOptimization": {
         "label": "Route optimisation",
-        "description": "Deployment and route planning with refill stations comes via Streamlet and is agreed separately.",
+        "description": "Route optimisation with refill stations comes via Streamlet and is agreed separately.",
         "linkLabel": "How the route optimisation calculates"
       }
     },
