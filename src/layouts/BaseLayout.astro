@@ -7,7 +7,11 @@ import Footer from './Footer.astro'
 import { getTranslations } from '../i18n/t'
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, type Language } from '../i18n/languages'
 import { siteOrigin } from '../lib/site'
+import { getEntry } from 'astro:content'
 import { organizationSchema } from '../lib/organizationSchema'
+import { personSchema } from '../lib/personSchema'
+import { absoluteImageUrl } from '../lib/absoluteImageUrl'
+import { company } from '../data/company'
 import '../css/site.css'
 
 interface Props {
@@ -18,19 +22,34 @@ interface Props {
   // address, such as the 404 page: a self-referencing canonical there would tell
   // crawlers the URL is a real page.
   path?: string
+  // Absolute URL; pages without one share the generic preview image.
+  image?: { url: string; alt: string }
+  ogType?: 'website' | 'article'
 }
 
 const OG_LOCALES: Record<Language, string> = { de: 'de_DE', en: 'en_GB' }
 
-const { title, description, language, path } = Astro.props
+const { title, description, language, path, image, ogType = 'website' } = Astro.props
 const base = siteOrigin(Astro.site)
 const canonical = path === undefined ? undefined : `${base}/${language}${path}`
 const tc = getTranslations(language, 'common')
 
 // Absolute, because social previews do not resolve relative paths.
-const ogImage = `${base}/assets/images/open-graph-image.png`
+const ogImage = image?.url ?? `${base}/assets/images/open-graph-image.png`
 
-const organization = organizationSchema(base, tc('footer.description'))
+const founderEntry = await getEntry('authors', company.managingDirectorAuthorId)
+const founder = founderEntry && {
+  ...personSchema(base, {
+    id: founderEntry.id,
+    name: founderEntry.data.name,
+    imageUrl: founderEntry.data.image && (await absoluteImageUrl(base, founderEntry.data.image)),
+    sameAs: founderEntry.data.sameAs,
+  }),
+  jobTitle: getTranslations(language, 'about')('owners.contact.role'),
+  url: `${base}/${language}/about`,
+}
+
+const organization = organizationSchema(base, tc('footer.description'), founder)
 
 // x-default points at German because that's the site's source language, not a
 // geo-targeted fallback.
@@ -67,7 +86,7 @@ const feeds = [
     <Font cssVariable="--font-lato-face" preload={[{ weight: 700 }]} />
     <title>{title}</title>
     <meta property="og:title" content={title} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:locale" content={OG_LOCALES[language]} />
     <meta name="twitter:title" content={title} />
     {description && <meta name="description" content={description} />}
@@ -84,8 +103,10 @@ const feeds = [
     <meta name="author" content="Green Ecolution" />
     <meta property="og:site_name" content="Green Ecolution" />
     <meta property="og:image" content={ogImage} />
+    {image && <meta property="og:image:alt" content={image.alt} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
+    {image && <meta name="twitter:image:alt" content={image.alt} />}
 
     <link rel="icon" type="image/svg+xml" href="/assets/favicons/favicon.svg" sizes="any" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png" />

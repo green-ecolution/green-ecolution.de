@@ -86,8 +86,8 @@
     "items": {
       "fieldWork": {
         "title": "Checking a young tree",
-        "description": "Two people from the project at a young tree with a watering bag. The photo shows what the project is about: demand arises at the site.",
-        "alt": "Two people at a young tree with a watering bag. One is crouching and using a tablet, the other is looking on."
+        "description": "Cedrik Hoffmann and another person from the project at a young tree with a watering bag. The photo shows what the project is about: demand arises at the site.",
+        "alt": "Cedrik Hoffmann crouches at a young tree with a watering bag and uses a tablet. Another person leans in beside him and looks on."
       },
       "watering": {
         "title": "Watering a young tree",
@@ -96,18 +96,18 @@
       },
       "sensorInstall": {
         "title": "Installing a soil probe",
-        "description": "A worker from the municipal operations centre opens the hole prepared by the earth auger while the probe is held ready beside it.",
-        "alt": "Installing a soil probe at a tree site: a worker in high-visibility clothing opens the hole prepared by the earth auger, with the probe and its cable held ready beside it."
+        "description": "A worker from the municipal operations centre opens the hole prepared by the earth auger while Cedrik Hoffmann and another person get the probe ready beside it.",
+        "alt": "Installing a soil probe at a tree site: a worker in high-visibility clothing opens the hole prepared by the earth auger. Beside him, Cedrik Hoffmann and another person hold the probe and its cable ready."
       },
       "treePit": {
         "title": "Excavator at a tree pit",
-        "description": "The municipal operations centre's excavator opens a tree pit on a city street.",
-        "alt": "A mini excavator belonging to the Flensburg municipal operations centre at a tree pit on a street, with two people standing beside it."
+        "description": "The municipal operations centre's excavator opens a tree pit on a city street while Cedrik Hoffmann looks on.",
+        "alt": "A mini excavator belonging to the Flensburg municipal operations centre at a tree pit on a street. Cedrik Hoffmann and another person stand beside it."
       },
       "team": {
         "title": "The team at work",
-        "description": "Two people at a laptop.",
-        "alt": "Two people looking at something on a laptop together."
+        "description": "Cedrik Hoffmann and another person at a laptop.",
+        "alt": "Cedrik Hoffmann and another person looking at something on a laptop together."
       }
     },
     "zip": {

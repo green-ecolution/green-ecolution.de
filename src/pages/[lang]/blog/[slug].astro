@@ -15,6 +15,10 @@ import { readingTimeInMinutes } from '../../../lib/readingTime'
 import { selectArticles } from '../../../lib/blogSelectors'
 import { articleSlug, getAdjacentArticles } from '../../../lib/blog'
 import { getAuthor } from '../../../lib/authors'
+import { siteOrigin } from '../../../lib/site'
+import { absoluteImageUrl } from '../../../lib/absoluteImageUrl'
+import { articleSchema } from '../../../lib/articleSchema'
+import { personSchema } from '../../../lib/personSchema'
 
 // See the release page: the link carries the language, the table gains a scroll
 // box, the rest is .content-body in css.
@@ -44,6 +48,22 @@ const { Content } = await render(entry)
 const author = await getAuthor(entry)
 const minutes = readingTimeInMinutes(entry.body ?? '')
 const { newer, older } = await getAdjacentArticles(language, slug)
+
+const base = siteOrigin(Astro.site)
+const coverUrl = await absoluteImageUrl(base, data.cover, 1200)
+const article = articleSchema(base, {
+  url: `${base}/${language}/blog/${slug}`,
+  headline: data.title,
+  description: data.summary,
+  datePublished: isoDate(data.date),
+  imageUrl: coverUrl,
+  author: personSchema(base, {
+    id: author.id,
+    name: author.data.name,
+    imageUrl: author.data.image && (await absoluteImageUrl(base, author.data.image)),
+    sameAs: author.data.sameAs,
+  }),
+})
 ---
 
 <BaseLayout
@@ -51,7 +71,10 @@ const { newer, older } = await getAdjacentArticles(language, slug)
   description={data.summary}
   language={language}
   path={`/blog/${slug}`}
+  image={{ url: coverUrl, alt: data.coverAlt }}
+  ogType="article"
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(article)} />
   <BreadcrumbSchema
     language={language}
     items={[

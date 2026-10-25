@@ -29,4 +29,17 @@ describe('organizationSchema', () => {
     expect(schema.telephone).toBe('+4946179330680')
     expect(schema.description).toBe('Beschreibung')
   })
+
+  it('trägt eine @id, auf die Artikel als Herausgeber verweisen', () => {
+    expect(schema['@id']).toBe('https://green-ecolution.de/#organization')
+  })
+
+  it('nennt den Gründer nur, wenn er übergeben wird', () => {
+    expect(schema).not.toHaveProperty('founder')
+
+    const founder = { '@type': 'Person', name: company.managingDirector }
+    expect(organizationSchema('https://green-ecolution.de', 'Beschreibung', founder).founder).toBe(
+      founder,
+    )
+  })
 })

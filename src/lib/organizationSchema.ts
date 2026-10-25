@@ -1,11 +1,16 @@
 import { company } from '../data/company'
 
-export function organizationSchema(base: string, description: string) {
+export function organizationId(base: string): string {
+  return `${base}/#organization`
+}
+
+export function organizationSchema(base: string, description: string, founder?: object) {
   const [postalCode, ...city] = company.postalCodeAndCity.split(' ')
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': organizationId(base),
     name: company.name,
     alternateName: 'Green Ecolution',
     url: base,
@@ -22,5 +27,6 @@ export function organizationSchema(base: string, description: string) {
     },
     parentOrganization: { '@type': 'Organization', name: company.parentOrganization },
     sameAs: [company.githubUrl],
+    ...(founder ? { founder } : {}),
   }
 }
