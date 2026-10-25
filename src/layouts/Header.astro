@@ -66,9 +66,9 @@ const navStrings = pickStrings(language, 'common', [
     </a>
 
     <!-- Desktop shows the links as plain markup; only the mobile menu needs
-         state, so the island hydrates below the lg breakpoint. -->
+         state, so the island hydrates below the xl breakpoint. -->
     <MainNavigation
-      client:media="(max-width: 1023px)"
+      client:media="(max-width: 1279px)"
       links={links}
       imprintHref={`/${language}/impressum`}
       privacyHref={`/${language}/datenschutz`}
