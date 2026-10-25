@@ -7,6 +7,7 @@ import Footer from './Footer.astro'
 import { getTranslations } from '../i18n/t'
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, type Language } from '../i18n/languages'
 import { siteOrigin } from '../lib/site'
+import { organizationSchema } from '../lib/organizationSchema'
 import '../css/site.css'
 
 interface Props {
@@ -29,14 +30,7 @@ const tc = getTranslations(language, 'common')
 // Absolute, because social previews do not resolve relative paths.
 const ogImage = `${base}/assets/images/open-graph-image.png`
 
-const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Green Ecolution',
-  url: base,
-  logo: `${base}/assets/favicons/favicon.svg`,
-  description: 'Smartes Grünflächenmanagement für nachhaltige Stadtentwicklung',
-}
+const organization = organizationSchema(base, tc('footer.description'))
 
 // x-default points at German because that's the site's source language, not a
 // geo-targeted fallback.
@@ -118,11 +112,7 @@ const feeds = [
     />
     <meta name="msapplication-TileColor" content="#4C7741" />
 
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(organizationSchema)}
-    ></script>
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(organization)}></script>
     <!-- The analytics client is injected by src/scripts/analytics.ts, and only
     on the public site. -->
 
