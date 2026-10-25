@@ -1,3 +1,4 @@
+import about from './about.json'
 import blog from './blog.json'
 import common from './common.json'
 import contact from './contact.json'
@@ -12,6 +13,7 @@ import streamlet from './streamlet.json'
 
 export default {
   common,
+  about,
   home,
   product,
   streamlet,

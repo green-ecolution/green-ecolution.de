@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Hero from '../../components/Hero.astro'
+import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro'
+import CompanyStory from '../../components/sections/CompanyStory.astro'
+import ContactSection from '../../components/sections/ContactSection.astro'
+import OpenSourceGovernance from '../../components/sections/OpenSourceGovernance.astro'
+import Ownership from '../../components/sections/Ownership.astro'
+import Stakeholder from '../../components/sections/Stakeholder.astro'
+import { company } from '../../data/company'
+import { getTranslations } from '../../i18n/t'
+import { languagePaths } from '../../lib/languagePaths'
+import { currentLanguage } from '../../i18n/languages'
+
+export const getStaticPaths = languagePaths
+
+const language = currentLanguage(Astro.params.lang)
+const t = getTranslations(language, 'about')
+const tc = getTranslations(language, 'common')
+---
+
+<BaseLayout
+  title={t('meta.title')}
+  description={t('meta.description')}
+  language={language}
+  path="/about"
+>
+  <BreadcrumbSchema
+    language={language}
+    items={[
+      { name: tc('breadcrumb.home'), path: '' },
+      { name: tc('breadcrumb.about'), path: '/about' },
+    ]}
+  />
+  <main
+    id="main-content"
+    class="relative overflow-hidden before:bg-cover before:bg-background-light-dot before:w-4/5 before:h-[100vh] before:max-h-[45rem] before:absolute before:-right-4 before:-top-16 before:-z-10 before:bg-no-repeat sm:before:-right-10 lg:before:max-h-[55rem] xl:before:w-[70rem] xl:before:-right-40 2xl:before:right-[10%] 2xl:before:bg-contain"
+  >
+    <Hero
+      label={t('hero.label')}
+      headline={t('hero.headline')}
+      description={t('hero.description', { company: company.name })}
+    />
+    <CompanyStory language={language} />
+    <OpenSourceGovernance language={language} />
+    <Ownership language={language} />
+    <Stakeholder language={language} hasDesktopList showAboutLink={false} />
+    <ContactSection language={language} />
+  </main>
+</BaseLayout>

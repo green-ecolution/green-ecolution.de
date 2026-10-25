@@ -77,6 +77,16 @@
         "label": "Dashboard",
         "description": "Visualisierung & Tourenplanung"
       }
+    },
+    "modules": {
+      "plugin": {
+        "title": "Plugin-System",
+        "description": "Modulare Erweiterungen für kommunenspezifische Anpassungen ohne Änderung der Kernsoftware. Import-Plugins für Baumkataster, CSV, Datenbanken."
+      },
+      "api": {
+        "title": "API-first",
+        "description": "Offene Schnittstellen für Integration in kommunale IT-Landschaften. Anbindung an IoT-Hubs und Open-Data-Portale."
+      }
     }
   },
   "requirements": {
@@ -105,43 +115,6 @@
     "tourLinkRich": "Wie die Tourenoptimierung rechnet und was sie als Eingabe erwartet, beschreibt die Seite zur <streamlet>Tourenoptimierung</streamlet>.",
     "cta": "Einstieg besprechen",
     "ctaAriaLabel": "Zur Kontaktseite"
-  },
-  "governance": {
-    "sectionLabel": "Governance",
-    "title": "Open Source als Prinzip",
-    "description": "Transparenz, Unabhängigkeit und Nachnutzbarkeit: die Grundpfeiler unserer Open-Source-Strategie.",
-    "pillars": {
-      "license": {
-        "category": "Lizenz",
-        "title": "AGPL-3.0-only",
-        "description": "Lizenziert unter der AGPL. Finanziert im Rahmen des Landesprogramms „Offene Innovation\" des DigitalHub.SH."
-      },
-      "sovereignty": {
-        "category": "Souveränität",
-        "title": "Digitale Souveränität",
-        "description": "Keine Abhängigkeit von proprietären Plattformen. Kommunen behalten die Kontrolle über ihre Daten und Infrastruktur. Kein Vendor-Lock-in."
-      },
-      "modularity": {
-        "category": "Modularität",
-        "title": "Plugin-System",
-        "description": "Modulare Erweiterungen für kommunenspezifische Anpassungen ohne Änderung der Kernsoftware. Import-Plugins für Baumkataster, CSV, Datenbanken."
-      },
-      "integration": {
-        "category": "Integration",
-        "title": "API-first",
-        "description": "Offene Schnittstellen für Integration in kommunale IT-Landschaften. Anbindung an IoT-Hubs und Open-Data-Portale."
-      },
-      "community": {
-        "category": "Community",
-        "title": "Nachnutzung & Community",
-        "description": "Quellcode und Dokumentation liegen öffentlich auf GitHub. Verbesserungen, die für eine Kommune entstehen, stehen allen anderen zur Verfügung."
-      },
-      "costEfficiency": {
-        "category": "Wirtschaftlichkeit",
-        "title": "Kosteneffizienz",
-        "description": "Keine Lizenzkosten für Kommunen. Die Wertschöpfung bleibt in Schleswig-Holstein, weil Weiterentwicklung und Betrieb regional erfolgen."
-      }
-    }
   },
   "advantages": {
     "sectionLabel": "Vorteile",

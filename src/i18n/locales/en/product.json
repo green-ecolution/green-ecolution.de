@@ -77,6 +77,16 @@
         "label": "Dashboard",
         "description": "Visualization & route planning"
       }
+    },
+    "modules": {
+      "plugin": {
+        "title": "Plugin system",
+        "description": "Modular extensions for municipality-specific adaptations without changing the core software. Import plugins for tree registries, CSV, and databases."
+      },
+      "api": {
+        "title": "API-first",
+        "description": "Open interfaces for integration into municipal IT landscapes. Connection to IoT hubs and open data portals."
+      }
     }
   },
   "requirements": {
@@ -105,43 +115,6 @@
     "tourLinkRich": "How the route optimisation works and what input it expects is described on the <streamlet>route optimisation</streamlet> page.",
     "cta": "Discuss getting started",
     "ctaAriaLabel": "Go to the contact page"
-  },
-  "governance": {
-    "sectionLabel": "Governance",
-    "title": "Open source as a principle",
-    "description": "Transparency, independence, and reusability: the cornerstones of our open-source strategy.",
-    "pillars": {
-      "license": {
-        "category": "License",
-        "title": "AGPL-3.0-only",
-        "description": "Licensed under the AGPL. Funded as part of DigitalHub.SH's \"Offene Innovation\" (\"Open Innovation\") state program."
-      },
-      "sovereignty": {
-        "category": "Sovereignty",
-        "title": "Digital sovereignty",
-        "description": "No dependency on proprietary platforms. Municipalities retain control over their data and infrastructure. No vendor lock-in."
-      },
-      "modularity": {
-        "category": "Modularity",
-        "title": "Plugin system",
-        "description": "Modular extensions for municipality-specific adaptations without changing the core software. Import plugins for tree registries, CSV, and databases."
-      },
-      "integration": {
-        "category": "Integration",
-        "title": "API-first",
-        "description": "Open interfaces for integration into municipal IT landscapes. Connection to IoT hubs and open data portals."
-      },
-      "community": {
-        "category": "Community",
-        "title": "Reuse & community",
-        "description": "Source code and documentation are public on GitHub. Improvements built for one municipality are available to all the others."
-      },
-      "costEfficiency": {
-        "category": "Cost efficiency",
-        "title": "Cost efficiency",
-        "description": "No licence fees for municipalities. Value creation stays in Schleswig-Holstein because development and operation happen regionally."
-      }
-    }
   },
   "advantages": {
     "sectionLabel": "Advantages",

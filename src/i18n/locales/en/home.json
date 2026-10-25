@@ -286,26 +286,19 @@
     "screenshotAlt": "Green Ecolution demo, dashboard with map view and sensor data"
   },
   "stakeholder": {
-    "sectionLabel": "Partners & Stakeholders",
-    "title": "Who is involved?",
-    "description": "In collaboration between PROGEEK, Smarte Grenzregion, the City of Flensburg and Hochschule Flensburg, a demand-driven and data-based irrigation system for trees is to be established.",
-    "sliderAriaLabel": "Project stakeholders",
+    "sectionLabel": "Partners",
+    "title": "Who we work with",
+    "description": "Green Ecolution grew out of a collaboration, and these partners helped launch the platform. The company is backed by the PROGEEK Group.",
+    "aboutLink": "More about us",
+    "sliderAriaLabel": "Our partners",
     "items": {
-      "progeek": {
-        "role": "Technical partner",
-        "description": "PROGEEK stands for innovative IT solutions, custom software development, and digital consulting, with the goal of guiding companies on their way into the future of digitalization."
-      },
       "smarteGrenzregion": {
-        "role": "Project coordinator",
+        "role": "Coordination",
         "description": "The project \"Smarte Grenzregion zwischen den Meeren\" aims to drive digital transformation in the region in order to shape integrated and sustainable urban and regional development and strengthen the common good."
       },
       "hsFlensburg": {
-        "role": "Initiator",
+        "role": "Research",
         "description": "Hochschule Flensburg offers practice-oriented degree programs with a focus on applied research and close collaboration with industry."
-      },
-      "tbz": {
-        "role": "Application partner",
-        "description": "The Technisches Betriebszentrum (TBZ) is the central service provider for the City of Flensburg and is responsible, among other things, for the upkeep of public green spaces, street cleaning, and waste management."
       }
     }
   },

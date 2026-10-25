@@ -25,6 +25,8 @@ const REQUIRED = [
   'de/product.html',
   'en/product.html',
   'de/services.html',
+  'de/about.html',
+  'en/about.html',
   'en/services.html',
   'de/streamlet.html',
   'en/streamlet.html',

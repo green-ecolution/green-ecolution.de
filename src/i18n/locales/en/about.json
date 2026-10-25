@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "title": "About us | Green Ecolution",
+    "description": "Green Ecolution is a company based in Flensburg. How a question from the City of Flensburg became a company, what we stand for and who is behind it."
+  },
+  "hero": {
+    "label": "About us",
+    "headline": "From Flensburg, for municipalities",
+    "description": "We are {{company}}, based in Flensburg. We develop and operate an open platform that turns measurements into decisions and operations, and we started with the irrigation of urban trees."
+  },
+  "story": {
+    "sectionLabel": "Story",
+    "title": "How a project became a company",
+    "p1": "It began with a question from the City of Flensburg: how can you tell which urban trees really need water, instead of watering by gut feeling? The city brought this problem to the Smarte Grenzregion.",
+    "p2": "In 2024, nine students on the Applied Computer Science master's programme at Hochschule Flensburg turned it into a research project, together with the city's Technisches Betriebszentrum. The result was a soil sensor and a platform that shows irrigation demand on a map and calculates the watering route. In user tests with the TBZ, the application achieved an above-average usability score.",
+    "p3": "Then it moved into practice. In autumn 2025, Green Ecolution received funding from the state programme \"Offene Innovation\" of DigitalHub.SH, the TBZ uses the platform in its daily work, and in September 2026 the state of Schleswig-Holstein awarded Green Ecolution its Digitalisation Prize.",
+    "p4": "To turn the project into a product for many municipalities, we founded {{company}}."
+  },
+  "values": {
+    "sectionLabel": "Principles",
+    "title": "Open source as a principle",
+    "description": "Transparency, independence and reusability are not extras for us, they are the foundation of our work.",
+    "pillars": {
+      "license": {
+        "category": "Licence",
+        "title": "AGPL-3.0-only",
+        "description": "Licensed under the AGPL. Funded as part of DigitalHub.SH's \"Offene Innovation\" (\"Open Innovation\") state programme."
+      },
+      "sovereignty": {
+        "category": "Sovereignty",
+        "title": "Digital sovereignty",
+        "description": "No dependency on proprietary platforms. Municipalities retain control over their data and infrastructure. No vendor lock-in."
+      },
+      "community": {
+        "category": "Community",
+        "title": "Reuse & community",
+        "description": "Source code and documentation are public on GitHub. Improvements built for one municipality are available to all the others."
+      },
+      "costEfficiency": {
+        "category": "Cost efficiency",
+        "title": "Cost efficiency",
+        "description": "No licence fees for municipalities. Value creation stays in Schleswig-Holstein because development and operation happen regionally."
+      }
+    }
+  },
+  "owners": {
+    "sectionLabel": "Who is behind it",
+    "title": "A company of the PROGEEK Group",
+    "description": "{{company}} is owned in equal shares by {{group}} and {{director}}. {{director}} runs the company as managing director and is your direct point of contact.",
+    "contact": {
+      "role": "Managing director",
+      "photoAlt": "Portrait of {{name}}",
+      "mailLabel": "Email",
+      "phoneLabel": "Phone"
+    },
+    "pressRich": "For press enquiries, logos and images, there is the <press>press page</press>."
+  }
+}

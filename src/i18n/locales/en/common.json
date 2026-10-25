@@ -17,6 +17,7 @@
     "product": "Product",
     "streamlet": "Route optimisation",
     "services": "Services",
+    "about": "About us",
     "contact": "Contact",
     "tryNow": "Try it now",
     "imprint": "Imprint",
@@ -36,6 +37,7 @@
     "privacy": "Privacy Policy",
     "releases": "Releases",
     "services": "Services",
+    "about": "About us",
     "press": "Press"
   },
   "banner": {
@@ -83,6 +85,7 @@
     "product": "Product",
     "streamlet": "Route optimisation",
     "services": "Services",
+    "about": "About us",
     "contact": "Contact",
     "imprint": "Imprint",
     "privacy": "Privacy Policy",
