@@ -56,7 +56,8 @@ const article = articleSchema(base, {
   url: `${base}/${language}/blog/${slug}`,
   headline: data.title,
   description: data.summary,
-  datePublished: isoDate(data.date),
+  // Google flags a bare date as invalid and wants a time zone.
+  datePublished: data.date.toISOString(),
   imageUrl: coverUrl,
   author: personSchema(base, {
     id: author.id,

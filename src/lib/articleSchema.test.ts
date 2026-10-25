@@ -10,7 +10,7 @@ describe('articleSchema', () => {
     url: `${BASE}/de/blog/beitrag`,
     headline: 'Titel',
     description: 'Zusammenfassung',
-    datePublished: '2026-10-25',
+    datePublished: '2026-10-25T00:00:00.000Z',
     imageUrl: `${BASE}/_astro/cover.jpg`,
     author,
   })
@@ -19,7 +19,7 @@ describe('articleSchema', () => {
     expect(schema['@type']).toBe('BlogPosting')
     expect(schema.mainEntityOfPage).toBe(`${BASE}/de/blog/beitrag`)
     expect(schema.headline).toBe('Titel')
-    expect(schema.datePublished).toBe('2026-10-25')
+    expect(schema.datePublished).toBe('2026-10-25T00:00:00.000Z')
     expect(schema.image).toEqual([`${BASE}/_astro/cover.jpg`])
   })
 
