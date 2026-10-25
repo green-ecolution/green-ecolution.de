@@ -190,7 +190,7 @@ const HomepageOverlay: React.FC<HomepageOverlayProps> = ({
                   <>
                     {recommendation.before}
                     <a
-                      href={`/${language}/project#vorteile`}
+                      href={`/${language}/product#vorteile`}
                       className="text-green-dark-900 font-semibold underline underline-offset-2 transition-all ease-in-out duration-300 hover:text-green-light-900"
                     >
                       {recommendation.inner}

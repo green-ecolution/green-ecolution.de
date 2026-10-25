@@ -14,9 +14,8 @@
   "nav": {
     "ariaLabel": "Hauptnavigation",
     "heading": "Hauptnavigation",
-    "project": "Das Projekt",
+    "product": "Produkt",
     "streamlet": "Tourenoptimierung",
-    "releases": "Releases",
     "contact": "Kontakt",
     "tryNow": "Jetzt ausprobieren",
     "imprint": "Impressum",
@@ -34,6 +33,7 @@
     "metaNavAriaLabel": "Meta-Navigation",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
+    "releases": "Releases",
     "press": "Presse"
   },
   "banner": {
@@ -78,7 +78,7 @@
   },
   "breadcrumb": {
     "home": "Startseite",
-    "project": "Projekt",
+    "product": "Produkt",
     "streamlet": "Tourenoptimierung",
     "contact": "Kontakt",
     "imprint": "Impressum",

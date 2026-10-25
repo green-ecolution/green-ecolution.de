@@ -158,7 +158,7 @@
     },
     "closing": "Everyone else benefits indirectly: healthy urban trees cool the city climate and support biodiversity.",
     "cta": "What you need for it",
-    "ctaAriaLabel": "Go to the requirements on the project page",
+    "ctaAriaLabel": "Go to the requirements on the product page",
     "photoAlt": "Two people at a young tree with a watering bag. One is crouching and using a tablet, the other is looking on.",
     "photoLead": "This is what it looks like day to day. The person watering sees what the site needs at the tree. The person planning sees it at their desk. Both work from the same data."
   },
@@ -329,8 +329,8 @@
       },
       "requirements": {
         "question": "What does a municipality need to bring?",
-        "answerPlain": "For scheduling and route planning, the locations of the trees and areas, the vehicles you already have with their water capacities and the refill points across the city are enough. Sensors are not a prerequisite for this; they improve the prioritisation. Once probes are added they need a radio link: LoRaWAN today, or NB-IoT with a SIM card as an alternative.\n\nWhich data and which infrastructure are needed in detail is set out under the requirements on the project page.",
-        "answerRich": "<p1>For scheduling and route planning, the locations of the trees and areas, the vehicles you already have with their water capacities and the refill points across the city are enough. Sensors are not a prerequisite for this; they improve the prioritisation. Once probes are added they need a radio link: LoRaWAN today, or NB-IoT with a SIM card as an alternative.</p1><p2>Which data and which infrastructure are needed in detail is set out under the <requirements>requirements on the project page</requirements>.</p2>"
+        "answerPlain": "For scheduling and route planning, the locations of the trees and areas, the vehicles you already have with their water capacities and the refill points across the city are enough. Sensors are not a prerequisite for this; they improve the prioritisation. Once probes are added they need a radio link: LoRaWAN today, or NB-IoT with a SIM card as an alternative.\n\nWhich data and which infrastructure are needed in detail is set out under the requirements on the product page.",
+        "answerRich": "<p1>For scheduling and route planning, the locations of the trees and areas, the vehicles you already have with their water capacities and the refill points across the city are enough. Sensors are not a prerequisite for this; they improve the prioritisation. Once probes are added they need a radio link: LoRaWAN today, or NB-IoT with a SIM card as an alternative.</p1><p2>Which data and which infrastructure are needed in detail is set out under the <requirements>requirements on the product page</requirements>.</p2>"
       },
       "openSource": {
         "question": "What does the open source code give us?",

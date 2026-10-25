@@ -14,9 +14,8 @@
   "nav": {
     "ariaLabel": "Main navigation",
     "heading": "Main navigation",
-    "project": "The Project",
+    "product": "Product",
     "streamlet": "Route optimisation",
-    "releases": "Releases",
     "contact": "Contact",
     "tryNow": "Try it now",
     "imprint": "Imprint",
@@ -34,6 +33,7 @@
     "metaNavAriaLabel": "Meta navigation",
     "imprint": "Imprint",
     "privacy": "Privacy Policy",
+    "releases": "Releases",
     "press": "Press"
   },
   "banner": {
@@ -78,7 +78,7 @@
   },
   "breadcrumb": {
     "home": "Home",
-    "project": "Project",
+    "product": "Product",
     "streamlet": "Route optimisation",
     "contact": "Contact",
     "imprint": "Imprint",

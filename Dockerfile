@@ -65,7 +65,9 @@ server {
         access_log off;
     }
 
-    location = /project      { return 301 /de/project; }
+    location = /project      { return 301 /de/product; }
+    location = /de/project   { return 301 /de/product; }
+    location = /en/project   { return 301 /en/product; }
     location = /contact      { return 301 /de/contact; }
     location = /releases     { return 301 /de/releases; }
     location = /streamlet    { return 301 /de/streamlet; }

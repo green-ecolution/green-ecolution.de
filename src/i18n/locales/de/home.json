@@ -158,7 +158,7 @@
     },
     "closing": "Mittelbar profitieren alle anderen mit: gesunde Stadtbäume kühlen das Stadtklima und fördern die biologische Vielfalt.",
     "cta": "Was du dafür brauchst",
-    "ctaAriaLabel": "Zu den Voraussetzungen auf der Projektseite",
+    "ctaAriaLabel": "Zu den Voraussetzungen auf der Produktseite",
     "photoAlt": "Zwei Personen an einem jungen Baum mit Wassersack. Eine kniet und bedient ein Tablet, die andere schaut zu.",
     "photoLead": "So sieht das im Alltag aus. Wer gießt, sieht am Baum, was dieser Standort braucht. Wer plant, sieht es am Schreibtisch. Beide arbeiten mit denselben Daten."
   },
@@ -329,8 +329,8 @@
       },
       "requirements": {
         "question": "Was muss eine Kommune mitbringen?",
-        "answerPlain": "Für die Einsatz- und Routenplanung genügen die Standorte der Bäume und Flächen, die vorhandenen Fahrzeuge mit ihren Wasserkapazitäten und die Nachfüllpunkte im Stadtgebiet. Sensorik ist dafür keine Voraussetzung, sie verbessert die Priorisierung. Kommen Sonden dazu, brauchen sie eine Funkanbindung: heute LoRaWAN, alternativ NB-IoT mit SIM-Karte.\n\nWelche Daten und welche Infrastruktur im Einzelnen nötig sind, steht bei den Voraussetzungen auf der Projektseite.",
-        "answerRich": "<p1>Für die Einsatz- und Routenplanung genügen die Standorte der Bäume und Flächen, die vorhandenen Fahrzeuge mit ihren Wasserkapazitäten und die Nachfüllpunkte im Stadtgebiet. Sensorik ist dafür keine Voraussetzung, sie verbessert die Priorisierung. Kommen Sonden dazu, brauchen sie eine Funkanbindung: heute LoRaWAN, alternativ NB-IoT mit SIM-Karte.</p1><p2>Welche Daten und welche Infrastruktur im Einzelnen nötig sind, steht bei den <requirements>Voraussetzungen auf der Projektseite</requirements>.</p2>"
+        "answerPlain": "Für die Einsatz- und Routenplanung genügen die Standorte der Bäume und Flächen, die vorhandenen Fahrzeuge mit ihren Wasserkapazitäten und die Nachfüllpunkte im Stadtgebiet. Sensorik ist dafür keine Voraussetzung, sie verbessert die Priorisierung. Kommen Sonden dazu, brauchen sie eine Funkanbindung: heute LoRaWAN, alternativ NB-IoT mit SIM-Karte.\n\nWelche Daten und welche Infrastruktur im Einzelnen nötig sind, steht bei den Voraussetzungen auf der Produktseite.",
+        "answerRich": "<p1>Für die Einsatz- und Routenplanung genügen die Standorte der Bäume und Flächen, die vorhandenen Fahrzeuge mit ihren Wasserkapazitäten und die Nachfüllpunkte im Stadtgebiet. Sensorik ist dafür keine Voraussetzung, sie verbessert die Priorisierung. Kommen Sonden dazu, brauchen sie eine Funkanbindung: heute LoRaWAN, alternativ NB-IoT mit SIM-Karte.</p1><p2>Welche Daten und welche Infrastruktur im Einzelnen nötig sind, steht bei den <requirements>Voraussetzungen auf der Produktseite</requirements>.</p2>"
       },
       "openSource": {
         "question": "Was bringt uns der offene Quellcode?",
