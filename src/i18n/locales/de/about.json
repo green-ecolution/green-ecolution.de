@@ -45,7 +45,7 @@
   },
   "owners": {
     "sectionLabel": "Wer dahintersteht",
-    "title": "Ein Unternehmen der PROGEEK Group",
+    "title": "Mitglied der PROGEEK Group",
     "description": "Die {{company}} gehört zu gleichen Teilen der {{group}} und {{director}}. {{director}} leitet die Firma als Geschäftsführer und ist dein direkter Ansprechpartner.",
     "contact": {
       "role": "Geschäftsführer",
