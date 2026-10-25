@@ -1,4 +1,5 @@
 ---
+import { Plug, Puzzle } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { architectureSteps } from '../../data/architectureSteps'
@@ -34,6 +35,11 @@ const CARD_CONFIGS = [
 const FLOW_PATH = 'M 0 20 Q 25 10 50 20 Q 75 30 100 20'
 const GRID_PATTERN =
   'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)'
+
+const MODULES = [
+  { id: 'plugin', icon: Puzzle },
+  { id: 'api', icon: Plug },
+] as const
 
 const { language } = Astro.props
 const t = getTranslations(language, 'product')
@@ -219,4 +225,24 @@ const lastIndex = architectureSteps.length - 1
     </a>
     {streamlet.after}
   </p>
+
+  <ul class="grid grid-cols-1 gap-4 mt-10 max-w-3xl mx-auto md:grid-cols-2 lg:gap-5">
+    {MODULES.map((module) => {
+      const Icon = module.icon
+
+      return (
+        <li class="h-full rounded-2xl border border-green-dark-900/10 bg-white p-5 lg:p-6">
+          <span class="flex w-10 h-10 rounded-lg bg-green-light-900/15 items-center justify-center mb-4">
+            <Icon className="w-5 h-5 text-green-dark-900" aria-hidden="true" />
+          </span>
+          <h3 class="font-lato font-semibold text-grey-900 mb-2">
+            {t(`architecture.modules.${module.id}.title`)}
+          </h3>
+          <p class="text-grey-900/70 leading-relaxed">
+            {t(`architecture.modules.${module.id}.description`)}
+          </p>
+        </li>
+      )
+    })}
+  </ul>
 </section>

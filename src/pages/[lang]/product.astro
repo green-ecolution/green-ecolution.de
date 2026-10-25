@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
 import Hero from '../../components/Hero.astro'
 import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro'
 import Advantages from '../../components/sections/Advantages.astro'
+import BeyondIrrigation from '../../components/sections/BeyondIrrigation.astro'
 import Architecture from '../../components/sections/Architecture.astro'
 import ContactSection from '../../components/sections/ContactSection.astro'
 import DashboardPreview from '../../components/sections/DashboardPreview.astro'
@@ -47,9 +48,10 @@ const tc = getTranslations(language, 'common')
       headline={t('hero.headline')}
       description={t('hero.description')}
     />
-    <DashboardPreview language={language} />
     <Process language={language} />
+    <DashboardPreview language={language} />
     <Architecture language={language} />
+    <BeyondIrrigation language={language} />
     <Requirements language={language} />
     <Advantages language={language} />
     <VisionRoadmap language={language} />

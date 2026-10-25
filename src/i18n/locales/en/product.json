@@ -1,15 +1,15 @@
 {
   "meta": {
-    "title": "Project | Green Ecolution | Smart Green Space Management",
-    "description": "Green Ecolution is an open-source solution for efficient irrigation of urban trees, developed in collaboration with the City of Flensburg."
+    "title": "Product | Green Ecolution | Measure. Understand. Act.",
+    "description": "Green Ecolution is a modular, open-source platform that turns readings into decisions and deployments. Today it controls the demand-based irrigation of urban trees."
   },
   "hero": {
-    "label": "Project",
-    "headline": "Smart green space management for livable cities",
-    "description": "Green Ecolution is an open-source solution for the efficient irrigation of urban trees. Our software combines sensor data with intelligent route optimization, enabling targeted, resource-efficient deployment planning. Developed in collaboration with the City of Flensburg, and soon available for your municipality too."
+    "label": "Product",
+    "headline": "Measure. Understand. Act.",
+    "description": "Green Ecolution is a modular, open-source platform. Sensors deliver readings, the platform turns them into a clear picture of the situation, and deployment planning sends your team exactly where it is needed. Today it controls the irrigation of urban trees, and that is only the beginning."
   },
   "dashboard": {
-    "sectionLabel": "Software",
+    "sectionLabel": "Irrigation example",
     "titleLine1": "Well-founded recommendations",
     "titleLine2": "for irrigation at a glance",
     "description": "Our system scientifically evaluates the sensor data and shows when irrigation is needed. The data is prepared so that it is easy to interpret and can be directly incorporated into deployment planning.",
@@ -17,24 +17,24 @@
   },
   "process": {
     "sectionLabel": "Process",
-    "title": "Measure. Understand. Act.",
-    "description": "From soil moisture to an optimized irrigation route, in one continuous digital workflow.",
+    "title": "Three steps, one system",
+    "description": "Measure, understand and act stay the same for every task. The irrigation of urban trees is the first example.",
     "steps": {
       "measure": {
         "category": "Capture",
         "title": "Measure",
-        "description": "Soil moisture sensors capture soil moisture and temperature at multiple depths (30/60/90 cm). The data is transmitted energy-efficiently via LoRaWAN.",
+        "description": "Sensors capture what is happening on site and transmit their readings energy-efficiently via LoRaWAN or NB-IoT. For irrigation, soil probes measure moisture and temperature at variable depths.",
         "details": {
-          "item1": "Soil moisture sensors at depths of 30, 60, and 90 cm",
-          "item2": "Measurement of soil moisture and temperature",
-          "item3": "Energy-efficient transmission via LoRaWAN",
+          "item1": "Sensors of different types can be connected",
+          "item2": "Soil moisture and temperature at variable depths",
+          "item3": "Energy-efficient transmission via LoRaWAN or NB-IoT",
           "item4": "Flush-mounted installation, no impact on maintenance work"
         }
       },
       "understand": {
         "category": "Analyze",
         "title": "Understand",
-        "description": "A traffic-light system shows the current irrigation need on a map. Staff can see at a glance which green spaces need water. Time series enable detailed analyses.",
+        "description": "The platform evaluates the measurement series and shows on a map and dashboard where action is needed. For irrigation, a traffic-light system shows which trees and areas need water.",
         "details": {
           "item1": "Traffic-light system shows irrigation needs on a map",
           "item2": "Prioritization by urgency when capacity is limited",
@@ -45,7 +45,7 @@
       "act": {
         "category": "Execute",
         "title": "Act",
-        "description": "Automated dispatch and route planning generates optimized irrigation routes, taking into account water capacity, vehicle size, and road restrictions.",
+        "description": "The picture of the situation becomes a deployment. Deployment and route planning generates routes that take vehicles, capacities and road restrictions into account. For irrigation, these are watering routes with refill stops.",
         "details": {
           "item1": "Automated dispatch and route planning",
           "item2": "Takes water capacity and vehicle size into account",
@@ -58,12 +58,12 @@
   "architecture": {
     "sectionLabel": "System Architecture",
     "title": "The path of the data",
-    "description": "This is how the readings travel from the tree to the optimized irrigation route through the Green Ecolution system.",
+    "description": "This is how the readings travel from the sensor to the finished route. Every component is connected through open interfaces and can be extended.",
     "streamletRich": "Route optimisation in the backend is handled by <streamlet>Streamlet</streamlet>, a separate service of ours that can also be used outside Green Ecolution.",
     "steps": {
       "sensor": {
         "label": "Sensor",
-        "description": "Measures soil moisture at the tree"
+        "description": "Measures on site, for example the soil moisture at the tree"
       },
       "gateway": {
         "label": "Gateway",
@@ -89,6 +89,14 @@
       }
     }
   },
+  "beyond": {
+    "sectionLabel": "Outlook",
+    "title": "Beyond irrigation",
+    "p1": "The irrigation of urban trees is the first use case we built Green Ecolution for. The platform itself is conceived more broadly: wherever something can be measured, the readings have to be evaluated and a deployment on site follows in the end, the principle of measuring, understanding and acting applies.",
+    "p2": "The architecture is designed to take on further sensor types and use cases. A new use case still means development work, for example to connect the sensors and evaluate the data. We take care of that work for you.",
+    "cta": "To our services",
+    "ctaAriaLabel": "To the page with our services"
+  },
   "requirements": {
     "sectionLabel": "Requirements",
     "title": "What you need for it",
@@ -104,7 +112,7 @@
         "description": "Water carts, vans and trailers with their water capacities, plus the refill points across the city. A new fleet or fixed irrigation hardware is not required."
       },
       "network": {
-        "label": "A radio link for the probes",
+        "label": "A radio link for the sensors",
         "description": "The probes transmit over LoRaWAN and the open The Things Network today. Since 2024 Schleswig-Holstein has built a state-wide network with more than 420 gateways. Where there is no coverage, you can either add a gateway of your own or run the same probes on NB-IoT with a SIM card. LoRaWAN is the technology in use today, not a condition."
       },
       "hosting": {
@@ -119,7 +127,7 @@
   "advantages": {
     "sectionLabel": "Advantages",
     "title": "All other features and advantages",
-    "description": "The project is publicly viewable and aims to reduce water consumption for irrigation while enabling variable deployment planning.",
+    "description": "Green Ecolution is publicly viewable and pursues one goal: using resources where they are needed. For irrigation, that means less water and variable deployment planning.",
     "items": {
       "openSource": {
         "title": "An open solution for everyone",
@@ -138,7 +146,7 @@
   "vision": {
     "sectionLabel": "Vision",
     "title": "Made for every municipality",
-    "descriptionPart1": "The platform is deliberately designed to be usable in any municipality. Map areas, organizational structures, and irrigation regions are freely configurable.",
+    "descriptionPart1": "The platform is deliberately designed to be usable in any municipality and for more than one task. Map areas, organisational structures and deployment areas are freely configurable, and new components connect through the plugin system and open interfaces.",
     "descriptionPart2": "Only open standards and open-source components are used. A cloud-native architecture based on Kubernetes enables multi-tenant, highly available operation. Additional municipalities can easily be added."
   },
   "roadmap": {
