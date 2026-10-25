@@ -86,8 +86,8 @@
     "items": {
       "fieldWork": {
         "title": "Kontrolle am Jungbaum",
-        "description": "Zwei Projektbeteiligte an einem jungen Baum mit Wassersack. Die Aufnahme zeigt die Situation, um die es im Projekt geht: Der Bedarf entsteht am Standort.",
-        "alt": "Zwei Personen an einem jungen Baum mit Wassersack. Eine kniet und bedient ein Tablet, die andere schaut zu."
+        "description": "Cedrik Hoffmann und eine weitere Person aus dem Projekt an einem jungen Baum mit Wassersack. Die Aufnahme zeigt die Situation, um die es im Projekt geht: Der Bedarf entsteht am Standort.",
+        "alt": "Cedrik Hoffmann kniet an einem jungen Baum mit Wassersack und bedient ein Tablet. Eine weitere Person beugt sich daneben und schaut zu."
       },
       "watering": {
         "title": "Bewässerung eines Jungbaums",
@@ -96,18 +96,18 @@
       },
       "sensorInstall": {
         "title": "Einbau einer Bodensonde",
-        "description": "Ein Mitarbeiter des Technischen Betriebszentrums öffnet das vom Erdbohrer vorbereitete Loch, daneben wird die Sonde bereitgehalten.",
-        "alt": "Einbau einer Bodensonde am Baumstandort: Ein Mitarbeiter in Warnkleidung öffnet mit dem Spaten das vom Erdbohrer vorbereitete Loch, daneben wird die Sonde mit ihrem Kabel bereitgehalten."
+        "description": "Ein Mitarbeiter des Technischen Betriebszentrums öffnet das vom Erdbohrer vorbereitete Loch, daneben bereiten Cedrik Hoffmann und eine weitere Person die Sonde vor.",
+        "alt": "Einbau einer Bodensonde am Baumstandort: Ein Mitarbeiter in Warnkleidung öffnet mit dem Spaten das vom Erdbohrer vorbereitete Loch. Daneben halten Cedrik Hoffmann und eine weitere Person die Sonde mit ihrem Kabel bereit."
       },
       "treePit": {
         "title": "Minibagger an der Baumscheibe",
-        "description": "Der Bagger des Technischen Betriebszentrums öffnet eine Baumscheibe im Straßenraum.",
-        "alt": "Ein Minibagger des Technischen Betriebszentrums Flensburg an einer Baumscheibe in einer Straße, daneben zwei Personen."
+        "description": "Der Bagger des Technischen Betriebszentrums öffnet eine Baumscheibe im Straßenraum, Cedrik Hoffmann sieht zu.",
+        "alt": "Ein Minibagger des Technischen Betriebszentrums Flensburg an einer Baumscheibe in einer Straße. Daneben stehen Cedrik Hoffmann und eine weitere Person."
       },
       "team": {
         "title": "Das Team bei der Arbeit",
-        "description": "Zwei Personen am Laptop.",
-        "alt": "Zwei Personen sehen sich gemeinsam etwas auf einem Laptop an."
+        "description": "Cedrik Hoffmann und eine weitere Person am Laptop.",
+        "alt": "Cedrik Hoffmann sieht sich mit einer weiteren Person gemeinsam etwas auf einem Laptop an."
       }
     },
     "zip": {
