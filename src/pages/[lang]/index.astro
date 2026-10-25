@@ -16,47 +16,19 @@ import LatestRelease from '../../components/sections/LatestRelease.astro'
 import Stakeholder from '../../components/sections/Stakeholder.astro'
 import Faq from '../../components/sections/Faq.astro'
 import ContactSection from '../../components/sections/ContactSection.astro'
-import VotingBanner from '../../components/islands/VotingBanner'
 import { getTranslations } from '../../i18n/t'
-import { pickStrings } from '../../i18n/pick'
 import { languagePaths } from '../../lib/languagePaths'
 import { currentLanguage } from '../../i18n/languages'
 
 export const getStaticPaths = languagePaths
 
-const VOTING_URL = 'https://open-source-wettbewerb.de/voting/green-ecolution/'
-const VOTING_DEADLINE = '2026-09-30T23:59:59+02:00'
-
-// The banner is rendered on the server so it reserves its own space from the
-// first paint. Once the vote is over it must not be shipped at all, otherwise
-// every visitor would see it flash before the client hides it again.
-const votingOpen = Date.now() <= new Date(VOTING_DEADLINE).getTime()
-
 const language = currentLanguage(Astro.params.lang)
 const t = getTranslations(language, 'home')
 const tc = getTranslations(language, 'common')
-
-const bannerStrings = pickStrings(language, 'common', [
-  'banner.ariaLabel',
-  'banner.title',
-  'banner.desktopDescription',
-  'banner.mobileDescription',
-  'banner.cta',
-  'banner.dismissAriaLabel',
-])
 ---
 
 <BaseLayout title={t('meta.title')} description={t('meta.description')} language={language} path="">
   <BreadcrumbSchema language={language} items={[{ name: tc('breadcrumb.home'), path: '' }]} />
-
-  {votingOpen && (
-    <VotingBanner
-      client:load
-      votingUrl={VOTING_URL}
-      deadline={VOTING_DEADLINE}
-      strings={bannerStrings}
-    />
-  )}
 
   <main id="main-content">
     <HomepageHero language={language} />

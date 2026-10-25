@@ -13,9 +13,9 @@ const { language } = Astro.props
 const t = getTranslations(language, 'home')
 
 const depths = [
-  { y: 120, label: '30 cm', color: '#658A58', zone: t('sensorProbe.zones.fineRoots') },
-  { y: 200, label: '60 cm', color: '#4C7741', zone: t('sensorProbe.zones.mainRoots') },
-  { y: 280, label: '90 cm', color: '#3D5F35', zone: t('sensorProbe.zones.deepRoots') },
+  { y: 120, color: '#658A58', zone: t('sensorProbe.zones.fineRoots') },
+  { y: 200, color: '#4C7741', zone: t('sensorProbe.zones.mainRoots') },
+  { y: 280, color: '#3D5F35', zone: t('sensorProbe.zones.deepRoots') },
 ]
 
 const FINE_ROOTS = [
@@ -82,18 +82,6 @@ const DEEP_ROOTS = [
                   stroke-dasharray="6 4"
                   opacity="0.3"
                 />
-                <text
-                  x="300"
-                  y={depth.y + 4}
-                  text-anchor="end"
-                  fill="#8B7355"
-                  font-size="11"
-                  style="font-family: var(--font-lato)"
-                  font-weight="600"
-                  opacity="0.6"
-                >
-                  {depth.label}
-                </text>
                 <text
                   x="40"
                   y={depth.y - 6}

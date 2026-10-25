@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Home | Green Ecolution | Smart Green Space Management",
-    "description": "Green Ecolution enables smart irrigation of green spaces through sensor-based monitoring and data-driven recommendations."
+    "title": "Green Ecolution | Measure. Understand. Act.",
+    "description": "Green Ecolution from Flensburg is developing an open platform that turns measurements into operations. We started with demand-based irrigation of urban trees."
   },
   "hero": {
     "badge": "Digitalisierungspreis 2026 · Green Coding special prize",
@@ -9,7 +9,7 @@
     "headlineHighlight": "smart irrigation",
     "headlineSuffix": " of green spaces!",
     "tagline": "Measure. Understand. Act.",
-    "description": "Sensor-based monitoring of green spaces transmits data over the LoRaWAN network for analysis, so that irrigation recommendations can be provided.",
+    "description": "Sensors in the soil show which trees need water, and operations planning sends your team straight to them. Irrigation is only the beginning, because the platform behind it is built for further tasks that can be measured, analysed and carried out on site.",
     "playAnimation": "Play animation",
     "adoptTreeAriaLabel": "Adopt a tree"
   },
@@ -89,26 +89,26 @@
     }
   },
   "introduction": {
-    "sectionLabel": "Overview",
-    "title": "What does smart green space management involve?",
-    "description": "In smart green space management, sensors continuously monitor green spaces and provide the data basis for their irrigation and care. This allows measures to be controlled precisely and adapted to the respective site conditions.",
-    "sliderAriaLabel": "Facts about green space management",
+    "sectionLabel": "Platform",
+    "title": "Measure. Understand. Act.",
+    "description": "Green Ecolution combines three steps into one platform. Sensors measure what is happening on site, the software turns that into a situation overview, and operations planning converts it into tours. We started with the irrigation of urban trees, and the platform is designed for further tasks.",
+    "sliderAriaLabel": "The platform in four points",
     "facts": {
-      "sensor": {
-        "label": "Readings from the soil",
-        "description": "Sensors at several depths show how moist the soil is in the root zone."
+      "measure": {
+        "label": "Measure",
+        "description": "Sensors deliver measurements from the city, for irrigation the soil moisture at variable depths."
       },
-      "evaluation": {
-        "label": "Analysis of measurement data",
-        "description": "Analysis of the data transmitted by sensors for demand-based irrigation of young trees."
+      "understand": {
+        "label": "Understand",
+        "description": "The platform analyses the measurement series and shows on a map and dashboard where action is needed."
       },
-      "youngTrees": {
-        "label": "Focus on young trees",
-        "description": "Young trees are particularly vulnerable to heat and therefore need protection. That's why trees are monitored during their first three years at their site."
+      "act": {
+        "label": "Act",
+        "description": "Operations and route planning turns the situation overview into tours that avoid unnecessary journeys."
       },
-      "monitoring": {
-        "label": "Monitoring multiple locations",
-        "description": "Using the LoRaWAN network, different locations can be monitored, and additional ones can easily be added."
+      "extend": {
+        "label": "Modularly extensible",
+        "description": "Further sensor types and use cases can be connected. Irrigation is the first."
       }
     }
   },
@@ -196,7 +196,7 @@
     }
   },
   "sensorProbe": {
-    "illustrationAriaLabel": "Schematic diagram of a soil probe at three depths",
+    "illustrationAriaLabel": "Schematic diagram of a soil probe measuring at several depths",
     "zones": {
       "fineRoots": "Fine roots",
       "mainRoots": "Main roots",
@@ -204,13 +204,13 @@
     },
     "sectionLabel": "Hardware",
     "title": "The soil probe",
-    "description": "Designed for use in public spaces. Sensors at three depths (30, 60 and 90 cm) capture the full root profile of a tree, from the near-surface fine roots to the deeper main roots. This makes it possible to see whether water actually reaches the root zone or only wets the surface. Installation is flush with the ground using standard soil augers. Maintenance work such as mowing is not affected.",
-    "probeCarrier": "The probe is the carrier, not the sensor. It takes several sensor types, so the configuration can be matched to the requirements.",
-    "availability": "The probes are available through PROGEEK GmbH.",
+    "description": "Designed for use in public spaces. The probe measures at variable depths and so maps the root profile of a tree, from the near-surface fine roots to the deeper main roots. This makes it possible to see whether water actually reaches the root zone or only wets the surface. Installation is flush with the ground using standard soil augers, and maintenance work such as mowing is not affected.",
+    "probeCarrier": "The probe is one possible sensor, not the only one. The platform is built so that other sensors can be connected as well.",
+    "availability": "You get the probes directly from us, and your team can install them itself.",
     "specs": {
       "depths": {
-        "label": "Measurement depths",
-        "value": "3"
+        "label": "measuring depths",
+        "value": "Variable"
       },
       "network": {
         "label": "Wireless network",
@@ -236,7 +236,7 @@
   },
   "videos": {
     "sectionLabel": "Videos",
-    "title": "Get to know the project through video",
+    "title": "Get to know Green Ecolution through video",
     "description": "Two films show what we are working on: the State of Schleswig-Holstein's video on our Digitalisierungspreis 2026 award and the television piece public broadcaster NDR filmed about the project.",
     "award": {
       "title": "Digitalisierungspreis 2026",
@@ -260,7 +260,7 @@
       "measure": {
         "category": "Capture",
         "title": "Measure",
-        "description": "Soil moisture sensors capture soil moisture and temperature at multiple depths (30/60/90 cm). The data is transmitted energy-efficiently via LoRaWAN."
+        "description": "Soil moisture sensors capture soil moisture and temperature at variable depths. The data is transmitted energy-efficiently via LoRaWAN."
       },
       "understand": {
         "category": "Analyze",

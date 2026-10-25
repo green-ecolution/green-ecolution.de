@@ -40,14 +40,6 @@
     "about": "Über uns",
     "press": "Presse"
   },
-  "banner": {
-    "ariaLabel": "Aufruf zum Community Voting",
-    "title": "Community Voting",
-    "desktopDescription": "Green Ecolution steht beim Open-Source-Wettbewerb zur Abstimmung. Noch bis zum 30. September.",
-    "mobileDescription": "Green Ecolution beim Open-Source-Wettbewerb unterstützen, noch bis 30.09.",
-    "cta": "Jetzt abstimmen",
-    "dismissAriaLabel": "Hinweis zum Community Voting schließen"
-  },
   "backToTop": {
     "ariaLabel": "Zurück nach oben"
   },

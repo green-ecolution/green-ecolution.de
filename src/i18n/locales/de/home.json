@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Startseite | Green Ecolution | Smartes Grünflächenmanagement",
-    "description": "Green Ecolution ermöglicht smarte Bewässerung von Grünflächen mittels sensorgestützter Überwachung und datenbasierten Handlungsempfehlungen."
+    "title": "Green Ecolution | Messen. Verstehen. Handeln.",
+    "description": "Green Ecolution aus Flensburg entwickelt eine offene Plattform, die Messwerte zu Einsätzen macht. Angefangen haben wir mit der bedarfsgerechten Bewässerung von Stadtbäumen."
   },
   "hero": {
     "badge": "Digitalisierungspreis 2026 · Sonderpreis Green Coding",
@@ -9,7 +9,7 @@
     "headlineHighlight": "smarte Bewässerung",
     "headlineSuffix": " von Grünflächen!",
     "tagline": "Messen. Verstehen. Handeln.",
-    "description": "Mittels sensorgestützter Überwachung von Grünflächen werden Daten über das LoRaWAN-Netz übermittelt und ausgewertet, sodass Handlungsempfehlungen für die Bewässerung abgegeben werden können.",
+    "description": "Sensoren im Boden zeigen, welche Bäume Wasser brauchen, und die Einsatzplanung schickt dein Team gezielt dorthin. Die Bewässerung ist dabei erst der Anfang, denn die Plattform dahinter ist für weitere Aufgaben gebaut, die sich messen, auswerten und vor Ort erledigen lassen.",
     "playAnimation": "Animation abspielen",
     "adoptTreeAriaLabel": "Baum adoptieren"
   },
@@ -89,26 +89,26 @@
     }
   },
   "introduction": {
-    "sectionLabel": "Überblick",
-    "title": "Was beinhaltet smartes Grünflächenmanagement?",
-    "description": "Beim smarten Grünflächenmanagement überwachen Sensoren die Grünflächen kontinuierlich und liefern die Datengrundlage für ihre Bewässerung und Pflege. So lassen sich die Maßnahmen präzise steuern und an die jeweiligen Standortbedingungen anpassen.",
-    "sliderAriaLabel": "Fakten zum Grünflächenmanagement",
+    "sectionLabel": "Plattform",
+    "title": "Messen. Verstehen. Handeln.",
+    "description": "Green Ecolution verbindet drei Schritte zu einer Plattform. Sensoren messen, was vor Ort passiert, die Software macht daraus ein Lagebild, und die Einsatzplanung setzt es in Touren um. Angefangen haben wir mit der Bewässerung von Stadtbäumen, die Plattform ist für weitere Aufgaben ausgelegt.",
+    "sliderAriaLabel": "Die Plattform in vier Punkten",
     "facts": {
-      "sensor": {
-        "label": "Messwerte aus dem Boden",
-        "description": "Sensoren in mehreren Tiefen zeigen, wie feucht der Boden im Wurzelbereich ist."
+      "measure": {
+        "label": "Messen",
+        "description": "Sensoren liefern Messwerte aus der Stadt, bei der Bewässerung die Bodenfeuchte in variablen Tiefen."
       },
-      "evaluation": {
-        "label": "Auswertung der Messdaten",
-        "description": "Auswertung der durch Sensoren übermittelten Daten für eine bedarfsgerechte Bewässerung von Jungbäumen."
+      "understand": {
+        "label": "Verstehen",
+        "description": "Die Plattform wertet die Messreihen aus und zeigt auf Karte und Dashboard, wo gehandelt werden muss."
       },
-      "youngTrees": {
-        "label": "Augenmerk auf Jungbäume",
-        "description": "Jungbäume sind besonders hitzeanfällig und daher schutzbedürftig. Deshalb werden Bäume in ihren ersten drei Standjahren überwacht."
+      "act": {
+        "label": "Handeln",
+        "description": "Die Einsatz- und Routenplanung macht aus dem Lagebild Touren, die ohne unnötige Wege auskommen."
       },
-      "monitoring": {
-        "label": "Monitoring mehrerer Standorte",
-        "description": "Unter Verwendung des LoRaWAN-Netzes können verschiedene Standorte überwacht und weitere einfach eingebunden werden."
+      "extend": {
+        "label": "Modular erweiterbar",
+        "description": "Weitere Sensortypen und Anwendungsfälle lassen sich anbinden. Die Bewässerung ist der erste."
       }
     }
   },
@@ -196,7 +196,7 @@
     }
   },
   "sensorProbe": {
-    "illustrationAriaLabel": "Schematische Darstellung einer Bodensonde in drei Tiefen",
+    "illustrationAriaLabel": "Schematische Darstellung einer Bodensonde, die in mehreren Tiefen misst",
     "zones": {
       "fineRoots": "Feinwurzeln",
       "mainRoots": "Hauptwurzeln",
@@ -204,13 +204,13 @@
     },
     "sectionLabel": "Hardware",
     "title": "Die Bodensonde",
-    "description": "Konzipiert für den Einsatz im öffentlichen Raum. Sensoren in drei Tiefen (30, 60 und 90 cm) bilden das gesamte Wurzelprofil eines Baumes ab, von den oberflächennahen Feinwurzeln bis zu den tieferen Hauptwurzeln. So lässt sich erkennen, ob Wasser tatsächlich im Wurzelbereich ankommt oder nur die Oberfläche benetzt wird. Die Installation erfolgt bodenbündig mit handelsüblichen Erdbohrern. Pflegearbeiten wie Mähen werden nicht beeinträchtigt.",
-    "probeCarrier": "Die Sonde ist der Träger, nicht der Sensor. Sie nimmt mehrere Sensortypen auf, sodass sich die Bestückung an die Anforderungen anpassen lässt.",
-    "availability": "Die Sonden sind über die PROGEEK GmbH beziehbar.",
+    "description": "Konzipiert für den Einsatz im öffentlichen Raum. Die Sonde misst in variablen Tiefen und bildet so das Wurzelprofil eines Baumes ab, von den oberflächennahen Feinwurzeln bis zu den tieferen Hauptwurzeln. So lässt sich erkennen, ob Wasser tatsächlich im Wurzelbereich ankommt oder nur die Oberfläche benetzt. Die Installation erfolgt bodenbündig mit handelsüblichen Erdbohrern, Pflegearbeiten wie Mähen werden nicht beeinträchtigt.",
+    "probeCarrier": "Die Sonde ist ein möglicher Sensor, nicht der einzige. Die Plattform ist so aufgebaut, dass sich auch andere Sensoren anbinden lassen.",
+    "availability": "Die Sonden bekommst du direkt von uns, und dein Team kann sie selbst setzen.",
     "specs": {
       "depths": {
         "label": "Messtiefen",
-        "value": "3"
+        "value": "Variable"
       },
       "network": {
         "label": "Funknetz",
@@ -236,7 +236,7 @@
   },
   "videos": {
     "sectionLabel": "Videos",
-    "title": "Lerne das Projekt per Video kennen",
+    "title": "Lerne Green Ecolution per Video kennen",
     "description": "Zwei Filme zeigen, woran wir arbeiten: das Video des Landes Schleswig-Holstein zur Auszeichnung beim Digitalisierungspreis 2026 und der Fernsehbeitrag, den der NDR über das Projekt gedreht hat.",
     "award": {
       "title": "Digitalisierungspreis 2026",
@@ -260,7 +260,7 @@
       "measure": {
         "category": "Erfassen",
         "title": "Messen",
-        "description": "Bodenfeuchtesensoren erfassen Bodenfeuchte und Temperatur in mehreren Tiefen (30/60/90 cm). Die Daten werden energieeffizient über LoRaWAN übertragen."
+        "description": "Bodenfeuchtesensoren erfassen Bodenfeuchte und Temperatur in variablen Tiefen. Die Daten werden energieeffizient über LoRaWAN übertragen."
       },
       "understand": {
         "category": "Analysieren",

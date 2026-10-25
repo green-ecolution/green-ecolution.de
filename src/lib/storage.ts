@@ -31,14 +31,6 @@ export function isInitialLoad(): boolean {
   return read('green_ecolution_initial_load') !== 'false'
 }
 
-export function dismissVotingBanner() {
-  write('green_ecolution_voting_banner_dismissed', 'true')
-}
-
-export function isVotingBannerDismissed(): boolean {
-  return read('green_ecolution_voting_banner_dismissed') === 'true'
-}
-
 export function setStoredLanguage(language: string) {
   write('green_ecolution_language', language)
 }
