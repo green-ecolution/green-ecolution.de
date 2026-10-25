@@ -8,4 +8,6 @@ export const company = {
   phone: { display: '+49 461 79330680', href: 'tel:+4946179330680' },
   email: 'info@green-ecolution.de',
   githubUrl: 'https://github.com/green-ecolution',
+  linkedinUrl: 'https://www.linkedin.com/company/green-ecolution',
+  instagramUrl: 'https://www.instagram.com/green.ecolution',
 } as const

@@ -11,8 +11,8 @@ export function organizationSchema(base: string, description: string, founder?: 
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': organizationId(base),
-    name: company.name,
-    alternateName: 'Green Ecolution',
+    name: 'Green Ecolution',
+    legalName: company.name,
     url: base,
     logo: `${base}/assets/favicons/favicon.svg`,
     // Google reads an organization with an address as a local business, which
@@ -29,7 +29,7 @@ export function organizationSchema(base: string, description: string, founder?: 
       addressCountry: 'DE',
     },
     parentOrganization: { '@type': 'Organization', name: company.parentOrganization },
-    sameAs: [company.githubUrl],
+    sameAs: [company.githubUrl, company.linkedinUrl, company.instagramUrl],
     ...(founder ? { founder } : {}),
   }
 }

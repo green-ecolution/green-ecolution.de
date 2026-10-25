@@ -5,9 +5,13 @@ import { organizationSchema } from './organizationSchema'
 describe('organizationSchema', () => {
   const schema = organizationSchema('https://green-ecolution.de', 'Beschreibung')
 
-  it('nennt die Firma mit ihrem eingetragenen Namen', () => {
-    expect(schema.name).toBe(company.name)
-    expect(schema.alternateName).toBe('Green Ecolution')
+  it('nennt die Firma so, wie nach ihr gesucht wird, und führt die Rechtsform separat', () => {
+    expect(schema.name).toBe('Green Ecolution')
+    expect(schema.legalName).toBe(company.name)
+  })
+
+  it('verweist auf die öffentlichen Profile der Firma', () => {
+    expect(schema.sameAs).toEqual([company.githubUrl, company.linkedinUrl, company.instagramUrl])
   })
 
   it('führt die PROGEEK Group als Muttergesellschaft', () => {
