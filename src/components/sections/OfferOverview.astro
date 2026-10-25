@@ -1,4 +1,5 @@
 ---
+import { Cpu, LifeBuoy, MonitorSmartphone, Wrench } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import Arrow from '../icons/Arrow.astro'
@@ -8,7 +9,13 @@ interface Props {
   language: Language
 }
 
-const OFFER_ITEMS = ['software', 'sensors', 'setup', 'operation'] as const
+// Same icons as the matching items on the services page.
+const OFFER_ITEMS = [
+  { id: 'software', icon: MonitorSmartphone },
+  { id: 'sensors', icon: Cpu },
+  { id: 'setup', icon: Wrench },
+  { id: 'operation', icon: LifeBuoy },
+] as const
 
 const { language } = Astro.props
 const t = getTranslations(language, 'home')
@@ -30,8 +37,11 @@ const t = getTranslations(language, 'home')
   </div>
 
   <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-    {OFFER_ITEMS.map((id) => (
+    {OFFER_ITEMS.map(({ id, icon: Icon }) => (
       <li class="h-full rounded-2xl border border-green-dark-900/10 bg-white p-5 lg:p-6">
+        <span class="flex w-10 h-10 rounded-lg bg-green-light-900/15 items-center justify-center mb-4">
+          <Icon className="w-5 h-5 text-green-dark-900" aria-hidden="true" />
+        </span>
         <h3 class="font-lato font-semibold text-grey-900 mb-2">{t(`offer.items.${id}.label`)}</h3>
         <p class="text-grey-900/70 leading-relaxed">{t(`offer.items.${id}.description`)}</p>
       </li>
