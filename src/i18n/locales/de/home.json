@@ -306,17 +306,42 @@
     "logoAlt": "Logo {{label}}",
     "visitWebsite": "Zur Webseite"
   },
+  "offer": {
+    "sectionLabel": "Angebot",
+    "title": "Alles aus einer Hand",
+    "description": "Von uns bekommst du die Software, die Sensorik, die Einrichtung und den Betrieb. Die Software ist quelloffen und lizenzfrei, bezahlt werden Sonden und Leistungen.",
+    "items": {
+      "software": {
+        "label": "Software",
+        "description": "Plattform mit Karte, Dashboard, Einsatzplanung und App, quelloffen und lizenzfrei."
+      },
+      "sensors": {
+        "label": "Sensorik",
+        "description": "Bodensonden für den öffentlichen Raum, die dein Team selbst setzen kann."
+      },
+      "setup": {
+        "label": "Einrichtung",
+        "description": "Einrichtung, Datenimport und Einführung für deine Organisation."
+      },
+      "operation": {
+        "label": "Betrieb",
+        "description": "Betrieb mit Updates, Sicherungen und Support."
+      }
+    },
+    "cta": "Zu den Leistungen",
+    "ctaAriaLabel": "Zur Seite mit unseren Leistungen und dem Preismodell"
+  },
   "faq": {
     "sectionLabel": "FAQ",
     "title": "Oft gestellte Fragen zu Green Ecolution",
     "items": {
       "origin": {
-        "question": "Wer steckt hinter dem Projekt Green Ecolution?",
-        "answerPlain": "Green Ecolution begann als Masterprojekt der Angewandten Informatik an der Hochschule Flensburg, gemeinsam mit dem Technischen Betriebszentrum Flensburg und der Smarten Grenzregion. Zu klären war, ob sich die Bewässerung im kommunalen Alltag wirklich datenbasiert steuern lässt, mit Sensorik im Boden und Touren, die sich daraus ergeben.\n\nDie Antwort fiel deutlich aus. In Nutzertests mit dem TBZ erreichte die Anwendung einen überdurchschnittlichen Usability-Wert und wurde auch von Mitarbeitenden ohne IT-Erfahrung als übersichtlich bewertet.\n\nAuf dieser Grundlage entwickelt PROGEEK die Lösung, die Kommunen heute einsetzen können. Sensorik und Plattform sind dafür auf den Regelbetrieb ausgelegt worden.",
-        "answerRich": "<p1>Green Ecolution begann als Masterprojekt der Angewandten Informatik an der <hsfl>Hochschule Flensburg</hsfl>, gemeinsam mit dem Technischen Betriebszentrum Flensburg und der <grenzregion>Smarten Grenzregion</grenzregion>. Zu klären war, ob sich die Bewässerung im kommunalen Alltag wirklich datenbasiert steuern lässt, mit Sensorik im Boden und Touren, die sich daraus ergeben.</p1><p2>Die Antwort fiel deutlich aus. In Nutzertests mit dem TBZ erreichte die Anwendung einen überdurchschnittlichen Usability-Wert und wurde auch von Mitarbeitenden ohne IT-Erfahrung als übersichtlich bewertet.</p2><p3>Auf dieser Grundlage entwickelt <progeek>PROGEEK</progeek> die Lösung, die Kommunen heute einsetzen können. Sensorik und Plattform sind dafür auf den Regelbetrieb ausgelegt worden.</p3>"
+        "question": "Wer steht hinter Green Ecolution?",
+        "answerPlain": "Green Ecolution ist ein Unternehmen aus Flensburg. Es gehört zu gleichen Teilen der PROGEEK Group und Cedrik Hoffmann, der die Firma als Geschäftsführer leitet.\n\nAngefangen hat es mit einer Frage der Stadt Flensburg, die sich damit an die Smarte Grenzregion wandte. Daraus wurde ein Masterprojekt der Angewandten Informatik an der Hochschule Flensburg, gemeinsam mit dem Technischen Betriebszentrum Flensburg. In Nutzertests mit dem TBZ erreichte die Anwendung einen überdurchschnittlichen Usability-Wert und wurde auch von Mitarbeitenden ohne IT-Erfahrung als übersichtlich bewertet.\n\nDamit Kommunen die Lösung im Alltag einsetzen können, haben wir die Firma gegründet. Mehr dazu steht auf der Seite Über uns.",
+        "answerRich": "<p1>Green Ecolution ist ein Unternehmen aus Flensburg. Es gehört zu gleichen Teilen der PROGEEK Group und Cedrik Hoffmann, der die Firma als Geschäftsführer leitet.</p1><p2>Angefangen hat es mit einer Frage der Stadt Flensburg, die sich damit an die <grenzregion>Smarte Grenzregion</grenzregion> wandte. Daraus wurde ein Masterprojekt der Angewandten Informatik an der <hsfl>Hochschule Flensburg</hsfl>, gemeinsam mit dem Technischen Betriebszentrum Flensburg. In Nutzertests mit dem TBZ erreichte die Anwendung einen überdurchschnittlichen Usability-Wert und wurde auch von Mitarbeitenden ohne IT-Erfahrung als übersichtlich bewertet.</p2><p3>Damit Kommunen die Lösung im Alltag einsetzen können, haben wir die Firma gegründet. Mehr dazu steht auf der Seite <about>Über uns</about>.</p3>"
       },
       "value": {
-        "question": "Welchen Mehrwert bietet das Projekt?",
+        "question": "Welchen Mehrwert bietet Green Ecolution?",
         "answerPlain": "Green Ecolution macht die Bewässerung von Stadtbäumen nachvollziehbar. Sensordaten zeigen, welche Flächen Wasser brauchen, und die Einsatzplanung setzt das in Touren um, die ohne unnötige Fahrten auskommen. Wer so gezielt bewässert, spart Wasser, Kraftstoff und Personaleinsatz, und Entscheidungen stützen sich auf Messwerte statt auf Erfahrung.\n\nFür Kommunen heißt das: fehlendes Wasser wird früher erkennbar, der Verbrauch ist dokumentiert, und die Lösung lässt sich selbst betreiben und gemeinsam weiterentwickeln, ohne Bindung an einen Anbieter.",
         "answerRich": "<p1>Green Ecolution macht die Bewässerung von Stadtbäumen nachvollziehbar. Sensordaten zeigen, welche Flächen Wasser brauchen, und die Einsatzplanung setzt das in Touren um, die ohne unnötige Fahrten auskommen. Wer so gezielt bewässert, spart Wasser, Kraftstoff und Personaleinsatz, und Entscheidungen stützen sich auf Messwerte statt auf Erfahrung.</p1><p2>Für Kommunen heißt das: fehlendes Wasser wird früher erkennbar, der Verbrauch ist dokumentiert, und die Lösung lässt sich selbst betreiben und gemeinsam weiterentwickeln, ohne Bindung an einen Anbieter.</p2>"
       },
@@ -332,13 +357,13 @@
       },
       "sensors": {
         "question": "Ist das System an bestimmte Sensoren gebunden?",
-        "answerPlain": "Die Bodensonde ist eine Eigenentwicklung für den Einsatz im öffentlichen Raum. Sie ist der Träger und nimmt mehrere Sensortypen in bis zu drei Tiefen auf, sodass sich das Wurzelprofil eines Baumes abbilden lässt. Welche Sensorik darin steckt, ist eine Frage der Bestückung und nicht fest vorgegeben.\n\nIm Forschungsprojekt waren es ein Watermark-Sensor für die Bodenwasserspannung und ein SMT100-Sensor für Bodenfeuchte und Temperatur. Für den kommunalen Einsatz haben wir die Bestückung seither angepasst und entwickeln sie weiter.\n\nSensoren anderer Hersteller werden unterstützt und lassen sich über das The Things Network und das Plug-in-System anbinden. Im Feld erprobt ist das bisher nicht.",
-        "answerRich": "<p1>Die Bodensonde ist eine Eigenentwicklung für den Einsatz im öffentlichen Raum. Sie ist der Träger und nimmt mehrere Sensortypen in bis zu drei Tiefen auf, sodass sich das Wurzelprofil eines Baumes abbilden lässt. Welche Sensorik darin steckt, ist eine Frage der Bestückung und nicht fest vorgegeben.</p1><p2>Im Forschungsprojekt waren es ein <watermark>Watermark-Sensor</watermark> für die Bodenwasserspannung und ein <smt100>SMT100-Sensor</smt100> für Bodenfeuchte und Temperatur. Für den kommunalen Einsatz haben wir die Bestückung seither angepasst und entwickeln sie weiter.</p2><p3>Sensoren anderer Hersteller werden unterstützt und lassen sich über das The Things Network und das Plug-in-System anbinden. Im Feld erprobt ist das bisher nicht.</p3>"
+        "answerPlain": "Nein. Die Plattform ist modular aufgebaut, und unsere Bodensonde ist ein möglicher Sensor, nicht der einzige. Sensoren anderer Hersteller lassen sich über das The Things Network und das Plug-in-System anbinden. Für einen neuen Sensortyp braucht es etwas Entwicklungsarbeit, die übernehmen wir. Im Feld erprobt ist die Anbindung fremder Sensoren bisher nicht.\n\nUnsere eigene Bodensonde ist für den öffentlichen Raum gebaut und misst in variablen Tiefen. Im Forschungsprojekt steckten darin ein Watermark-Sensor für die Bodenwasserspannung und ein SMT100-Sensor für Bodenfeuchte und Temperatur. Heute liegt statt des Eigenbaus aus der Forschung ein Serienmodell im Boden.",
+        "answerRich": "<p1>Nein. Die Plattform ist modular aufgebaut, und unsere Bodensonde ist ein möglicher Sensor, nicht der einzige. Sensoren anderer Hersteller lassen sich über das The Things Network und das Plug-in-System anbinden. Für einen neuen Sensortyp braucht es etwas Entwicklungsarbeit, die übernehmen wir. Im Feld erprobt ist die Anbindung fremder Sensoren bisher nicht.</p1><p2>Unsere eigene Bodensonde ist für den öffentlichen Raum gebaut und misst in variablen Tiefen. Im Forschungsprojekt steckten darin ein <watermark>Watermark-Sensor</watermark> für die Bodenwasserspannung und ein <smt100>SMT100-Sensor</smt100> für Bodenfeuchte und Temperatur. Heute liegt statt des Eigenbaus aus der Forschung ein Serienmodell im Boden.</p2>"
       },
-      "progress": {
-        "question": "Wie ist der aktuelle Fortschritt des Projekts?",
-        "answerPlain": "Das Forschungsprojekt „Green Ecolution“ wurde im Rahmen des Masterstudiengangs „Angewandte Informatik“ an der Hochschule Flensburg erfolgreich abgeschlossen. Aufbauend auf den im Projekt erzielten Ergebnissen wird die Weiterentwicklung nun fortgesetzt.\n\nIm Oktober 2025 erhielt das Projekt im Rahmen des DigitalHub Call for Concepts des Landesprogramms „Offene Innovation – Open Source made in Schleswig-Holstein“ eine Finanzierung. Dadurch kann das System weiter ausgebaut und praxisnah erprobt werden.\n\nAktuell arbeiten PROGEEK, die Stadt Flensburg und die Smarte Grenzregion gemeinsam an der Weiterentwicklung und Integration des Systems, um die gewonnenen Erkenntnisse nachhaltig in den kommunalen Alltag zu überführen.",
-        "answerRich": "<p1>Das Forschungsprojekt „Green Ecolution“ wurde im Rahmen des Masterstudiengangs „Angewandte Informatik“ an der <hsfl>Hochschule Flensburg</hsfl> erfolgreich abgeschlossen. Aufbauend auf den im Projekt erzielten Ergebnissen wird die Weiterentwicklung nun fortgesetzt.</p1><p2>Im Oktober 2025 erhielt das Projekt im Rahmen des <program>DigitalHub Call for Concepts</program> des Landesprogramms <funding>„Offene Innovation – Open Source made in Schleswig-Holstein“</funding> eine Finanzierung. Dadurch kann das System weiter ausgebaut und praxisnah erprobt werden.</p2><p3>Aktuell arbeiten <progeek>PROGEEK</progeek>, die <flensburg>Stadt Flensburg</flensburg> und die <grenzregion>Smarte Grenzregion</grenzregion> gemeinsam an der Weiterentwicklung und Integration des Systems, um die gewonnenen Erkenntnisse nachhaltig in den kommunalen Alltag zu überführen.</p3>"
+      "cost": {
+        "question": "Was kostet der Einsatz?",
+        "answerPlain": "Die Software selbst kostet nichts, sie ist quelloffen und lizenzfrei. Bezahlt werden die Sonden, die du einmalig kaufst, die Einrichtung und, wenn wir die Plattform für dich betreiben, der laufende Betrieb.\n\nWie sich das zusammensetzt, steht im Preismodell auf der Leistungsseite. Ein konkretes Angebot erstellen wir nach einem ersten Gespräch.",
+        "answerRich": "<p1>Die Software selbst kostet nichts, sie ist quelloffen und lizenzfrei. Bezahlt werden die Sonden, die du einmalig kaufst, die Einrichtung und, wenn wir die Plattform für dich betreiben, der laufende Betrieb.</p1><p2>Wie sich das zusammensetzt, steht im <pricing>Preismodell auf der Leistungsseite</pricing>. Ein konkretes Angebot erstellen wir nach einem ersten Gespräch.</p2>"
       }
     }
   }

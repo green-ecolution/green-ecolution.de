@@ -306,17 +306,42 @@
     "logoAlt": "Logo {{label}}",
     "visitWebsite": "Visit website"
   },
+  "offer": {
+    "sectionLabel": "Offer",
+    "title": "Everything from one source",
+    "description": "From us you get the software, the sensors, the setup and the operation. The software is open source and free of licence fees; you pay for probes and services.",
+    "items": {
+      "software": {
+        "label": "Software",
+        "description": "Platform with map, dashboard, scheduling and app, open source and free of licence fees."
+      },
+      "sensors": {
+        "label": "Sensors",
+        "description": "Soil probes for public spaces that your team can install itself."
+      },
+      "setup": {
+        "label": "Setup",
+        "description": "Setup, data import and onboarding for your organisation."
+      },
+      "operation": {
+        "label": "Operation",
+        "description": "Operation with updates, backups and support."
+      }
+    },
+    "cta": "View our services",
+    "ctaAriaLabel": "Go to the page with our services and the pricing model"
+  },
   "faq": {
     "sectionLabel": "FAQ",
     "title": "Frequently asked questions about Green Ecolution",
     "items": {
       "origin": {
-        "question": "Who is behind the Green Ecolution project?",
-        "answerPlain": "Green Ecolution started out as a master's project in Applied Computer Science at Flensburg University of Applied Sciences, together with the municipal service centre of Flensburg and Smarte Grenzregion. The question was whether watering in municipal day-to-day work can really be steered by data, with sensors in the soil and tours derived from them.\n\nThe answer was clear. In user tests with the service centre the application scored an above-average usability rating and was described as clear and manageable even by staff without an IT background.\n\nOn that foundation PROGEEK is building the solution municipalities can use today. Sensors and platform have been laid out for regular operation.",
-        "answerRich": "<p1>Green Ecolution started out as a master's project in Applied Computer Science at <hsfl>Flensburg University of Applied Sciences</hsfl>, together with the municipal service centre of Flensburg and <grenzregion>Smarte Grenzregion</grenzregion>. The question was whether watering in municipal day-to-day work can really be steered by data, with sensors in the soil and tours derived from them.</p1><p2>The answer was clear. In user tests with the service centre the application scored an above-average usability rating and was described as clear and manageable even by staff without an IT background.</p2><p3>On that foundation <progeek>PROGEEK</progeek> is building the solution municipalities can use today. Sensors and platform have been laid out for regular operation.</p3>"
+        "question": "Who is behind Green Ecolution?",
+        "answerPlain": "Green Ecolution is a company based in Flensburg. It is owned in equal shares by PROGEEK Group and Cedrik Hoffmann, who runs the company as managing director.\n\nIt began with a question from the City of Flensburg, which turned to Smarte Grenzregion with it. That became a master's project in Applied Computer Science at Flensburg University of Applied Sciences, together with the municipal service centre of Flensburg. In user tests with the service centre the application scored an above-average usability rating and was described as clear and manageable even by staff without an IT background.\n\nWe founded the company so that municipalities can use the solution in their daily work. You can find more on the About us page.",
+        "answerRich": "<p1>Green Ecolution is a company based in Flensburg. It is owned in equal shares by PROGEEK Group and Cedrik Hoffmann, who runs the company as managing director.</p1><p2>It began with a question from the City of Flensburg, which turned to <grenzregion>Smarte Grenzregion</grenzregion> with it. That became a master's project in Applied Computer Science at <hsfl>Flensburg University of Applied Sciences</hsfl>, together with the municipal service centre of Flensburg. In user tests with the service centre the application scored an above-average usability rating and was described as clear and manageable even by staff without an IT background.</p2><p3>We founded the company so that municipalities can use the solution in their daily work. You can find more on the <about>About us</about> page.</p3>"
       },
       "value": {
-        "question": "What value does the project provide?",
+        "question": "What value does Green Ecolution provide?",
         "answerPlain": "Green Ecolution makes the watering of urban trees traceable. Sensor data shows which areas need water, and the scheduling turns that into tours without unnecessary trips. Watering this deliberately saves water, fuel and staff time, and decisions rest on measurements instead of experience.\n\nFor municipalities that means missing water becomes visible earlier, consumption is documented, and the solution can be operated in-house and developed further together, without being tied to a single vendor.",
         "answerRich": "<p1>Green Ecolution makes the watering of urban trees traceable. Sensor data shows which areas need water, and the scheduling turns that into tours without unnecessary trips. Watering this deliberately saves water, fuel and staff time, and decisions rest on measurements instead of experience.</p1><p2>For municipalities that means missing water becomes visible earlier, consumption is documented, and the solution can be operated in-house and developed further together, without being tied to a single vendor.</p2>"
       },
@@ -332,13 +357,13 @@
       },
       "sensors": {
         "question": "Is the system tied to specific sensors?",
-        "answerPlain": "The soil probe is our own development, designed for use in public spaces. It is the carrier, and it takes several sensor types at up to three depths, which makes it possible to cover the root profile of a tree. Which sensors sit inside is a matter of configuration, not something fixed.\n\nIn the research project these were a Watermark sensor for soil water tension and an SMT100 sensor for soil moisture and temperature. We have adapted the configuration for municipal use since then and keep developing it.\n\nSensors from other manufacturers are supported and can be connected through The Things Network and the plug-in system. This has not been proven in the field so far.",
-        "answerRich": "<p1>The soil probe is our own development, designed for use in public spaces. It is the carrier, and it takes several sensor types at up to three depths, which makes it possible to cover the root profile of a tree. Which sensors sit inside is a matter of configuration, not something fixed.</p1><p2>In the research project these were a <watermark>Watermark sensor</watermark> for soil water tension and an <smt100>SMT100 sensor</smt100> for soil moisture and temperature. We have adapted the configuration for municipal use since then and keep developing it.</p2><p3>Sensors from other manufacturers are supported and can be connected through The Things Network and the plug-in system. This has not been proven in the field so far.</p3>"
+        "answerPlain": "No. The platform is modular, and our soil probe is one possible sensor, not the only one. Sensors from other manufacturers can be connected through The Things Network and the plug-in system. A new sensor type needs some development work, which we take care of. Connecting third-party sensors has not been proven in the field so far.\n\nOur own soil probe is built for public spaces and measures at variable depths. In the research project it contained a Watermark sensor for soil water tension and an SMT100 sensor for soil moisture and temperature. Today a series-produced model sits in the ground instead of the research prototype.",
+        "answerRich": "<p1>No. The platform is modular, and our soil probe is one possible sensor, not the only one. Sensors from other manufacturers can be connected through The Things Network and the plug-in system. A new sensor type needs some development work, which we take care of. Connecting third-party sensors has not been proven in the field so far.</p1><p2>Our own soil probe is built for public spaces and measures at variable depths. In the research project it contained a <watermark>Watermark sensor</watermark> for soil water tension and an <smt100>SMT100 sensor</smt100> for soil moisture and temperature. Today a series-produced model sits in the ground instead of the research prototype.</p2>"
       },
-      "progress": {
-        "question": "What is the current progress of the project?",
-        "answerPlain": "The \"Green Ecolution\" research project was successfully completed as part of the Applied Computer Science (Angewandte Informatik) master's program at Hochschule Flensburg. Building on the results achieved in the project, the further development is now being continued.\n\nIn October 2025, the project received funding through the DigitalHub Call for Concepts of the state program \"Offene Innovation – Open Source made in Schleswig-Holstein.\" This enables the system to be further expanded and tested in practice.\n\nPROGEEK, the City of Flensburg, and Smarte Grenzregion are currently working together on the further development and integration of the system, in order to transfer the insights gained into everyday municipal practice on a lasting basis.",
-        "answerRich": "<p1>The \"Green Ecolution\" research project was successfully completed as part of the Applied Computer Science (Angewandte Informatik) master's program at <hsfl>Hochschule Flensburg</hsfl>. Building on the results achieved in the project, the further development is now being continued.</p1><p2>In October 2025, the project received funding through the <program>DigitalHub Call for Concepts</program> of the state program <funding>\"Offene Innovation – Open Source made in Schleswig-Holstein\"</funding>. This enables the system to be further expanded and tested in practice.</p2><p3><progeek>PROGEEK</progeek>, the <flensburg>City of Flensburg</flensburg>, and <grenzregion>Smarte Grenzregion</grenzregion> are currently working together on the further development and integration of the system, in order to transfer the insights gained into everyday municipal practice on a lasting basis.</p3>"
+      "cost": {
+        "question": "What does it cost to use?",
+        "answerPlain": "The software itself costs nothing; it is open source and free of licence fees. You pay for the probes, which you buy once, for the setup and, if we operate the platform for you, for the ongoing operation.\n\nHow this adds up is set out in the pricing model on the services page. We prepare a specific quote after an initial conversation.",
+        "answerRich": "<p1>The software itself costs nothing; it is open source and free of licence fees. You pay for the probes, which you buy once, for the setup and, if we operate the platform for you, for the ongoing operation.</p1><p2>How this adds up is set out in the <pricing>pricing model on the services page</pricing>. We prepare a specific quote after an initial conversation.</p2>"
       }
     }
   }
