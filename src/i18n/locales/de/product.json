@@ -6,7 +6,7 @@
   "hero": {
     "label": "Produkt",
     "headline": "Messen. Verstehen. Handeln.",
-    "description": "Green Ecolution ist eine modulare, quelloffene Plattform. Sensoren liefern Messwerte, die Plattform macht daraus ein klares Bild der Lage, und die Einsatzplanung schickt dein Team gezielt dorthin, wo es gebraucht wird. Heute steuert sie die Bewässerung von Stadtbäumen, und das ist erst der Anfang."
+    "description": "Green Ecolution ist eine modulare, quelloffene Plattform. Sensoren liefern Messwerte, die Plattform macht daraus ein klares Bild der Lage und die Einsatzplanung schickt dein Team gezielt dorthin, wo es gebraucht wird. Heute steuert sie die Bewässerung von Stadtbäumen. Das ist erst der Anfang."
   },
   "dashboard": {
     "sectionLabel": "Beispiel Bewässerung",
@@ -23,7 +23,7 @@
       "measure": {
         "category": "Erfassen",
         "title": "Messen",
-        "description": "Sensoren erfassen, was vor Ort passiert, und funken ihre Werte energiesparend über LoRaWAN oder NB-IoT. Bei der Bewässerung messen Bodensonden Feuchte und Temperatur in variablen Tiefen.",
+        "description": "Sensoren erfassen das Geschehen vor Ort und funken ihre Werte energiesparend über LoRaWAN oder NB-IoT. Bei der Bewässerung messen Bodensonden Feuchte und Temperatur in variablen Tiefen.",
         "details": {
           "item1": "Auf weitere Sensortypen erweiterbar",
           "item2": "Bodenfeuchte und Temperatur in variablen Tiefen",
@@ -184,7 +184,7 @@
   "mediaFeature": {
     "sectionLabel": "Presse",
     "title": "Green Ecolution im Schleswig-Holstein Magazin",
-    "description": "Der NDR hat im August 2026 über Stadtbäume berichtet, die den trockenen Sommern nicht mehr standhalten, und dafür einen Vormittag in Flensburg gedreht. Der Beitrag zeigt, wie ein Bodenfeuchtesensor eingebaut wird und wie das Technische Betriebszentrum daraus die nächste Gießfahrt plant.",
+    "description": "Der NDR hat im August 2026 über Stadtbäume berichtet, die den trockenen Sommern nicht mehr standhalten. Dafür hat das Team einen Vormittag in Flensburg gedreht. Der Beitrag zeigt, wie ein Bodenfeuchtesensor eingebaut wird und wie das Technische Betriebszentrum daraus die nächste Gießfahrt plant.",
     "posterAlt": "Blick von unten in eine Eichenkrone, die Sonne blitzt zwischen den Blättern durch, unten links das Logo des Schleswig-Holstein Magazins"
   },
   "resources": {
@@ -213,7 +213,7 @@
       },
       "ndrReport": {
         "label": "NDR-Beitrag im Schleswig-Holstein Magazin",
-        "description": "Der NDR berichtete über Stadtbäume, die den trockenen Sommern nicht mehr standhalten, und zeigte Green Ecolution in Flensburg als Lösungsansatz."
+        "description": "Der NDR berichtete über Stadtbäume, die den trockenen Sommern nicht mehr standhalten. Als Lösungsansatz zeigte er Green Ecolution in Flensburg."
       },
       "pressRelease": {
         "label": "Pressemitteilung der Stadt Flensburg",

@@ -6,14 +6,14 @@
   "hero": {
     "label": "Über uns",
     "headline": "Aus Flensburg, für Kommunen",
-    "description": "Wir sind die {{company}} aus Flensburg. Wir entwickeln und betreiben eine offene Plattform, die Messwerte in Entscheidungen und Einsätze übersetzt, und haben mit der Bewässerung von Stadtbäumen angefangen."
+    "description": "Wir sind die {{company}} aus Flensburg. Wir entwickeln und betreiben eine offene Plattform, die Messwerte in Entscheidungen und Einsätze übersetzt. Angefangen haben wir mit der Bewässerung von Stadtbäumen."
   },
   "story": {
     "sectionLabel": "Geschichte",
     "title": "Wie aus einem Projekt eine Firma wurde",
     "p1": "Am Anfang stand eine Frage der Stadt Flensburg: Wie lässt sich erkennen, welche Stadtbäume wirklich Wasser brauchen, statt nach Gefühl zu gießen? Mit diesem Problem wandte sich die Stadt an die Smarte Grenzregion.",
     "p2": "2024 machten neun Studierende im Master Angewandte Informatik an der Hochschule Flensburg daraus ein Forschungsprojekt, gemeinsam mit dem Technischen Betriebszentrum der Stadt. Es entstanden ein Sensor für den Boden und eine Plattform, die den Bewässerungsbedarf auf einer Karte zeigt und die Gießfahrt berechnet. In Nutzertests mit dem TBZ erreichte die Anwendung einen überdurchschnittlichen Usability-Wert.",
-    "p3": "Danach ging es in die Praxis. Im Herbst 2025 erhielt Green Ecolution eine Finanzierung aus dem Landesprogramm „Offene Innovation“ des DigitalHub.SH, das TBZ setzt die Plattform im Alltag ein, und im September 2026 hat das Land Schleswig-Holstein Green Ecolution mit dem Digitalisierungspreis ausgezeichnet.",
+    "p3": "Danach ging es in die Praxis. Im Herbst 2025 erhielt Green Ecolution eine Finanzierung aus dem Landesprogramm „Offene Innovation“ des DigitalHub.SH. Das TBZ setzt die Plattform im Alltag ein. Im September 2026 hat das Land Schleswig-Holstein Green Ecolution mit dem Digitalisierungspreis ausgezeichnet.",
     "p4": "Damit aus dem Projekt ein Produkt für viele Kommunen wird, haben wir die {{company}} gegründet."
   },
   "values": {

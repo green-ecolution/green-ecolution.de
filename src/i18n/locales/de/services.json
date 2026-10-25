@@ -48,11 +48,11 @@
   "pricing": {
     "sectionLabel": "Preismodell",
     "title": "Wofür du bezahlst",
-    "description": "Konkrete Beträge hängen von der Zahl der Standorte und vom Umfang ab, deshalb erstellen wir sie als Angebot. Der Aufbau ist aber immer derselbe, und für die Software selbst zahlst du nichts.",
+    "description": "Konkrete Beträge hängen von der Zahl der Standorte und vom Umfang ab, deshalb erstellen wir sie als Angebot. Der Aufbau ist aber immer derselbe. Für die Software selbst zahlst du nichts.",
     "items": {
       "oneTime": {
         "label": "Einmalig",
-        "description": "Die Sonden kaufst du einmalig. Wie viele es werden, richtet sich nach deinen Standorten, und wir stellen den Umfang mit dir zusammen. Dazu kommt die Einrichtung der Plattform mit Datenimport und Einführung."
+        "description": "Die Sonden kaufst du einmalig. Wie viele es werden, richtet sich nach deinen Standorten. Den Umfang stellen wir mit dir zusammen. Dazu kommt die Einrichtung der Plattform mit Datenimport und Einführung."
       },
       "recurring": {
         "label": "Laufend",

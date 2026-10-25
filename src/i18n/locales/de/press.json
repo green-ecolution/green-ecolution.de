@@ -30,11 +30,11 @@
       },
       "medium": {
         "label": "Kurzfassung, rund 50 Wörter",
-        "text": "Green Ecolution ist ein Unternehmen aus Flensburg und entwickelt eine modulare Open-Source-Plattform nach dem Prinzip Messen, Verstehen, Handeln. Der erste Anwendungsfall ist die bedarfsgerechte Bewässerung von Stadtbäumen: Sensoren messen die Bodenfeuchte, die Software zeigt den Bedarf, und die Einsatzplanung berechnet die Gießtouren. Entstanden ist Green Ecolution an der Hochschule Flensburg."
+        "text": "Green Ecolution ist ein Unternehmen aus Flensburg und entwickelt eine modulare Open-Source-Plattform nach dem Prinzip Messen, Verstehen, Handeln. Der erste Anwendungsfall ist die bedarfsgerechte Bewässerung von Stadtbäumen: Sensoren messen die Bodenfeuchte, die Software zeigt den Bedarf und die Einsatzplanung berechnet die Gießtouren. Entstanden ist Green Ecolution an der Hochschule Flensburg."
       },
       "long": {
         "label": "Langfassung, rund 120 Wörter",
-        "text": "Green Ecolution ist ein Unternehmen aus Flensburg und Mitglied der PROGEEK Group. Es entwickelt und betreibt eine modulare Open-Source-Plattform, die Messwerte in Entscheidungen und Einsätze übersetzt.\n\nDer erste Anwendungsfall ist die bedarfsgerechte Bewässerung von Stadtbäumen. Sensoren messen die Bodenfeuchte in variablen Tiefen und funken ihre Werte über LoRaWAN. Die Software wertet die Messreihen aus, zeigt auf einer Karte, welche Bäume Wasser brauchen, und berechnet daraus die Gießtouren. Die Stadt Flensburg setzt das System mit ihrem Technischen Betriebszentrum im Alltag ein.\n\nAngestoßen hat das Vorhaben die Stadt Flensburg gemeinsam mit der Smarten Grenzregion, entstanden ist es 2024 als Forschungsprojekt an der Hochschule Flensburg. Der gesamte Code liegt öffentlich auf GitHub. 2026 wurde Green Ecolution mit dem Digitalisierungspreis Schleswig-Holstein ausgezeichnet."
+        "text": "Green Ecolution ist ein Unternehmen aus Flensburg und Mitglied der PROGEEK Group. Es entwickelt und betreibt eine modulare Open-Source-Plattform, die Messwerte in Entscheidungen und Einsätze übersetzt.\n\nDer erste Anwendungsfall ist die bedarfsgerechte Bewässerung von Stadtbäumen. Sensoren messen die Bodenfeuchte in variablen Tiefen und funken ihre Werte über LoRaWAN. Die Software wertet die Messreihen aus und zeigt auf einer Karte, welche Bäume Wasser brauchen. Daraus berechnet sie die Gießtouren. Die Stadt Flensburg setzt das System mit ihrem Technischen Betriebszentrum im Alltag ein.\n\nAngestoßen hat das Vorhaben die Stadt Flensburg gemeinsam mit der Smarten Grenzregion, entstanden ist es 2024 als Forschungsprojekt an der Hochschule Flensburg. Der gesamte Code liegt öffentlich auf GitHub. 2026 wurde Green Ecolution mit dem Digitalisierungspreis Schleswig-Holstein ausgezeichnet."
       }
     }
   },
@@ -148,7 +148,7 @@
     "items": {
       "ndrShMagazin": {
         "title": "Extreme Sommer: Stadtbäume in Not",
-        "description": "Der NDR berichtete über Stadtbäume, die den trockenen Sommern nicht mehr standhalten, und zeigte Green Ecolution in Flensburg als Lösungsansatz."
+        "description": "Der NDR berichtete über Stadtbäume, die den trockenen Sommern nicht mehr standhalten. Als Lösungsansatz zeigte er Green Ecolution in Flensburg."
       },
       "landesregierungSh": {
         "title": "Land fördert Open-Source-Projekte",
