@@ -25,7 +25,7 @@
         "title": "Messen",
         "description": "Sensoren erfassen, was vor Ort passiert, und funken ihre Werte energiesparend über LoRaWAN oder NB-IoT. Bei der Bewässerung messen Bodensonden Feuchte und Temperatur in variablen Tiefen.",
         "details": {
-          "item1": "Sensoren unterschiedlicher Art lassen sich anbinden",
+          "item1": "Auf weitere Sensortypen erweiterbar",
           "item2": "Bodenfeuchte und Temperatur in variablen Tiefen",
           "item3": "Energieeffiziente Übertragung über LoRaWAN oder NB-IoT",
           "item4": "Bodenbündige Installation, kein Einfluss auf Pflegearbeiten"

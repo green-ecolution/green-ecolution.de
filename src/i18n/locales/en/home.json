@@ -108,7 +108,7 @@
       },
       "extend": {
         "label": "Modularly extensible",
-        "description": "Further sensor types and use cases can be connected. Irrigation is the first."
+        "description": "Further sensor types and use cases can be connected with some development work. Irrigation is the first."
       }
     }
   },
@@ -205,7 +205,7 @@
     "sectionLabel": "Hardware",
     "title": "The soil probe",
     "description": "Designed for use in public spaces. The probe measures at variable depths and so maps the root profile of a tree, from the near-surface fine roots to the deeper main roots. This makes it possible to see whether water actually reaches the root zone or only wets the surface. Installation is flush with the ground using standard soil augers, and maintenance work such as mowing is not affected.",
-    "probeCarrier": "The probe is one possible sensor, not the only one. The platform is built so that other sensors can be connected as well.",
+    "probeCarrier": "The probe is one possible sensor, not the only one. The platform is built so that other sensors can be connected as well with some development work.",
     "availability": "You get the probes directly from us, and your team can install them itself.",
     "specs": {
       "depths": {
@@ -357,8 +357,8 @@
       },
       "sensors": {
         "question": "Is the system tied to specific sensors?",
-        "answerPlain": "No. The platform is modular, and our soil probe is one possible sensor, not the only one. Sensors from other manufacturers can be connected through The Things Network and the plug-in system. A new sensor type needs some development work, which we take care of. Connecting third-party sensors has not been proven in the field so far.\n\nOur own soil probe is built for public spaces and measures at variable depths. In the research project it contained a Watermark sensor for soil water tension and an SMT100 sensor for soil moisture and temperature. Today a series-produced model sits in the ground instead of the research prototype.",
-        "answerRich": "<p1>No. The platform is modular, and our soil probe is one possible sensor, not the only one. Sensors from other manufacturers can be connected through The Things Network and the plug-in system. A new sensor type needs some development work, which we take care of. Connecting third-party sensors has not been proven in the field so far.</p1><p2>Our own soil probe is built for public spaces and measures at variable depths. In the research project it contained a <watermark>Watermark sensor</watermark> for soil water tension and an <smt100>SMT100 sensor</smt100> for soil moisture and temperature. Today a series-produced model sits in the ground instead of the research prototype.</p2>"
+        "answerPlain": "No. The platform is modular, and our soil probe is one possible sensor, not the only one. Sensors from other manufacturers can be connected through The Things Network and the plug-in system. A new sensor type needs some development work, which we take care of. Connecting third-party sensors has not been proven in the field so far.\n\nThe soil probe we supply is built for public spaces and measures at variable depths. In the research project it contained a Watermark sensor for soil water tension and an SMT100 sensor for soil moisture and temperature. Today a series-produced model sits in the ground instead of the research prototype.",
+        "answerRich": "<p1>No. The platform is modular, and our soil probe is one possible sensor, not the only one. Sensors from other manufacturers can be connected through The Things Network and the plug-in system. A new sensor type needs some development work, which we take care of. Connecting third-party sensors has not been proven in the field so far.</p1><p2>The soil probe we supply is built for public spaces and measures at variable depths. In the research project it contained a <watermark>Watermark sensor</watermark> for soil water tension and an <smt100>SMT100 sensor</smt100> for soil moisture and temperature. Today a series-produced model sits in the ground instead of the research prototype.</p2>"
       },
       "cost": {
         "question": "What does it cost to use?",

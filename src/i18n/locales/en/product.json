@@ -25,7 +25,7 @@
         "title": "Measure",
         "description": "Sensors capture what is happening on site and transmit their readings energy-efficiently via LoRaWAN or NB-IoT. For irrigation, soil probes measure moisture and temperature at variable depths.",
         "details": {
-          "item1": "Sensors of different types can be connected",
+          "item1": "Extensible to further sensor types",
           "item2": "Soil moisture and temperature at variable depths",
           "item3": "Energy-efficient transmission via LoRaWAN or NB-IoT",
           "item4": "Flush-mounted installation, no impact on maintenance work"
