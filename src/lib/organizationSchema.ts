@@ -15,6 +15,9 @@ export function organizationSchema(base: string, description: string, founder?: 
     alternateName: 'Green Ecolution',
     url: base,
     logo: `${base}/assets/favicons/favicon.svg`,
+    // Google reads an organization with an address as a local business, which
+    // expects an image.
+    image: `${base}/assets/images/open-graph-image.png`,
     description,
     email: company.email,
     telephone: company.phone.href.replace('tel:', ''),

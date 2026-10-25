@@ -30,6 +30,10 @@ describe('organizationSchema', () => {
     expect(schema.description).toBe('Beschreibung')
   })
 
+  it('liefert ein Bild, das Google für lokale Unternehmen erwartet', () => {
+    expect(schema.image).toBe('https://green-ecolution.de/assets/images/open-graph-image.png')
+  })
+
   it('trägt eine @id, auf die Artikel als Herausgeber verweisen', () => {
     expect(schema['@id']).toBe('https://green-ecolution.de/#organization')
   })
