@@ -54,6 +54,10 @@
       "label": "Sensorik ist nicht Voraussetzung",
       "description": "Die Tourenplanung rechnet auch ohne Messwerte. Sensordaten verbessern die Priorisierung, weil sie zeigen, welche Halte wirklich Wasser brauchen."
     },
+    "roadNetwork": {
+      "label": "Das Straßennetz lässt sich anpassen",
+      "description": "Ein gewöhnliches Navigationssystem rechnet mit dem Straßennetz, wie es für alle gilt. Bei Streamlet lassen sich einzelne Straßen und Wege anpassen und zum Beispiel als befahrbar markieren. Das Technische Betriebszentrum Flensburg darf Wege befahren, die für den normalen Verkehr gesperrt sind. Die Touren führen dann über diese Wege, statt sie zu umfahren."
+    },
     "integratedRich": "In <project>Green Ecolution</project> ist die Tourenoptimierung schon eingebaut. Wer die Plattform einsetzt, muss Streamlet nicht selbst anbinden.",
     "cta": "Wie das System aufgebaut ist",
     "ctaAriaLabel": "Zur Architektur auf der Produktseite"
