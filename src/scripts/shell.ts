@@ -13,6 +13,7 @@ export function setup() {
 
   const progress = document.getElementById('scroll-progress')
   const header = document.getElementById('site-header')
+  const headerBlur = document.getElementById('site-header-blur')
   const backToTop = document.getElementById('back-to-top')
 
   let frame = 0
@@ -30,15 +31,15 @@ export function setup() {
     if (header) {
       const scrolled = scrollTop > HEADER_SCROLLED_PX
       header.classList.toggle('bg-white/80', scrolled)
-      header.classList.toggle('backdrop-blur-xl', scrolled)
-      header.classList.toggle('backdrop-saturate-150', scrolled)
       header.classList.toggle('shadow-header-edge', scrolled)
-      header.classList.toggle('bg-transparent', !scrolled)
+      header.classList.toggle('bg-white/0', !scrolled)
+      headerBlur?.classList.toggle('backdrop-blur-xl', scrolled)
+      headerBlur?.classList.toggle('backdrop-saturate-150', scrolled)
       // Marks the bar as a translucent layer; general.css turns it solid again
       // for readers who asked for less transparency.
       header.toggleAttribute('data-material', scrolled)
 
-      // The iOS status bar picks up this colour, so it has to follow the header.
+      // Chrome and iOS before 26 tint their bars from this; Safari 26 samples the header instead.
       document
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute('content', scrolled ? '#fcfcfc' : '#4C7741')

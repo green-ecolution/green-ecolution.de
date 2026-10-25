@@ -78,7 +78,9 @@ const feeds = [
 <html lang={language} class="scroll-smooth scroll-pt-40">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- cover lets the page run beneath Safari's toolbar and Android's gesture
+         bar; fixed elements keep clear of them through safe-area insets. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <!-- Kept in sync with the header background by src/scripts/shell.ts -->
     <meta name="theme-color" content="#4C7741" />
     <!-- Only the two faces every page paints above the fold are preloaded. -->
@@ -140,14 +142,6 @@ const feeds = [
     <ClientRouter />
   </head>
   <body class="bg-white antialiased font-nunito-sans text-base text-grey-900 w-full overflow-x-hidden lg:text-lg selection:bg-green-light-900/20 selection:text-grey-900">
-    <div class="fixed top-0 left-0 right-0 h-1 z-[60] bg-transparent">
-      <div
-        id="scroll-progress"
-        class="h-full w-full origin-left bg-gradient-to-r from-green-dark-900 via-green-middle-900 to-green-light-900"
-        style="transform: scaleX(0); will-change: transform;"
-      ></div>
-    </div>
-
     <Header language={language} />
 
     <slot />
@@ -156,7 +150,7 @@ const feeds = [
       id="back-to-top"
       type="button"
       aria-label={tc('backToTop.ariaLabel')}
-      class="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-green-dark-900 text-white shadow-lg cursor-pointer transition-all ease-out duration-200 hover:bg-green-middle-900 hover:scale-110 hover:shadow-xl active:scale-95 active:duration-75 focus:outline-none focus:ring-2 focus:ring-green-light-900 focus:ring-offset-2 opacity-0 translate-y-4 pointer-events-none"
+      class="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-[calc(1.5rem+env(safe-area-inset-right))] z-50 p-3 rounded-full bg-green-dark-900 text-white shadow-lg cursor-pointer transition-all ease-out duration-200 hover:bg-green-middle-900 hover:scale-110 hover:shadow-xl active:scale-95 active:duration-75 focus:outline-none focus:ring-2 focus:ring-green-light-900 focus:ring-offset-2 opacity-0 translate-y-4 pointer-events-none"
     >
       <ArrowUp className="w-5 h-5" />
     </button>

@@ -361,7 +361,7 @@ function Navigation({
         onPointerMove={handlePointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
-        className="main-navigation touch-pan-y fixed inset-y-2 right-0 block px-4 w-[70vw] z-[60] bg-grey-900 max-w-100 rounded-tl-2xl rounded-bl-2xl shadow-main-nav md:px-6 xl:relative xl:inset-y-auto xl:right-auto xl:bg-transparent xl:shadow-none xl:w-auto xl:max-w-none xl:z-auto"
+        className="main-navigation touch-pan-y fixed top-[calc(0.5rem+env(safe-area-inset-top))] bottom-[calc(0.5rem+env(safe-area-inset-bottom))] right-0 block px-4 w-[70vw] z-[60] bg-grey-900 max-w-100 rounded-tl-2xl rounded-bl-2xl shadow-main-nav md:px-6 xl:relative xl:inset-y-auto xl:right-auto xl:bg-transparent xl:shadow-none xl:w-auto xl:max-w-none xl:z-auto"
       >
         <p className="pt-[20vh] text-white/80 mb-6 md:text-lg xl:hidden">{t('nav.heading')}</p>
         <ul className="text-white xl:text-grey-900 xl:flex xl:gap-x-6 2xl:gap-x-10 xl:justify-center xl:items-center">
