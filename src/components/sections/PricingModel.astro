@@ -1,4 +1,5 @@
 ---
+import { Clock, Package, RefreshCw, Route } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import Arrow from '../icons/Arrow.astro'
@@ -8,7 +9,12 @@ interface Props {
   language: Language
 }
 
-const PRICING_ITEMS = ['oneTime', 'recurring', 'effort', 'separate'] as const
+const PRICING_ITEMS = [
+  { id: 'oneTime', icon: Package },
+  { id: 'recurring', icon: RefreshCw },
+  { id: 'effort', icon: Clock },
+  { id: 'separate', icon: Route },
+] as const
 
 const { language } = Astro.props
 const t = getTranslations(language, 'services')
@@ -33,9 +39,12 @@ const t = getTranslations(language, 'services')
   </div>
 
   <dl class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-    {PRICING_ITEMS.map((id) => (
+    {PRICING_ITEMS.map(({ id, icon: Icon }) => (
       <div class="h-full rounded-2xl border border-green-dark-900/10 bg-white p-5 lg:p-6">
         <dt class="font-lato font-semibold text-green-dark-900 mb-2">
+          <span class="flex w-10 h-10 rounded-lg bg-green-light-900/15 items-center justify-center mb-4">
+            <Icon className="w-5 h-5 text-green-dark-900" aria-hidden="true" />
+          </span>
           {t(`pricing.items.${id}.label`)}
         </dt>
         <dd class="text-grey-900/70 leading-relaxed">{t(`pricing.items.${id}.description`)}</dd>
