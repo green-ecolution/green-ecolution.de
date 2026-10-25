@@ -42,7 +42,10 @@ const requirements = splitSlot(t('onboarding.descriptionRich'), 'requirements')
   <ol class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
     {ONBOARDING_STEPS.map((id, index) => (
       <li>
-        <span class="block font-lato font-bold text-4xl text-green-light-900/60 mb-3">
+        <span
+          aria-hidden="true"
+          class="block font-lato font-bold text-4xl text-green-light-900/60 mb-3"
+        >
           {String(index + 1).padStart(2, '0')}
         </span>
         <h3 class="font-lato font-semibold text-grey-900 mb-2">
