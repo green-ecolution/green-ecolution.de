@@ -1,6 +1,7 @@
 ---
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
+import { company } from '../../data/company'
 import { renderSlots, type SlotTag } from '../../lib/slotText'
 
 interface Props {
@@ -87,6 +88,7 @@ const ITEMS = [
 ] as const
 
 const t = getTranslations(language, 'home')
+const owners = { group: company.parentOrganization, director: company.managingDirector }
 
 // Single source of truth: the JSON-LD schema reads answerPlain, the accordion
 // renders answerRich, both kept in sync in the translation catalog.
@@ -98,13 +100,13 @@ const faqSchema = {
     name: t(`faq.items.${item.id}.question`),
     acceptedAnswer: {
       '@type': 'Answer',
-      text: t(`faq.items.${item.id}.answerPlain`),
+      text: t(`faq.items.${item.id}.answerPlain`, owners),
     },
   })),
 }
 
 const answers = ITEMS.map((item) => {
-  const html = renderSlots(t(`faq.items.${item.id}.answerRich`), item.tags)
+  const html = renderSlots(t(`faq.items.${item.id}.answerRich`, owners), item.tags)
   return {
     id: item.id,
     question: t(`faq.items.${item.id}.question`),
