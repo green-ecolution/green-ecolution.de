@@ -46,7 +46,7 @@
   "owners": {
     "sectionLabel": "Who is behind it",
     "title": "Together with PROGEEK Group",
-    "description": "{{director}} founded Green Ecolution together with {{group}}. Each holds half of the shares. As managing director, {{director}} is your direct point of contact.",
+    "description": "{{director}} founded Green Ecolution together with {{group}}. As managing director, he is your direct point of contact.",
     "contact": {
       "role": "Managing director",
       "photoAlt": "Portrait of {{name}}",

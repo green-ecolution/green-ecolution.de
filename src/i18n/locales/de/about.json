@@ -46,7 +46,7 @@
   "owners": {
     "sectionLabel": "Wer dahintersteht",
     "title": "Zusammen mit der PROGEEK Group",
-    "description": "{{director}} hat Green Ecolution gemeinsam mit der {{group}} gegründet. Beide halten jeweils die Hälfte der Anteile. Als Geschäftsführer ist {{director}} dein direkter Ansprechpartner.",
+    "description": "{{director}} hat Green Ecolution gemeinsam mit der {{group}} gegründet. Als Geschäftsführer ist er dein direkter Ansprechpartner.",
     "contact": {
       "role": "Geschäftsführer",
       "photoAlt": "Porträt von {{name}}",
