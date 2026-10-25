@@ -1,18 +1,18 @@
 {
   "meta": {
     "title": "Contact | Green Ecolution | Smart Green Space Management",
-    "description": "Contact Green Ecolution with questions about the project, to connect your municipality, or to contribute to development."
+    "description": "Contact Green Ecolution with questions about our platform, for an offer for your municipality, or to contribute to development."
   },
   "hero": {
     "label": "Contact",
     "headline": "Let's get in touch",
-    "description": "Do you have questions about the project, want to connect your municipality, or want to contribute to development? We welcome every message and will get back to you promptly."
+    "description": "Do you have questions about Green Ecolution, want an offer for your municipality, or want to contribute to development? We welcome every message and will get back to you promptly."
   },
   "channels": {
     "badge": "We look forward to hearing from you",
     "mail": {
       "label": "Write to us",
-      "description": "Do you have questions about the project or want to learn more? We'll get back to you promptly.",
+      "description": "Do you have questions about Green Ecolution or want to learn more? We'll get back to you promptly.",
       "cta": "Send email"
     },
     "github": {

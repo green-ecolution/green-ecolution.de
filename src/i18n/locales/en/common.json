@@ -27,7 +27,8 @@
   "footer": {
     "logoAriaLabel": "Go to homepage",
     "logoAlt": "Green Ecolution logo",
-    "description": "Green Ecolution is a digital system for the needs-based and resource-efficient irrigation of urban trees, contributing to sustainable and climate-resilient urban development.",
+    "description": "Green Ecolution develops and runs an open platform that turns measurements from the city into decisions and operations. We started with the demand-driven irrigation of urban trees.",
+    "group": "A PROGEEK Group company",
     "contact": "Contact",
     "contactAriaLabel": "Feel free to contact us by email",
     "github": "GitHub",
