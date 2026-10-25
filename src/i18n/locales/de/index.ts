@@ -6,6 +6,7 @@ import legal from './legal.json'
 import press from './press.json'
 import product from './product.json'
 import releases from './releases.json'
+import services from './services.json'
 import showcase from './showcase.json'
 import streamlet from './streamlet.json'
 
@@ -16,6 +17,7 @@ export default {
   streamlet,
   contact,
   releases,
+  services,
   legal,
   blog,
   press,

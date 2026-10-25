@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "title": "Services | Green Ecolution",
+    "description": "Software, sensors, setup and operation from a single source: what municipalities get from Green Ecolution and how the pricing model is structured."
+  },
+  "hero": {
+    "label": "Services",
+    "headline": "Everything from a single source",
+    "description": "From the probe in the ground to the route on the navigation device: we deliver the software, the sensors, the setup and the operation. The software stays open source and free of licence fees, so you are never tied to us."
+  },
+  "scope": {
+    "sectionLabel": "Scope of services",
+    "title": "What we deliver",
+    "description": "Green Ecolution consists of software, sensors and the services that make both work in everyday use. You get all of it from us.",
+    "framing": "The foundation was laid by the master's project at Flensburg University of Applied Sciences. Since then, we have prepared the platform and sensors for regular operation in use at the Technisches Betriebszentrum Flensburg.",
+    "items": {
+      "software": {
+        "label": "Software",
+        "description": "The platform with its map and dashboard, grouping into irrigation units, fleet and team management, the user and role model, the mobile app and the review of consumption. The source code is open and there are no licence fees for municipalities."
+      },
+      "sensors": {
+        "label": "Sensors",
+        "description": "The soil probe measures at variable depths and transmits over LoRaWAN or, where LoRaWAN is unavailable, over NB-IoT with a SIM card. It is installed flush with the ground using standard earth augers, which your team can do itself. We connect further sensor types as needed."
+      },
+      "setup": {
+        "label": "Setup",
+        "description": "We set up the platform for your municipality, adapt it to your organisational structure, import your tree register and other data sources and introduce your team to working with it."
+      },
+      "operation": {
+        "label": "Operation",
+        "description": "We operate the platform with updates, backups and support, and on request in your municipality's Kubernetes cluster. Because the source code is open, running it yourself always remains possible."
+      },
+      "extension": {
+        "label": "Customisation and extension",
+        "description": "The platform is built in a modular way. We develop new sensor types, use cases beyond irrigation and interfaces to your specialist applications for you. What comes out of this is also available to other municipalities through the open source code."
+      },
+      "tourOptimization": {
+        "label": "Route optimisation",
+        "description": "Deployment and route planning with refill stations comes via Streamlet and is agreed separately.",
+        "linkLabel": "How the route optimisation calculates"
+      }
+    },
+    "photoAlt": "Two people looking at something on a laptop together.",
+    "photoLead": "We advise you from the first question through to day-to-day operation. Here with us in Flensburg you talk directly to the people who build and run the system.",
+    "cta": "Discuss getting started",
+    "ctaAriaLabel": "Go to the contact page"
+  },
+  "pricing": {
+    "sectionLabel": "Pricing model",
+    "title": "What you pay for",
+    "description": "Concrete amounts depend on the number of sites and the scope, which is why we prepare them as a quote. The structure is always the same, though, and you pay nothing for the software itself.",
+    "items": {
+      "oneTime": {
+        "label": "One-off",
+        "description": "You buy the probes once. How many you need depends on your sites, and we put the scope together with you. On top of that comes the setup of the platform with data import and introduction."
+      },
+      "recurring": {
+        "label": "Recurring",
+        "description": "Operation and support of the platform. If probes transmit over NB-IoT, data transmission per probe is added."
+      },
+      "effort": {
+        "label": "By effort",
+        "description": "Adaptations to your processes, new sensor types, further use cases and interfaces."
+      },
+      "separate": {
+        "label": "Separate",
+        "description": "Route optimisation with Streamlet."
+      }
+    },
+    "selfHosting": "Because the source code is open, you can also run the platform yourself. In that case you only pay for what you actually need from us.",
+    "cta": "Request a quote",
+    "ctaAriaLabel": "Go to the contact page"
+  },
+  "onboarding": {
+    "sectionLabel": "Rollout",
+    "title": "How you get to Green Ecolution",
+    "descriptionRich": "Getting started is smaller than it first looks. What your municipality should bring along is described under <requirements>requirements on the product page</requirements>.",
+    "steps": {
+      "talk": {
+        "title": "First conversation",
+        "description": "We clarify which areas and processes you want to map and which data is already available. After that you receive a quote."
+      },
+      "setup": {
+        "title": "Setup",
+        "description": "We set up the platform, import tree register, vehicles and refill points and adapt roles and areas to your organisation."
+      },
+      "sensors": {
+        "title": "Installing probes",
+        "description": "The probes are built so that your team can install them itself, flush with the ground and with a standard earth auger. If you like, we provide instruction on site."
+      },
+      "operation": {
+        "title": "Ongoing operation",
+        "description": "From now on you plan with measured values. We take care of updates, backups and support and keep developing the platform with you."
+      }
+    }
+  }
+}

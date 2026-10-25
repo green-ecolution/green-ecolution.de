@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "title": "Leistungen | Green Ecolution",
+    "description": "Software, Sensorik, Einrichtung und Betrieb aus einer Hand: was Kommunen von Green Ecolution bekommen und wie das Preismodell aufgebaut ist."
+  },
+  "hero": {
+    "label": "Leistungen",
+    "headline": "Alles aus einer Hand",
+    "description": "Von der Sonde im Boden bis zur Tour auf dem Navigationsgerät: Wir liefern die Software, die Sensorik, die Einrichtung und den Betrieb. Die Software bleibt dabei quelloffen und lizenzfrei, du bist also nie an uns gebunden."
+  },
+  "scope": {
+    "sectionLabel": "Leistungsumfang",
+    "title": "Was wir liefern",
+    "description": "Green Ecolution besteht aus Software, Sensorik und den Leistungen, die beides im Alltag zum Laufen bringen. Alles davon bekommst du von uns.",
+    "framing": "Die Grundlage hat das Masterprojekt an der Hochschule Flensburg gelegt. Seitdem haben wir Plattform und Sensorik im Einsatz beim Technischen Betriebszentrum Flensburg auf den Regelbetrieb ausgelegt.",
+    "items": {
+      "software": {
+        "label": "Software",
+        "description": "Die Plattform mit Karte und Dashboard, die Gruppierung zu Bewässerungseinheiten, Fuhrpark- und Teamverwaltung, das Benutzer- und Rollenkonzept, die Mobile App und die Auswertung des Verbrauchs. Der Quellcode ist offen, für Kommunen fallen keine Lizenzkosten an."
+      },
+      "sensors": {
+        "label": "Sensorik",
+        "description": "Die Bodensonde misst in variablen Tiefen und funkt über LoRaWAN oder, wo kein LoRaWAN verfügbar ist, über NB-IoT mit SIM-Karte. Sie wird mit marktüblichen Erdbohrern bodenbündig gesetzt, das schafft dein Team auch selbst. Weitere Sensortypen binden wir bei Bedarf an."
+      },
+      "setup": {
+        "label": "Einrichtung",
+        "description": "Wir richten die Plattform für deine Kommune ein, passen sie an deine Organisationsstruktur an, übernehmen Baumkataster und andere Datenquellen und führen dein Team in die Arbeit damit ein."
+      },
+      "operation": {
+        "label": "Betrieb",
+        "description": "Wir betreiben die Plattform mit Updates, Sicherungen und Support, auf Wunsch auch im Kubernetes-Cluster deiner Kommune. Weil der Quellcode offen ist, bleibt der eigene Betrieb jederzeit möglich."
+      },
+      "extension": {
+        "label": "Anpassung und Erweiterung",
+        "description": "Die Plattform ist modular aufgebaut. Neue Sensortypen, Anwendungsfälle über die Bewässerung hinaus und Schnittstellen zu deinen Fachverfahren entwickeln wir für dich. Was dabei entsteht, steht über den offenen Quellcode auch anderen Kommunen zur Verfügung."
+      },
+      "tourOptimization": {
+        "label": "Tourenoptimierung",
+        "description": "Die Einsatz- und Routenplanung mit Nachfüllstationen kommt über Streamlet dazu und wird separat vereinbart.",
+        "linkLabel": "Wie die Tourenoptimierung rechnet"
+      }
+    },
+    "photoAlt": "Zwei Personen sehen sich gemeinsam etwas auf einem Laptop an.",
+    "photoLead": "Wir beraten dich von der ersten Frage bis zum laufenden Betrieb. Bei uns in Flensburg sprichst du direkt mit den Leuten, die das System bauen und betreiben.",
+    "cta": "Einstieg besprechen",
+    "ctaAriaLabel": "Zur Kontaktseite"
+  },
+  "pricing": {
+    "sectionLabel": "Preismodell",
+    "title": "Wofür du bezahlst",
+    "description": "Konkrete Beträge hängen von der Zahl der Standorte und vom Umfang ab, deshalb erstellen wir sie als Angebot. Der Aufbau ist aber immer derselbe, und für die Software selbst zahlst du nichts.",
+    "items": {
+      "oneTime": {
+        "label": "Einmalig",
+        "description": "Die Sonden kaufst du einmalig. Wie viele es werden, richtet sich nach deinen Standorten, und wir stellen den Umfang mit dir zusammen. Dazu kommt die Einrichtung der Plattform mit Datenimport und Einführung."
+      },
+      "recurring": {
+        "label": "Laufend",
+        "description": "Betrieb und Support der Plattform. Funken Sonden über NB-IoT, kommt die Datenübertragung pro Sonde hinzu."
+      },
+      "effort": {
+        "label": "Nach Aufwand",
+        "description": "Anpassungen an deine Abläufe, neue Sensortypen, weitere Anwendungsfälle und Schnittstellen."
+      },
+      "separate": {
+        "label": "Separat",
+        "description": "Die Tourenoptimierung mit Streamlet."
+      }
+    },
+    "selfHosting": "Weil der Quellcode offen ist, kannst du die Plattform auch selbst betreiben. Dann bezahlst du nur, was du von uns tatsächlich brauchst.",
+    "cta": "Angebot anfragen",
+    "ctaAriaLabel": "Zur Kontaktseite"
+  },
+  "onboarding": {
+    "sectionLabel": "Einführung",
+    "title": "So kommst du zu Green Ecolution",
+    "descriptionRich": "Der Einstieg ist kleiner, als es zunächst aussieht. Was deine Kommune dafür mitbringen sollte, steht bei den <requirements>Voraussetzungen auf der Produktseite</requirements>.",
+    "steps": {
+      "talk": {
+        "title": "Erstes Gespräch",
+        "description": "Wir klären, welche Flächen und Abläufe du abbilden willst und welche Daten schon vorliegen. Danach bekommst du ein Angebot."
+      },
+      "setup": {
+        "title": "Einrichtung",
+        "description": "Wir richten die Plattform ein, übernehmen Baumkataster, Fahrzeuge und Nachfüllpunkte und passen Rollen und Gebiete an deine Organisation an."
+      },
+      "sensors": {
+        "title": "Sonden setzen",
+        "description": "Die Sonden sind so gebaut, dass dein Team sie selbst setzen kann, bodenbündig und mit marktüblichem Erdbohrer. Wenn du möchtest, weisen wir vor Ort ein."
+      },
+      "operation": {
+        "title": "Laufender Betrieb",
+        "description": "Ab jetzt planst du mit Messwerten. Wir kümmern uns um Updates, Sicherungen und Support und entwickeln die Plattform mit dir weiter."
+      }
+    }
+  }
+}

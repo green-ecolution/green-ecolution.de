@@ -106,30 +106,6 @@
     "cta": "Discuss getting started",
     "ctaAriaLabel": "Go to the contact page"
   },
-  "productScope": {
-    "sectionLabel": "What you get",
-    "title": "What the system consists of",
-    "description": "Green Ecolution consists of software, hardware and the services around them. The software is open source; the probes and the support come from PROGEEK GmbH in Flensburg.",
-    "framing": "The master's project at Flensburg University of Applied Sciences showed that the approach holds up in municipal day-to-day work. What municipalities get today is built on that foundation at PROGEEK.",
-    "columns": {
-      "software": {
-        "label": "Software",
-        "description": "The platform with its map and dashboard, grouping into irrigation units, fleet and team management, the user and role model, the mobile app and the review of consumption. The source code is open and there are no licence fees for municipalities. Route optimisation with refill stations comes via Streamlet and is agreed separately."
-      },
-      "hardware": {
-        "label": "Hardware",
-        "description": "The soil probe records the soil water status at several depths and transmits over LoRaWAN or, where LoRaWAN is unavailable, over NB-IoT with a SIM card. It is designed for public spaces, is installed flush with the ground using standard earth augers and does not get in the way of maintenance work such as mowing. The probes are available through PROGEEK, a firmware of our own is in development, and regional manufacturing is the goal going forward."
-      },
-      "services": {
-        "label": "Services",
-        "description": "PROGEEK handles hosting and operation, adapts the platform to the municipality's organisational structure, connects existing data sources and supports the rollout. You get a system somebody looks after, and you keep every freedom that open source brings."
-      }
-    },
-    "cta": "Request a quote",
-    "ctaAriaLabel": "Go to the contact page",
-    "photoAlt": "Two PROGEEK staff members looking at something on a laptop together.",
-    "photoLead": "We advise you from the first question through to day-to-day operation. At PROGEEK in Flensburg you talk directly to the people who build and run the system."
-  },
   "governance": {
     "sectionLabel": "Governance",
     "title": "Open source as a principle",

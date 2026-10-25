@@ -106,30 +106,6 @@
     "cta": "Einstieg besprechen",
     "ctaAriaLabel": "Zur Kontaktseite"
   },
-  "productScope": {
-    "sectionLabel": "Produktumfang",
-    "title": "Was zum System gehört",
-    "description": "Green Ecolution besteht aus Software, Hardware und den Leistungen drumherum. Die Software ist quelloffen, die Sonden und die Unterstützung kommen von der PROGEEK GmbH aus Flensburg.",
-    "framing": "Das Masterprojekt an der Hochschule Flensburg hat gezeigt, dass der Ansatz im kommunalen Alltag trägt. Was Kommunen heute bekommen, entsteht auf dieser Grundlage bei PROGEEK.",
-    "columns": {
-      "software": {
-        "label": "Software",
-        "description": "Die Plattform mit Karte und Dashboard, die Gruppierung zu Bewässerungseinheiten, Fuhrpark- und Teamverwaltung, das Benutzer- und Rollenkonzept, die Mobile App und die Auswertung des Verbrauchs. Der Quellcode ist offen, für Kommunen fallen keine Lizenzkosten an. Die Tourenoptimierung mit Nachfüllstationen kommt über Streamlet dazu und wird separat vereinbart."
-      },
-      "hardware": {
-        "label": "Hardware",
-        "description": "Die Bodensonde erfasst den Bodenwasserstatus in mehreren Tiefen und funkt über LoRaWAN oder, wo kein LoRaWAN verfügbar ist, über NB-IoT mit SIM-Karte. Sie ist für den öffentlichen Raum ausgelegt, wird mit marktüblichen Erdbohrern bodenbündig eingebracht und behindert Pflegearbeiten wie Mähen nicht. Die Sonden sind über PROGEEK beziehbar, eine eigene Firmware ist in Entwicklung, und perspektivisch soll regional gefertigt werden."
-      },
-      "services": {
-        "label": "Leistungen",
-        "description": "PROGEEK übernimmt Hosting und Betrieb, passt die Plattform an die Organisationsstruktur der Kommune an, bindet vorhandene Datenquellen an und unterstützt bei der Einführung. Du bekommst ein System, um das sich jemand kümmert, und behältst jede Freiheit, die offener Quellcode mitbringt."
-      }
-    },
-    "cta": "Angebot anfragen",
-    "ctaAriaLabel": "Zur Kontaktseite",
-    "photoAlt": "Zwei Mitarbeitende von PROGEEK sehen sich gemeinsam etwas auf einem Laptop an.",
-    "photoLead": "Wir beraten dich von der ersten Frage bis zum laufenden Betrieb. Bei PROGEEK in Flensburg sprichst du direkt mit den Leuten, die das System bauen und betreiben."
-  },
   "governance": {
     "sectionLabel": "Governance",
     "title": "Open Source als Prinzip",

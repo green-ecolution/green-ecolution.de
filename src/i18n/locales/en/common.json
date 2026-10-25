@@ -16,6 +16,7 @@
     "heading": "Main navigation",
     "product": "Product",
     "streamlet": "Route optimisation",
+    "services": "Services",
     "contact": "Contact",
     "tryNow": "Try it now",
     "imprint": "Imprint",
@@ -34,6 +35,7 @@
     "imprint": "Imprint",
     "privacy": "Privacy Policy",
     "releases": "Releases",
+    "services": "Services",
     "press": "Press"
   },
   "banner": {
@@ -80,10 +82,17 @@
     "home": "Home",
     "product": "Product",
     "streamlet": "Route optimisation",
+    "services": "Services",
     "contact": "Contact",
     "imprint": "Imprint",
     "privacy": "Privacy Policy",
     "blog": "Blog",
     "press": "Press"
+  },
+  "testimonial": {
+    "sectionLabel": "In practice",
+    "quote": "“I can already tell how much work the system takes off my hands. I can see at a glance where watering is really needed, and we drive straight there. In the past, watering tied up so much time in summer that other work was left undone. Now we can finally get to it.”",
+    "name": "Sönke Clausen",
+    "role": "Green space maintenance, Technisches Betriebszentrum Flensburg"
   }
 }

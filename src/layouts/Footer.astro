@@ -49,6 +49,11 @@ const metaLinkClasses =
       <nav aria-label={t('footer.metaNavAriaLabel')}>
         <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-start md:justify-end">
           <li>
+            <a href={`/${language}/services`} class={metaLinkClasses}>
+              {t('footer.services')}
+            </a>
+          </li>
+          <li>
             <a href={`/${language}/releases`} class={metaLinkClasses}>
               {t('footer.releases')}
             </a>
