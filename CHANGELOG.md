@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.19.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.18.0...v1.19.0) (2026-10-25)
+
+
+### Features
+
+* **home:** replace the intro animation with contact and product links ([#550](https://github.com/green-ecolution/green-ecolution.de/issues/550)) ([5781c09](https://github.com/green-ecolution/green-ecolution.de/commit/5781c09ff918d231af12e30b64c12087fd01e278))
+* **seo:** make blog articles discoverable in search ([#552](https://github.com/green-ecolution/green-ecolution.de/issues/552)) ([4c6a132](https://github.com/green-ecolution/green-ecolution.de/commit/4c6a1323454446020a07d86b3141ff554fc26312))
+* **streamlet:** mention the adjustable road network ([#551](https://github.com/green-ecolution/green-ecolution.de/issues/551)) ([2c52a07](https://github.com/green-ecolution/green-ecolution.de/commit/2c52a07d28d4a494bd9c9fc6d72ffa97cf80379d))
+* turn the project landing page into the Green Ecolution company site ([#548](https://github.com/green-ecolution/green-ecolution.de/issues/548)) ([e61055b](https://github.com/green-ecolution/green-ecolution.de/commit/e61055b1e8d95b61911aa5ccebf645b414b6849e))
+
 ## [1.18.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.17.4...v1.18.0) (2026-10-24)
 
 
