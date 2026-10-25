@@ -5,9 +5,13 @@ import { organizationSchema } from './organizationSchema'
 describe('organizationSchema', () => {
   const schema = organizationSchema('https://green-ecolution.de', 'Beschreibung')
 
-  it('nennt die Firma mit ihrem eingetragenen Namen', () => {
-    expect(schema.name).toBe(company.name)
-    expect(schema.alternateName).toBe('Green Ecolution')
+  it('nennt die Firma so, wie nach ihr gesucht wird, und führt die Rechtsform separat', () => {
+    expect(schema.name).toBe('Green Ecolution')
+    expect(schema.legalName).toBe(company.name)
+  })
+
+  it('verweist auf die öffentlichen Profile der Firma', () => {
+    expect(schema.sameAs).toEqual([company.githubUrl, company.linkedinUrl, company.instagramUrl])
   })
 
   it('führt die PROGEEK Group als Muttergesellschaft', () => {
@@ -28,6 +32,10 @@ describe('organizationSchema', () => {
     expect(schema.email).toBe(company.email)
     expect(schema.telephone).toBe('+4946179330680')
     expect(schema.description).toBe('Beschreibung')
+  })
+
+  it('liefert ein Bild, das Google für lokale Unternehmen erwartet', () => {
+    expect(schema.image).toBe('https://green-ecolution.de/assets/images/open-graph-image.png')
   })
 
   it('trägt eine @id, auf die Artikel als Herausgeber verweisen', () => {

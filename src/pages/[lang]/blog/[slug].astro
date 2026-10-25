@@ -19,6 +19,7 @@ import { siteOrigin } from '../../../lib/site'
 import { absoluteImageUrl } from '../../../lib/absoluteImageUrl'
 import { articleSchema } from '../../../lib/articleSchema'
 import { personSchema } from '../../../lib/personSchema'
+import { company } from '../../../data/company'
 
 // See the release page: the link carries the language, the table gains a scroll
 // box, the rest is .content-body in css.
@@ -55,12 +56,15 @@ const article = articleSchema(base, {
   url: `${base}/${language}/blog/${slug}`,
   headline: data.title,
   description: data.summary,
-  datePublished: isoDate(data.date),
+  // Google flags a bare date as invalid and wants a time zone.
+  datePublished: data.date.toISOString(),
   imageUrl: coverUrl,
   author: personSchema(base, {
     id: author.id,
     name: author.data.name,
     imageUrl: author.data.image && (await absoluteImageUrl(base, author.data.image)),
+    // The about page introduces only the managing director.
+    url: author.id === company.managingDirectorAuthorId ? `${base}/${language}/about` : undefined,
     sameAs: author.data.sameAs,
   }),
 })

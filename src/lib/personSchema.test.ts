@@ -12,15 +12,17 @@ describe('personSchema', () => {
     })
   })
 
-  it('übernimmt Bild und Profile, wenn vorhanden', () => {
+  it('übernimmt Bild, Profilseite und Profile, wenn vorhanden', () => {
     const schema = personSchema(BASE, {
       id: 'cedrik-hoffmann',
       name: 'Cedrik Hoffmann',
       imageUrl: `${BASE}/_astro/portrait.jpg`,
+      url: `${BASE}/de/about`,
       sameAs: ['https://example.org/profil'],
     })
 
     expect(schema.image).toBe(`${BASE}/_astro/portrait.jpg`)
+    expect(schema.url).toBe(`${BASE}/de/about`)
     expect(schema.sameAs).toEqual(['https://example.org/profil'])
   })
 

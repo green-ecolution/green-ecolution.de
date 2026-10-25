@@ -2,6 +2,7 @@ interface Person {
   id: string
   name: string
   imageUrl?: string
+  url?: string
   sameAs?: readonly string[]
 }
 
@@ -17,6 +18,7 @@ export function personSchema(base: string, person: Person) {
     '@id': personId(base, person.id),
     name: person.name,
     ...(person.imageUrl ? { image: person.imageUrl } : {}),
+    ...(person.url ? { url: person.url } : {}),
     ...(person.sameAs?.length ? { sameAs: person.sameAs } : {}),
   }
 }
