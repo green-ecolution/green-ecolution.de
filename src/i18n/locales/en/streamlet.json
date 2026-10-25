@@ -54,6 +54,10 @@
       "label": "Sensors are not a prerequisite",
       "description": "Route planning works without readings. Sensor data improves the prioritisation because it shows which stops actually need water."
     },
+    "roadNetwork": {
+      "label": "The road network can be adjusted",
+      "description": "A standard navigation system works with the road network as it applies to everyone. In Streamlet, individual roads and paths can be adjusted and, for example, marked as passable. Flensburg's technical operations centre may use paths that are closed to regular traffic. The routes then run along these paths instead of avoiding them."
+    },
     "integratedRich": "In <project>Green Ecolution</project> the route optimisation is already built in. Anyone using the platform does not have to wire up Streamlet themselves.",
     "cta": "How the system is put together",
     "ctaAriaLabel": "Go to the architecture section on the product page"

@@ -56,9 +56,13 @@ const integrated = splitSlot(t('benefit.integratedRich'), 'project')
     })}
   </ul>
 
-  <div class="mt-10 max-w-2xl border-l-2 border-green-light-900/30 pl-6 lg:mt-12">
-    <h3 class="font-lato font-semibold text-grey-900 mb-2">{t('benefit.sensorsOptional.label')}</h3>
-    <p class="text-grey-900/70 leading-relaxed">{t('benefit.sensorsOptional.description')}</p>
+  <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:mt-12 lg:gap-12">
+    {(['sensorsOptional', 'roadNetwork'] as const).map((note) => (
+      <div class="border-l-2 border-green-light-900/30 pl-6">
+        <h3 class="font-lato font-semibold text-grey-900 mb-2">{t(`benefit.${note}.label`)}</h3>
+        <p class="text-grey-900/70 leading-relaxed">{t(`benefit.${note}.description`)}</p>
+      </div>
+    ))}
   </div>
 
   <p class="text-grey-900/70 leading-relaxed mt-10 max-w-2xl lg:mt-12">
