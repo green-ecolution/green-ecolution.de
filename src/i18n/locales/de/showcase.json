@@ -78,11 +78,11 @@
     },
     "inspection": {
       "statement": "Der Zustand jedes Baums, direkt vor Ort.",
-      "body": "Mitarbeitende sehen am Tablet, welcher Baum Wasser braucht, und dokumentieren die Bewässerung sofort."
+      "body": "Mitarbeitende sehen am Tablet, welcher Baum Wasser braucht. Die Bewässerung dokumentieren sie sofort."
     },
     "team": {
       "statement": "Entstanden an der Hochschule Flensburg.",
-      "body": "Koordiniert von der Smarten Grenzregion, weiterentwickelt zur Produktionsreife durch die PROGEEK GmbH."
+      "body": "Koordiniert von der Smarten Grenzregion, heute weiterentwickelt von Green Ecolution, gegründet zusammen mit der PROGEEK Group."
     },
     "open-source": {
       "statement": "100 % Open Source unter AGPL-3.0",

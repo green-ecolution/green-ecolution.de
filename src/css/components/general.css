@@ -70,7 +70,7 @@ summary:focus-visible,
 /* The drawer is positioned at its open place and pushed out with a transform,
    so the gesture can write a px offset every frame without touching layout.
    --drawer-x lives on the root because the scrim reads the same progress.
-   Above lg the markup is a plain nav bar and must not be moved at all. */
+   Above xl the markup is a plain nav bar and must not be moved at all. */
 .main-navigation {
   /* The origin is the right edge, so the overshoot stretch pulls the panel open
      to the left without ever unsticking it from the side of the screen. */
@@ -78,7 +78,7 @@ summary:focus-visible,
   transform-origin: 100% 50%;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .main-navigation {
     transform: none;
   }

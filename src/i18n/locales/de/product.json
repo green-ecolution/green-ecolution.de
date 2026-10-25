@@ -1,15 +1,15 @@
 {
   "meta": {
-    "title": "Projekt | Green Ecolution | Smartes Grünflächenmanagement",
-    "description": "Green Ecolution ist eine Open-Source-Lösung für die effiziente Bewässerung urbaner Bäume, entwickelt in Zusammenarbeit mit der Stadt Flensburg."
+    "title": "Produkt | Green Ecolution | Messen. Verstehen. Handeln.",
+    "description": "Green Ecolution ist eine modulare, quelloffene Plattform, die Messwerte zu Entscheidungen und Einsätzen macht. Heute steuert sie die bedarfsgerechte Bewässerung von Stadtbäumen."
   },
   "hero": {
-    "label": "Projekt",
-    "headline": "Smartes Grünflächenmanagement für lebenswerte Städte",
-    "description": "Green Ecolution ist eine Open-Source-Lösung für die effiziente Bewässerung urbaner Bäume. Unsere Software kombiniert Sensordaten mit intelligenter Routenoptimierung und ermöglicht so eine gezielte, ressourcenschonende Einsatzplanung. Entwickelt in Zusammenarbeit mit der Stadt Flensburg und bald auch für deine Kommune verfügbar."
+    "label": "Produkt",
+    "headline": "Messen. Verstehen. Handeln.",
+    "description": "Green Ecolution ist eine modulare, quelloffene Plattform. Sensoren liefern Messwerte, die Plattform macht daraus ein klares Bild der Lage und die Einsatzplanung schickt dein Team gezielt dorthin, wo es gebraucht wird. Heute steuert sie die Bewässerung von Stadtbäumen. Das ist erst der Anfang."
   },
   "dashboard": {
-    "sectionLabel": "Software",
+    "sectionLabel": "Beispiel Bewässerung",
     "titleLine1": "Fundierte Handlungsempfehlungen",
     "titleLine2": "zur Bewässerung auf einen Blick",
     "description": "Unser System wertet die Sensordaten wissenschaftlich aus und zeigt, zu welchem Zeitpunkt eine Bewässerung notwendig ist. Die Daten werden so aufbereitet, dass sie einfach zu interpretieren und direkt in die Einsatzplanung einzubinden sind.",
@@ -17,24 +17,24 @@
   },
   "process": {
     "sectionLabel": "Prozess",
-    "title": "Messen. Verstehen. Handeln.",
-    "description": "Von der Bodenfeuchte zur optimierten Bewässerungsroute, in einem durchgängigen digitalen Workflow.",
+    "title": "Drei Schritte, ein System",
+    "description": "Messen, Verstehen und Handeln bleiben für jede Aufgabe gleich. Die Bewässerung von Stadtbäumen ist das erste Beispiel.",
     "steps": {
       "measure": {
         "category": "Erfassen",
         "title": "Messen",
-        "description": "Bodenfeuchtesensoren erfassen Bodenfeuchte und Temperatur in mehreren Tiefen (30/60/90 cm). Die Daten werden energieeffizient über LoRaWAN übertragen.",
+        "description": "Sensoren erfassen das Geschehen vor Ort und funken ihre Werte energiesparend über LoRaWAN oder NB-IoT. Bei der Bewässerung messen Bodensonden Feuchte und Temperatur in variablen Tiefen.",
         "details": {
-          "item1": "Bodenfeuchtesensoren in 30, 60 und 90 cm Tiefe",
-          "item2": "Erfassung von Bodenfeuchte und Temperatur",
-          "item3": "Energieeffiziente Übertragung über LoRaWAN",
+          "item1": "Auf weitere Sensortypen erweiterbar",
+          "item2": "Bodenfeuchte und Temperatur in variablen Tiefen",
+          "item3": "Energieeffiziente Übertragung über LoRaWAN oder NB-IoT",
           "item4": "Bodenbündige Installation, kein Einfluss auf Pflegearbeiten"
         }
       },
       "understand": {
         "category": "Analysieren",
         "title": "Verstehen",
-        "description": "Ein Ampelsystem zeigt auf einer Karte den aktuellen Bewässerungsbedarf. Mitarbeiter erkennen auf einen Blick, welche Grünflächen Wasser brauchen. Zeitverläufe ermöglichen detaillierte Analysen.",
+        "description": "Die Plattform wertet die Messreihen aus und zeigt auf Karte und Dashboard, wo gehandelt werden muss. Bei der Bewässerung zeigt ein Ampelsystem, welche Bäume und Flächen Wasser brauchen.",
         "details": {
           "item1": "Ampelsystem zeigt Bewässerungsbedarf auf einer Karte",
           "item2": "Priorisierung nach Dringlichkeit bei begrenzten Kapazitäten",
@@ -45,7 +45,7 @@
       "act": {
         "category": "Ausführen",
         "title": "Handeln",
-        "description": "Automatisierte Einsatz- und Routenplanung erzeugt optimierte Bewässerungstouren unter Berücksichtigung von Wasserkapazität, Fahrzeuggröße und Straßenrestriktionen.",
+        "description": "Aus dem Lagebild wird ein Einsatz. Die Einsatz- und Routenplanung erzeugt Touren unter Berücksichtigung von Fahrzeugen, Kapazitäten und Straßenrestriktionen. Bei der Bewässerung sind das Gießtouren mit Nachfüllstopps.",
         "details": {
           "item1": "Automatisierte Einsatz- und Routenplanung",
           "item2": "Berücksichtigung von Wasserkapazität und Fahrzeuggröße",
@@ -58,12 +58,12 @@
   "architecture": {
     "sectionLabel": "System-Architektur",
     "title": "Der Weg der Daten",
-    "description": "So gelangen die Messwerte vom Baum bis zur optimierten Bewässerungsroute durch das Green Ecolution System.",
+    "description": "So gelangen die Messwerte vom Sensor bis zur fertigen Tour. Jeder Baustein ist über offene Schnittstellen verbunden und lässt sich ergänzen.",
     "streamletRich": "Die Routenoptimierung im Backend übernimmt <streamlet>Streamlet</streamlet>, ein eigener Dienst von uns, der sich auch außerhalb von Green Ecolution einsetzen lässt.",
     "steps": {
       "sensor": {
         "label": "Sensor",
-        "description": "Misst Bodenfeuchte am Baum"
+        "description": "Misst vor Ort, etwa die Bodenfeuchte am Baum"
       },
       "gateway": {
         "label": "Gateway",
@@ -77,7 +77,25 @@
         "label": "Dashboard",
         "description": "Visualisierung & Tourenplanung"
       }
+    },
+    "modules": {
+      "plugin": {
+        "title": "Plugin-System",
+        "description": "Modulare Erweiterungen für kommunenspezifische Anpassungen ohne Änderung der Kernsoftware. Import-Plugins für Baumkataster, CSV, Datenbanken."
+      },
+      "api": {
+        "title": "API-first",
+        "description": "Offene Schnittstellen für Integration in kommunale IT-Landschaften. Anbindung an IoT-Hubs und Open-Data-Portale."
+      }
     }
+  },
+  "beyond": {
+    "sectionLabel": "Ausblick",
+    "title": "Über die Bewässerung hinaus",
+    "p1": "Die Bewässerung von Stadtbäumen ist der erste Anwendungsfall, für den wir Green Ecolution gebaut haben. Die Plattform selbst ist allgemeiner gedacht: Überall dort, wo sich etwas messen lässt, die Werte ausgewertet werden müssen und am Ende ein Einsatz vor Ort steht, passt das Prinzip aus Messen, Verstehen und Handeln.",
+    "p2": "Die Architektur ist darauf ausgelegt, weitere Sensortypen und Anwendungsfälle aufzunehmen. Ein neuer Anwendungsfall bedeutet trotzdem Entwicklungsarbeit, etwa für die Anbindung der Sensoren und die Auswertung der Daten. Diese Arbeit übernehmen wir für dich.",
+    "cta": "Zu unseren Leistungen",
+    "ctaAriaLabel": "Zur Seite mit unseren Leistungen"
   },
   "requirements": {
     "sectionLabel": "Voraussetzungen",
@@ -94,7 +112,7 @@
         "description": "Gießwagen, Transporter und Anhänger mit ihren Wasserkapazitäten sowie die Nachfüllpunkte im Stadtgebiet. Eine neue Flotte oder stationäre Bewässerungstechnik ist nicht nötig."
       },
       "network": {
-        "label": "Eine Funkanbindung für die Sonden",
+        "label": "Eine Funkanbindung für die Sensoren",
         "description": "Die Sonden funken heute über LoRaWAN und das offene The Things Network. Schleswig-Holstein hat seit 2024 ein landesweites Netz mit über 420 Gateways aufgebaut. Wo keine Abdeckung besteht, lässt sich entweder ein eigenes Gateway setzen, oder dieselben Sonden kommen mit NB-IoT und SIM-Karte zum Einsatz. LoRaWAN ist die heute genutzte Technik, keine Bedingung."
       },
       "hosting": {
@@ -106,71 +124,10 @@
     "cta": "Einstieg besprechen",
     "ctaAriaLabel": "Zur Kontaktseite"
   },
-  "productScope": {
-    "sectionLabel": "Produktumfang",
-    "title": "Was zum System gehört",
-    "description": "Green Ecolution besteht aus Software, Hardware und den Leistungen drumherum. Die Software ist quelloffen, die Sonden und die Unterstützung kommen von der PROGEEK GmbH aus Flensburg.",
-    "framing": "Das Masterprojekt an der Hochschule Flensburg hat gezeigt, dass der Ansatz im kommunalen Alltag trägt. Was Kommunen heute bekommen, entsteht auf dieser Grundlage bei PROGEEK.",
-    "columns": {
-      "software": {
-        "label": "Software",
-        "description": "Die Plattform mit Karte und Dashboard, die Gruppierung zu Bewässerungseinheiten, Fuhrpark- und Teamverwaltung, das Benutzer- und Rollenkonzept, die Mobile App und die Auswertung des Verbrauchs. Der Quellcode ist offen, für Kommunen fallen keine Lizenzkosten an. Die Tourenoptimierung mit Nachfüllstationen kommt über Streamlet dazu und wird separat vereinbart."
-      },
-      "hardware": {
-        "label": "Hardware",
-        "description": "Die Bodensonde erfasst den Bodenwasserstatus in mehreren Tiefen und funkt über LoRaWAN oder, wo kein LoRaWAN verfügbar ist, über NB-IoT mit SIM-Karte. Sie ist für den öffentlichen Raum ausgelegt, wird mit marktüblichen Erdbohrern bodenbündig eingebracht und behindert Pflegearbeiten wie Mähen nicht. Die Sonden sind über PROGEEK beziehbar, eine eigene Firmware ist in Entwicklung, und perspektivisch soll regional gefertigt werden."
-      },
-      "services": {
-        "label": "Leistungen",
-        "description": "PROGEEK übernimmt Hosting und Betrieb, passt die Plattform an die Organisationsstruktur der Kommune an, bindet vorhandene Datenquellen an und unterstützt bei der Einführung. Du bekommst ein System, um das sich jemand kümmert, und behältst jede Freiheit, die offener Quellcode mitbringt."
-      }
-    },
-    "cta": "Angebot anfragen",
-    "ctaAriaLabel": "Zur Kontaktseite",
-    "photoAlt": "Zwei Mitarbeitende von PROGEEK sehen sich gemeinsam etwas auf einem Laptop an.",
-    "photoLead": "Wir beraten dich von der ersten Frage bis zum laufenden Betrieb. Bei PROGEEK in Flensburg sprichst du direkt mit den Leuten, die das System bauen und betreiben."
-  },
-  "governance": {
-    "sectionLabel": "Governance",
-    "title": "Open Source als Prinzip",
-    "description": "Transparenz, Unabhängigkeit und Nachnutzbarkeit: die Grundpfeiler unserer Open-Source-Strategie.",
-    "pillars": {
-      "license": {
-        "category": "Lizenz",
-        "title": "AGPL-3.0-only",
-        "description": "Lizenziert unter der AGPL. Finanziert im Rahmen des Landesprogramms „Offene Innovation\" des DigitalHub.SH."
-      },
-      "sovereignty": {
-        "category": "Souveränität",
-        "title": "Digitale Souveränität",
-        "description": "Keine Abhängigkeit von proprietären Plattformen. Kommunen behalten die Kontrolle über ihre Daten und Infrastruktur. Kein Vendor-Lock-in."
-      },
-      "modularity": {
-        "category": "Modularität",
-        "title": "Plugin-System",
-        "description": "Modulare Erweiterungen für kommunenspezifische Anpassungen ohne Änderung der Kernsoftware. Import-Plugins für Baumkataster, CSV, Datenbanken."
-      },
-      "integration": {
-        "category": "Integration",
-        "title": "API-first",
-        "description": "Offene Schnittstellen für Integration in kommunale IT-Landschaften. Anbindung an IoT-Hubs und Open-Data-Portale."
-      },
-      "community": {
-        "category": "Community",
-        "title": "Nachnutzung & Community",
-        "description": "Quellcode und Dokumentation liegen öffentlich auf GitHub. Verbesserungen, die für eine Kommune entstehen, stehen allen anderen zur Verfügung."
-      },
-      "costEfficiency": {
-        "category": "Wirtschaftlichkeit",
-        "title": "Kosteneffizienz",
-        "description": "Keine Lizenzkosten für Kommunen. Die Wertschöpfung bleibt in Schleswig-Holstein, weil Weiterentwicklung und Betrieb regional erfolgen."
-      }
-    }
-  },
   "advantages": {
     "sectionLabel": "Vorteile",
     "title": "Alle weiteren Funktionen und Vorteile",
-    "description": "Das Projekt ist öffentlich einsehbar und hat als Ziel, den Wasserverbrauch für die Bewässerung zu verringern sowie eine variable Einsatzplanung zu ermöglichen.",
+    "description": "Green Ecolution ist öffentlich einsehbar und verfolgt ein Ziel: Ressourcen dort einsetzen, wo sie gebraucht werden. Bei der Bewässerung heißt das weniger Wasser und eine variable Einsatzplanung.",
     "items": {
       "openSource": {
         "title": "Offene Lösung für alle",
@@ -189,7 +146,7 @@
   "vision": {
     "sectionLabel": "Vision",
     "title": "Für jede Kommune gemacht",
-    "descriptionPart1": "Die Plattform ist bewusst so gestaltet, dass sie in jeder Kommune eingesetzt werden kann. Kartenbereiche, Organisationsstrukturen und Bewässerungsregionen sind frei konfigurierbar.",
+    "descriptionPart1": "Die Plattform ist bewusst so gestaltet, dass sie in jeder Kommune und für mehr als eine Aufgabe eingesetzt werden kann. Kartenbereiche, Organisationsstrukturen und Einsatzgebiete sind frei konfigurierbar, neue Bausteine docken über das Plugin-System und offene Schnittstellen an.",
     "descriptionPart2": "Es werden ausschließlich offene Standards und Open-Source-Komponenten verwendet. Cloud-native Architektur mit Kubernetes ermöglicht einen mandantenfähigen, hochverfügbaren Betrieb. Weitere Kommunen können leicht hinzugefügt werden."
   },
   "roadmap": {
@@ -227,7 +184,7 @@
   "mediaFeature": {
     "sectionLabel": "Presse",
     "title": "Green Ecolution im Schleswig-Holstein Magazin",
-    "description": "Der NDR hat im August 2026 über Stadtbäume berichtet, die den trockenen Sommern nicht mehr standhalten, und dafür einen Vormittag in Flensburg gedreht. Der Beitrag zeigt, wie ein Bodenfeuchtesensor eingebaut wird und wie das Technische Betriebszentrum daraus die nächste Gießfahrt plant.",
+    "description": "Der NDR hat im August 2026 über Stadtbäume berichtet, die den trockenen Sommern nicht mehr standhalten. Dafür hat das Team einen Vormittag in Flensburg gedreht. Der Beitrag zeigt, wie ein Bodenfeuchtesensor eingebaut wird und wie das Technische Betriebszentrum daraus die nächste Gießfahrt plant.",
     "posterAlt": "Blick von unten in eine Eichenkrone, die Sonne blitzt zwischen den Blättern durch, unten links das Logo des Schleswig-Holstein Magazins"
   },
   "resources": {
@@ -256,7 +213,7 @@
       },
       "ndrReport": {
         "label": "NDR-Beitrag im Schleswig-Holstein Magazin",
-        "description": "Der NDR berichtete über Stadtbäume, die den trockenen Sommern nicht mehr standhalten, und zeigte Green Ecolution in Flensburg als Lösungsansatz."
+        "description": "Der NDR berichtete über Stadtbäume, die den trockenen Sommern nicht mehr standhalten. Als Lösungsansatz zeigte er Green Ecolution in Flensburg."
       },
       "pressRelease": {
         "label": "Pressemitteilung der Stadt Flensburg",

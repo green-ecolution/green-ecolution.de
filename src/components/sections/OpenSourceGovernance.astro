@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { language } = Astro.props
-const t = getTranslations(language, 'project')
+const t = getTranslations(language, 'about')
 ---
 
 <section class="relative overflow-hidden bg-[#1a2a16]">
@@ -24,36 +24,35 @@ const t = getTranslations(language, 'project')
     <div class="mb-10 lg:mb-14">
       <div class="inline-block mb-6">
         <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-          {t('governance.sectionLabel')}
+          {t('values.sectionLabel')}
         </span>
         <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
       </div>
 
       <div class="lg:flex lg:justify-between lg:gap-12 xl:gap-16">
         <h2 class="font-lato font-bold text-2xl mb-4 text-white lg:mb-0 lg:max-w-xs lg:shrink-0 lg:text-3xl xl:max-w-sm xl:text-4xl">
-          {t('governance.title')}
+          {t('values.title')}
         </h2>
 
-        <p class="text-white/60 leading-relaxed lg:max-w-2xl">{t('governance.description')}</p>
+        <p class="text-white/60 leading-relaxed lg:max-w-2xl">{t('values.description')}</p>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       {governancePillars.map((pillar, index) => {
         const Icon = pillar.icon
 
-        // Mobile (1 col): top border on every item except the first.
-        // md (2 cols): left border on the right column.
-        // lg (3 cols): no top border on the first row, left border on columns 2 and 3.
+        // Mobile: top border on all but the first. md (2 cols): left border on the
+        // right column, top border on the second row. lg (4 cols): left borders only.
         return (
           <article
             class:list={[
               'group p-6 lg:p-8 hover:bg-white/[0.03] transition-colors duration-300',
               index > 0 && 'border-t border-white/10',
+              index === 1 && 'md:border-t-0',
               index % 2 !== 0 && 'md:border-l md:border-white/10',
-              index < 3 && 'lg:border-t-0',
-              index % 3 !== 0 && 'lg:border-l lg:border-white/10',
-              index % 3 === 0 && index >= 3 && 'lg:border-l-0',
+              'lg:border-t-0',
+              index > 0 && 'lg:border-l lg:border-white/10',
             ]}
           >
             <div class="mb-4 w-10 h-10 rounded-lg bg-green-dark-900/60 flex items-center justify-center transition-colors group-hover:bg-green-dark-900">
@@ -61,15 +60,15 @@ const t = getTranslations(language, 'project')
             </div>
 
             <span class="text-xs font-semibold tracking-widest uppercase text-green-light-900/70 mb-2 block">
-              {t(`governance.pillars.${pillar.id}.category`)}
+              {t(`values.pillars.${pillar.id}.category`)}
             </span>
 
             <h3 class="font-lato font-bold text-white mb-2 tracking-wide">
-              {t(`governance.pillars.${pillar.id}.title`)}
+              {t(`values.pillars.${pillar.id}.title`)}
             </h3>
 
             <p class="text-white/50 text-sm leading-relaxed">
-              {t(`governance.pillars.${pillar.id}.description`)}
+              {t(`values.pillars.${pillar.id}.description`)}
             </p>
           </article>
         )

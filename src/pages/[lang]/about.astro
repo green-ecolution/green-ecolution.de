@@ -2,28 +2,20 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import Hero from '../../components/Hero.astro'
 import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro'
-import Advantages from '../../components/sections/Advantages.astro'
-import Architecture from '../../components/sections/Architecture.astro'
+import CompanyStory from '../../components/sections/CompanyStory.astro'
 import ContactSection from '../../components/sections/ContactSection.astro'
-import DashboardPreview from '../../components/sections/DashboardPreview.astro'
-import FurtherLinks from '../../components/sections/FurtherLinks.astro'
-import MediaFeature from '../../components/sections/MediaFeature.astro'
 import OpenSourceGovernance from '../../components/sections/OpenSourceGovernance.astro'
-import Process from '../../components/sections/Process.astro'
-import ProductScope from '../../components/sections/ProductScope.astro'
-import Requirements from '../../components/sections/Requirements.astro'
-import VisionRoadmap from '../../components/sections/VisionRoadmap.astro'
+import Ownership from '../../components/sections/Ownership.astro'
+import Stakeholder from '../../components/sections/Stakeholder.astro'
+import { company } from '../../data/company'
 import { getTranslations } from '../../i18n/t'
 import { languagePaths } from '../../lib/languagePaths'
 import { currentLanguage } from '../../i18n/languages'
 
 export const getStaticPaths = languagePaths
 
-// The react page also scrolled to window.location.hash on mount. A static page
-// does not need it: the browser resolves the fragment itself once the document
-// is there.
 const language = currentLanguage(Astro.params.lang)
-const t = getTranslations(language, 'project')
+const t = getTranslations(language, 'about')
 const tc = getTranslations(language, 'common')
 ---
 
@@ -31,13 +23,13 @@ const tc = getTranslations(language, 'common')
   title={t('meta.title')}
   description={t('meta.description')}
   language={language}
-  path="/project"
+  path="/about"
 >
   <BreadcrumbSchema
     language={language}
     items={[
       { name: tc('breadcrumb.home'), path: '' },
-      { name: tc('breadcrumb.project'), path: '/project' },
+      { name: tc('breadcrumb.about'), path: '/about' },
     ]}
   />
   <main
@@ -47,18 +39,12 @@ const tc = getTranslations(language, 'common')
     <Hero
       label={t('hero.label')}
       headline={t('hero.headline')}
-      description={t('hero.description')}
+      description={t('hero.description', { company: company.name })}
     />
-    <DashboardPreview language={language} />
-    <Process language={language} />
-    <Architecture language={language} />
-    <Requirements language={language} />
-    <ProductScope language={language} />
+    <CompanyStory language={language} />
     <OpenSourceGovernance language={language} />
-    <Advantages language={language} />
-    <VisionRoadmap language={language} />
-    <MediaFeature language={language} />
-    <FurtherLinks language={language} />
+    <Ownership language={language} />
+    <Stakeholder language={language} hasDesktopList showAboutLink={false} />
     <ContactSection language={language} />
   </main>
 </BaseLayout>

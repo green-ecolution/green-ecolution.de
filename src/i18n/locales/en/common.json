@@ -14,9 +14,10 @@
   "nav": {
     "ariaLabel": "Main navigation",
     "heading": "Main navigation",
-    "project": "The Project",
+    "product": "Product",
     "streamlet": "Route optimisation",
-    "releases": "Releases",
+    "services": "Services",
+    "about": "About us",
     "contact": "Contact",
     "tryNow": "Try it now",
     "imprint": "Imprint",
@@ -26,7 +27,7 @@
   "footer": {
     "logoAriaLabel": "Go to homepage",
     "logoAlt": "Green Ecolution logo",
-    "description": "Green Ecolution is a digital system for the needs-based and resource-efficient irrigation of urban trees, contributing to sustainable and climate-resilient urban development.",
+    "description": "Green Ecolution develops and runs an open platform that turns measurements from the city into decisions and operations. We started with the demand-driven irrigation of urban trees.",
     "contact": "Contact",
     "contactAriaLabel": "Feel free to contact us by email",
     "github": "GitHub",
@@ -34,15 +35,8 @@
     "metaNavAriaLabel": "Meta navigation",
     "imprint": "Imprint",
     "privacy": "Privacy Policy",
+    "releases": "Releases",
     "press": "Press"
-  },
-  "banner": {
-    "ariaLabel": "Call to action for community voting",
-    "title": "Community Voting",
-    "desktopDescription": "Green Ecolution is up for voting in the Open Source competition, open until September 30.",
-    "mobileDescription": "Support Green Ecolution in the Open Source competition, open until Sep 30.",
-    "cta": "Vote now",
-    "dismissAriaLabel": "Close the community voting notice"
   },
   "backToTop": {
     "ariaLabel": "Back to top"
@@ -78,12 +72,20 @@
   },
   "breadcrumb": {
     "home": "Home",
-    "project": "Project",
+    "product": "Product",
     "streamlet": "Route optimisation",
+    "services": "Services",
+    "about": "About us",
     "contact": "Contact",
     "imprint": "Imprint",
     "privacy": "Privacy Policy",
     "blog": "Blog",
     "press": "Press"
+  },
+  "testimonial": {
+    "sectionLabel": "In practice",
+    "quote": "“I can already tell how much work the system takes off my hands. I can see at a glance where watering is really needed, and we drive straight there. In the past, watering tied up so much time in summer that other work was left undone. Now we can finally get to it.”",
+    "name": "Sönke Clausen",
+    "role": "Green space maintenance, Technisches Betriebszentrum Flensburg"
   }
 }

@@ -68,7 +68,7 @@ function StreamletHero({ language }: { language: string }) {
           <p className="text-grey-900/60 leading-relaxed mb-8">
             {origin.before}
             <a
-              href={`/${language}/project`}
+              href={`/${language}/product`}
               className="font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
             >
               {origin.inner}

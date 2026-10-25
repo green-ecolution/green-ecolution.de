@@ -1,0 +1,33 @@
+---
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+import { company } from '../../data/company'
+
+interface Props {
+  language: Language
+}
+
+const PARAGRAPHS = ['p1', 'p2', 'p3', 'p4'] as const
+
+const { language } = Astro.props
+const t = getTranslations(language, 'about')
+---
+
+<section class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36">
+  <div class="inline-block mb-4">
+    <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+      {t('story.sectionLabel')}
+    </span>
+    <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+  </div>
+
+  <h2 class="font-lato font-bold text-2xl mb-8 text-grey-900 lg:text-3xl xl:text-4xl">
+    {t('story.title')}
+  </h2>
+
+  <div class="max-w-2xl space-y-4 text-grey-900/80 leading-relaxed lg:text-lg">
+    {PARAGRAPHS.map((id) => (
+      <p>{t(`story.${id}`, { company: company.name })}</p>
+    ))}
+  </div>
+</section>

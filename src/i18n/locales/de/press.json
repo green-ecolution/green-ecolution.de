@@ -18,23 +18,23 @@
   },
   "boilerplate": {
     "sectionLabel": "Zum Zitieren",
-    "title": "Das Projekt in Kurzform",
-    "description": "Drei Textlängen für Meldungen, Anmoderationen und Hintergrundstücke. Alle Angaben sind mit dem Projekt abgestimmt und können unverändert übernommen werden.",
+    "title": "Green Ecolution in Kurzform",
+    "description": "Drei Textlängen für Meldungen, Anmoderationen und Hintergrundstücke. Alle Angaben sind mit uns abgestimmt und können unverändert übernommen werden.",
     "copy": "Kopieren",
     "copied": "Kopiert",
     "copyAriaLabel": "{{variant}} in die Zwischenablage kopieren",
     "items": {
       "short": {
         "label": "Ein Satz",
-        "text": "Green Ecolution ist ein von der Smarten Grenzregion koordiniertes Open-Source-Projekt, das die Bewässerung von Stadtbäumen mithilfe von Bodenfeuchtesensoren und dem LoRaWAN-Netz bedarfsgerecht steuert."
+        "text": "Green Ecolution aus Flensburg entwickelt eine modulare Open-Source-Plattform, die Messwerte zu Einsätzen macht, angefangen bei der bedarfsgerechten Bewässerung von Stadtbäumen."
       },
       "medium": {
         "label": "Kurzfassung, rund 50 Wörter",
-        "text": "Green Ecolution ist ein Open-Source-Projekt zur bedarfsgerechten Bewässerung von Stadtbäumen, koordiniert von der Smarten Grenzregion. In unterschiedlicher Tiefe platzierte Sensoren messen die Bodenfeuchte und übermitteln ihre Werte über das LoRaWAN-Netz. Aus den Daten leitet die Software Handlungsempfehlungen ab, besonders für Jungbäume in ihren ersten drei Standjahren. Entstanden ist es an der Hochschule Flensburg."
+        "text": "Green Ecolution ist ein Unternehmen aus Flensburg und entwickelt eine modulare Open-Source-Plattform nach dem Prinzip Messen, Verstehen, Handeln. Der erste Anwendungsfall ist die bedarfsgerechte Bewässerung von Stadtbäumen: Sensoren messen die Bodenfeuchte, die Software zeigt den Bedarf und die Einsatzplanung berechnet die Gießtouren. Entstanden ist Green Ecolution an der Hochschule Flensburg."
       },
       "long": {
         "label": "Langfassung, rund 120 Wörter",
-        "text": "Green Ecolution ist ein digitales System zur bedarfsgerechten und ressourcenschonenden Bewässerung von Stadtbäumen. Entstanden ist es als Forschungsprojekt an der Hochschule Flensburg. Koordiniert wird das Vorhaben von der Smarten Grenzregion, weiterentwickelt gemeinsam mit der PROGEEK GmbH, der Stadt Flensburg und ihrem Technischen Betriebszentrum.\n\nIn unterschiedlicher Tiefe platzierte Sensoren messen die Bodenfeuchte an den Baumstandorten und übermitteln ihre Werte über das LoRaWAN-Netz. Die Software wertet die Messreihen aus und gibt Handlungsempfehlungen für die Bewässerung, sodass Einsätze dort stattfinden, wo sie gebraucht werden. Im Fokus stehen Jungbäume, die in ihren ersten drei Standjahren besonders hitzeanfällig sind.\n\nDas Projekt ist quelloffen, der gesamte Code liegt öffentlich auf GitHub. 2025 wurde Green Ecolution als eines der Open-Source-Projekte im Rahmen des DigitalHub.SH vorgestellt und finanziert."
+        "text": "Green Ecolution ist ein Unternehmen aus Flensburg, gegründet zusammen mit der PROGEEK Group. Es entwickelt und betreibt eine modulare Open-Source-Plattform, die Messwerte in Entscheidungen und Einsätze übersetzt.\n\nDer erste Anwendungsfall ist die bedarfsgerechte Bewässerung von Stadtbäumen. Sensoren messen die Bodenfeuchte in variablen Tiefen und funken ihre Werte über LoRaWAN. Die Software wertet die Messreihen aus und zeigt auf einer Karte, welche Bäume Wasser brauchen. Daraus berechnet sie die Gießtouren. Die Stadt Flensburg setzt das System mit ihrem Technischen Betriebszentrum im Alltag ein.\n\nAngestoßen hat das Vorhaben die Stadt Flensburg gemeinsam mit der Smarten Grenzregion, entstanden ist es 2024 als Forschungsprojekt an der Hochschule Flensburg. Der gesamte Code liegt öffentlich auf GitHub. 2026 wurde Green Ecolution mit dem Digitalisierungspreis Schleswig-Holstein ausgezeichnet."
       }
     }
   },
@@ -106,8 +106,8 @@
       },
       "team": {
         "title": "Das Team bei der Arbeit",
-        "description": "Zwei Mitarbeitende von PROGEEK am Laptop.",
-        "alt": "Zwei Mitarbeitende von PROGEEK sehen sich gemeinsam etwas auf einem Laptop an."
+        "description": "Zwei Personen am Laptop.",
+        "alt": "Zwei Personen sehen sich gemeinsam etwas auf einem Laptop an."
       }
     },
     "zip": {
@@ -148,7 +148,7 @@
     "items": {
       "ndrShMagazin": {
         "title": "Extreme Sommer: Stadtbäume in Not",
-        "description": "Der NDR berichtete über Stadtbäume, die den trockenen Sommern nicht mehr standhalten, und zeigte Green Ecolution in Flensburg als Lösungsansatz."
+        "description": "Der NDR berichtete über Stadtbäume, die den trockenen Sommern nicht mehr standhalten. Als Lösungsansatz zeigte er Green Ecolution in Flensburg."
       },
       "landesregierungSh": {
         "title": "Land fördert Open-Source-Projekte",

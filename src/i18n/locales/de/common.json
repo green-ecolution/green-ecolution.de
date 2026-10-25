@@ -14,9 +14,10 @@
   "nav": {
     "ariaLabel": "Hauptnavigation",
     "heading": "Hauptnavigation",
-    "project": "Das Projekt",
+    "product": "Produkt",
     "streamlet": "Tourenoptimierung",
-    "releases": "Releases",
+    "services": "Leistungen",
+    "about": "Über uns",
     "contact": "Kontakt",
     "tryNow": "Jetzt ausprobieren",
     "imprint": "Impressum",
@@ -26,7 +27,7 @@
   "footer": {
     "logoAriaLabel": "Zur Startseite navigieren",
     "logoAlt": "Logo Green Ecolution",
-    "description": "Green Ecolution ist ein digitales System zur bedarfsgerechten und ressourcenschonenden Bewässerung von Stadtbäumen und leistet damit einen Beitrag zu einer nachhaltigen und klimaresilienten Stadtentwicklung.",
+    "description": "Green Ecolution entwickelt und betreibt eine offene Plattform, die Messwerte aus der Stadt in Entscheidungen und Einsätze übersetzt. Angefangen haben wir mit der bedarfsgerechten Bewässerung von Stadtbäumen.",
     "contact": "Kontakt",
     "contactAriaLabel": "Kontaktiere uns gern per Mail",
     "github": "GitHub",
@@ -34,15 +35,8 @@
     "metaNavAriaLabel": "Meta-Navigation",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
+    "releases": "Releases",
     "press": "Presse"
-  },
-  "banner": {
-    "ariaLabel": "Aufruf zum Community Voting",
-    "title": "Community Voting",
-    "desktopDescription": "Green Ecolution steht beim Open-Source-Wettbewerb zur Abstimmung. Noch bis zum 30. September.",
-    "mobileDescription": "Green Ecolution beim Open-Source-Wettbewerb unterstützen, noch bis 30.09.",
-    "cta": "Jetzt abstimmen",
-    "dismissAriaLabel": "Hinweis zum Community Voting schließen"
   },
   "backToTop": {
     "ariaLabel": "Zurück nach oben"
@@ -78,12 +72,20 @@
   },
   "breadcrumb": {
     "home": "Startseite",
-    "project": "Projekt",
+    "product": "Produkt",
     "streamlet": "Tourenoptimierung",
+    "services": "Leistungen",
+    "about": "Über uns",
     "contact": "Kontakt",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
     "blog": "Blog",
     "press": "Presse"
+  },
+  "testimonial": {
+    "sectionLabel": "Aus der Praxis",
+    "quote": "„Ich merke jetzt schon, wie sehr mir das System die Arbeit abnimmt. Ich sehe auf einen Blick, wo wirklich bewässert werden muss. Wir fahren gezielt dorthin. Früher hat das Gießen im Sommer so viel Zeit gebunden, dass andere Arbeiten liegen geblieben sind. Die können wir jetzt endlich angehen.“",
+    "name": "Sönke Clausen",
+    "role": "Grünflächenpflege, Technisches Betriebszentrum Flensburg"
   }
 }

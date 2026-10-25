@@ -34,7 +34,7 @@ describe('getTranslations', () => {
   })
 
   it('kennt jeden Namespace, den das Parity-Skript prüft', () => {
-    const namespaces = ['common', 'home', 'project', 'streamlet', 'contact', 'releases', 'legal']
+    const namespaces = ['common', 'home', 'product', 'streamlet', 'contact', 'releases', 'legal']
     for (const namespace of namespaces) {
       const t = getTranslations('de', namespace as 'common')
       expect(typeof t).toBe('function')

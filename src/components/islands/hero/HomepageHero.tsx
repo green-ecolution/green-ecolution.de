@@ -116,7 +116,7 @@ function HomepageHero({ language }: { language: string }) {
 
   return (
     <section>
-      <div className="overflow-hidden relative mx-auto w-full min-h-[calc(100svh-var(--voting-banner-height,0px))] max-w-screen-3xl pointer-events-none before:bg-background-yellow-dot before:bg-cover before:w-4/5 before:h-[100vh] before:max-h-[45rem] before:absolute before:-right-4 before:bottom-0 before:-z-50 before:bg-no-repeat sm:before:-right-10 md:before:max-h-[70rem] 2xl:before:right-0 2xl:before:bg-contain">
+      <div className="overflow-hidden relative mx-auto w-full min-h-svh max-w-screen-3xl pointer-events-none before:bg-background-yellow-dot before:bg-cover before:w-4/5 before:h-[100vh] before:max-h-[45rem] before:absolute before:-right-4 before:bottom-0 before:-z-50 before:bg-no-repeat sm:before:-right-10 md:before:max-h-[70rem] 2xl:before:right-0 2xl:before:bg-contain">
         {/* Organic gradient blob */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div

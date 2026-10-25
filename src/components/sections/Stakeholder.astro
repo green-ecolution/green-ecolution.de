@@ -2,31 +2,24 @@
 import { getImage } from 'astro:assets'
 import StakeholderSlider from '../islands/StakeholderSlider'
 import type { StakeholderEntry } from '../islands/StakeholderSlider'
-import progeekLogo from '../../assets/logos/progeek.svg'
 import smarteGrenzregionLogo from '../../assets/logos/smarte-grenzregion.png'
 import hochschuleFlensburgLogo from '../../assets/logos/hochschule-flensburg.png'
-import tbzLogo from '../../assets/logos/tbz.png'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 
 interface Props {
   language: Language
   hasDesktopList?: boolean
+  showAboutLink?: boolean
 }
 
-const { language, hasDesktopList = false } = Astro.props
+const { language, hasDesktopList = false, showAboutLink = true } = Astro.props
 // The section reads the home namespace, not contact: it is shared with the
 // start page.
 const t = getTranslations(language, 'home')
 const tc = getTranslations(language, 'common')
 
 const COMPANIES = [
-  {
-    id: 'progeek',
-    label: 'PROGEEK GmbH',
-    url: 'https://progeek.de/',
-    image: progeekLogo,
-  },
   {
     id: 'smarteGrenzregion',
     label: 'Smarte Grenzregion',
@@ -38,12 +31,6 @@ const COMPANIES = [
     label: 'Hochschule Flensburg',
     url: 'https://hs-flensburg.de/',
     image: hochschuleFlensburgLogo,
-  },
-  {
-    id: 'tbz',
-    label: 'TBZ Flensburg',
-    url: 'https://www.tbz-flensburg.de/',
-    image: tbzLogo,
   },
 ] as const
 
@@ -104,6 +91,14 @@ const sliderTranslations = {
     <p class:list={['text-grey-900/70 leading-relaxed max-w-3xl', hasDesktopList && 'lg:mx-auto']}>
       {t('stakeholder.description')}
     </p>
+    {showAboutLink && (
+      <a
+        href={`/${language}/about`}
+        class="inline-block mt-4 font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
+      >
+        {t('stakeholder.aboutLink')}
+      </a>
+    )}
   </article>
 
   <div>

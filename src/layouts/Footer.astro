@@ -47,7 +47,12 @@ const metaLinkClasses =
 
     <div class="mt-10 md:justify-self-end md:mt-0">
       <nav aria-label={t('footer.metaNavAriaLabel')}>
-        <ul class="flex items-center justify-center gap-x-6 sm:justify-start md:justify-end">
+        <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-start md:justify-end">
+          <li>
+            <a href={`/${language}/releases`} class={metaLinkClasses}>
+              {t('footer.releases')}
+            </a>
+          </li>
           <li>
             <a href={`/${language}/presse`} class={metaLinkClasses}>
               {t('footer.press')}

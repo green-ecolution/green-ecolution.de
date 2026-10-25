@@ -18,23 +18,23 @@
   },
   "boilerplate": {
     "sectionLabel": "Ready to quote",
-    "title": "The project in brief",
-    "description": "Three lengths for news items, intros and background pieces. All wording is approved by the project and can be used unchanged.",
+    "title": "Green Ecolution in brief",
+    "description": "Three lengths for news items, intros and background pieces. All wording is approved by us and can be used unchanged.",
     "copy": "Copy",
     "copied": "Copied",
     "copyAriaLabel": "Copy {{variant}} to the clipboard",
     "items": {
       "short": {
         "label": "One sentence",
-        "text": "Green Ecolution is an open source project coordinated by Smarte Grenzregion that controls the irrigation of urban trees according to demand, using soil moisture sensors and the LoRaWAN network."
+        "text": "Green Ecolution, based in Flensburg, develops a modular open source platform that turns measurements into action, starting with the demand-driven irrigation of urban trees."
       },
       "medium": {
         "label": "Short version, around 50 words",
-        "text": "Green Ecolution is an open source project for the demand-driven irrigation of urban trees, coordinated by Smarte Grenzregion. Sensors placed at different depths measure soil moisture and transmit their readings over the LoRaWAN network. From that data the software derives irrigation recommendations, particularly for young trees in their first three years. It began at Flensburg University of Applied Sciences."
+        "text": "Green Ecolution is a company based in Flensburg that develops a modular open source platform built on the principle of measure, understand, act. The first use case is the demand-driven irrigation of urban trees: sensors measure soil moisture, the software shows where water is needed, and the operations planning calculates the watering routes. Green Ecolution began at Flensburg University of Applied Sciences."
       },
       "long": {
         "label": "Long version, around 120 words",
-        "text": "Green Ecolution is a digital system for the demand-driven and resource-efficient irrigation of urban trees. It began as a research project at Flensburg University of Applied Sciences. The work is coordinated by Smarte Grenzregion and continued together with PROGEEK GmbH, the City of Flensburg and its Technisches Betriebszentrum.\n\nSensors placed at different depths measure soil moisture at the tree sites and transmit their readings over the LoRaWAN network. The software evaluates the measurement series and issues irrigation recommendations, so that crews water where watering is actually needed. The focus is on young trees, which are particularly vulnerable to heat in their first three years.\n\nThe project is open source and the entire code is publicly available on GitHub. In 2025 Green Ecolution was presented and funded as one of the open source projects of DigitalHub.SH."
+        "text": "Green Ecolution is a Flensburg-based company founded together with PROGEEK Group. It develops and runs a modular open source platform that turns measurements into decisions and operations.\n\nThe first use case is the demand-driven irrigation of urban trees. Sensors measure soil moisture at variable depths and transmit their readings over LoRaWAN. The software evaluates the measurement series, shows on a map which trees need water, and calculates the watering routes from that. The City of Flensburg uses the system day to day together with its Technisches Betriebszentrum.\n\nThe project was initiated by the City of Flensburg together with Smarte Grenzregion and began in 2024 as a research project at Flensburg University of Applied Sciences. The entire code is publicly available on GitHub. In 2026 Green Ecolution received the Digitalisierungspreis Schleswig-Holstein."
       }
     }
   },
@@ -106,8 +106,8 @@
       },
       "team": {
         "title": "The team at work",
-        "description": "Two PROGEEK staff at a laptop.",
-        "alt": "Two PROGEEK staff looking at something on a laptop together."
+        "description": "Two people at a laptop.",
+        "alt": "Two people looking at something on a laptop together."
       }
     },
     "zip": {

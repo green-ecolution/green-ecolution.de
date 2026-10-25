@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Hero from '../../components/Hero.astro'
+import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro'
+import Advantages from '../../components/sections/Advantages.astro'
+import BeyondIrrigation from '../../components/sections/BeyondIrrigation.astro'
+import Architecture from '../../components/sections/Architecture.astro'
+import ContactSection from '../../components/sections/ContactSection.astro'
+import DashboardPreview from '../../components/sections/DashboardPreview.astro'
+import FurtherLinks from '../../components/sections/FurtherLinks.astro'
+import MediaFeature from '../../components/sections/MediaFeature.astro'
+import Process from '../../components/sections/Process.astro'
+import Requirements from '../../components/sections/Requirements.astro'
+import VisionRoadmap from '../../components/sections/VisionRoadmap.astro'
+import { getTranslations } from '../../i18n/t'
+import { languagePaths } from '../../lib/languagePaths'
+import { currentLanguage } from '../../i18n/languages'
+
+export const getStaticPaths = languagePaths
+
+// The react page also scrolled to window.location.hash on mount. A static page
+// does not need it: the browser resolves the fragment itself once the document
+// is there.
+const language = currentLanguage(Astro.params.lang)
+const t = getTranslations(language, 'product')
+const tc = getTranslations(language, 'common')
+---
+
+<BaseLayout
+  title={t('meta.title')}
+  description={t('meta.description')}
+  language={language}
+  path="/product"
+>
+  <BreadcrumbSchema
+    language={language}
+    items={[
+      { name: tc('breadcrumb.home'), path: '' },
+      { name: tc('breadcrumb.product'), path: '/product' },
+    ]}
+  />
+  <main
+    id="main-content"
+    class="relative overflow-hidden before:bg-cover before:bg-background-light-dot before:w-4/5 before:h-[100vh] before:max-h-[45rem] before:absolute before:-right-4 before:-top-16 before:-z-10 before:bg-no-repeat sm:before:-right-10 lg:before:max-h-[55rem] xl:before:w-[70rem] xl:before:-right-40 2xl:before:right-[10%] 2xl:before:bg-contain"
+  >
+    <Hero
+      label={t('hero.label')}
+      headline={t('hero.headline')}
+      description={t('hero.description')}
+    />
+    <Process language={language} />
+    <DashboardPreview language={language} />
+    <Architecture language={language} />
+    <BeyondIrrigation language={language} />
+    <Requirements language={language} />
+    <Advantages language={language} />
+    <VisionRoadmap language={language} />
+    <MediaFeature language={language} />
+    <FurtherLinks language={language} />
+    <ContactSection language={language} />
+  </main>
+</BaseLayout>

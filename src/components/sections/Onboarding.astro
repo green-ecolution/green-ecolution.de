@@ -1,0 +1,58 @@
+---
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+import { splitSlot } from '../../lib/slotText'
+
+interface Props {
+  language: Language
+}
+
+const ONBOARDING_STEPS = ['talk', 'setup', 'sensors', 'operation'] as const
+
+const { language } = Astro.props
+const t = getTranslations(language, 'services')
+const requirements = splitSlot(t('onboarding.descriptionRich'), 'requirements')
+---
+
+<section
+  id="onboarding"
+  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
+>
+  <div class="inline-block mb-4">
+    <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+      {t('onboarding.sectionLabel')}
+    </span>
+    <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+  </div>
+
+  <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
+    {t('onboarding.title')}
+  </h2>
+  <p class="text-grey-900/70 leading-relaxed max-w-2xl mb-10 lg:mb-14">
+    {requirements.before}
+    <a
+      href={`/${language}/product#requirements`}
+      class="font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
+    >
+      {requirements.inner}
+    </a>
+    {requirements.after}
+  </p>
+
+  <ol class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+    {ONBOARDING_STEPS.map((id, index) => (
+      <li>
+        <span
+          aria-hidden="true"
+          class="block font-lato font-bold text-4xl text-green-light-900/60 mb-3"
+        >
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <h3 class="font-lato font-semibold text-grey-900 mb-2">
+          {t(`onboarding.steps.${id}.title`)}
+        </h3>
+        <p class="text-grey-900/70 leading-relaxed">{t(`onboarding.steps.${id}.description`)}</p>
+      </li>
+    ))}
+  </ol>
+</section>

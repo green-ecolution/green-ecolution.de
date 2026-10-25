@@ -1,0 +1,41 @@
+---
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+import Arrow from '../icons/Arrow.astro'
+import Button from '../Button.astro'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'product')
+---
+
+<section
+  id="beyond"
+  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36"
+>
+  <div class="inline-block mb-4">
+    <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+      {t('beyond.sectionLabel')}
+    </span>
+    <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+  </div>
+
+  <h2 class="font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-3xl xl:text-4xl">
+    {t('beyond.title')}
+  </h2>
+
+  <div class="max-w-2xl space-y-4 text-grey-900/80 leading-relaxed lg:text-lg">
+    <p>{t('beyond.p1')}</p>
+    <p>{t('beyond.p2')}</p>
+  </div>
+
+  <div class="mt-8">
+    <Button href={`/${language}/services`} ariaLabel={t('beyond.ctaAriaLabel')} isDark>
+      <span>{t('beyond.cta')}</span>
+      <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+    </Button>
+  </div>
+</section>

@@ -14,49 +14,23 @@ import ProcessCompact from '../../components/sections/ProcessCompact.astro'
 import DemoInstance from '../../components/sections/DemoInstance.astro'
 import LatestRelease from '../../components/sections/LatestRelease.astro'
 import Stakeholder from '../../components/sections/Stakeholder.astro'
+import OfferOverview from '../../components/sections/OfferOverview.astro'
+import Testimonial from '../../components/sections/Testimonial.astro'
 import Faq from '../../components/sections/Faq.astro'
 import ContactSection from '../../components/sections/ContactSection.astro'
-import VotingBanner from '../../components/islands/VotingBanner'
 import { getTranslations } from '../../i18n/t'
-import { pickStrings } from '../../i18n/pick'
 import { languagePaths } from '../../lib/languagePaths'
 import { currentLanguage } from '../../i18n/languages'
 
 export const getStaticPaths = languagePaths
 
-const VOTING_URL = 'https://open-source-wettbewerb.de/voting/green-ecolution/'
-const VOTING_DEADLINE = '2026-09-30T23:59:59+02:00'
-
-// The banner is rendered on the server so it reserves its own space from the
-// first paint. Once the vote is over it must not be shipped at all, otherwise
-// every visitor would see it flash before the client hides it again.
-const votingOpen = Date.now() <= new Date(VOTING_DEADLINE).getTime()
-
 const language = currentLanguage(Astro.params.lang)
 const t = getTranslations(language, 'home')
 const tc = getTranslations(language, 'common')
-
-const bannerStrings = pickStrings(language, 'common', [
-  'banner.ariaLabel',
-  'banner.title',
-  'banner.desktopDescription',
-  'banner.mobileDescription',
-  'banner.cta',
-  'banner.dismissAriaLabel',
-])
 ---
 
 <BaseLayout title={t('meta.title')} description={t('meta.description')} language={language} path="">
   <BreadcrumbSchema language={language} items={[{ name: tc('breadcrumb.home'), path: '' }]} />
-
-  {votingOpen && (
-    <VotingBanner
-      client:load
-      votingUrl={VOTING_URL}
-      deadline={VOTING_DEADLINE}
-      strings={bannerStrings}
-    />
-  )}
 
   <main id="main-content">
     <HomepageHero language={language} />
@@ -64,12 +38,14 @@ const bannerStrings = pickStrings(language, 'common', [
     <AwardBanner language={language} />
     <Introduction language={language} />
     <Challenge language={language} />
-    <TargetGroups language={language} />
     <Features language={language} />
     <SensorProbe language={language} />
-    <Videos language={language} />
     <ProcessCompact language={language} />
+    <Testimonial language={language} />
+    <TargetGroups language={language} />
+    <OfferOverview language={language} />
     <DemoInstance language={language} />
+    <Videos language={language} />
     <LatestRelease language={language} />
     <div class="relative overflow-hidden before:bg-cover before:bg-background-light-dot before:w-[90%] before:h-[120vh] before:max-w-[60rem] before:absolute before:-right-4 before:top-8 before:-z-10 before:bg-no-repeat sm:before:-right-[5%] 2xl:before:w-[90rem] 2xl:before:max-w-[90rem] 2xl:before:right-[10%] 2xl:before:bg-contain 3xl:before:right-[20%]">
       <Stakeholder language={language} />

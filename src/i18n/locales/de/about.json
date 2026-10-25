@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "title": "Über uns | Green Ecolution",
+    "description": "Green Ecolution ist ein Unternehmen aus Flensburg. Wie aus einer Frage der Stadt Flensburg eine Firma wurde, wofür wir stehen und wer dahintersteht."
+  },
+  "hero": {
+    "label": "Über uns",
+    "headline": "Aus Flensburg, für Kommunen",
+    "description": "Wir sind die {{company}} aus Flensburg. Wir entwickeln und betreiben eine offene Plattform, die Messwerte in Entscheidungen und Einsätze übersetzt. Angefangen haben wir mit der Bewässerung von Stadtbäumen."
+  },
+  "story": {
+    "sectionLabel": "Geschichte",
+    "title": "Wie aus einem Projekt eine Firma wurde",
+    "p1": "Am Anfang stand eine Frage der Stadt Flensburg: Wie lässt sich erkennen, welche Stadtbäume wirklich Wasser brauchen, statt nach Gefühl zu gießen? Mit diesem Problem wandte sich die Stadt an die Smarte Grenzregion.",
+    "p2": "2024 machten neun Studierende im Master Angewandte Informatik an der Hochschule Flensburg daraus ein Forschungsprojekt, gemeinsam mit dem Technischen Betriebszentrum der Stadt. Es entstanden ein Sensor für den Boden und eine Plattform, die den Bewässerungsbedarf auf einer Karte zeigt und die Gießfahrt berechnet. In Nutzertests mit dem TBZ erreichte die Anwendung einen überdurchschnittlichen Usability-Wert.",
+    "p3": "Danach ging es in die Praxis. Im Herbst 2025 erhielt Green Ecolution eine Finanzierung aus dem Landesprogramm „Offene Innovation“ des DigitalHub.SH. Das TBZ setzt die Plattform im Alltag ein. Im September 2026 hat das Land Schleswig-Holstein Green Ecolution mit dem Digitalisierungspreis ausgezeichnet.",
+    "p4": "Damit aus dem Projekt ein Produkt für viele Kommunen wird, haben wir die {{company}} gegründet."
+  },
+  "values": {
+    "sectionLabel": "Haltung",
+    "title": "Open Source als Prinzip",
+    "description": "Transparenz, Unabhängigkeit und Nachnutzbarkeit sind für uns keine Zugabe, sondern die Grundlage unserer Arbeit.",
+    "pillars": {
+      "license": {
+        "category": "Lizenz",
+        "title": "AGPL-3.0-only",
+        "description": "Lizenziert unter der AGPL. Finanziert im Rahmen des Landesprogramms „Offene Innovation“ des DigitalHub.SH."
+      },
+      "sovereignty": {
+        "category": "Souveränität",
+        "title": "Digitale Souveränität",
+        "description": "Keine Abhängigkeit von proprietären Plattformen. Kommunen behalten die Kontrolle über ihre Daten und Infrastruktur. Kein Vendor-Lock-in."
+      },
+      "community": {
+        "category": "Community",
+        "title": "Nachnutzung & Community",
+        "description": "Quellcode und Dokumentation liegen öffentlich auf GitHub. Verbesserungen, die für eine Kommune entstehen, stehen allen anderen zur Verfügung."
+      },
+      "costEfficiency": {
+        "category": "Wirtschaftlichkeit",
+        "title": "Kosteneffizienz",
+        "description": "Keine Lizenzkosten für Kommunen. Die Wertschöpfung bleibt in Schleswig-Holstein, weil Weiterentwicklung und Betrieb regional erfolgen."
+      }
+    }
+  },
+  "owners": {
+    "sectionLabel": "Wer dahintersteht",
+    "title": "Zusammen mit der PROGEEK Group",
+    "description": "{{director}} hat Green Ecolution gemeinsam mit der {{group}} gegründet. Als Geschäftsführer ist er dein direkter Ansprechpartner.",
+    "contact": {
+      "role": "Geschäftsführer",
+      "photoAlt": "Porträt von {{name}}",
+      "mailLabel": "E-Mail",
+      "phoneLabel": "Telefon"
+    },
+    "pressRich": "Für Presseanfragen, Logos und Bilder gibt es die <press>Presseseite</press>."
+  }
+}

@@ -1,0 +1,43 @@
+---
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+
+interface Props {
+  language: Language
+  compact?: boolean
+}
+
+const { language, compact = false } = Astro.props
+const t = getTranslations(language, 'common')
+---
+
+<section
+  class:list={[
+    'px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg',
+    compact ? 'my-16 lg:my-20' : 'my-20 lg:my-28 xl:my-36',
+  ]}
+>
+  <div class="inline-block mb-6 lg:mb-8">
+    <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+      {t('testimonial.sectionLabel')}
+    </span>
+    <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+  </div>
+
+  <figure class="border-l-2 border-green-light-900/30 pl-6 lg:pl-8">
+    <blockquote>
+      <p
+        class:list={[
+          'font-lato text-grey-900 leading-snug',
+          compact ? 'text-lg lg:text-xl' : 'text-xl lg:text-2xl xl:text-3xl',
+        ]}
+      >
+        {t('testimonial.quote')}
+      </p>
+    </blockquote>
+    <figcaption class="mt-6 text-grey-900/70">
+      <span class="block font-semibold text-grey-900">{t('testimonial.name')}</span>
+      <span>{t('testimonial.role')}</span>
+    </figcaption>
+  </figure>
+</section>

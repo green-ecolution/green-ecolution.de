@@ -16,9 +16,10 @@ const t = getTranslations(language, 'common')
 const pathname = Astro.url.pathname
 
 const links = [
-  { label: t('nav.project'), href: `/${language}/project` },
+  { label: t('nav.product'), href: `/${language}/product` },
   { label: t('nav.streamlet'), href: `/${language}/streamlet` },
-  { label: t('nav.releases'), href: `/${language}/releases` },
+  { label: t('nav.services'), href: `/${language}/services` },
+  { label: t('nav.about'), href: `/${language}/about` },
   { label: t('nav.blog'), href: `/${language}/blog` },
   { label: t('nav.contact'), href: `/${language}/contact` },
 ].map((link) => ({
@@ -46,7 +47,7 @@ const navStrings = pickStrings(language, 'common', [
 </a>
 <header
   id="site-header"
-  class="fixed inset-x-0 top-[var(--voting-banner-height,0px)] z-50 transition-all ease-in-out duration-300 bg-transparent"
+  class="fixed inset-x-0 top-0 z-50 transition-all ease-in-out duration-300 bg-transparent"
 >
   <div class="relative px-4 py-5 max-w-screen-lg mx-auto flex justify-between items-center md:px-6 xl:max-w-screen-xl">
     <a
@@ -65,9 +66,9 @@ const navStrings = pickStrings(language, 'common', [
     </a>
 
     <!-- Desktop shows the links as plain markup; only the mobile menu needs
-         state, so the island hydrates below the lg breakpoint. -->
+         state, so the island hydrates below the xl breakpoint. -->
     <MainNavigation
-      client:media="(max-width: 1023px)"
+      client:media="(max-width: 1279px)"
       links={links}
       imprintHref={`/${language}/impressum`}
       privacyHref={`/${language}/datenschutz`}

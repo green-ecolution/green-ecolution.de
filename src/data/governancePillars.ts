@@ -1,8 +1,7 @@
-import { Shield, Lock, Puzzle, Plug, Users, PiggyBank } from 'lucide-react'
+import { Shield, Lock, Users, PiggyBank } from 'lucide-react'
 import type { ComponentType } from 'react'
 
-export type GovernancePillarId =
-  'license' | 'sovereignty' | 'modularity' | 'integration' | 'community' | 'costEfficiency'
+export type GovernancePillarId = 'license' | 'sovereignty' | 'community' | 'costEfficiency'
 
 interface GovernancePillar {
   id: GovernancePillarId
@@ -10,28 +9,8 @@ interface GovernancePillar {
 }
 
 export const governancePillars: GovernancePillar[] = [
-  {
-    id: 'license',
-    icon: Shield,
-  },
-  {
-    id: 'sovereignty',
-    icon: Lock,
-  },
-  {
-    id: 'modularity',
-    icon: Puzzle,
-  },
-  {
-    id: 'integration',
-    icon: Plug,
-  },
-  {
-    id: 'community',
-    icon: Users,
-  },
-  {
-    id: 'costEfficiency',
-    icon: PiggyBank,
-  },
+  { id: 'license', icon: Shield },
+  { id: 'sovereignty', icon: Lock },
+  { id: 'community', icon: Users },
+  { id: 'costEfficiency', icon: PiggyBank },
 ]

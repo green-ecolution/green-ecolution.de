@@ -1,11 +1,11 @@
 {
   "meta": {
     "title": "Blog | Green Ecolution",
-    "description": "Reports from the Green Ecolution project: sensors in the field, appearances around the region and progress on the platform."
+    "description": "Reports from Green Ecolution: sensors in the field, appearances around the region and progress on the platform."
   },
   "overview": {
     "eyebrow": "Blog",
-    "title": "From the project",
+    "title": "From our work",
     "description": "Sensors in the field, appearances around the region and progress on the platform.",
     "empty": "No post here yet. The first one is coming."
   },
