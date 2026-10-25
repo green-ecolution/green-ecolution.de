@@ -308,7 +308,7 @@
   },
   "offer": {
     "sectionLabel": "Offer",
-    "title": "Everything from one source",
+    "title": "Everything from a single source",
     "description": "From us you get the software, the sensors, the setup and the operation. The software is open source and free of licence fees; you pay for probes and services.",
     "items": {
       "software": {
