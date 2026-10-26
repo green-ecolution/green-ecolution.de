@@ -209,6 +209,13 @@
     "photoAlt": "Installing a soil probe at a tree site: a worker in high-visibility clothing opens the hole prepared by the earth auger, with the probe and its cable held ready beside it.",
     "photoCaption": "Installed together with the municipal service centre of Flensburg."
   },
+  "sensorSetup": {
+    "sectionLabel": "Setup",
+    "title": "Ready for use on site in a few steps",
+    "description": "The sensors are buried in the root zone of the trees by the staff of the municipal service centres themselves, without any external contractors. A mobile app is already available for the setup: scanning the QR code on the sensor is all it takes to assign it to its tree and location and connect it to the platform. This way, a sensor is ready for use on site in just a few steps.",
+    "photoAlt": "A hand holds a LoRaWAN sensor with a QR code, next to it a smartphone shows the first step of the sensor setup in the Green Ecolution app.",
+    "photoCaption": "Setting up a sensor with the mobile app."
+  },
   "videos": {
     "sectionLabel": "Videos",
     "title": "Get to know Green Ecolution through video",
