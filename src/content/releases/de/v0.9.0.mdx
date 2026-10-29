@@ -1,0 +1,165 @@
+---
+version: '0.9.0'
+date: '2026-10-29'
+author: 'cedrik-hoffmann'
+title: 'Fachmodule je Organisation, Abfallbehälter mit Leerungstouren und eine Organisationswahl'
+summary: 'Version 0.9.0 teilt Green Ecolution in einen gemeinsamen Kern und Fachmodule auf, die jede Organisation für sich ein- und ausschaltet. Die Bewässerung ist das erste Modul, das zweite ist neu: Abfallbehälter mit Füllständen aus Abstandssensoren und Leerungstouren auf dem bekannten Board, vorerst als Erprobungsstand. Für Instanzen mit mehreren Organisationen kommen eine Organisationswahl im Benutzermenü, eine Mandantenübersicht für den Betreiber und das Verschieben von Ressourcen aus dem Aktionsmenü hinzu. Stationen werden in den Einstellungen gepflegt. Die GPX-Datei eines Einsatzplans führt die Stopps als Wegpunkte mit.'
+highlights:
+  - 'Modul Abfall'
+  - 'Fachmodule'
+  - 'Organisationswahl'
+  - 'Mandantenübersicht'
+  - 'Stationen'
+  - 'Ressourcen verschieben'
+changelog:
+  - type: 'feat'
+    description: 'Modul Abfall mit Abfallbehältern, Füllstufen aus Abstandssensoren und Leerungstouren'
+    pr: 1114
+  - type: 'feat'
+    description: 'Laderaum als Fahrzeugkapazität, Stationen in den Einstellungen und ein Modulumschalter auf dem Board'
+    pr: 1113
+  - type: 'feat'
+    scope: 'backend'
+    description: 'Kern und Fachmodule getrennt, die Bewässerung wird zum ersten Modul'
+    pr: 1107
+  - type: 'feat'
+    scope: 'frontend'
+    description: 'Abschnitt Module auf der Organisationsseite, das Handbuch zeigt nur Kapitel aktiver Module'
+    pr: 1111
+  - type: 'feat'
+    description: 'Organisationswahl im Benutzermenü, die Karte, Listen und Rechte auf einen Teilbaum eingrenzt'
+    pr: 1116
+  - type: 'feat'
+    description: 'Mandantenübersicht für Mitglieder der obersten Organisation'
+    pr: 1121
+  - type: 'feat'
+    scope: 'frontend'
+    description: 'Gruppen, Bäume, Fahrzeuge, Sensoren, Behälter und Stationen aus dem Aktionsmenü in eine andere Organisation verschieben'
+    pr: 1118
+  - type: 'feat'
+    scope: 'backend'
+    description: 'Die GPX-Datei enthält nummerierte Wegpunkte für Startpunkt, Stopps und Stationen in Fahrreihenfolge'
+    pr: 1122
+  - type: 'feat'
+    scope: 'watering-plan'
+    description: 'Der Wassertank des Fahrzeugs lässt sich bei Einsätzen mit Anhänger abwählen'
+    pr: 1104
+  - type: 'feat'
+    scope: 'devcli'
+    description: 'Entwicklerkonsole geco für die lokale Umgebung'
+    pr: 1101
+  - type: 'fix'
+    description: 'Ein von einer übergeordneten Organisation gesetzter Modulschalter ist für die Untereinheit verbindlich'
+    pr: 1115
+  - type: 'fix'
+    description: 'Routen nutzen nur Startpunkte der eigenen Organisationskette, der Plugin-Import setzt ein aktives Modul voraus'
+    pr: 1117
+  - type: 'fix'
+    scope: 'frontend'
+    description: 'Fahrzeug- und Anhängerauswahl im Planformular zeigen nur noch den passenden Fahrzeugtyp'
+    pr: 1120
+---
+
+Version 0.9.0 verändert den Aufbau von Green Ecolution. Aus der Anwendung für die Bewässerung wird ein gemeinsamer Kern mit Fachmodulen, die sich je Organisation ein- und ausschalten lassen. Die Bewässerung ist das erste dieser Module, das zweite ist neu: Abfallbehälter mit Füllständen und Leerungstouren. Für Instanzen mit mehreren Organisationen kommen eine Organisationswahl im Benutzermenü, eine Mandantenübersicht für den Betreiber und das Verschieben von Ressourcen aus dem Aktionsmenü hinzu. Stationen lassen sich jetzt in den Einstellungen pflegen. Die GPX-Datei eines Einsatzplans führt die Stopps als Wegpunkte mit.
+
+## Highlight des Releases
+
+### Abfallbehälter und Leerungstouren
+
+Das Modul Abfall erweitert Green Ecolution um Abfallbehälter und ihre Leerung. Es ist standardmäßig ausgeschaltet und wird je Organisation im Abschnitt Module der Organisationsseite eingeschaltet. Erst dann erscheinen der Bereich Abfallbehälter unter Bestand in der Seitennavigation, die Behälter auf der Karte und die Leerungstouren in der Einsatzplanung.
+
+Ein Behälter wird mit Nummer, Volumen in Litern und Tiefe in Zentimetern erfasst, sein Standort mit einem Klick auf die Karte gesetzt. Die Tiefe ist der Abstand vom Sensor bis zum Behälterboden. Aus ihr und der letzten Abstandsmessung ergibt sich der Füllstand: Misst der Sensor 60 cm bei 120 cm Tiefe, ist der Behälter zur Hälfte gefüllt. Daraus leitet die Anwendung eine von vier Füllstufen ab. Voll heißt, der Schwellwert der Organisation ist erreicht, Normal gilt darunter. Geleert gilt nach einer abgeschlossenen Leerungstour. Unbekannt steht ein Behälter, solange keine Messung vorliegt oder die letzte älter ist als die Offline-Grenze der Organisation. Den Schwellwert legt jede Organisation in ihren Einstellungen selbst fest. Die Vorgabe liegt bei 80 Prozent. Der Wert wird wie die übrigen Fachlichen Vorgaben im Organisationsbaum nach unten vererbt.
+
+Die Liste zeigt jeden Behälter mit Nummer, Volumen, Füllstufe und Sensor und lässt sich nach Füllstufe filtern. Auf der Karte erscheinen die Behälter nach Füllstufe eingefärbt. Die Detailseite stellt Stammdaten und Füllstand nebeneinander, darunter lassen sich Kommentare hinterlassen, etwa zu einem beschädigten Deckel. Den Füllstand meldet ein Abstandssensor, der über die Sensorverwaltung einem Behälter zugeordnet wird, so wie bisher einem Baum. Als Sensormodell bringt das Modul vorerst einen simulierten Ultraschallsensor mit.
+
+![Die Liste der Abfallbehälter mit Suche, Füllstufenfilter und Behältern in den Füllstufen Voll, Normal und Geleert](../../../assets/releases/v0.9.0-abfallbehaelter.png)
+
+Leerungstouren entstehen auf demselben Board wie Bewässerungseinsätze. Sind beide Module aktiv, wechselt ein Umschalter über dem Board zwischen Bewässerung und Leerung. Die Spalte Vorschläge zeigt dann die vollen Behälter. Sie lassen sich zu einer Tour bündeln oder im Formular über Behälter auswählen zusammenstellen, wo Alle vollen auswählen sämtliche Behälter ab dem Schwellwert auf einmal markiert. Der Bedarf eines Behälters ist sein Volumen mal sein Füllstand, bei unbekannter Füllung rechnet die Planung mit dem vollen Volumen. Daraus ergibt sich, wie viel Laderaum die Tour braucht. Das Fahrzeug muss deshalb einen Laderaum eingetragen haben. Außerdem muss es eine Station geben, an der es ihn entladen kann, denn die Route endet erst nach dem Entladen. Fehlt eines von beiden, weist die Anwendung darauf hin, statt eine Route zu berechnen.
+
+Beim Beenden einer Tour fragt die Anwendung für jeden Behälter, ob er geleert wurde. Optional nimmt sie die gesammelte Menge in Litern entgegen. Geleerte Behälter wechseln auf die Füllstufe Geleert, bis der Sensor wieder misst. Die mitgelieferte Rollenvorlage Abfallsammlung bündelt die Rechte für die tägliche Arbeit: Behälter und Touren verwalten sowie Sensoren, Fahrzeuge, Regionen und Startpunkte ansehen.
+
+![Der Dialog zum Abschließen einer Leerungstour mit einem Schalter je Behälter und der optionalen Literangabe, im Hintergrund das Board mit den Reitern Bewässerung und Leerung](../../../assets/releases/v0.9.0-leerungstour.png)
+
+Das Modul Abfall ist in dieser Version noch nicht für den produktiven Einsatz vorgesehen. Es dient zunächst als Nachweis, dass ein zweites Fachmodul mit eigenen Objekten, Sensoren und Touren auf dem gemeinsamen Kern aufsetzen kann. Deshalb ist es bewusst auf den Kernablauf beschränkt. Als Sensormodell steht bislang nur ein simulierter Abstandssensor zur Verfügung. Wer das Modul einschaltet, sollte es als Erprobungsstand betrachten; die Bewässerung ist davon nicht betroffen.
+
+## Neue Funktionen
+
+### Fachmodule je Organisation
+
+Green Ecolution besteht ab dieser Version aus einem gemeinsamen Kern und Fachmodulen. Der Kern umfasst Organisationen, Rollen, Sensoren, Fahrzeuge und Stationen. Ein Fachmodul bringt die Bereiche mit, die zu einer Aufgabe gehören: Das Modul Bewässerung liefert Bäume, Bewässerungsgruppen, Bewässerungseinsätze und die Auswertung samt der zugehörigen Kartenebenen und Dashboard-Kacheln, das Modul Abfall die Behälter und Leerungstouren.
+
+Im Abschnitt Module der Organisationsseite steht für jedes Modul ein Schalter. Ein eingeschaltetes Modul steht der Organisation und allen Organisationen darunter zur Verfügung. Wie bei den Fachlichen Vorgaben zeigt ein Abzeichen, woher der Zustand kommt: ein eigener Wert, ein geerbter oder die Vorgabe der Instanz. Was eine übergeordnete Organisation für eine Untereinheit festlegt, ist für diese verbindlich. Der Schalter trägt dann den Hinweis Festgelegt von und lässt sich nur von der festlegenden Organisation aus wieder ändern. Ein von oben abgeschaltetes Modul erscheint bei der Untereinheit gar nicht mehr in der Liste.
+
+Ist ein Modul aus, verschwinden seine Bereiche aus Navigation, Karte, Dashboard und Einsatzplanung. Ein Link auf eine seiner Seiten zeigt den Hinweis Modul nicht aktiv. Die Daten bleiben unberührt und stehen wieder zur Verfügung, sobald das Modul erneut eingeschaltet wird. Auch das Handbuch richtet sich danach und zeigt angemeldeten Personen nur die Kapitel der Module, die für sie aktiv sind.
+
+![Der Abschnitt Module auf der Organisationsseite mit den Schaltern für Bewässerung und Abfall und ihren Herkunftsabzeichen](../../../assets/releases/v0.9.0-module.png)
+
+### Organisation wählen
+
+Wer mehreren Organisationen angehört oder eine Organisation mit Untereinheiten verwaltet, findet im Benutzermenü den neuen Eintrag Organisation. Er öffnet den erreichbaren Teil des Organisationsbaums, ab neun Einträgen mit einem Suchfeld darüber. Wird eine Organisation gewählt, gilt die Auswahl samt ihren Untereinheiten: Karte, Listen, Einsatzpläne, Dashboard und Einstellungen zeigen nur noch, was zu diesem Teil gehört. Die Karte öffnet sich an dem Ausschnitt, der für diese Organisation eingestellt ist. Neue Objekte entstehen in der gewählten Organisation. Die eigenen Rechte gelten nur innerhalb der Auswahl, auch wenn man an anderer Stelle des Baums mehr dürfte.
+
+Die Benutzerkarte am Fuß der Navigation zeigt dann den Namen der Organisation statt der E-Mail-Adresse. Die Wahl der eigenen Organisation hebt die Auswahl wieder auf. Der Browser merkt sich die Einstellung für das Konto. Führt ein Link auf ein Objekt außerhalb der gewählten Organisation, meldet die Anwendung es als nicht gefunden oder zeigt Kein Zugriff und bietet in beiden Fällen an, zur eigenen Organisation zu wechseln.
+
+![Das geöffnete Benutzermenü mit dem Untermenü Organisation und dem Organisationsbaum, eine Unterorganisation ist ausgewählt](../../../assets/releases/v0.9.0-organisationswahl.png)
+
+### Mandantenübersicht
+
+Die oberste Organisation einer Instanz ist kein Mandant, sondern ihr Betreiber. Ihre Mitglieder landen nach der Anmeldung deshalb nicht mehr auf dem Dashboard, sondern in der Mandantenübersicht. Die Seitennavigation führt unter Instanz zu Mandanten, Organisation, Team und Rollen, Plugins und Systeminformationen. Karte, Einsatzpläne, Fahrzeuge und Sensoren tauchen dort nicht auf, weil sie immer zu einem bestimmten Mandanten gehören.
+
+Jede Karte der Übersicht steht für einen Mandanten und nennt die Zahl seiner Unterorganisationen, die Mitarbeitenden in seinem gesamten Ast, die aktiven Module sowie die Sensoren, Fahrzeuge und Einsatzpläne, die ihm und seinen Unterorganisationen gehören. Als Mandant öffnen wechselt in dessen Organisation und zeigt die Anwendung so, wie seine Mitarbeitenden sie sehen. Technisch ist das derselbe Organisationswechsel wie über das Benutzermenü. Über dieses Menü geht es auch zurück in die Übersicht.
+
+![Die Mandantenübersicht mit der Navigation Instanz und der Karte des Mandanten TBZ mit seinen Kennzahlen](../../../assets/releases/v0.9.0-mandanten.png)
+
+### Ressourcen in eine andere Organisation verschieben
+
+Seit [0.5.0](/de/releases/v0.5.0) gehört jede Ressource zu einer Organisation. Der Ausblick von [0.5.1](/de/releases/v0.5.1) hatte den nachträglichen Wechsel der Organisation angekündigt. Die Detailseiten von Bewässerungsgruppen, Bäumen, Fahrzeugen, Sensoren und Abfallbehältern tragen dafür jetzt im Menü Weitere Aktionen den Eintrag In andere Organisation verschieben, die Stationsliste eine entsprechende Schaltfläche. Der Dialog bietet als Ziel die Organisationen an, in denen die eigene Rolle die Ressource bearbeiten darf, deshalb erscheint der Eintrag nur, wenn es mindestens eine weitere gibt.
+
+Eine Bewässerungsgruppe wechselt samt ihren Bäumen und deren Sensoren, ihre Einsatzpläne und Kommentare bleiben erhalten. Ein Baum in einer Gruppe und ein mit einem Ziel verbundener Sensor lassen sich nicht einzeln verschieben. Der Eintrag ist dann ausgegraut und nennt den Grund. Die Standardstation wird nie angeboten, weil jede Organisation genau eine hat.
+
+![Der Dialog zum Verschieben einer Bewässerungsgruppe mit der aufgeklappten Auswahl der Zielorganisation](../../../assets/releases/v0.9.0-verschieben.png)
+
+### Stationen in den Einstellungen
+
+Startpunkte gibt es seit [0.4.0](/de/releases/v0.4.0), pflegen ließen sie sich aber nur über die Schnittstelle. Unter Einstellungen › Stationen steht jetzt eine eigene Seite dafür. Jede Tour beginnt an einem Startpunkt und kehrt dorthin zurück. Manche dieser Orte sind zugleich Stationen, an denen Fahrzeuge unterwegs auffüllen oder entladen, deshalb werden beide auf derselben Seite gepflegt. Eine Station ist ein Startpunkt mit der Angabe, was dort geschieht: Wasser auffüllen, Laderaum entladen oder beides. Bei der Routenberechnung kommen nur Stationen infrage, die zur Kapazität des jeweiligen Einsatzplans passen.
+
+Eine Station wird mit Name, Organisation und Position auf der Karte angelegt. Genau eine je Organisation ist der Standard, der im Formular eines Einsatzplans vorgeschlagen wird und sich erst löschen lässt, wenn ein anderer bestimmt ist. Startpunkte sind dafür zu einer eigenen Ressource im Berechtigungskatalog geworden. Rollen, die Rechte auf Einsatzpläne halten, haben beim Update die entsprechenden Rechte auf Startpunkte automatisch erhalten.
+
+![Die Seite Stationen mit zwei Einträgen, einer davon als Standard markiert, einer mit den Kapazitäten Wasser und Laderaum](../../../assets/releases/v0.9.0-stationen.png)
+
+## Weitere Verbesserungen
+
+### Wegpunkte in der GPX-Datei
+
+Die GPX-Datei eines Einsatzplans enthielt bisher nur die Strecke. Jetzt kommen Wegpunkte hinzu, für den Startpunkt, jeden Stopp und jede Station, in Fahrreihenfolge durchnummeriert. Die Reihenfolge stammt aus der Routenberechnung und bleibt beim Einsatzplan gespeichert. In einer Navigations-App wie OsmAnd lässt sich der Track als Routenquelle verwenden, die Wegpunkte zeigt die App entlang der Strecke. So ist unterwegs erkennbar, welche Gruppe oder welcher Behälter als nächstes dran ist und wo nachgefüllt oder entladen wird.
+
+### Einsätze ohne den Wassertank des Fahrzeugs
+
+Ein Einsatz mit Anhänger rechnete bisher immer mit dem Fassungsvermögen von Fahrzeug und Anhänger zusammen, auch wenn das Fahrzeug selbst kein Wasser mitführt. Sobald im Formular ein Anhänger gewählt ist, erscheint jetzt die Option Wassertank des Fahrzeugs mitnutzen. Sie ist zunächst aktiv. Wird sie abgewählt, rechnen Routenberechnung und Gruppenauswahl allein mit dem Anhänger. Die Detailseite des Einsatzplans nennt die gewählte Variante.
+
+### Kapazitäten der Fahrzeuge
+
+Das Fahrzeugformular bündelt die Kapazitäten in einem Abschnitt. Neben dem Wassertank für die Bewässerung steht der Laderaum für Leerungstouren, jeweils in Litern. Angezeigt werden nur die Kapazitäten der Module, die für die Organisation aktiv sind, ein ausgeblendetes Feld behält seinen gespeicherten Wert. Ein Fahrzeug braucht mindestens eine Kapazität und darf beide haben.
+
+## Behobene Fehler
+
+### Einsatzpläne
+
+Das Formular eines Einsatzplans lud für Fahrzeug und Anhänger dieselbe ungefilterte Liste, sodass Anhänger unter den Fahrzeugen auftauchten und umgekehrt. Jede Auswahl zeigt jetzt nur den passenden Fahrzeugtyp.
+
+Die Routenberechnung betrachtete alle Startpunkte der Instanz. Mit mehreren Mandanten konnte eine Route deshalb am Betriebshof eines anderen Mandanten beginnen und an dessen Stationen nachfüllen. Infrage kommen jetzt nur die Startpunkte der eigenen Organisation, ihrer übergeordneten Organisationen und ihrer Untereinheiten, wobei der eigene Standard einem geerbten vorgeht. Die Routenvorschau eines bearbeiteten Plans nutzt denselben Startpunkt, mit dem er gespeichert wird.
+
+### Plugins
+
+Die Import-Schnittstelle prüfte nur die Rechte des Plugins. Ein Plugin konnte so weiter Bäume anlegen und löschen, obwohl die Organisation das Modul Bewässerung abgeschaltet hatte. Der Import setzt jetzt voraus, dass das Modul in der Organisation des Plugins aktiv ist.
+
+## Wichtig für bestehende Installationen
+
+Die Aufteilung in Kern und Module verändert einige Schnittstellen und Konfigurationsschlüssel. Die Einstellungen der Bewässerung sind in der Konfiguration unter `modules.irrigation` zusammengezogen: der Wasserbedarf je Baum, die Nachwirkzeit samt Prüfintervall und die Grenzen der Umkreissuche. Der Server startet nicht, solange noch einer der alten Schlüssel gesetzt ist. Die Meldung nennt den neuen Ort. Die Schnittstelle der Einsatzpläne liegt jetzt unter `/api/v1/plans` statt `/api/v1/watering-plans`. Die Statistik unter `/api/v1/info/statistics` meldet Sensoren, Fahrzeuge und Einsatzpläne sowie je Modul dessen eigene Zählwerte statt fester Baum- und Gruppenzahlen. Eigene Auswertungen, die diese Endpunkte lesen, müssen angepasst werden.
+
+Die Migration legt die Tabellen des Abfallmoduls an, auch wenn es ausgeschaltet bleibt. Außerdem ergänzt sie bei jeder Rolle, die Rechte auf Einsatzpläne hält, die entsprechenden Rechte auf Startpunkte. Das Modul Abfall ist nach dem Update in keiner Organisation aktiv und wird gezielt eingeschaltet.
+
+## Ausblick
+
+Das Abfallmodul bleibt vorerst ein Erprobungsstand. Auf der jetzt gelegten Grundlage lässt es sich schrittweise ausbauen, etwa um reale Sensormodelle.
+
+Rückmeldungen und Fehlerberichte sind jederzeit willkommen auf [GitHub](https://github.com/green-ecolution/green-ecolution/issues).
