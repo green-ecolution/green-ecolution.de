@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.19.3](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.2...v1.19.3) (2026-10-29)
+
+
+### Features
+
+* **home:** show sensor setup with the mobile app ([6d1b1fd](https://github.com/green-ecolution/green-ecolution.de/commit/6d1b1fd69f10630eeb2c146fc87f15c927a65d36))
+
+
+### Documentation
+
+* **releases:** add release notes for v0.9.0 ([#563](https://github.com/green-ecolution/green-ecolution.de/issues/563)) ([1076ec6](https://github.com/green-ecolution/green-ecolution.de/commit/1076ec6b29524ec56fb43aa2d9dd58d645972c2f))
+
 ## [1.19.2](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.1...v1.19.2) (2026-10-25)
 
 
