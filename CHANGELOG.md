@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.19.4](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.3...v1.19.4) (2026-10-30)
+
+
+### Bug Fixes
+
+* **blog:** embed award video in Digitalisierungspreis post ([1ba43a6](https://github.com/green-ecolution/green-ecolution.de/commit/1ba43a6b9cd6fc222fe76b84aefdb424858340cb))
+
 ## [1.19.3](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.2...v1.19.3) (2026-10-29)
 
 
