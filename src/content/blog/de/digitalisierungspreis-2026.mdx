@@ -7,9 +7,23 @@ coverAlt: Digitalisierungsminister Dirk Schrödter steht mit Cedrik Hoffmann und
 author: cedrik-hoffmann
 ---
 
+import ContentEmbed from '../../../components/content/ContentEmbed.astro'
+import awardVideoPoster from '../../../assets/blog/digitalisierungspreis-2026-video-poster.webp'
+import { awardVideo } from '../../../data/awardVideo'
+
 Green Ecolution hat beim Digitalisierungspreis 2026 des Landes Schleswig-Holstein den Sonderpreis Green Coding gewonnen. Digitalisierungsminister Dirk Schrödter hat den Preis am Abend des 23. September im Gästehaus der Landesregierung in Kiel überreicht. Er ist mit 25.000 Euro dotiert. Den [Digitalisierungspreis](https://www.schleswig-holstein.de/DE/fachinhalte/P/preiseWettbewerbe/Digitalisierungspreis) vergibt das Land seit 2018.
 
 Beworben hatte sich PROGEEK, wo wir Green Ecolution im Landesprogramm Offene Innovation zur Produktionsreife weiterentwickeln. Den Sonderpreis für Green IT gibt es in diesem Jahr zum ersten Mal. Er zeichnet Software aus, die sparsam mit Energie und Ressourcen umgeht. Dass wir ihn als Erste bekommen, freut uns sehr.
+
+<ContentEmbed
+  language="de"
+  src={awardVideo.playerUrl}
+  title={awardVideo.title}
+  poster={awardVideoPoster}
+  posterAlt="Ein Projektmitarbeiter hält einen Bodenfeuchtesensor in der Hand, im Hintergrund ein junger Straßenbaum und ein Pritschenwagen mit Wassertank"
+  caption={awardVideo.attribution}
+  provider={awardVideo.provider}
+/>
 
 ## Green IT auf zwei Ebenen
 
