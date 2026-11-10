@@ -20,3 +20,7 @@ export function pinnedStep(progress: number, steps: number): PinnedStep {
 export function progressForStep(index: number, steps: number): number {
   return (index + 0.5) / steps
 }
+
+export function phaseOfStep(fill: number, phases: number): number {
+  return Math.min(phases - 1, Math.floor(Math.max(0, fill) * phases))
+}

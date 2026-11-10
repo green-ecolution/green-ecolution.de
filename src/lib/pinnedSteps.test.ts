@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { pinProgress, pinnedStep, progressForStep } from './pinnedSteps'
+import { phaseOfStep, pinProgress, pinnedStep, progressForStep } from './pinnedSteps'
 
 describe('pinProgress', () => {
   it('bleibt vor dem Pin-Bereich bei 0', () => {
@@ -40,5 +40,20 @@ describe('progressForStep', () => {
     for (let index = 0; index < 3; index++) {
       expect(pinnedStep(progressForStep(index, 3), 3).index).toBe(index)
     }
+  })
+})
+
+describe('phaseOfStep', () => {
+  it('teilt einen Schritt mit mehreren Bildern in gleich lange Phasen', () => {
+    expect(phaseOfStep(0.2, 2)).toBe(0)
+    expect(phaseOfStep(0.6, 2)).toBe(1)
+  })
+
+  it('bleibt am Ende des Schritts bei der letzten Phase', () => {
+    expect(phaseOfStep(1, 2)).toBe(1)
+  })
+
+  it('hat bei nur einem Bild immer Phase 0', () => {
+    expect(phaseOfStep(0.9, 1)).toBe(0)
   })
 })

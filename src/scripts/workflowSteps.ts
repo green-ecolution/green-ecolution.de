@@ -1,10 +1,16 @@
-import { pinnedStep, progressForStep } from '../lib/pinnedSteps'
+import { phaseOfStep, pinnedStep, progressForStep } from '../lib/pinnedSteps'
 import { bindPinnedStage } from './pinStage'
 
 let page: AbortController | null = null
 
-function activate(root: HTMLElement, active: number) {
-  if (root.dataset.activeStep === String(active)) return
+function phasesOf(root: HTMLElement, step: number): number {
+  return root.querySelectorAll(`[data-step-visual="${step}"]`).length || 1
+}
+
+function activate(root: HTMLElement, active: number, phase = 0) {
+  const key = `${active}:${phase}`
+  if (root.dataset.activeVisual === key) return
+  root.dataset.activeVisual = key
   root.dataset.activeStep = String(active)
 
   for (const step of root.querySelectorAll<HTMLElement>('[data-step]')) {
@@ -14,7 +20,9 @@ function activate(root: HTMLElement, active: number) {
     trigger.setAttribute('aria-expanded', String(Number(trigger.dataset.stepTrigger) === active))
   }
   for (const visual of root.querySelectorAll<HTMLElement>('[data-step-visual]')) {
-    const isActive = Number(visual.dataset.stepVisual) === active
+    const isActive =
+      Number(visual.dataset.stepVisual) === active &&
+      Number(visual.dataset.stepPhase ?? 0) === phase
     visual.dataset.active = String(isActive)
     if (isActive) visual.removeAttribute('aria-hidden')
     else visual.setAttribute('aria-hidden', 'true')
@@ -34,6 +42,7 @@ function setup() {
     const steps = root.querySelectorAll('[data-step]').length
     root.dataset.enhanced = ''
     root.dataset.activeStep = '0'
+    root.dataset.activeVisual = '0:0'
 
     const pin = bindPinnedStage(track, stage, signal, (progress) => {
       if (progress === null) {
@@ -42,7 +51,7 @@ function setup() {
       }
       const { index, fill } = pinnedStep(progress, steps)
       root.style.setProperty('--step-fill', fill.toFixed(3))
-      activate(root, index)
+      activate(root, index, phaseOfStep(fill, phasesOf(root, index)))
     })
 
     for (const trigger of root.querySelectorAll<HTMLElement>('[data-step-trigger]')) {
