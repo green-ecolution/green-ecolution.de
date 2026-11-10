@@ -122,6 +122,9 @@
         "label": "Kurzer Schauer",
         "status": "Nur die oberste Schicht ist feucht. Die Sonde meldet Feuchte bei den Feinwurzeln, die tieferen Messpunkte bleiben trocken."
       },
+      "midway": {
+        "status": "Das Wasser ist bis zu den Hauptwurzeln vorgedrungen. Der tiefste Messpunkt bleibt noch trocken."
+      },
       "soak": {
         "label": "Gründlich gegossen",
         "status": "Das Wasser ist im Wurzelbereich angekommen. Alle drei Messpunkte melden Feuchte."
