@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import { Leaf, Mail, Phone, Smartphone } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { company } from '../../data/company'
@@ -14,20 +15,40 @@ const { language } = Astro.props
 const t = getTranslations(language, 'about')
 const press = splitSlot(t('owners.pressRich'), 'press')
 
+const contactChannels = [
+  {
+    icon: Mail,
+    label: t('owners.contact.mailLabel'),
+    href: `mailto:${company.email}`,
+    display: company.email,
+  },
+  {
+    icon: Phone,
+    label: t('owners.contact.phoneLabel'),
+    href: company.phone.href,
+    display: company.phone.display,
+  },
+  {
+    icon: Smartphone,
+    label: t('owners.contact.mobileLabel'),
+    href: company.mobile.href,
+    display: company.mobile.display,
+  },
+]
+
 const LINK_CLASS =
   'font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4'
 ---
 
 <section class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
-  <div class="inline-block mb-4">
-    <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-      {t('owners.sectionLabel')}
-    </span>
-    <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
-  </div>
-
-  <div class="lg:grid lg:grid-cols-12 lg:gap-10 lg:items-start">
+  <div class="lg:grid lg:grid-cols-12 lg:gap-10 lg:items-center">
     <div class="lg:col-span-7">
+      <div class="inline-block mb-4">
+        <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+          {t('owners.sectionLabel')}
+        </span>
+        <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+      </div>
       <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
         {t('owners.title')}
       </h2>
@@ -46,35 +67,60 @@ const LINK_CLASS =
       </p>
     </div>
 
-    <div class="mt-10 lg:mt-0 lg:col-span-5 rounded-2xl border border-green-dark-900/10 bg-white p-6 flex gap-5 items-center">
-      <Image
-        src={portrait}
-        alt={t('owners.contact.photoAlt', { name: company.managingDirector })}
-        widths={[112, 224]}
-        sizes="112px"
-        class="w-28 h-28 rounded-full object-cover shrink-0"
-      />
-      <div>
-        <p class="font-lato font-semibold text-grey-900">{company.managingDirector}</p>
-        <p class="text-grey-900/70 mb-3">{t('owners.contact.role')}</p>
-        <p class="text-sm">
-          <span class="text-grey-900/60">{t('owners.contact.mailLabel')}: </span>
-          <a href={`mailto:${company.email}`} class={LINK_CLASS}>
-            {company.email}
-          </a>
-        </p>
-        <p class="text-sm mt-1">
-          <span class="text-grey-900/60">{t('owners.contact.phoneLabel')}: </span>
-          <a href={company.phone.href} class={LINK_CLASS}>
-            {company.phone.display}
-          </a>
-        </p>
-        <p class="text-sm mt-1">
-          <span class="text-grey-900/60">{t('owners.contact.mobileLabel')}: </span>
-          <a href={company.mobile.href} class={LINK_CLASS}>
-            {company.mobile.display}
-          </a>
-        </p>
+    <div class="relative mt-10 lg:mt-0 lg:col-span-5 overflow-hidden rounded-3xl border border-green-dark-900/10 bg-gradient-to-br from-green-light-100 via-white to-white p-6 md:p-8">
+      <div
+        class="absolute -top-20 -right-20 w-56 h-56 rounded-full bg-green-light-900/15 blur-3xl pointer-events-none"
+        aria-hidden="true"
+      ></div>
+
+      <div class="relative flex flex-col gap-6 sm:flex-row sm:items-center">
+        <div class="relative shrink-0 self-start sm:self-center">
+          <div class="rounded-full bg-gradient-to-br from-green-light-900 to-green-dark-900 p-1">
+            <div class="rounded-full bg-white p-1">
+              <Image
+                src={portrait}
+                alt={t('owners.contact.photoAlt', { name: company.managingDirector })}
+                widths={[112, 224]}
+                sizes="112px"
+                class="w-28 h-28 rounded-full object-cover"
+              />
+            </div>
+          </div>
+          <div
+            class="absolute bottom-0 right-0 w-9 h-9 rounded-full bg-green-dark-900 ring-4 ring-white flex items-center justify-center shadow-md"
+            aria-hidden="true"
+          >
+            <Leaf className="w-4 h-4 text-white" />
+          </div>
+        </div>
+
+        <div class="min-w-0">
+          <p class="font-lato font-bold text-lg text-grey-900 lg:text-xl">
+            {company.managingDirector}
+          </p>
+          <p class="text-sm font-semibold tracking-wide text-green-dark-900 mb-4">
+            {t('owners.contact.role')}
+          </p>
+          <ul class="space-y-1">
+            {contactChannels.map((channel) => (
+              <li>
+                <a
+                  href={channel.href}
+                  class="group -mx-2 flex items-center gap-3 rounded-xl px-2 py-1.5 text-sm font-medium text-grey-900 transition-colors hover:bg-green-dark-900/5 focus-visible:outline-2 focus-visible:outline-green-dark-900"
+                >
+                  <span
+                    class="w-8 h-8 shrink-0 rounded-lg bg-green-dark-900/10 text-green-dark-900 flex items-center justify-center transition-colors group-hover:bg-green-dark-900 group-hover:text-white"
+                    aria-hidden="true"
+                  >
+                    <channel.icon className="w-4 h-4" />
+                  </span>
+                  <span class="sr-only">{channel.label}: </span>
+                  <span class="break-all">{channel.display}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   </div>
