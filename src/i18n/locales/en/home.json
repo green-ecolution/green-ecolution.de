@@ -10,7 +10,6 @@
     "headlineSuffix": " of green spaces!",
     "tagline": "Measure. Understand. Act.",
     "description": "Sensors in the soil show which trees need water, and route planning sends your team straight there. Irrigation is only the beginning.",
-    "adoptTreeAriaLabel": "Adopt a tree",
     "ctaContact": "Get in touch",
     "ctaProduct": "Explore the product"
   },
@@ -21,47 +20,6 @@
     "description": "In September 2026 the state of Schleswig-Holstein honoured Green Ecolution for resource-efficient software and demand-based irrigation. Digital minister Dirk Schrödter presented the prize in Kiel.",
     "cta": "Read about the award ceremony",
     "imageAlt": "Digital minister Dirk Schrödter applauds two PROGEEK representatives holding trophy and certificate on stage, behind them a screen reading Green Ecolution"
-  },
-  "adoptModal": {
-    "ariaLabel": "Adoption certificate for {{fullName}}",
-    "fullName": "{{name}} the {{species}}",
-    "certificateLabel": "Adoption certificate",
-    "certificateNumber": "No. {{number}}",
-    "waitingIn": "is waiting for you in Flensburg",
-    "funFactLabel": "Did you know?",
-    "quote": "“Thank you for thinking of me! With projects like Green Ecolution, city trees like me finally get the attention we deserve.”",
-    "signature": "— {{name}}, in Flensburg since {{year}}",
-    "thanks": "Thank you, {{name}}! 🌳"
-  },
-  "adoptTree": {
-    "species": {
-      "birch": "Birch",
-      "spruce": "Spruce",
-      "oak": "Oak",
-      "beech": "Beech",
-      "chestnut": "Chestnut",
-      "linden": "Linden",
-      "maple": "Maple",
-      "ash": "Ash",
-      "elm": "Elm",
-      "plane": "Plane tree",
-      "fir": "Fir",
-      "willow": "Willow",
-      "robinia": "Robinia",
-      "alder": "Alder",
-      "poplar": "Poplar"
-    },
-    "facts": {
-      "evaporation": "A large city tree can evaporate up to 400 liters of water a day, cooling its surroundings by up to 3°C.",
-      "oxygen": "A single beech tree produces enough oxygen for 10 people per year.",
-      "dust": "City trees filter a significant share of particulate matter from the air in their immediate surroundings.",
-      "roots": "The roots of a street tree often extend over one and a half times the area of its crown.",
-      "co2": "Over its lifetime, a 100-year-old tree has bound around 5 tons of CO₂.",
-      "network": "Trees communicate through underground fungal networks, known as the “Wood Wide Web”.",
-      "lifespan": "Street trees live an average of only 60 years. In rural areas, they live three times as long.",
-      "noise": "A dense stand of trees can reduce noise levels by up to 10 decibels.",
-      "water": "In hot summers, a city tree needs up to 200 additional liters of water per week."
-    }
   },
   "introduction": {
     "sectionLabel": "Platform",

@@ -3,65 +3,14 @@ import { Trophy } from 'lucide-react'
 import Arrow from '../icons/Arrow.astro'
 import HeroTreesIsland from '../islands/hero/HeroTreesIsland'
 import type { Language } from '../../i18n/languages'
-import { pickStrings } from '../../i18n/pick'
 import { getTranslations } from '../../i18n/t'
-import type { TranslationKey } from '../../i18n/t'
 
 interface Props {
   language: Language
 }
 
-const FACT_IDS = [
-  'evaporation',
-  'oxygen',
-  'dust',
-  'roots',
-  'co2',
-  'network',
-  'lifespan',
-  'noise',
-  'water',
-] as const
-
-const SPECIES_IDS = [
-  'birch',
-  'spruce',
-  'oak',
-  'beech',
-  'chestnut',
-  'linden',
-  'maple',
-  'ash',
-  'elm',
-  'plane',
-  'fir',
-  'willow',
-  'robinia',
-  'alder',
-  'poplar',
-] as const
-
-// Spelled out rather than passing the namespace: the island renders every one of
-// these, and an explicit list is what keeps the payload from growing with the
-// catalog.
-const ISLAND_KEYS = [
-  'hero.adoptTreeAriaLabel',
-  'adoptModal.ariaLabel',
-  'adoptModal.certificateLabel',
-  'adoptModal.certificateNumber',
-  'adoptModal.fullName',
-  'adoptModal.funFactLabel',
-  'adoptModal.quote',
-  'adoptModal.signature',
-  'adoptModal.thanks',
-  'adoptModal.waitingIn',
-  ...FACT_IDS.map((id) => `adoptTree.facts.${id}`),
-  ...SPECIES_IDS.map((id) => `adoptTree.species.${id}`),
-] as TranslationKey<'home'>[]
-
 const { language } = Astro.props
 const t = getTranslations(language, 'home')
-const strings = pickStrings(language, 'home', ISLAND_KEYS)
 ---
 
 <section>
@@ -132,6 +81,6 @@ const strings = pickStrings(language, 'home', ISLAND_KEYS)
       </div>
     </article>
 
-    <HeroTreesIsland client:visible strings={strings} />
+    <HeroTreesIsland client:visible />
   </div>
 </section>

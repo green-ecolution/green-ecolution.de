@@ -10,7 +10,6 @@
     "headlineSuffix": " von Grünflächen!",
     "tagline": "Messen. Verstehen. Handeln.",
     "description": "Sensoren im Boden zeigen, welche Bäume Wasser brauchen. Die Einsatzplanung schickt dein Team gezielt dorthin. Die Bewässerung ist dabei erst der Anfang.",
-    "adoptTreeAriaLabel": "Baum adoptieren",
     "ctaContact": "Kontakt aufnehmen",
     "ctaProduct": "Produkt entdecken"
   },
@@ -21,47 +20,6 @@
     "description": "Das Land Schleswig-Holstein hat Green Ecolution im September 2026 für ressourcenschonende Software und bedarfsgerechte Bewässerung ausgezeichnet. Überreicht hat den Preis Digitalisierungsminister Dirk Schrödter in Kiel.",
     "cta": "Zum Beitrag über die Preisverleihung",
     "imageAlt": "Digitalisierungsminister Dirk Schrödter applaudiert auf der Bühne zwei Vertretern von PROGEEK mit Trophäe und Urkunde, dahinter die Leinwand mit der Aufschrift Green Ecolution"
-  },
-  "adoptModal": {
-    "ariaLabel": "Adoptionsurkunde für {{fullName}}",
-    "fullName": "{{name}} die {{species}}",
-    "certificateLabel": "Adoptionsurkunde",
-    "certificateNumber": "Nr. {{number}}",
-    "waitingIn": "wartet in Flensburg auf dich",
-    "funFactLabel": "Wusstest du?",
-    "quote": "„Danke, dass du an mich denkst! Mit Projekten wie Green Ecolution bekommen Stadtbäume wie ich endlich die Aufmerksamkeit, die wir verdienen.“",
-    "signature": "— {{name}}, seit {{year}} in Flensburg",
-    "thanks": "Danke, {{name}}! 🌳"
-  },
-  "adoptTree": {
-    "species": {
-      "birch": "Birke",
-      "spruce": "Fichte",
-      "oak": "Eiche",
-      "beech": "Buche",
-      "chestnut": "Kastanie",
-      "linden": "Linde",
-      "maple": "Ahorn",
-      "ash": "Esche",
-      "elm": "Ulme",
-      "plane": "Platane",
-      "fir": "Tanne",
-      "willow": "Weide",
-      "robinia": "Robinie",
-      "alder": "Erle",
-      "poplar": "Pappel"
-    },
-    "facts": {
-      "evaporation": "Ein großer Stadtbaum kann bis zu 400 Liter Wasser am Tag verdunsten und so die Umgebung um bis zu 3°C kühlen.",
-      "oxygen": "Eine einzige Buche produziert genug Sauerstoff für 10 Menschen pro Jahr.",
-      "dust": "Stadtbäume filtern einen relevanten Anteil des Feinstaubs aus der Luft in ihrer unmittelbaren Umgebung.",
-      "roots": "Die Wurzeln eines Straßenbaums erstrecken sich oft über das Anderthalbfache der Kronenfläche.",
-      "co2": "Ein 100-jähriger Baum hat in seinem Leben etwa 5 Tonnen CO₂ gebunden.",
-      "network": "Bäume kommunizieren über unterirdische Pilznetzwerke, das sogenannte „Wood Wide Web“.",
-      "lifespan": "Straßenbäume leben im Durchschnitt nur 60 Jahre. Auf dem Land werden sie dreimal so alt.",
-      "noise": "Ein dichter Baumbestand kann den Lärmpegel um bis zu 10 Dezibel senken.",
-      "water": "In heißen Sommern braucht ein Stadtbaum bis zu 200 Liter Wasser pro Woche zusätzlich."
-    }
   },
   "introduction": {
     "sectionLabel": "Plattform",
