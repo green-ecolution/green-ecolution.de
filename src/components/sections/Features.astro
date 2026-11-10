@@ -99,17 +99,24 @@ const ROWS = [FEATURES.slice(0, 3), FEATURES.slice(3)]
             <div
               data-preview={preview ? 'closed' : undefined}
               data-preview-size={preview ? (feature.large ? 'large' : 'small') : undefined}
+              data-size={feature.large ? 'large' : 'small'}
               class:list={[
-                'feature-card group relative @container overflow-hidden rounded-xl p-5 md:rounded-2xl md:p-6 lg:p-8 border hover:shadow-lg',
+                'feature-card group relative overflow-hidden rounded-xl p-5 md:rounded-2xl md:p-6 lg:p-8 border hover:shadow-lg',
                 feature.large && 'sm:col-span-2',
                 BORDER_CLASSES[feature.color],
                 COLOR_CLASSES[feature.color],
               ]}
             >
-              <div class="@lg:flex @lg:items-start @lg:gap-x-6">
+              <div
+                class:list={[
+                  'feature-content',
+                  feature.large && 'lg:flex lg:items-start lg:gap-x-6',
+                ]}
+              >
                 <figure
                   class:list={[
-                    'shrink-0 w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4 @lg:mb-0',
+                    'shrink-0 w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4',
+                    feature.large && 'lg:mb-0',
                     ICON_COLOR_CLASSES[feature.color],
                   ]}
                 >
@@ -144,6 +151,25 @@ const ROWS = [FEATURES.slice(0, 3), FEATURES.slice(3)]
                 </div>
               </div>
 
+              {feature.large && (
+                // What a large card shows while a neighbour borrows its second
+                // column: the full text would not fit, so only icon and title.
+                <div
+                  class="feature-compact pointer-events-none absolute inset-0 hidden p-8 lg:block"
+                  aria-hidden="true"
+                >
+                  <span
+                    class:list={[
+                      'flex w-14 h-14 rounded-xl items-center justify-center mb-4 [&>svg]:w-8 [&>svg]:h-8',
+                      ICON_COLOR_CLASSES[feature.color],
+                    ]}
+                  >
+                    <Icon />
+                  </span>
+                  <span class="block font-lato font-bold text-xl text-grey-900">{label}</span>
+                </div>
+              )}
+
               {preview && (
                 <>
                   <div class="feature-preview pointer-events-none absolute inset-0 z-10 bg-white opacity-0 group-data-[preview=open]:opacity-100">
@@ -153,7 +179,7 @@ const ROWS = [FEATURES.slice(0, 3), FEATURES.slice(3)]
                       widths={[480, 800, 1200]}
                       sizes="(min-width: 1024px) 50vw, 100vw"
                       loading="lazy"
-                      class="w-full h-full object-cover object-left-top"
+                      class="feature-preview-image w-full h-full object-cover object-left-top"
                     />
                     <div class="absolute left-3 bottom-3 flex flex-wrap gap-2" aria-hidden="true">
                       <span class="rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-grey-900 shadow-sm">
@@ -195,59 +221,116 @@ const ROWS = [FEATURES.slice(0, 3), FEATURES.slice(3)]
 
 <style>
   .feature-preview {
-    transition: opacity 300ms ease-out;
+    transition: opacity 250ms ease-out;
   }
 
   .feature-card {
     transition:
-      flex-basis 500ms var(--ease-spring-settle),
+      flex-basis 550ms var(--ease-spring-settle),
       box-shadow 300ms ease-out,
       border-color 300ms ease-out,
       background-color 300ms ease-out;
   }
 
+  .feature-content,
+  .feature-compact {
+    transition: opacity 200ms ease-out;
+  }
+
+  .feature-compact {
+    opacity: 0;
+  }
+
   @media (min-width: 1024px) {
-    /* Percentages rather than grow factors: padding would otherwise count
-       against the ratio. Shrinking scales by basis, so the gaps keep 2:1:1. */
+    /* The row is the measure for every card, so text and screenshots can be
+       sized to a card's resting width and never rewrap while widths animate. */
+    .feature-row {
+      container-type: inline-size;
+    }
+
     .feature-card {
+      --share: 0.25;
       flex: 0 1 25%;
       min-width: 0;
     }
 
-    .feature-card[data-preview-size='large'] {
+    .feature-card[data-size='large'] {
+      --share: 0.5;
       flex-basis: 50%;
     }
 
-    /* An opened small card takes the large card's second column. */
-    .feature-card[data-preview-size='small'][data-preview='open'] {
-      flex-basis: 50%;
+    /* 2rem are the row's two gaps, 4rem the card padding, 2px the border. */
+    .feature-content {
+      width: calc((100cqw - 2rem) * var(--share) - 4rem - 2px);
     }
 
-    .feature-row:has(> [data-preview-size='small'][data-preview='open'])
-      > [data-preview-size='large'] {
-      flex-basis: 25%;
+    .feature-preview-image {
+      width: calc((100cqw - 2rem) * 0.5 - 2px);
+      max-width: none;
     }
   }
 
-  /* With a pointer, hovering does the same without a click. A short delay keeps
-     a row from shuffling while the pointer only passes through. */
-  @media (min-width: 1024px) and (hover: hover) {
-    .feature-card[data-preview]:hover {
+  /* Trading widths: the small card takes the large card's second column. The
+     large card's text fades out before it narrows and its compact title fades
+     in once it has; the screenshot is revealed as the small card widens. */
+  @media (min-width: 1024px) {
+    .feature-card[data-size='small'][data-preview='open'] {
+      flex-basis: 50%;
       transition-delay: 120ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview='open']) > [data-size='large'] {
+      flex-basis: 25%;
+      transition-delay: 120ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview='open'])
+      > [data-size='large']
+      .feature-content {
+      opacity: 0;
+      transition-delay: 0ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview='open'])
+      > [data-size='large']
+      .feature-compact {
+      opacity: 1;
+      transition-delay: 450ms;
+    }
+
+    .feature-card[data-preview='open'] .feature-preview {
+      transition-delay: 150ms;
+    }
+  }
+
+  @media (min-width: 1024px) and (hover: hover) {
+    .feature-card[data-size='small'][data-preview]:hover {
+      flex-basis: 50%;
+      transition-delay: 120ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview]:hover) > [data-size='large'] {
+      flex-basis: 25%;
+      transition-delay: 120ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview]:hover)
+      > [data-size='large']
+      .feature-content {
+      opacity: 0;
+      transition-delay: 0ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview]:hover)
+      > [data-size='large']
+      .feature-compact {
+      opacity: 1;
+      transition-delay: 450ms;
     }
 
     .feature-card[data-preview]:hover .feature-preview {
       opacity: 1;
-      transition-delay: 120ms;
-    }
-
-    .feature-card[data-preview-size='small']:hover {
-      flex-basis: 50%;
-    }
-
-    .feature-row:has(> [data-preview-size='small']:hover) > [data-preview-size='large'] {
-      flex-basis: 25%;
-      transition-delay: 120ms;
+      transition-delay: 150ms;
     }
 
     /* The button is for keyboards and touch; with a pointer the card opens itself. */
@@ -256,9 +339,16 @@ const ROWS = [FEATURES.slice(0, 3), FEATURES.slice(3)]
     }
   }
 
+  /* Coming back, the text waits until its card is wide again. */
+  .feature-content {
+    transition-delay: 400ms;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .feature-card,
-    .feature-preview {
+    .feature-preview,
+    .feature-content,
+    .feature-compact {
       transition: none;
     }
   }
