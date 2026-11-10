@@ -87,7 +87,8 @@
       },
       "fleet": {
         "label": "Fleet Management",
-        "description": "Manage vans and trailers with water capacities. Automatic refill stops in route planning."
+        "description": "Manage vans and trailers with water capacities. Automatic refill stops in route planning.",
+        "screenshotAlt": "Form for adding a vehicle with licence plate, vehicle type, water capacity, driving licence class and dimensions"
       },
       "tourPlanning": {
         "label": "Tour planning",

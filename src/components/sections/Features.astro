@@ -16,6 +16,7 @@ import groupOverview from '../../assets/screens/treecluster-list.png'
 import operationsBoard from '../../assets/screens/watering-plan-board.png'
 import evaluations from '../../assets/screens/evaluations.png'
 import teamSettings from '../../assets/screens/settings-team-members.png'
+import vehicleForm from '../../assets/screens/vehicle-form.png'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 
@@ -61,11 +62,10 @@ const t = getTranslations(language, 'home')
 
 type FeatureId = (typeof FEATURES)[number]['id']
 
-// Literal keys: TranslationKey comes from the german catalog, and only these
-// these features carry a screenshotAlt.
 const PREVIEWS: Partial<Record<FeatureId, { src: ImageMetadata; alt: string }>> = {
   dashboard: { src: groupDashboard, alt: t('features.items.dashboard.screenshotAlt') },
   grouping: { src: groupOverview, alt: t('features.items.grouping.screenshotAlt') },
+  fleet: { src: vehicleForm, alt: t('features.items.fleet.screenshotAlt') },
   tourPlanning: { src: operationsBoard, alt: t('features.items.tourPlanning.screenshotAlt') },
   teamManagement: { src: teamSettings, alt: t('features.items.teamManagement.screenshotAlt') },
   analysis: { src: evaluations, alt: t('features.items.analysis.screenshotAlt') },

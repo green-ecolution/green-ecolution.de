@@ -87,7 +87,8 @@
       },
       "fleet": {
         "label": "Fuhrparkverwaltung",
-        "description": "Verwalte Transporter und Anhänger mit Wasserkapazitäten. Automatische Nachfüllstopps in der Routenplanung."
+        "description": "Verwalte Transporter und Anhänger mit Wasserkapazitäten. Automatische Nachfüllstopps in der Routenplanung.",
+        "screenshotAlt": "Formular zum Anlegen eines Fahrzeugs mit Kennzeichen, Fahrzeugtyp, Wasserkapazität, Führerscheinklasse und Abmessungen"
       },
       "tourPlanning": {
         "label": "Tour-Planung",
