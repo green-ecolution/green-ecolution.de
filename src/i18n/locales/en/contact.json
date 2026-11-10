@@ -10,25 +10,20 @@
   },
   "channels": {
     "badge": "We look forward to hearing from you",
+    "title": "A direct line to us",
+    "description": "Pick whichever way suits you best. For questions and offers you can reach us by email, phone or WhatsApp. Our source code is open and available to everyone on GitHub.",
     "mail": {
-      "label": "Write to us",
-      "description": "Do you have questions about Green Ecolution or want to learn more? We'll get back to you promptly.",
-      "cta": "Send email"
+      "label": "Write to us"
     },
     "phone": {
-      "label": "Call us",
-      "description": "Prefer to talk directly? You can reach us by phone at {{number}}.",
-      "cta": "Call now"
+      "label": "Call us"
     },
     "whatsapp": {
       "label": "WhatsApp",
-      "description": "Send us a message on WhatsApp if you prefer that to email.",
       "cta": "Open chat"
     },
     "github": {
-      "label": "Open Source",
-      "description": "Explore our code, contribute to development, or use Green Ecolution for your municipality.",
-      "cta": "View on GitHub"
+      "label": "Open Source"
     }
   },
   "cta": {
