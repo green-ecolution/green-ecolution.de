@@ -193,19 +193,19 @@
         "category": "Capture",
         "title": "Measure",
         "description": "Soil moisture sensors capture soil moisture and temperature at variable depths. The data is transmitted energy-efficiently via LoRaWAN.",
-        "screenshotAlt": "Sensor detail in Green Ecolution showing soil moisture over time at 40 and 80 centimetres, battery level, reception and the location on the map"
+        "screenshotAlt": "Two PROGEEK employees on a lawn: one holds a sensor with an antenna and points ahead, the other holds a laptop."
       },
       "understand": {
         "category": "Analyze",
         "title": "Understand",
         "description": "A traffic-light system shows the current irrigation need on a map. Staff can see at a glance which green spaces need water. Time series enable detailed analyses.",
-        "screenshotAlt": "Map of Flensburg with coloured markers for irrigation needs and the number of trees per group"
+        "screenshotAlt": "Sensor detail in Green Ecolution showing soil moisture over time at 40 and 80 centimetres, battery level, reception and the location on the map"
       },
       "act": {
         "category": "Execute",
         "title": "Act",
         "description": "Automated dispatch and route planning generates optimized irrigation routes, taking into account water capacity, vehicle size, and road restrictions.",
-        "screenshotAlt": "Route planning on the map with selected irrigation groups and the drawn tour"
+        "screenshotAlt": "Route planning on the map with selected irrigation groups, the drawn tour and refill points"
       }
     },
     "photoLead": "In the end it comes down to the run. The route is settled before the vehicle leaves: which sites need water, how much has to be carried and in what order they are visited. Instead of a blanket round, it follows what the sensors in the ground have measured.",

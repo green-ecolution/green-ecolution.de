@@ -2,9 +2,9 @@
 import { Image } from 'astro:assets'
 import Arrow from '../icons/Arrow.astro'
 import wateringPhoto from '../../assets/photos/bewaesserung-jungbaum-tbz.jpg'
+import measurePhoto from '../../assets/photos/sensor-messung-progeek.jpg'
 import sensorDetail from '../../assets/screens/sensor-detail.png'
-import mapOverview from '../../assets/screens/map-overview.png'
-import routePlanning from '../../assets/screens/watering-plan-route.png'
+import routePlanning from '../../assets/releases/v0.4.0-route-nachfuellpunkte.png'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { workflowSteps } from '../../data/workflowSteps'
@@ -19,10 +19,12 @@ const t = getTranslations(language, 'home')
 // The router Link carried hash="process"; as a plain anchor the fragment goes
 // straight into the href.
 const moreHref = `/${language}/product#process`
-const SCREENSHOTS = {
-  measure: sensorDetail,
-  understand: mapOverview,
-  act: routePlanning,
+// Screenshots crop from the top left, where the app's navigation anchors them;
+// the photo keeps its subjects in the middle.
+const VISUALS = {
+  measure: { src: measurePhoto, position: 'object-center' },
+  understand: { src: sensorDetail, position: 'object-left-top' },
+  act: { src: routePlanning, position: 'object-left-top' },
 }
 ---
 
@@ -58,14 +60,17 @@ const SCREENSHOTS = {
         <div class="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-grey-900/10">
           {workflowSteps.map((step, index) => (
             <Image
-              src={SCREENSHOTS[step.id]}
+              src={VISUALS[step.id].src}
               alt={t(`workflow.steps.${step.id}.screenshotAlt`)}
               widths={[800, 1200, 1600]}
               sizes="(min-width: 1280px) 720px, 58vw"
               loading="lazy"
               data-step-visual={index}
               data-active={String(index === 0)}
-              class="absolute inset-0 w-full h-full object-cover object-left-top opacity-0 transition-opacity duration-500 ease-out data-[active=true]:opacity-100 motion-reduce:transition-none"
+              class:list={[
+                'absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-out data-[active=true]:opacity-100 motion-reduce:transition-none',
+                VISUALS[step.id].position,
+              ]}
             />
           ))}
         </div>
@@ -110,12 +115,15 @@ const SCREENSHOTS = {
             </p>
 
             <Image
-              src={SCREENSHOTS[step.id]}
+              src={VISUALS[step.id].src}
               alt={t(`workflow.steps.${step.id}.screenshotAlt`)}
               widths={[640, 960]}
               sizes="100vw"
               loading="lazy"
-              class="mt-6 w-full aspect-[16/10] object-cover object-left-top rounded-xl shadow-md ring-1 ring-grey-900/10 lg:hidden"
+              class:list={[
+                'mt-6 w-full aspect-[16/10] object-cover rounded-xl shadow-md ring-1 ring-grey-900/10 lg:hidden',
+                VISUALS[step.id].position,
+              ]}
             />
           </li>
         )
