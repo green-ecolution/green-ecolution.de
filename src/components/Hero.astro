@@ -11,7 +11,7 @@ const { headline, description, label } = Astro.props
 <section class="mt-28 px-4 max-w-208 mx-auto md:px-6 lg:mt-36 lg:max-w-screen-lg xl:mt-52 xl:max-w-screen-xl">
   <div class="lg:text-center">
     <div class="inline-block mb-6 lg:mx-auto">
-      <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+      <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
         {label}
       </span>
       <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
@@ -21,7 +21,7 @@ const { headline, description, label } = Astro.props
       {headline}
     </h1>
 
-    <p class="text-grey-600 leading-relaxed max-w-3xl lg:mx-auto lg:text-lg">{description}</p>
+    <p class="text-grey-900/70 leading-relaxed max-w-3xl lg:mx-auto lg:text-lg">{description}</p>
 
     {Astro.slots.has('default') && (
       <div class="mt-8">

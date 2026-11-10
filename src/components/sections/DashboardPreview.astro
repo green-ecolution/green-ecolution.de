@@ -16,7 +16,7 @@ const t = getTranslations(language, 'product')
 <section class="my-20 px-4 max-w-208 mx-auto md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
   <article class="mb-10 lg:mb-14 lg:text-center">
     <div class="inline-block mb-4 lg:mx-auto">
-      <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+      <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
         {t('dashboard.sectionLabel')}
       </span>
       <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
@@ -29,7 +29,9 @@ const t = getTranslations(language, 'product')
       {t('dashboard.titleLine2')}
     </h2>
 
-    <p class="text-grey-600 leading-relaxed max-w-2xl lg:mx-auto">{t('dashboard.description')}</p>
+    <p class="text-grey-900/70 leading-relaxed max-w-2xl lg:mx-auto">
+      {t('dashboard.description')}
+    </p>
   </article>
 
   <figure class="relative">
@@ -44,7 +46,7 @@ const t = getTranslations(language, 'product')
         </div>
         <div class="flex-1 mx-2 sm:mx-4">
           <div class="h-5 sm:h-6 bg-grey-900/10 rounded-md max-w-md mx-auto flex items-center justify-center">
-            <span class="text-[10px] sm:text-xs text-grey-600/60">app.green-ecolution.de</span>
+            <span class="text-[10px] sm:text-xs text-grey-900/50">app.green-ecolution.de</span>
           </div>
         </div>
       </div>

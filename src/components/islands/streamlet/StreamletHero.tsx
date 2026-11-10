@@ -22,7 +22,7 @@ function StreamletHero({ language }: { language: string }) {
       <div className="lg:grid lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-10 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:gap-x-14">
         <div className="lg:col-start-1 lg:row-start-1">
           <div className="inline-block mb-6">
-            <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+            <span className="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
               {t('hero.sectionLabel')}
             </span>
             <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
