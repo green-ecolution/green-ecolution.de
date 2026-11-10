@@ -132,7 +132,12 @@
     },
     "sectionLabel": "Hardware",
     "title": "Die Bodensonde",
-    "description": "Konzipiert für den Einsatz im öffentlichen Raum. Die Sonde misst in variablen Tiefen und bildet so das Wurzelprofil eines Baumes ab, von den oberflächennahen Feinwurzeln bis zu den tieferen Hauptwurzeln. So lässt sich erkennen, ob Wasser tatsächlich im Wurzelbereich ankommt oder nur die Oberfläche benetzt. Die Installation erfolgt bodenbündig mit handelsüblichen Erdbohrern, Pflegearbeiten wie Mähen werden nicht beeinträchtigt.",
+    "description": "Konzipiert für den Einsatz im öffentlichen Raum. Die Sonde misst in variablen Tiefen und bildet so das Wurzelprofil eines Baumes ab, von den oberflächennahen Feinwurzeln bis zu den tieferen Hauptwurzeln. So lässt sich erkennen, ob Wasser tatsächlich im Wurzelbereich ankommt oder nur die Oberfläche benetzt.",
+    "installation": {
+      "sectionLabel": "Einbau",
+      "title": "Gesetzt vom eigenen Team",
+      "text": "Die Sensoren werden direkt von den Mitarbeitenden der kommunalen Betriebszentren im Wurzelbereich der Bäume eingegraben, ganz ohne externe Dienstleister. Die Installation erfolgt bodenbündig mit handelsüblichen Erdbohrern, Pflegearbeiten wie Mähen werden nicht beeinträchtigt."
+    },
     "probeCarrier": "Die Sonde ist ein möglicher Sensor, nicht der einzige. Die Plattform ist so aufgebaut, dass sich mit etwas Entwicklungsarbeit auch andere Sensoren anbinden lassen.",
     "availability": "Die Sonden bekommst du direkt von uns und dein Team kann sie selbst setzen.",
     "specs": {
@@ -165,7 +170,7 @@
   "sensorSetup": {
     "sectionLabel": "Einrichtung",
     "title": "Vor Ort in wenigen Schritten einsatzbereit",
-    "description": "Die Sensoren werden direkt von den Mitarbeitenden der kommunalen Betriebszentren im Wurzelbereich der Bäume eingegraben, ganz ohne externe Dienstleister. Für die Einrichtung steht bereits eine mobile App zur Verfügung: Ein Scan des QR-Codes auf dem Sensor genügt, um ihn dem jeweiligen Baum und Standort zuzuordnen und mit der Plattform zu verbinden. So ist ein Sensor in wenigen Schritten vor Ort einsatzbereit.",
+    "description": "Für die Einrichtung steht bereits eine mobile App zur Verfügung: Ein Scan des QR-Codes auf dem Sensor genügt, um ihn dem jeweiligen Baum und Standort zuzuordnen und mit der Plattform zu verbinden. So ist ein Sensor in wenigen Schritten vor Ort einsatzbereit.",
     "photoAlt": "Eine Hand hält einen LoRaWAN-Sensor mit QR-Code, daneben zeigt ein Smartphone den ersten Schritt der Sensoreinrichtung in der Green-Ecolution-App.",
     "photoCaption": "Einrichtung eines Sensors mit der mobilen App."
   },

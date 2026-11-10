@@ -23,6 +23,9 @@ export function bindPinnedStage(
   stage: HTMLElement,
   signal: AbortSignal,
   onUpdate: (progress: number | null) => void,
+  // Stages whose parts overlap once pinned report their pinned height here;
+  // by default it is the height of the stage content as laid out.
+  contentHeight?: () => number,
 ): PinnedStage {
   const wide = window.matchMedia(WIDE_ENOUGH)
   let pinned = false
@@ -31,13 +34,15 @@ export function bindPinnedStage(
   const decidePinning = () => {
     const rem = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
     const available = window.innerHeight - HEADER_REM * rem - STAGE_MARGIN_PX
-    const content = [...stage.children].reduce(
-      (sum, child) =>
-        sum +
-        (child as HTMLElement).offsetHeight +
-        Number.parseFloat(getComputedStyle(child).marginBottom),
-      0,
-    )
+    const content =
+      contentHeight?.() ??
+      [...stage.children].reduce(
+        (sum, child) =>
+          sum +
+          (child as HTMLElement).offsetHeight +
+          Number.parseFloat(getComputedStyle(child).marginBottom),
+        0,
+      )
     pinned = wide.matches && content <= available
     track.toggleAttribute('data-pinned', pinned)
   }

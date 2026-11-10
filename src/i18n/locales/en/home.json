@@ -132,7 +132,12 @@
     },
     "sectionLabel": "Hardware",
     "title": "The soil probe",
-    "description": "Designed for use in public spaces. The probe measures at variable depths and so maps the root profile of a tree, from the near-surface fine roots to the deeper main roots. This makes it possible to see whether water actually reaches the root zone or only wets the surface. Installation is flush with the ground using standard soil augers, and maintenance work such as mowing is not affected.",
+    "description": "Designed for use in public spaces. The probe measures at variable depths and so maps the root profile of a tree, from the near-surface fine roots to the deeper main roots. This makes it possible to see whether water actually reaches the root zone or only wets the surface.",
+    "installation": {
+      "sectionLabel": "Installation",
+      "title": "Installed by your own team",
+      "text": "The sensors are buried in the root zone of the trees by the staff of the municipal service centres themselves, without any external contractors. Installation is flush with the ground using standard soil augers, and maintenance work such as mowing is not affected."
+    },
     "probeCarrier": "The probe is one possible sensor, not the only one. The platform is built so that other sensors can be connected as well with some development work.",
     "availability": "You get the probes directly from us, and your team can install them itself.",
     "specs": {
@@ -165,7 +170,7 @@
   "sensorSetup": {
     "sectionLabel": "Setup",
     "title": "Ready for use on site in a few steps",
-    "description": "The sensors are buried in the root zone of the trees by the staff of the municipal service centres themselves, without any external contractors. A mobile app is already available for the setup: scanning the QR code on the sensor is all it takes to assign it to its tree and location and connect it to the platform. This way, a sensor is ready for use on site in just a few steps.",
+    "description": "A mobile app is already available for the setup: scanning the QR code on the sensor is all it takes to assign it to its tree and location and connect it to the platform. This way, a sensor is ready for use on site in just a few steps.",
     "photoAlt": "A hand holds a LoRaWAN sensor with a QR code, next to it a smartphone shows the first step of the sensor setup in the Green Ecolution app.",
     "photoCaption": "Setting up a sensor with the mobile app."
   },

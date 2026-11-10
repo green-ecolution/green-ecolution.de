@@ -4,6 +4,7 @@ import { getTranslations } from '../../i18n/t'
 import { sensorSpecs, sensorFeatures } from '../../data/sensorSpecs'
 import { Image } from 'astro:assets'
 import sensorPhoto from '../../assets/photos/sensor-einbau-erdbohrer.jpg'
+import setupPhoto from '../../assets/photos/sensor-einrichtung-app-qr.jpg'
 
 interface Props {
   language: Language
@@ -19,6 +20,7 @@ const depths = [
 ]
 
 const SOAK_OPTIONS = ['shower', 'soak'] as const
+const CHAPTERS = 3
 
 const FINE_ROOTS = [
   { d: 'M160,75 Q130,90 100,100 Q80,105 65,95', width: '1.5' },
@@ -40,293 +42,362 @@ const DEEP_ROOTS = [
   <div class="px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl">
     <div data-pin-track>
       <div data-pin-stage>
-        <div class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16 lg:items-center">
-          <div class="mb-10 lg:mb-0">
-            <div
-              data-soak-root
-              data-soak="shower"
-              data-soak-midway-status={t('sensorProbe.soak.midway.status')}
-              class="relative bg-gradient-to-b from-green-light-100/60 to-white rounded-2xl p-4 lg:p-6 border border-green-dark-900/5 shadow-sm"
-            >
-              <svg
-                viewBox="0 0 320 360"
-                class="w-full max-w-sm mx-auto"
-                aria-label={t('sensorProbe.illustrationAriaLabel')}
-                role="img"
+        <div data-hardware class="hardware-chapters">
+          <article
+            data-chapter="0"
+            data-active="true"
+            class="hardware-chapter lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16 lg:items-center"
+          >
+            <div class="mb-10 lg:mb-0">
+              <div
+                data-soak-root
+                data-soak="shower"
+                data-soak-midway-status={t('sensorProbe.soak.midway.status')}
+                class="relative bg-gradient-to-b from-green-light-100/60 to-white rounded-2xl p-4 lg:p-6 border border-green-dark-900/5 shadow-sm"
               >
-                <rect x="0" y="0" width="320" height="60" fill="#f0f7ed" rx="8"></rect>
+                <svg
+                  viewBox="0 0 320 360"
+                  class="w-full max-w-sm mx-auto"
+                  aria-label={t('sensorProbe.illustrationAriaLabel')}
+                  role="img"
+                >
+                  <rect x="0" y="0" width="320" height="60" fill="#f0f7ed" rx="8"></rect>
 
-                <rect x="0" y="60" width="320" height="300" fill="#8B7355" opacity="0.15"></rect>
-                <rect x="0" y="60" width="320" height="4" fill="#ACB63B" opacity="0.4"></rect>
+                  <rect x="0" y="60" width="320" height="300" fill="#8B7355" opacity="0.15"></rect>
+                  <rect x="0" y="60" width="320" height="4" fill="#ACB63B" opacity="0.4"></rect>
 
-                <rect x="0" y="64" width="320" height="100" fill="#8B7355" opacity="0.08"></rect>
-                <rect x="0" y="164" width="320" height="100" fill="#8B7355" opacity="0.14"></rect>
-                <rect x="0" y="264" width="320" height="96" fill="#8B7355" opacity="0.2"></rect>
+                  <rect x="0" y="64" width="320" height="100" fill="#8B7355" opacity="0.08"></rect>
+                  <rect x="0" y="164" width="320" height="100" fill="#8B7355" opacity="0.14"></rect>
+                  <rect x="0" y="264" width="320" height="96" fill="#8B7355" opacity="0.2"></rect>
 
-                <defs>
-                  <linearGradient id="soak-front" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#3B6E8F" stop-opacity="0.3"></stop>
-                    <stop offset="0.85" stop-color="#3B6E8F" stop-opacity="0.22"></stop>
-                    <stop offset="1" stop-color="#3B6E8F" stop-opacity="0"></stop>
-                  </linearGradient>
-                </defs>
-                <rect
-                  class="soak-water"
-                  x="0"
-                  y="64"
-                  width="320"
-                  height="250"
-                  fill="url(#soak-front)"
-                ></rect>
+                  <defs>
+                    <linearGradient id="soak-front" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#3B6E8F" stop-opacity="0.3"></stop>
+                      <stop offset="0.85" stop-color="#3B6E8F" stop-opacity="0.22"></stop>
+                      <stop offset="1" stop-color="#3B6E8F" stop-opacity="0"></stop>
+                    </linearGradient>
+                  </defs>
+                  <rect
+                    class="soak-water"
+                    x="0"
+                    y="64"
+                    width="320"
+                    height="250"
+                    fill="url(#soak-front)"
+                  ></rect>
 
-                <g opacity="0.18">
-                  {FINE_ROOTS.map((root) => (
-                    <path d={root.d} fill="none" stroke="#6B4423" stroke-width={root.width} />
-                  ))}
-                </g>
-                <g opacity="0.13">
-                  {MEDIUM_ROOTS.map((d) => (
-                    <path d={d} fill="none" stroke="#6B4423" stroke-width="1.8" />
-                  ))}
-                </g>
-                <g opacity="0.09">
-                  {DEEP_ROOTS.map((d) => (
-                    <path d={d} fill="none" stroke="#6B4423" stroke-width="2" />
-                  ))}
-                </g>
-
-                {depths.map((depth) => (
-                  <g>
-                    <line
-                      x1="40"
-                      y1={depth.y}
-                      x2="280"
-                      y2={depth.y}
-                      stroke="#8B7355"
-                      stroke-width="0.5"
-                      stroke-dasharray="6 4"
-                      opacity="0.3"
-                    />
-                    <text
-                      x="40"
-                      y={depth.y - 6}
-                      text-anchor="start"
-                      fill={depth.color}
-                      font-size="13"
-                      style="font-family: var(--font-lato)"
-                      font-weight="600"
-                    >
-                      {depth.zone}
-                    </text>
-                  </g>
-                ))}
-
-                <rect
-                  x="155"
-                  y="40"
-                  width="10"
-                  height="260"
-                  fill="#4C7741"
-                  rx="3"
-                  opacity="0.9"
-                ></rect>
-                <rect
-                  x="157"
-                  y="40"
-                  width="6"
-                  height="260"
-                  fill="#658A58"
-                  rx="2"
-                  opacity="0.5"
-                ></rect>
-
-                <rect x="148" y="32" width="24" height="30" fill="#3D5F35" rx="6"></rect>
-                <rect
-                  x="153"
-                  y="36"
-                  width="14"
-                  height="4"
-                  fill="#ACB63B"
-                  rx="2"
-                  opacity="0.7"
-                ></rect>
-
-                {depths.map((depth, index) => (
-                  <g class="soak-point" data-depth={index}>
-                    <circle
-                      class="soak-ring"
-                      cx="160"
-                      cy={depth.y}
-                      r="15"
-                      fill="none"
-                      stroke="#3B6E8F"
-                      stroke-width="2.5"
-                    />
-                    <circle cx="160" cy={depth.y} r="12" fill={depth.color} opacity="0.2" />
-                    <circle cx="160" cy={depth.y} r="7" fill={depth.color} />
-                    <circle cx="160" cy={depth.y} r="3" fill="white" opacity="0.6" />
-
-                    {[
-                      { r: '2.5', values: '0;0.8;0.8;0', begin: index * 0.8 },
-                      { r: '2', values: '0;0.6;0.6;0', begin: index * 0.8 + 1.5 },
-                    ].map((particle) => (
-                      <circle r={particle.r} fill="#ACB63B" opacity="0" class="motion-only">
-                        <animateMotion
-                          path={`M160,${depth.y} L160,40`}
-                          dur="3s"
-                          begin={`${particle.begin}s`}
-                          repeatCount="indefinite"
-                        />
-                        <animate
-                          attributeName="opacity"
-                          values={particle.values}
-                          dur="3s"
-                          begin={`${particle.begin}s`}
-                          repeatCount="indefinite"
-                        />
-                      </circle>
+                  <g opacity="0.18">
+                    {FINE_ROOTS.map((root) => (
+                      <path d={root.d} fill="none" stroke="#6B4423" stroke-width={root.width} />
                     ))}
                   </g>
-                ))}
+                  <g opacity="0.13">
+                    {MEDIUM_ROOTS.map((d) => (
+                      <path d={d} fill="none" stroke="#6B4423" stroke-width="1.8" />
+                    ))}
+                  </g>
+                  <g opacity="0.09">
+                    {DEEP_ROOTS.map((d) => (
+                      <path d={d} fill="none" stroke="#6B4423" stroke-width="2" />
+                    ))}
+                  </g>
 
-                <rect x="157" y="12" width="6" height="22" fill="#6B4423" rx="2"></rect>
-                <ellipse cx="160" cy="6" rx="18" ry="12" fill="#4C7741" opacity="0.7"></ellipse>
-                <ellipse cx="160" cy="3" rx="12" ry="8" fill="#3D5F35" opacity="0.5"></ellipse>
-
-                <g opacity="0.4" class="motion-only">
-                  <path
-                    d="M178,28 Q188,20 178,12"
-                    fill="none"
-                    stroke="#ACB63B"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  >
-                    <animate
-                      attributeName="opacity"
-                      values="0;0.6;0"
-                      dur="2s"
-                      repeatCount="indefinite"
-                    ></animate>
-                  </path>
-                  <path
-                    d="M184,32 Q198,20 184,8"
-                    fill="none"
-                    stroke="#ACB63B"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  >
-                    <animate
-                      attributeName="opacity"
-                      values="0;0.4;0"
-                      dur="2s"
-                      begin="0.4s"
-                      repeatCount="indefinite"
-                    ></animate>
-                  </path>
-                </g>
-              </svg>
-
-              <div class="mt-4 border-t border-green-dark-900/10 pt-4">
-                <div
-                  role="group"
-                  aria-label={t('sensorProbe.soak.groupLabel')}
-                  class="flex flex-wrap gap-2"
-                >
-                  {SOAK_OPTIONS.map((option) => (
-                    <button
-                      type="button"
-                      data-soak-option={option}
-                      data-soak-status={t(`sensorProbe.soak.${option}.status`)}
-                      aria-pressed={String(option === 'shower')}
-                      class="inline-flex items-center min-h-11 px-4 rounded-full text-sm font-semibold ring-1 ring-green-dark-900/25 text-green-dark-900 bg-white cursor-pointer transition-colors hover:bg-green-light-100 aria-pressed:bg-green-dark-900 aria-pressed:text-white aria-pressed:ring-green-dark-900"
-                    >
-                      {t(`sensorProbe.soak.${option}.label`)}
-                    </button>
+                  {depths.map((depth) => (
+                    <g>
+                      <line
+                        x1="40"
+                        y1={depth.y}
+                        x2="280"
+                        y2={depth.y}
+                        stroke="#8B7355"
+                        stroke-width="0.5"
+                        stroke-dasharray="6 4"
+                        opacity="0.3"
+                      />
+                      <text
+                        x="40"
+                        y={depth.y - 6}
+                        text-anchor="start"
+                        fill={depth.color}
+                        font-size="13"
+                        style="font-family: var(--font-lato)"
+                        font-weight="600"
+                      >
+                        {depth.zone}
+                      </text>
+                    </g>
                   ))}
-                </div>
-                <p
-                  data-soak-text
-                  aria-live="polite"
-                  class="mt-3 text-sm text-grey-900/70 leading-relaxed min-h-[3lh]"
-                >
-                  {t('sensorProbe.soak.shower.status')}
-                </p>
-              </div>
-            </div>
-          </div>
 
-          <div>
-            <div class="inline-block mb-6">
-              <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
-                {t('sensorProbe.sectionLabel')}
-              </span>
-              <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
-            </div>
+                  <rect
+                    x="155"
+                    y="40"
+                    width="10"
+                    height="260"
+                    fill="#4C7741"
+                    rx="3"
+                    opacity="0.9"
+                  ></rect>
+                  <rect
+                    x="157"
+                    y="40"
+                    width="6"
+                    height="260"
+                    fill="#658A58"
+                    rx="2"
+                    opacity="0.5"
+                  ></rect>
 
-            <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
-              {t('sensorProbe.title')}
-            </h2>
+                  <rect x="148" y="32" width="24" height="30" fill="#3D5F35" rx="6"></rect>
+                  <rect
+                    x="153"
+                    y="36"
+                    width="14"
+                    height="4"
+                    fill="#ACB63B"
+                    rx="2"
+                    opacity="0.7"
+                  ></rect>
 
-            <p class="text-grey-900/70 leading-relaxed mb-4">{t('sensorProbe.description')}</p>
+                  {depths.map((depth, index) => (
+                    <g class="soak-point" data-depth={index}>
+                      <circle
+                        class="soak-ring"
+                        cx="160"
+                        cy={depth.y}
+                        r="15"
+                        fill="none"
+                        stroke="#3B6E8F"
+                        stroke-width="2.5"
+                      />
+                      <circle cx="160" cy={depth.y} r="12" fill={depth.color} opacity="0.2" />
+                      <circle cx="160" cy={depth.y} r="7" fill={depth.color} />
+                      <circle cx="160" cy={depth.y} r="3" fill="white" opacity="0.6" />
 
-            <p class="text-grey-900/70 leading-relaxed mb-4">{t('sensorProbe.probeCarrier')}</p>
+                      {[
+                        { r: '2.5', values: '0;0.8;0.8;0', begin: index * 0.8 },
+                        { r: '2', values: '0;0.6;0.6;0', begin: index * 0.8 + 1.5 },
+                      ].map((particle) => (
+                        <circle r={particle.r} fill="#ACB63B" opacity="0" class="motion-only">
+                          <animateMotion
+                            path={`M160,${depth.y} L160,40`}
+                            dur="3s"
+                            begin={`${particle.begin}s`}
+                            repeatCount="indefinite"
+                          />
+                          <animate
+                            attributeName="opacity"
+                            values={particle.values}
+                            dur="3s"
+                            begin={`${particle.begin}s`}
+                            repeatCount="indefinite"
+                          />
+                        </circle>
+                      ))}
+                    </g>
+                  ))}
 
-            <p class="text-grey-900/70 leading-relaxed">{t('sensorProbe.availability')}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+                  <rect x="157" y="12" width="6" height="22" fill="#6B4423" rx="2"></rect>
+                  <ellipse cx="160" cy="6" rx="18" ry="12" fill="#4C7741" opacity="0.7"></ellipse>
+                  <ellipse cx="160" cy="3" rx="12" ry="8" fill="#3D5F35" opacity="0.5"></ellipse>
 
-    <div class="mt-12 lg:mt-16 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-center">
-      <div class="lg:col-span-5">
-        <div class="flex flex-wrap gap-3 mb-8">
-          {sensorSpecs.map((spec) => (
-            <div class="flex items-center gap-2 border border-green-light-900/40 rounded-full px-4 py-2 transition-all duration-300 hover:border-green-light-900 hover:bg-green-light-100/50 hover:shadow-sm cursor-default">
-              <span class="font-lato font-bold text-green-dark-900">
-                {t(`sensorProbe.specs.${spec}.value`)}
-              </span>
-              <span class="text-sm text-grey-900/70">{t(`sensorProbe.specs.${spec}.label`)}</span>
-            </div>
-          ))}
-        </div>
+                  <g opacity="0.4" class="motion-only">
+                    <path
+                      d="M178,28 Q188,20 178,12"
+                      fill="none"
+                      stroke="#ACB63B"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    >
+                      <animate
+                        attributeName="opacity"
+                        values="0;0.6;0"
+                        dur="2s"
+                        repeatCount="indefinite"
+                      ></animate>
+                    </path>
+                    <path
+                      d="M184,32 Q198,20 184,8"
+                      fill="none"
+                      stroke="#ACB63B"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    >
+                      <animate
+                        attributeName="opacity"
+                        values="0;0.4;0"
+                        dur="2s"
+                        begin="0.4s"
+                        repeatCount="indefinite"
+                      ></animate>
+                    </path>
+                  </g>
+                </svg>
 
-        <div class="space-y-4">
-          {sensorFeatures.map((feature) => {
-            const Icon = feature.icon
-
-            return (
-              <div class="flex items-start gap-4">
-                <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-green-light-900/15 flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-green-dark-900" />
-                </div>
-                <div>
-                  <h3 class="font-lato font-semibold text-grey-900 mb-0.5">
-                    {t(`sensorProbe.features.${feature.id}.label`)}
-                  </h3>
-                  <p class="text-sm text-grey-900/70 leading-relaxed">
-                    {t(`sensorProbe.features.${feature.id}.description`)}
+                <div class="mt-4 border-t border-green-dark-900/10 pt-4">
+                  <div
+                    role="group"
+                    aria-label={t('sensorProbe.soak.groupLabel')}
+                    class="flex flex-wrap gap-2"
+                  >
+                    {SOAK_OPTIONS.map((option) => (
+                      <button
+                        type="button"
+                        data-soak-option={option}
+                        data-soak-status={t(`sensorProbe.soak.${option}.status`)}
+                        aria-pressed={String(option === 'shower')}
+                        class="inline-flex items-center min-h-11 px-4 rounded-full text-sm font-semibold ring-1 ring-green-dark-900/25 text-green-dark-900 bg-white cursor-pointer transition-colors hover:bg-green-light-100 aria-pressed:bg-green-dark-900 aria-pressed:text-white aria-pressed:ring-green-dark-900"
+                      >
+                        {t(`sensorProbe.soak.${option}.label`)}
+                      </button>
+                    ))}
+                  </div>
+                  <p
+                    data-soak-text
+                    aria-live="polite"
+                    class="mt-3 text-sm text-grey-900/70 leading-relaxed min-h-[3lh]"
+                  >
+                    {t('sensorProbe.soak.shower.status')}
                   </p>
                 </div>
               </div>
-            )
-          })}
+            </div>
+
+            <div>
+              <div class="inline-block mb-6">
+                <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
+                  {t('sensorProbe.sectionLabel')}
+                </span>
+                <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+              </div>
+
+              <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
+                {t('sensorProbe.title')}
+              </h2>
+
+              <p class="text-grey-900/70 leading-relaxed">{t('sensorProbe.description')}</p>
+
+              <ul class="space-y-4 mt-6">
+                {sensorFeatures.map((feature) => {
+                  const Icon = feature.icon
+
+                  return (
+                    <li class="flex items-start gap-4">
+                      <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-green-light-900/15 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-green-dark-900" />
+                      </div>
+                      <div>
+                        <h3 class="font-lato font-semibold text-grey-900 mb-0.5">
+                          {t(`sensorProbe.features.${feature.id}.label`)}
+                        </h3>
+                        <p class="text-sm text-grey-900/70 leading-relaxed">
+                          {t(`sensorProbe.features.${feature.id}.description`)}
+                        </p>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          </article>
+
+          <article
+            data-chapter="1"
+            data-active="false"
+            class="hardware-chapter lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16 lg:items-center"
+          >
+            <figure class="mb-10 lg:mb-0">
+              <Image
+                src={sensorPhoto}
+                alt={t('sensorProbe.photoAlt')}
+                widths={[640, 960, 1280]}
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                loading="lazy"
+                class="w-full aspect-[4/3] object-cover rounded-2xl"
+              />
+              <figcaption class="mt-3 text-sm text-grey-900/60">
+                {t('sensorProbe.photoCaption')}
+              </figcaption>
+            </figure>
+
+            <div>
+              <div class="inline-block mb-6">
+                <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
+                  {t('sensorProbe.installation.sectionLabel')}
+                </span>
+                <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+              </div>
+              <h3 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
+                {t('sensorProbe.installation.title')}
+              </h3>
+
+              <p class="text-grey-900/70 leading-relaxed mb-4">
+                {t('sensorProbe.installation.text')}
+              </p>
+
+              <p class="text-grey-900/70 leading-relaxed mb-6">{t('sensorProbe.availability')}</p>
+
+              <ul class="flex flex-wrap gap-3">
+                {sensorSpecs.map((spec) => (
+                  <li class="flex items-center gap-2 border border-green-light-900/40 rounded-full px-4 py-2">
+                    <span class="font-lato font-bold text-green-dark-900">
+                      {t(`sensorProbe.specs.${spec}.value`)}
+                    </span>
+                    <span class="text-sm text-grey-900/70">
+                      {t(`sensorProbe.specs.${spec}.label`)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+
+          <article
+            data-chapter="2"
+            data-active="false"
+            class="hardware-chapter lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16 lg:items-center"
+          >
+            <figure class="mb-10 lg:mb-0">
+              <Image
+                src={setupPhoto}
+                alt={t('sensorSetup.photoAlt')}
+                widths={[640, 960, 1280]}
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                loading="lazy"
+                class="w-full aspect-[4/3] object-cover rounded-2xl"
+              />
+              <figcaption class="mt-3 text-sm text-grey-900/60">
+                {t('sensorSetup.photoCaption')}
+              </figcaption>
+            </figure>
+
+            <div>
+              <div class="inline-block mb-6">
+                <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
+                  {t('sensorSetup.sectionLabel')}
+                </span>
+                <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+              </div>
+              <h3 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
+                {t('sensorSetup.title')}
+              </h3>
+
+              <p class="text-grey-900/70 leading-relaxed mb-4">{t('sensorSetup.description')}</p>
+
+              <p class="text-grey-900/70 leading-relaxed">{t('sensorProbe.probeCarrier')}</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="hardware-progress mt-6 gap-2" aria-hidden="true">
+          {Array.from({ length: CHAPTERS }, (_, index) => (
+            <span
+              data-chapter-marker={index}
+              data-active={String(index === 0)}
+              class="h-1 w-10 rounded-full bg-green-dark-900/15 transition-colors duration-300 data-[active=true]:bg-green-dark-900"
+            ></span>
+          ))}
         </div>
       </div>
-
-      <figure class="mt-10 lg:mt-0 lg:col-span-7">
-        <Image
-          src={sensorPhoto}
-          alt={t('sensorProbe.photoAlt')}
-          widths={[640, 960, 1280]}
-          sizes="(min-width: 1024px) 58vw, 100vw"
-          loading="lazy"
-          class="w-full aspect-[3/2] object-cover rounded-xl"
-        />
-
-        <figcaption class="mt-3 text-sm text-grey-900/60">
-          {t('sensorProbe.photoCaption')}
-        </figcaption>
-      </figure>
     </div>
   </div>
 </section>
@@ -365,6 +436,44 @@ const DEEP_ROOTS = [
 
   [data-soak='soak'] .soak-point[data-depth='2'] .soak-ring {
     transition-delay: 1.1s;
+  }
+
+  /* Unpinned, the three chapters simply follow each other. Pinned, they share
+     one place on the stage and crossfade as the reader scrolls on. */
+  .hardware-chapters {
+    display: grid;
+    gap: 5rem;
+  }
+
+  .hardware-progress {
+    display: none;
+  }
+
+  [data-pin-track][data-pinned] {
+    --pin-distance: 300svh;
+  }
+
+  [data-pin-track][data-pinned] .hardware-chapters {
+    gap: 0;
+  }
+
+  [data-pin-track][data-pinned] .hardware-chapter {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.5s ease-out,
+      visibility 0s linear 0.5s;
+  }
+
+  [data-pin-track][data-pinned] .hardware-chapter[data-active='true'] {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease-out;
+  }
+
+  [data-pin-track][data-pinned] .hardware-progress {
+    display: flex;
   }
 
   /* While pinned, the scroll position is the water: the script drops data-soak
