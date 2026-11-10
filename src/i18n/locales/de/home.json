@@ -193,7 +193,7 @@
         "category": "Erfassen",
         "title": "Messen",
         "description": "Bodenfeuchtesensoren erfassen Bodenfeuchte und Temperatur in variablen Tiefen. Die Daten werden energieeffizient über LoRaWAN übertragen.",
-        "screenshotAlt": "Zwei Mitarbeiter von PROGEEK auf einer Wiese: Einer hält einen Sensor mit Antenne und zeigt nach vorn, der andere hält einen Laptop."
+        "screenshotAlt": "Sendeeinheit des Bodenfeuchtesensors mit Antenne und QR-Code, daran die beiden Bodenfeuchtefühler mit ihren Messspitzen"
       },
       "understand": {
         "category": "Analysieren",

@@ -1,8 +1,9 @@
 ---
 import { Image } from 'astro:assets'
+import { ChevronDown } from 'lucide-react'
 import Arrow from '../icons/Arrow.astro'
 import wateringPhoto from '../../assets/photos/bewaesserung-jungbaum-tbz.jpg'
-import measurePhoto from '../../assets/photos/sensor-messung-progeek.jpg'
+import measurePhoto from '../../assets/photos/sensor-ges-1000.jpg'
 import sensorDetail from '../../assets/screens/sensor-detail.png'
 import routePlanning from '../../assets/releases/v0.4.0-route-nachfuellpunkte.png'
 import type { Language } from '../../i18n/languages'
@@ -54,77 +55,73 @@ const VISUALS = {
     </a>
   </div>
 
-  <div data-scroll-steps class="lg:grid lg:grid-cols-12 lg:gap-10 xl:gap-16">
-    <div class="hidden lg:block lg:col-span-7">
-      <div class="sticky top-28">
-        <div class="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-grey-900/10">
-          {workflowSteps.map((step, index) => (
-            <Image
-              src={VISUALS[step.id].src}
-              alt={t(`workflow.steps.${step.id}.screenshotAlt`)}
-              widths={[800, 1200, 1600]}
-              sizes="(min-width: 1280px) 720px, 58vw"
-              loading="lazy"
-              data-step-visual={index}
-              data-active={String(index === 0)}
-              class:list={[
-                'absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-out data-[active=true]:opacity-100 motion-reduce:transition-none',
-                VISUALS[step.id].position,
-              ]}
-            />
-          ))}
-        </div>
-        <div class="flex gap-2 mt-4" aria-hidden="true">
-          {workflowSteps.map((_, index) => (
-            <span
-              data-step-visual={index}
-              data-active={String(index === 0)}
-              class="h-1 w-8 rounded-full bg-green-dark-900/15 transition-colors duration-300 data-[active=true]:bg-green-dark-900"
-            ></span>
-          ))}
-        </div>
-      </div>
+  <div data-workflow class="grid gap-8 lg:grid-cols-12 lg:gap-10 lg:items-center xl:gap-16">
+    <div class="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-grey-900/10 lg:col-span-7">
+      {workflowSteps.map((step, index) => (
+        <Image
+          src={VISUALS[step.id].src}
+          alt={t(`workflow.steps.${step.id}.screenshotAlt`)}
+          widths={[640, 960, 1280, 1600]}
+          sizes="(min-width: 1280px) 720px, (min-width: 1024px) 58vw, 100vw"
+          loading="lazy"
+          data-step-visual={index}
+          data-active={String(index === 0)}
+          aria-hidden={index === 0 ? undefined : 'true'}
+          class:list={[
+            'absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-out data-[active=true]:opacity-100 motion-reduce:transition-none',
+            VISUALS[step.id].position,
+          ]}
+        />
+      ))}
     </div>
 
-    <ol class="lg:col-span-5">
+    <ol class="border-t border-green-dark-900/15 lg:col-span-5">
       {workflowSteps.map((step, index) => {
         const Icon = step.icon
+        const panelId = `workflow-panel-${step.id}`
 
         return (
           <li
             data-step={index}
             data-active={String(index === 0)}
-            class="group relative border-t border-green-dark-900/15 py-8 first:border-t-0 first:pt-0 lg:border-t-0 lg:py-0 lg:pl-8 lg:min-h-[70vh] lg:last:min-h-[60vh]"
+            class="group relative border-b border-green-dark-900/15"
           >
             <span
               aria-hidden="true"
-              class="hidden lg:block absolute left-0 top-0 h-full w-0.5 rounded-full bg-green-dark-900/15 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900"
+              class="absolute left-0 top-0 h-full w-0.5 bg-transparent transition-colors duration-300 group-data-[active=true]:bg-green-dark-900"
             ></span>
-            <Icon className="w-8 h-8 text-green-dark-900/50 mb-5 transition-colors duration-300 group-data-[active=true]:text-green-dark-900 lg:w-10 lg:h-10" />
-
-            <span class="text-xs font-semibold tracking-widest uppercase text-green-dark-900 block mb-2">
-              {step.number} · {t(`workflow.steps.${step.id}.category`)}
-            </span>
-
-            <h3 class="font-lato font-bold text-xl text-grey-900 mb-3 lg:text-2xl xl:text-3xl">
-              {t(`workflow.steps.${step.id}.title`)}
+            <h3>
+              <button
+                type="button"
+                data-step-trigger={index}
+                aria-expanded={String(index === 0)}
+                aria-controls={panelId}
+                class="flex w-full items-center gap-x-4 py-5 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+              >
+                <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
+                  <Icon className="w-5 h-5" aria-hidden="true" />
+                </span>
+                <span class="flex-1">
+                  <span class="block text-xs font-semibold tracking-widest uppercase text-green-dark-900 mb-1">
+                    {step.number} · {t(`workflow.steps.${step.id}.category`)}
+                  </span>
+                  <span class="block font-lato font-bold text-xl text-grey-900 lg:text-2xl">
+                    {t(`workflow.steps.${step.id}.title`)}
+                  </span>
+                </span>
+                <ChevronDown
+                  aria-hidden="true"
+                  className="w-5 h-5 shrink-0 text-green-dark-900 transition-transform duration-300 group-data-[active=true]:rotate-180 motion-reduce:transition-none"
+                />
+              </button>
             </h3>
-
-            <p class="text-grey-900/70 leading-relaxed">
-              {t(`workflow.steps.${step.id}.description`)}
-            </p>
-
-            <Image
-              src={VISUALS[step.id].src}
-              alt={t(`workflow.steps.${step.id}.screenshotAlt`)}
-              widths={[640, 960]}
-              sizes="100vw"
-              loading="lazy"
-              class:list={[
-                'mt-6 w-full aspect-[16/10] object-cover rounded-xl shadow-md ring-1 ring-grey-900/10 lg:hidden',
-                VISUALS[step.id].position,
-              ]}
-            />
+            <div id={panelId} class="workflow-panel">
+              <div>
+                <p class="pb-6 pl-5 pr-2 sm:pl-[4.75rem] text-grey-900/70 leading-relaxed">
+                  {t(`workflow.steps.${step.id}.description`)}
+                </p>
+              </div>
+            </div>
           </li>
         )
       })}
@@ -162,6 +159,29 @@ const VISUALS = {
   </div>
 </section>
 
+<style>
+  .workflow-panel {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .workflow-panel > div {
+    overflow: hidden;
+  }
+
+  /* Collapsing waits for the script, so without it every step stays readable. */
+  [data-workflow][data-enhanced] [data-step]:not([data-active='true']) .workflow-panel {
+    grid-template-rows: 0fr;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .workflow-panel {
+      transition: none;
+    }
+  }
+</style>
+
 <script>
-  import '../../scripts/scrollSteps'
+  import '../../scripts/workflowSteps'
 </script>

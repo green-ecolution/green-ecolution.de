@@ -193,7 +193,7 @@
         "category": "Capture",
         "title": "Measure",
         "description": "Soil moisture sensors capture soil moisture and temperature at variable depths. The data is transmitted energy-efficiently via LoRaWAN.",
-        "screenshotAlt": "Two PROGEEK employees on a lawn: one holds a sensor with an antenna and points ahead, the other holds a laptop."
+        "screenshotAlt": "Transmitter unit of the soil moisture sensor with antenna and QR code, connected to the two soil moisture probes with their prongs"
       },
       "understand": {
         "category": "Analyze",
