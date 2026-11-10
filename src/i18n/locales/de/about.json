@@ -51,7 +51,8 @@
       "role": "Geschäftsführer",
       "photoAlt": "Porträt von {{name}}",
       "mailLabel": "E-Mail",
-      "phoneLabel": "Telefon"
+      "phoneLabel": "Telefon",
+      "mobileLabel": "Mobil"
     },
     "pressRich": "Für Presseanfragen, Logos und Bilder gibt es die <press>Presseseite</press>."
   }

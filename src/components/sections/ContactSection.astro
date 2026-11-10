@@ -1,7 +1,8 @@
 ---
-import { Mail } from 'lucide-react'
+import { Mail, MessageCircle } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
+import { company } from '../../data/company'
 
 interface Props {
   language: Language
@@ -44,14 +45,24 @@ const t = getTranslations(language, 'contact')
           {t('cta.description')}
         </p>
 
-        <div>
+        <div class="flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
           <a
-            href="mailto:info@green-ecolution.de"
+            href={`mailto:${company.email}`}
             aria-label={t('cta.mailAriaLabel')}
-            class="group inline-flex items-center justify-center gap-x-3 rounded-xl font-semibold px-8 py-4 bg-white text-green-dark-900 transition-all duration-300 hover:bg-green-light-100 hover:shadow-lg hover:shadow-black/20 hover:scale-105 active:scale-100"
+            class="group inline-flex items-center justify-center gap-x-3 rounded-xl font-semibold px-8 py-4 border-2 border-white bg-white text-green-dark-900 transition-all duration-300 hover:bg-green-light-100 hover:shadow-lg hover:shadow-black/20 hover:scale-105 active:scale-100"
           >
             <Mail className="w-5 h-5 transition-transform group-hover:-rotate-12" />
             <span>{t('cta.mailButtonLabel')}</span>
+          </a>
+          <a
+            href={company.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('cta.whatsappAriaLabel')}
+            class="group inline-flex items-center justify-center gap-x-3 rounded-xl font-semibold px-8 py-4 border-2 border-white/70 text-white transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-105 active:scale-100"
+          >
+            <MessageCircle className="w-5 h-5 transition-transform group-hover:-rotate-12" />
+            <span>{t('cta.whatsappButtonLabel')}</span>
           </a>
         </div>
       </div>

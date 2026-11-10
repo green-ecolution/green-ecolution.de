@@ -4,16 +4,17 @@ interface Props {
   ariaLabel: string
   isExternalLink?: boolean
   isDark?: boolean
+  iconOnly?: boolean
 }
 
 // The caller passes a finished path. Without a router there is no reason for
 // this building block to know about languages.
-const { href, ariaLabel, isExternalLink = false, isDark = false } = Astro.props
+const { href, ariaLabel, isExternalLink = false, isDark = false, iconOnly = false } = Astro.props
 
 // Touch never fires hover, so every state that only lives there is invisible on
 // a phone. The press state in .press-spring is what actually answers the touch.
 const baseClasses =
-  'press-spring flex items-center justify-center gap-x-4 rounded-2xl w-max font-semibold px-5 py-2 group cursor-pointer text-white'
+  'press-spring flex items-center justify-center gap-x-4 rounded-2xl w-max font-semibold py-2 group cursor-pointer text-white'
 
 const darkClasses =
   'bg-green-dark-900 hover:bg-green-light-900 hover:shadow-lg hover:shadow-green-light-900/40 hover:-translate-y-0.5 active:bg-green-light-900 active:translate-y-0'
@@ -25,9 +26,10 @@ const lightClasses =
 <a
   href={href}
   aria-label={ariaLabel}
+  title={iconOnly ? ariaLabel : undefined}
   target={isExternalLink ? '_blank' : undefined}
   rel={isExternalLink ? 'noopener noreferrer' : undefined}
-  class:list={[baseClasses, isDark ? darkClasses : lightClasses]}
+  class:list={[baseClasses, iconOnly ? 'px-2' : 'px-5', isDark ? darkClasses : lightClasses]}
 >
   <slot />
 </a>
