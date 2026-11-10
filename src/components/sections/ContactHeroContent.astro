@@ -1,5 +1,5 @@
 ---
-import { Mail, ExternalLink, Leaf, ArrowRight, Phone, MessageCircle } from 'lucide-react'
+import { Mail, ExternalLink, ArrowRight, Phone, MessageCircle } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { company } from '../../data/company'
@@ -11,182 +11,107 @@ interface Props {
 const { language } = Astro.props
 const t = getTranslations(language, 'contact')
 
-const ACCENTS = {
-  middle: {
-    bg: 'from-green-middle-900/10 to-green-light-100',
-    border: 'border-green-middle-900/20',
-    icon: 'bg-green-middle-900',
-    hover: 'hover:border-green-middle-900/40 hover:shadow-green-middle-900/10',
-  },
-  dark: {
-    bg: 'from-green-dark-900/10 to-green-light-100',
-    border: 'border-green-dark-900/20',
-    icon: 'bg-green-dark-900',
-    hover: 'hover:border-green-dark-900/40 hover:shadow-green-dark-900/10',
-  },
-}
-
-const cards = [
+const channels = [
   {
     href: `mailto:${company.email}`,
-    image: null,
     icon: Mail,
-    title: t('channels.mail.label'),
-    description: t('channels.mail.description'),
-    cta: t('channels.mail.cta'),
+    label: t('channels.mail.label'),
+    value: company.email,
     isExternal: false,
-    accent: ACCENTS.dark,
   },
   {
     href: company.mobile.href,
-    image: null,
     icon: Phone,
-    title: t('channels.phone.label'),
-    description: t('channels.phone.description', {
-      number: company.mobile.display.replaceAll(' ', '\u00a0'),
-    }),
-    cta: t('channels.phone.cta'),
+    label: t('channels.phone.label'),
+    value: company.mobile.display,
     isExternal: false,
-    accent: ACCENTS.middle,
   },
   {
     href: company.whatsappUrl,
-    image: null,
     icon: MessageCircle,
-    title: t('channels.whatsapp.label'),
-    description: t('channels.whatsapp.description'),
-    cta: t('channels.whatsapp.cta'),
+    label: t('channels.whatsapp.label'),
+    value: t('channels.whatsapp.cta'),
     isExternal: true,
-    accent: ACCENTS.middle,
   },
   {
     href: company.githubUrl,
-    image: '/assets/svg/socials/github.svg',
     icon: null,
-    title: t('channels.github.label'),
-    description: t('channels.github.description'),
-    cta: t('channels.github.cta'),
+    label: t('channels.github.label'),
+    value: company.githubUrl.replace('https://', ''),
     isExternal: true,
-    accent: ACCENTS.dark,
   },
-]
-
-const leaves = [
-  { class: 'top-0 left-[10%] hidden md:block', delay: '0s' },
-  { class: 'top-1/2 right-[5%] hidden lg:block', delay: '2s' },
-  { class: 'bottom-0 left-[20%] hidden md:block', delay: '4s' },
 ]
 ---
 
-<div class="relative mt-12 lg:mt-16">
-  {leaves.map((leaf) => (
+<div class="mt-12 lg:mt-16 max-w-4xl mx-auto text-left">
+  <div class="relative overflow-hidden rounded-3xl border border-green-dark-900/10 bg-gradient-to-br from-green-light-100 via-white to-white p-6 md:p-10">
     <div
-      class:list={['absolute pointer-events-none floating-leaf', leaf.class]}
-      style={`animation-delay: ${leaf.delay}`}
-    >
-      <Leaf className="w-6 h-6 text-green-light-900/20 rotate-45" />
-    </div>
-  ))}
+      class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-green-light-900/15 blur-3xl pointer-events-none"
+      aria-hidden="true"
+    ></div>
 
-  <div class="text-center mb-10 lg:mb-12">
-    <div class="inline-flex items-center gap-2 px-4 py-2 bg-green-light-100 rounded-full mb-4">
-      <div class="w-2 h-2 bg-green-light-900 rounded-full animate-pulse"></div>
-      <span class="text-xs font-semibold text-green-dark-900 tracking-wide uppercase">
-        {t('channels.badge')}
-      </span>
-    </div>
-  </div>
+    <div class="relative grid gap-8 md:grid-cols-5 md:gap-10 md:items-center">
+      <div class="md:col-span-2">
+        <div class="inline-flex items-center gap-2 mb-4">
+          <span
+            class="w-2 h-2 bg-green-light-900 rounded-full animate-pulse"
+            aria-hidden="true"
+          ></span>
+          <span class="text-xs font-semibold text-green-dark-900 tracking-wide uppercase">
+            {t('channels.badge')}
+          </span>
+        </div>
+        <h2 class="font-lato font-bold text-2xl text-grey-900 mb-3 lg:text-3xl">
+          {t('channels.title')}
+        </h2>
+        <p class="text-grey-900/70 leading-relaxed">{t('channels.description')}</p>
+      </div>
 
-  <div class="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
-    {cards.map((card) => (
-      <div>
-        <a
-          href={card.href}
-          target={card.isExternal ? '_blank' : undefined}
-          rel={card.isExternal ? 'noopener noreferrer' : undefined}
-          class:list={[
-            'group relative flex flex-col items-center text-center p-6 md:p-8 h-full bg-gradient-to-br border-2 rounded-3xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1',
-            card.accent.bg,
-            card.accent.border,
-            card.accent.hover,
-          ]}
-        >
-          <div class="absolute -top-3 -right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div
-              class:list={[
-                'w-8 h-8 rounded-full flex items-center justify-center shadow-lg',
-                card.accent.icon,
-              ]}
+      <ul class="md:col-span-3 divide-y divide-green-dark-900/10">
+        {channels.map((channel) => (
+          <li>
+            <a
+              href={channel.href}
+              target={channel.isExternal ? '_blank' : undefined}
+              rel={channel.isExternal ? 'noopener noreferrer' : undefined}
+              class="group -mx-3 flex items-center gap-4 rounded-2xl px-3 py-3.5 transition-colors hover:bg-green-dark-900/5 focus-visible:outline-2 focus-visible:outline-green-dark-900"
             >
-              <Leaf className="w-4 h-4 text-white" />
-            </div>
-          </div>
+              <span
+                class="w-11 h-11 shrink-0 rounded-xl bg-green-dark-900/10 text-green-dark-900 flex items-center justify-center transition-colors group-hover:bg-green-dark-900 group-hover:text-white"
+                aria-hidden="true"
+              >
+                {channel.icon ? (
+                  <channel.icon className="w-5 h-5" />
+                ) : (
+                  <span class="github-icon w-5 h-5 bg-current" />
+                )}
+              </span>
 
-          <div
-            class:list={[
-              'w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300',
-              card.accent.icon,
-            ]}
-          >
-            {card.icon ? (
-              <card.icon className="w-7 h-7 md:w-8 md:h-8 text-white" />
-            ) : (
-              <img
-                src={card.image}
-                class="w-7 h-7 md:w-8 md:h-8 brightness-0 invert"
-                alt=""
-                loading="lazy"
-              />
-            )}
-          </div>
+              <span class="min-w-0 flex-grow">
+                <span class="block text-xs font-semibold tracking-wide text-grey-900/60 uppercase">
+                  {channel.label}
+                </span>
+                <span class="block text-sm font-semibold text-grey-900 break-words sm:text-base">
+                  {channel.value}
+                </span>
+              </span>
 
-          <h3 class="font-lato font-bold text-xl md:text-2xl text-grey-900 mb-2">{card.title}</h3>
-          <p class="text-grey-900/80 text-sm md:text-base leading-relaxed mb-6 flex-grow">
-            {card.description}
-          </p>
-
-          <div class="flex items-center justify-center gap-2 text-green-dark-900 font-semibold group-hover:gap-3 transition-all duration-300">
-            <span>{card.cta}</span>
-            {card.isExternal ? (
-              <ExternalLink className="w-4 h-4" />
-            ) : (
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-            )}
-          </div>
-
-          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/20" />
-        </a>
-      </div>
-    ))}
-  </div>
-
-  <div class="flex justify-center mt-12 lg:mt-16">
-    <div class="flex items-center gap-4">
-      <div class="h-px w-12 bg-gradient-to-r from-transparent to-green-light-900/30"></div>
-      <div class="flex gap-1">
-        <div class="w-1.5 h-1.5 bg-green-dark-900/30 rounded-full"></div>
-        <div class="w-1.5 h-1.5 bg-green-middle-900/30 rounded-full"></div>
-        <div class="w-1.5 h-1.5 bg-green-light-900/30 rounded-full"></div>
-      </div>
-      <div class="h-px w-12 bg-gradient-to-l from-transparent to-green-light-900/30"></div>
+              {channel.isExternal ? (
+                <ExternalLink className="w-4 h-4 shrink-0 text-green-dark-900/60 transition-colors group-hover:text-green-dark-900" />
+              ) : (
+                <ArrowRight className="w-4 h-4 shrink-0 text-green-dark-900/60 transition-all group-hover:translate-x-1 group-hover:text-green-dark-900" />
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 </div>
 
 <style>
-  /* The keyframe returns to its starting transform, so the reduced-motion rule
-     freezing it on the end state lands exactly on the neutral position. */
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0) rotate(45deg);
-    }
-    50% {
-      transform: translateY(-15px) rotate(55deg);
-    }
-  }
-
-  .floating-leaf {
-    animation: float 6s ease-in-out infinite;
+  /* Masking lets the brand SVG follow currentColor on hover. */
+  .github-icon {
+    mask: url('/assets/svg/socials/github.svg') center / contain no-repeat;
   }
 </style>
