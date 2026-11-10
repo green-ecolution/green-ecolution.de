@@ -106,3 +106,21 @@ summary:focus-visible,
     border-color: color-mix(in oklab, var(--color-grey-900) 40%, transparent) !important;
   }
 }
+
+/* Scroll pinning, switched on by src/scripts/pinStage.ts. While pinned, the
+   stage holds still below the header and the track's extra height is the
+   scroll distance the section plays through. */
+@media (min-width: 768px) {
+  [data-pin-track][data-pinned] {
+    height: calc(100svh - 4.5rem + var(--pin-distance, 150svh));
+  }
+
+  [data-pin-track][data-pinned] > [data-pin-stage] {
+    position: sticky;
+    top: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: calc(100svh - 4.5rem);
+  }
+}

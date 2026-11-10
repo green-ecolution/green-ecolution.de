@@ -1,40 +1,44 @@
 import { describe, expect, it } from 'vitest'
-import { pinnedStep, scrollOffsetForStep } from './pinnedSteps'
+import { pinProgress, pinnedStep, progressForStep } from './pinnedSteps'
 
-const DISTANCE = 1500
-const STEPS = 3
-
-describe('pinnedStep', () => {
-  it('beginnt mit dem ersten Schritt, bevor der Pin-Bereich erreicht ist', () => {
-    expect(pinnedStep(-200, DISTANCE, STEPS)).toEqual({ index: 0, fill: 0 })
+describe('pinProgress', () => {
+  it('bleibt vor dem Pin-Bereich bei 0', () => {
+    expect(pinProgress(-200, 1500)).toBe(0)
   })
 
-  it('teilt die Scrollstrecke gleichmäßig auf die Schritte auf', () => {
-    expect(pinnedStep(250, DISTANCE, STEPS)).toEqual({ index: 0, fill: 0.5 })
-    expect(pinnedStep(500, DISTANCE, STEPS)).toEqual({ index: 1, fill: 0 })
-    expect(pinnedStep(1250, DISTANCE, STEPS)).toEqual({ index: 2, fill: 0.5 })
+  it('wächst linear mit der Scrollstrecke', () => {
+    expect(pinProgress(750, 1500)).toBe(0.5)
   })
 
-  it('bleibt nach dem Pin-Bereich beim letzten Schritt mit voller Linie', () => {
-    expect(pinnedStep(1500, DISTANCE, STEPS)).toEqual({ index: 2, fill: 1 })
-    expect(pinnedStep(4000, DISTANCE, STEPS)).toEqual({ index: 2, fill: 1 })
+  it('bleibt nach dem Pin-Bereich bei 1', () => {
+    expect(pinProgress(4000, 1500)).toBe(1)
   })
 
   it('kommt ohne Scrollstrecke aus', () => {
-    expect(pinnedStep(0, 0, STEPS)).toEqual({ index: 0, fill: 1 })
+    expect(pinProgress(0, 0)).toBe(1)
   })
 })
 
-describe('scrollOffsetForStep', () => {
+describe('pinnedStep', () => {
+  it('teilt den Fortschritt gleichmäßig auf die Schritte auf', () => {
+    expect(pinnedStep(0, 3)).toEqual({ index: 0, fill: 0 })
+    expect(pinnedStep(0.5, 3)).toEqual({ index: 1, fill: 0.5 })
+  })
+
+  it('bleibt am Ende beim letzten Schritt mit voller Linie', () => {
+    expect(pinnedStep(1, 3)).toEqual({ index: 2, fill: 1 })
+  })
+})
+
+describe('progressForStep', () => {
   it('springt in die Mitte des Abschnitts eines Schritts', () => {
-    expect(scrollOffsetForStep(0, DISTANCE, STEPS)).toBe(250)
-    expect(scrollOffsetForStep(2, DISTANCE, STEPS)).toBe(1250)
+    expect(progressForStep(0, 4)).toBe(0.125)
+    expect(progressForStep(3, 4)).toBe(0.875)
   })
 
   it('führt zurück auf denselben Schritt', () => {
-    for (let index = 0; index < STEPS; index++) {
-      const offset = scrollOffsetForStep(index, DISTANCE, STEPS)
-      expect(pinnedStep(offset, DISTANCE, STEPS).index).toBe(index)
+    for (let index = 0; index < 3; index++) {
+      expect(pinnedStep(progressForStep(index, 3), 3).index).toBe(index)
     }
   })
 })

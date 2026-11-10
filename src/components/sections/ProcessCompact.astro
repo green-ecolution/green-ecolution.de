@@ -30,8 +30,8 @@ const VISUALS = {
 ---
 
 <section class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
-  <div data-workflow-pin class="workflow-pin">
-    <div class="workflow-stage">
+  <div data-pin-track>
+    <div data-pin-stage>
       <div class="w-full mb-8 lg:grid lg:grid-cols-12 lg:gap-x-10 lg:items-start lg:mb-8 xl:gap-x-16">
         <div class="lg:contents">
           <div class="mb-4 lg:col-span-12">
@@ -188,24 +188,6 @@ const VISUALS = {
   /* Collapsing waits for the script, so without it every step stays readable. */
   [data-workflow][data-enhanced] [data-step]:not([data-active='true']) .workflow-panel {
     grid-template-rows: 0fr;
-  }
-
-  /* While pinned, the stage holds still and the extra height of the wrapper is
-     the scroll distance that walks through the steps. The script only pins when
-     the stage fits the screen; phones and short windows keep the plain switcher. */
-  @media (min-width: 768px) {
-    .workflow-pin[data-pinned] {
-      height: calc(100svh - 4.5rem + 150svh);
-    }
-
-    .workflow-pin[data-pinned] .workflow-stage {
-      position: sticky;
-      top: 4.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: calc(100svh - 4.5rem);
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {

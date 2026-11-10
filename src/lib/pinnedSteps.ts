@@ -4,16 +4,19 @@ export interface PinnedStep {
   fill: number
 }
 
-export function pinnedStep(scrolled: number, distance: number, steps: number): PinnedStep {
-  if (distance <= 0) return { index: 0, fill: 1 }
-
-  const progress = Math.min(1, Math.max(0, scrolled / distance)) * steps
-  if (progress >= steps) return { index: steps - 1, fill: 1 }
-
-  const index = Math.floor(progress)
-  return { index, fill: progress - index }
+export function pinProgress(scrolled: number, distance: number): number {
+  if (distance <= 0) return 1
+  return Math.min(1, Math.max(0, scrolled / distance))
 }
 
-export function scrollOffsetForStep(index: number, distance: number, steps: number): number {
-  return ((index + 0.5) / steps) * distance
+export function pinnedStep(progress: number, steps: number): PinnedStep {
+  const position = Math.min(1, Math.max(0, progress)) * steps
+  if (position >= steps) return { index: steps - 1, fill: 1 }
+
+  const index = Math.floor(position)
+  return { index, fill: position - index }
+}
+
+export function progressForStep(index: number, steps: number): number {
+  return (index + 0.5) / steps
 }
