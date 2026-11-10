@@ -24,7 +24,7 @@ const restOfPath = Astro.url.pathname.split('/').slice(2).join('/')
           data-lang-switch={entry}
           aria-current={entry === language ? 'page' : undefined}
           class:list={[
-            'px-2 py-1 text-sm font-semibold rounded transition-colors ease-in-out duration-300 xl:px-1.5 xl:text-xs',
+            'inline-flex items-center justify-center min-w-11 min-h-11 px-2 text-sm font-semibold rounded transition-colors ease-in-out duration-300 xl:min-w-6 xl:min-h-6 xl:px-1.5 xl:py-1 xl:text-xs',
             entry === language
               ? 'text-white underline underline-offset-4 xl:text-green-dark-900'
               : 'text-white/60 hover:text-green-light-900 xl:text-grey-900/60 xl:hover:text-green-middle-900',

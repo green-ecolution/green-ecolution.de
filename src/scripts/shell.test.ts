@@ -53,4 +53,36 @@ describe('shell', () => {
 
     vi.unstubAllGlobals()
   })
+
+  test('shows the back-to-top button only while scrolling up past the threshold', async () => {
+    mountShell()
+    vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => {
+      callback(0)
+      return 0
+    })
+    const scrollTo = (y: number) => {
+      vi.stubGlobal('scrollY', y)
+      window.dispatchEvent(new Event('scroll'))
+    }
+
+    await import('./shell')
+    vi.stubGlobal('scrollY', 0)
+    document.dispatchEvent(new Event('astro:page-load'))
+    const button = document.getElementById('back-to-top')!
+    const isHidden = () => button.classList.contains('opacity-0')
+
+    scrollTo(2000)
+    expect(isHidden()).toBe(true)
+
+    scrollTo(1700)
+    expect(isHidden()).toBe(false)
+
+    scrollTo(1900)
+    expect(isHidden()).toBe(true)
+
+    scrollTo(300)
+    expect(isHidden()).toBe(true)
+
+    vi.unstubAllGlobals()
+  })
 })
