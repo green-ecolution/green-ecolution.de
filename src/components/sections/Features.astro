@@ -152,8 +152,8 @@ const ROWS = [FEATURES.slice(0, 3), FEATURES.slice(3)]
               </div>
 
               {feature.large && (
-                // What a large card shows while a neighbour borrows its second
-                // column: the full text would not fit, so only icon and title.
+                // A large card set for one column while a neighbour borrows its
+                // second one; slightly smaller type keeps it within the row height.
                 <div
                   class="feature-compact pointer-events-none absolute inset-0 hidden p-8 lg:block"
                   aria-hidden="true"
@@ -166,7 +166,10 @@ const ROWS = [FEATURES.slice(0, 3), FEATURES.slice(3)]
                   >
                     <Icon />
                   </span>
-                  <span class="block font-lato font-bold text-xl text-grey-900">{label}</span>
+                  <span class="block font-lato font-bold text-xl mb-2 text-grey-900">{label}</span>
+                  <span class="block text-sm text-grey-900/70 leading-relaxed">
+                    {t(`features.items.${feature.id}.description`)}
+                  </span>
                 </div>
               )}
 
