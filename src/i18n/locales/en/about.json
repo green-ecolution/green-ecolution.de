@@ -51,7 +51,8 @@
       "role": "Managing director",
       "photoAlt": "Portrait of {{name}}",
       "mailLabel": "Email",
-      "phoneLabel": "Phone"
+      "phoneLabel": "Phone",
+      "mobileLabel": "Mobile"
     },
     "pressRich": "For press enquiries, logos and images, there is the <press>press page</press>."
   }

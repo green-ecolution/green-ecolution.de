@@ -1,6 +1,8 @@
 ---
 import { APP_VERSION } from 'astro:env/server'
+import { MessageCircle, Phone } from 'lucide-react'
 import Button from '../components/Button.astro'
+import { company } from '../data/company'
 import type { Language } from '../i18n/languages'
 import { getTranslations } from '../i18n/t'
 
@@ -29,18 +31,29 @@ const metaLinkClasses =
         />
       </a>
       <p class="max-w-sm">{t('footer.description')}</p>
-      <div class="flex flex-wrap gap-6 mt-8">
-        <Button href="mailto:info@green-ecolution.de" ariaLabel={t('footer.contactAriaLabel')}>
+      <div class="flex flex-wrap items-center gap-3 mt-8">
+        <Button href={`mailto:${company.email}`} ariaLabel={t('footer.contactAriaLabel')}>
           <img src="/assets/svg/socials/mail.svg" class="w-6 h-6" alt="" loading="lazy" />
-          <span>{t('footer.contact')}</span>
+          <span class="leading-6">{t('footer.contact')}</span>
+        </Button>
+        <Button href={company.mobile.href} ariaLabel={t('footer.phoneAriaLabel')} iconOnly>
+          <Phone className="w-6 h-6" aria-hidden="true" />
         </Button>
         <Button
-          href="https://github.com/green-ecolution"
+          href={company.whatsappUrl}
+          ariaLabel={t('footer.whatsappAriaLabel')}
+          isExternalLink
+          iconOnly
+        >
+          <MessageCircle className="w-6 h-6" aria-hidden="true" />
+        </Button>
+        <Button
+          href={company.githubUrl}
           ariaLabel={t('footer.githubAriaLabel')}
           isExternalLink
+          iconOnly
         >
           <img src="/assets/svg/socials/github.svg" class="w-6 h-6" alt="" loading="lazy" />
-          <span>{t('footer.github')}</span>
         </Button>
       </div>
     </div>

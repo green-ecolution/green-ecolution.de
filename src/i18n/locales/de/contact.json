@@ -15,6 +15,16 @@
       "description": "Hast du Fragen zu Green Ecolution oder möchtest du mehr erfahren? Wir melden uns zeitnah bei dir zurück.",
       "cta": "E-Mail senden"
     },
+    "phone": {
+      "label": "Ruf uns an",
+      "description": "Lieber direkt sprechen? Du erreichst uns telefonisch unter {{number}}.",
+      "cta": "Jetzt anrufen"
+    },
+    "whatsapp": {
+      "label": "WhatsApp",
+      "description": "Schick uns eine Nachricht über WhatsApp, wenn dir das lieber ist als eine E-Mail.",
+      "cta": "Chat öffnen"
+    },
     "github": {
       "label": "Open Source",
       "description": "Entdecke unseren Code, trage zur Entwicklung bei oder nutze Green Ecolution für deine Kommune.",
@@ -26,6 +36,8 @@
     "headline": "Lass uns gemeinsam grüner werden",
     "description": "Hast du Fragen, Feedback oder ein Anliegen? Wir freuen uns über deine Nachricht und melden uns so schnell wie möglich bei dir.",
     "mailAriaLabel": "Kontaktiere uns gerne per E-Mail",
-    "mailButtonLabel": "Schreib uns"
+    "mailButtonLabel": "Schreib uns",
+    "whatsappAriaLabel": "Schreib uns auf WhatsApp",
+    "whatsappButtonLabel": "WhatsApp"
   }
 }

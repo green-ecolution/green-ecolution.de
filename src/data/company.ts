@@ -6,6 +6,8 @@ export const company = {
   managingDirectorAuthorId: 'cedrik-hoffmann',
   parentOrganization: 'PROGEEK Group',
   phone: { display: '+49 461 79330680', href: 'tel:+4946179330680' },
+  mobile: { display: '+49 152 03482816', href: 'tel:+4915203482816' },
+  whatsappUrl: 'https://wa.me/4915203482816',
   email: 'info@green-ecolution.de',
   githubUrl: 'https://github.com/green-ecolution',
   linkedinUrl: 'https://www.linkedin.com/company/green-ecolution',

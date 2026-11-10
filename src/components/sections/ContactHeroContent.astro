@@ -1,7 +1,8 @@
 ---
-import { Mail, ExternalLink, Leaf, ArrowRight } from 'lucide-react'
+import { Mail, ExternalLink, Leaf, ArrowRight, Phone, MessageCircle } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
+import { company } from '../../data/company'
 
 interface Props {
   language: Language
@@ -27,8 +28,9 @@ const ACCENTS = {
 
 const cards = [
   {
-    href: 'mailto:info@green-ecolution.de',
+    href: `mailto:${company.email}`,
     image: null,
+    icon: Mail,
     title: t('channels.mail.label'),
     description: t('channels.mail.description'),
     cta: t('channels.mail.cta'),
@@ -36,13 +38,36 @@ const cards = [
     accent: ACCENTS.dark,
   },
   {
-    href: 'https://github.com/green-ecolution',
+    href: company.mobile.href,
+    image: null,
+    icon: Phone,
+    title: t('channels.phone.label'),
+    description: t('channels.phone.description', {
+      number: company.mobile.display.replaceAll(' ', '\u00a0'),
+    }),
+    cta: t('channels.phone.cta'),
+    isExternal: false,
+    accent: ACCENTS.middle,
+  },
+  {
+    href: company.whatsappUrl,
+    image: null,
+    icon: MessageCircle,
+    title: t('channels.whatsapp.label'),
+    description: t('channels.whatsapp.description'),
+    cta: t('channels.whatsapp.cta'),
+    isExternal: true,
+    accent: ACCENTS.middle,
+  },
+  {
+    href: company.githubUrl,
     image: '/assets/svg/socials/github.svg',
+    icon: null,
     title: t('channels.github.label'),
     description: t('channels.github.description'),
     cta: t('channels.github.cta'),
     isExternal: true,
-    accent: ACCENTS.middle,
+    accent: ACCENTS.dark,
   },
 ]
 
@@ -103,15 +128,15 @@ const leaves = [
               card.accent.icon,
             ]}
           >
-            {card.image ? (
+            {card.icon ? (
+              <card.icon className="w-7 h-7 md:w-8 md:h-8 text-white" />
+            ) : (
               <img
                 src={card.image}
                 class="w-7 h-7 md:w-8 md:h-8 brightness-0 invert"
                 alt=""
                 loading="lazy"
               />
-            ) : (
-              <Mail className="w-7 h-7 md:w-8 md:h-8 text-white" />
             )}
           </div>
 
