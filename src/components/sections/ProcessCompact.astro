@@ -4,7 +4,7 @@ import { ChevronDown } from 'lucide-react'
 import Arrow from '../icons/Arrow.astro'
 import wateringPhoto from '../../assets/photos/bewaesserung-jungbaum-tbz.jpg'
 import measurePhoto from '../../assets/photos/sensor-ges-1000.jpg'
-import sensorDetail from '../../assets/screens/sensor-detail.png'
+import mapOverview from '../../assets/releases/v0.3.0-karte-uebersicht.png'
 import routePlanning from '../../assets/releases/v0.4.0-route-nachfuellpunkte.png'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
@@ -24,108 +24,121 @@ const moreHref = `/${language}/product#process`
 // the photo keeps its subjects in the middle.
 const VISUALS = {
   measure: { src: measurePhoto, position: 'object-center' },
-  understand: { src: sensorDetail, position: 'object-left-top' },
+  understand: { src: mapOverview, position: 'object-left-top' },
   act: { src: routePlanning, position: 'object-left-top' },
 }
 ---
 
 <section class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
-  <div class="flex items-end justify-between mb-8 lg:mb-12">
-    <div>
-      <div class="inline-block mb-4">
-        <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
-          {t('workflow.sectionLabel')}
-        </span>
-        <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+  <div data-workflow-pin class="workflow-pin">
+    <div class="workflow-stage">
+      <div class="w-full mb-8 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-end lg:mb-10 xl:gap-16">
+        <div class="lg:col-span-5">
+          <div class="inline-block mb-4">
+            <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
+              {t('workflow.sectionLabel')}
+            </span>
+            <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+          </div>
+
+          <h2 class="font-lato font-bold text-2xl text-grey-900 lg:text-3xl xl:text-4xl">
+            {t('workflow.title')}
+          </h2>
+        </div>
+
+        <div class="lg:col-span-7">
+          <p class="mt-4 max-w-2xl text-grey-900/70 leading-relaxed lg:mt-0">
+            {t('workflow.description')}
+          </p>
+          <a
+            href={moreHref}
+            aria-label={t('workflow.moreLinkAriaLabel')}
+            class="hidden lg:inline-flex mt-3 group items-center gap-x-2 font-semibold text-green-dark-900 hover:text-green-light-900 transition-colors duration-300 whitespace-nowrap"
+          >
+            {t('workflow.moreLink')}
+            <Arrow class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </a>
+        </div>
       </div>
 
-      <h2 class="font-lato font-bold text-2xl text-grey-900 lg:text-3xl xl:text-4xl">
-        {t('workflow.title')}
-      </h2>
-      <p class="mt-4 max-w-2xl text-grey-900/70 leading-relaxed">{t('workflow.description')}</p>
-    </div>
+      <div
+        data-workflow
+        class="grid w-full gap-8 md:grid-cols-12 md:items-center lg:gap-10 xl:gap-16"
+      >
+        <div class="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-grey-900/10 md:col-span-6 lg:col-span-7">
+          {workflowSteps.map((step, index) => (
+            <Image
+              src={VISUALS[step.id].src}
+              alt={t(`workflow.steps.${step.id}.screenshotAlt`)}
+              widths={[640, 960, 1280, 1600]}
+              sizes="(min-width: 1280px) 720px, (min-width: 1024px) 58vw, (min-width: 768px) 50vw, 100vw"
+              loading="lazy"
+              data-step-visual={index}
+              data-active={String(index === 0)}
+              aria-hidden={index === 0 ? undefined : 'true'}
+              class:list={[
+                'absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-out data-[active=true]:opacity-100 motion-reduce:transition-none',
+                VISUALS[step.id].position,
+              ]}
+            />
+          ))}
+        </div>
 
-    <a
-      href={moreHref}
-      aria-label={t('workflow.moreLinkAriaLabel')}
-      class="hidden lg:flex group items-center gap-x-2 font-semibold text-green-dark-900 hover:text-green-light-900 transition-colors duration-300 whitespace-nowrap"
-    >
-      {t('workflow.moreLink')}
-      <Arrow class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-    </a>
-  </div>
+        <ol class="border-t border-green-dark-900/15 md:col-span-6 lg:col-span-5">
+          {workflowSteps.map((step, index) => {
+            const Icon = step.icon
+            const panelId = `workflow-panel-${step.id}`
 
-  <div data-workflow class="grid gap-8 lg:grid-cols-12 lg:gap-10 lg:items-center xl:gap-16">
-    <div class="relative aspect-[16/10] overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-grey-900/10 lg:col-span-7">
-      {workflowSteps.map((step, index) => (
-        <Image
-          src={VISUALS[step.id].src}
-          alt={t(`workflow.steps.${step.id}.screenshotAlt`)}
-          widths={[640, 960, 1280, 1600]}
-          sizes="(min-width: 1280px) 720px, (min-width: 1024px) 58vw, 100vw"
-          loading="lazy"
-          data-step-visual={index}
-          data-active={String(index === 0)}
-          aria-hidden={index === 0 ? undefined : 'true'}
-          class:list={[
-            'absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-out data-[active=true]:opacity-100 motion-reduce:transition-none',
-            VISUALS[step.id].position,
-          ]}
-        />
-      ))}
-    </div>
-
-    <ol class="border-t border-green-dark-900/15 lg:col-span-5">
-      {workflowSteps.map((step, index) => {
-        const Icon = step.icon
-        const panelId = `workflow-panel-${step.id}`
-
-        return (
-          <li
-            data-step={index}
-            data-active={String(index === 0)}
-            class="group relative border-b border-green-dark-900/15"
-          >
-            <span
-              aria-hidden="true"
-              class="absolute left-0 top-0 h-full w-0.5 bg-transparent transition-colors duration-300 group-data-[active=true]:bg-green-dark-900"
-            ></span>
-            <h3>
-              <button
-                type="button"
-                data-step-trigger={index}
-                aria-expanded={String(index === 0)}
-                aria-controls={panelId}
-                class="flex w-full items-center gap-x-4 py-5 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+            return (
+              <li
+                data-step={index}
+                data-active={String(index === 0)}
+                class="group relative border-b border-green-dark-900/15"
               >
-                <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
-                  <Icon className="w-5 h-5" aria-hidden="true" />
-                </span>
-                <span class="flex-1">
-                  <span class="block text-xs font-semibold tracking-widest uppercase text-green-dark-900 mb-1">
-                    {step.number} · {t(`workflow.steps.${step.id}.category`)}
-                  </span>
-                  <span class="block font-lato font-bold text-xl text-grey-900 lg:text-2xl">
-                    {t(`workflow.steps.${step.id}.title`)}
-                  </span>
-                </span>
-                <ChevronDown
+                <span
                   aria-hidden="true"
-                  className="w-5 h-5 shrink-0 text-green-dark-900 transition-transform duration-300 group-data-[active=true]:rotate-180 motion-reduce:transition-none"
-                />
-              </button>
-            </h3>
-            <div id={panelId} class="workflow-panel">
-              <div>
-                <p class="pb-6 pl-5 pr-2 sm:pl-[4.75rem] text-grey-900/70 leading-relaxed">
-                  {t(`workflow.steps.${step.id}.description`)}
-                </p>
-              </div>
-            </div>
-          </li>
-        )
-      })}
-    </ol>
+                  class="absolute left-0 top-0 h-full w-0.5 bg-transparent transition-colors duration-300 group-data-[active=true]:bg-green-dark-900/15"
+                >
+                  <span class="workflow-fill block h-full w-full origin-top bg-green-dark-900 scale-y-0 group-data-[active=true]:scale-y-(--step-fill,1)"></span>
+                </span>
+                <h3>
+                  <button
+                    type="button"
+                    data-step-trigger={index}
+                    aria-expanded={String(index === 0)}
+                    aria-controls={panelId}
+                    class="flex w-full items-center gap-x-4 py-5 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+                  >
+                    <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
+                      <Icon className="w-5 h-5" aria-hidden="true" />
+                    </span>
+                    <span class="flex-1">
+                      <span class="block text-xs font-semibold tracking-widest uppercase text-green-dark-900 mb-1">
+                        {step.number} · {t(`workflow.steps.${step.id}.category`)}
+                      </span>
+                      <span class="block font-lato font-bold text-xl text-grey-900 lg:text-2xl">
+                        {t(`workflow.steps.${step.id}.title`)}
+                      </span>
+                    </span>
+                    <ChevronDown
+                      aria-hidden="true"
+                      className="w-5 h-5 shrink-0 text-green-dark-900 transition-transform duration-300 group-data-[active=true]:rotate-180 motion-reduce:transition-none"
+                    />
+                  </button>
+                </h3>
+                <div id={panelId} class="workflow-panel">
+                  <div>
+                    <p class="pb-6 pl-5 pr-2 sm:pl-[4.75rem] text-grey-900/70 leading-relaxed">
+                      {t(`workflow.steps.${step.id}.description`)}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            )
+          })}
+        </ol>
+      </div>
+    </div>
   </div>
 
   <div class="mt-10 lg:mt-14 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-center">
@@ -173,6 +186,24 @@ const VISUALS = {
   /* Collapsing waits for the script, so without it every step stays readable. */
   [data-workflow][data-enhanced] [data-step]:not([data-active='true']) .workflow-panel {
     grid-template-rows: 0fr;
+  }
+
+  /* While pinned, the stage holds still and the extra height of the wrapper is
+     the scroll distance that walks through the steps. The script only pins when
+     the stage fits the screen; phones and short windows keep the plain switcher. */
+  @media (min-width: 768px) {
+    .workflow-pin[data-pinned] {
+      height: calc(100svh - 4.5rem + 150svh);
+    }
+
+    .workflow-pin[data-pinned] .workflow-stage {
+      position: sticky;
+      top: 4.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: calc(100svh - 4.5rem);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

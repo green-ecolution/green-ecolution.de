@@ -199,7 +199,7 @@
         "category": "Analyze",
         "title": "Understand",
         "description": "A traffic-light system shows the current irrigation need on a map. Staff can see at a glance which green spaces need water. Time series enable detailed analyses.",
-        "screenshotAlt": "Sensor detail in Green Ecolution showing soil moisture over time at 40 and 80 centimetres, battery level, reception and the location on the map"
+        "screenshotAlt": "Map of Flensburg with coloured traffic light markers for the irrigation needs of tree groups and filters for very dry and slightly dry groups"
       },
       "act": {
         "category": "Execute",

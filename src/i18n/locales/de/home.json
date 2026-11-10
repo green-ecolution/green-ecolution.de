@@ -199,7 +199,7 @@
         "category": "Analysieren",
         "title": "Verstehen",
         "description": "Ein Ampelsystem zeigt auf einer Karte den aktuellen Bewässerungsbedarf. Mitarbeiter erkennen auf einen Blick, welche Grünflächen Wasser brauchen. Zeitverläufe ermöglichen detaillierte Analysen.",
-        "screenshotAlt": "Sensordetail in Green Ecolution mit dem Bodenfeuchte-Verlauf in 40 und 80 Zentimetern Tiefe, Akkustand, Empfang und Einsatzort auf der Karte"
+        "screenshotAlt": "Kartenansicht von Flensburg mit farbigen Ampelpunkten für den Bewässerungsbedarf der Baumgruppen und Filtern für sehr trockene und leicht trockene Gruppen"
       },
       "act": {
         "category": "Ausführen",
