@@ -4,7 +4,6 @@ import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro'
 import HomepageHero from '../../components/homepage/HomepageHero.astro'
 import HomepageDevider from '../../components/homepage/HomepageDevider.astro'
 import AwardBanner from '../../components/homepage/AwardBanner.astro'
-import Introduction from '../../components/sections/Introduction.astro'
 import Challenge from '../../components/sections/Challenge.astro'
 import TargetGroups from '../../components/sections/TargetGroups.astro'
 import Features from '../../components/sections/Features.astro'
@@ -37,12 +36,11 @@ const tc = getTranslations(language, 'common')
     <HomepageHero language={language} />
     <HomepageDevider />
     <AwardBanner language={language} />
-    <Introduction language={language} />
     <Challenge language={language} />
+    <ProcessCompact language={language} />
     <Features language={language} />
     <SensorProbe language={language} />
     <SensorSetup language={language} />
-    <ProcessCompact language={language} />
     <Testimonial language={language} />
     <TargetGroups language={language} />
     <OfferOverview language={language} />

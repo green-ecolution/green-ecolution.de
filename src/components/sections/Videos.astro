@@ -21,60 +21,55 @@ const awardPosterImage = await getImage({ src: awardVideoPoster, width: 1280, fo
 const ndrPosterImage = await getImage({ src: ndrPlayerPoster, width: 1280, format: 'webp' })
 ---
 
-<section class="relative overflow-hidden px-4 mx-auto md:px-6 py-20 lg:py-28 xl:py-36 before:bg-cover before:bg-background-light-dot before:w-[90%] before:h-[80%] before:absolute before:-right-4 before:top-12 before:-z-10 before:bg-no-repeat xl:before:bg-contain xl:before:top-20 xl:before:left-[10%] 3xl:before:left-[20%]">
-  <article class="mx-auto mb-8 lg:mb-14 lg:text-center xl:max-w-screen-lg">
-    <div class="mb-6 lg:mb-8 lg:flex lg:justify-center">
-      <div class="inline-block">
-        <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-          {t('videos.sectionLabel')}
-        </span>
-        <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 lg:mx-auto"></div>
-      </div>
-    </div>
-
-    <h2 class="font-lato font-bold text-2xl mb-6 text-grey-900 lg:text-3xl">{t('videos.title')}</h2>
-    <p class="text-grey-900/80 leading-relaxed">{t('videos.description')}</p>
-  </article>
-
-  <div class="mx-auto grid grid-cols-1 gap-6 xl:max-w-screen-xl">
-    <article class="bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300">
-      <div class="overflow-hidden rounded-xl">
-        <ConsentEmbed
-          client:visible
-          src={awardVideo.playerUrl}
-          title={awardVideo.title}
-          posterSrc={awardPosterImage.src}
-          posterAlt={t('videos.award.posterAlt')}
-          {...consentEmbedStrings(language, awardVideo.provider)}
-        />
-      </div>
-      <h3 class="mt-8 mb-4 font-lato text-xl text-grey-900 lg:text-2xl">
-        <strong>{t('videos.award.title')}</strong>&nbsp;|&nbsp;
-        <span class="text-base lg:text-lg text-grey-900/60">{t('videos.award.duration')}</span>
-      </h3>
-      <p class="text-grey-900/80 leading-relaxed">{t('videos.award.description')}</p>
-      <p class="mt-4 text-sm text-grey-900/60">{awardVideo.attribution}</p>
+<section class="relative overflow-hidden py-20 lg:py-28 xl:py-36 before:bg-cover before:bg-background-light-dot before:w-[90%] before:h-[80%] before:absolute before:-right-4 before:top-12 before:-z-10 before:bg-no-repeat xl:before:bg-contain xl:before:top-20 xl:before:left-[10%] 3xl:before:left-[20%]">
+  <div class="max-w-208 mx-auto px-4 md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl">
+    <article class="mb-8 lg:mb-14">
+      <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
+        {t('videos.title')}
+      </h2>
+      <p class="max-w-2xl text-grey-900/70 leading-relaxed">{t('videos.description')}</p>
     </article>
 
-    <article class="h-full bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
-      <div class="overflow-hidden rounded-xl">
-        <ConsentEmbed
-          client:visible
-          src={ndrFeature.playerUrl}
-          title={ndrFeature.title}
-          posterSrc={ndrPosterImage.src}
-          posterAlt={t('videos.ndr.posterAlt')}
-          {...consentEmbedStrings(language, ndrFeature.provider)}
-        />
-      </div>
-      <div class="mt-8 lg:mt-0">
-        <h3 class="mb-4 font-lato text-xl text-grey-900 lg:text-2xl">
-          <strong>{t('videos.ndr.title')}</strong>&nbsp;|&nbsp;
-          <span class="text-base lg:text-lg text-grey-900/60">{t('videos.ndr.duration')}</span>
+    <div class="grid grid-cols-1 gap-6">
+      <article class="bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300">
+        <div class="overflow-hidden rounded-xl">
+          <ConsentEmbed
+            client:visible
+            src={awardVideo.playerUrl}
+            title={awardVideo.title}
+            posterSrc={awardPosterImage.src}
+            posterAlt={t('videos.award.posterAlt')}
+            {...consentEmbedStrings(language, awardVideo.provider)}
+          />
+        </div>
+        <h3 class="mt-8 mb-4 font-lato text-xl text-grey-900 lg:text-2xl">
+          <strong>{t('videos.award.title')}</strong>&nbsp;|&nbsp;
+          <span class="text-base lg:text-lg text-grey-900/60">{t('videos.award.duration')}</span>
         </h3>
-        <p class="text-grey-900/80 leading-relaxed">{t('videos.ndr.description')}</p>
-        <p class="mt-4 text-sm text-grey-900/60">{ndrFeature.attribution}</p>
-      </div>
-    </article>
+        <p class="text-grey-900/80 leading-relaxed">{t('videos.award.description')}</p>
+        <p class="mt-4 text-sm text-grey-900/60">{awardVideo.attribution}</p>
+      </article>
+
+      <article class="h-full bg-white shadow-md hover:shadow-lg rounded-2xl p-6 border border-grey-100 hover:border-green-light-900/30 transition-all duration-300 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
+        <div class="overflow-hidden rounded-xl">
+          <ConsentEmbed
+            client:visible
+            src={ndrFeature.playerUrl}
+            title={ndrFeature.title}
+            posterSrc={ndrPosterImage.src}
+            posterAlt={t('videos.ndr.posterAlt')}
+            {...consentEmbedStrings(language, ndrFeature.provider)}
+          />
+        </div>
+        <div class="mt-8 lg:mt-0">
+          <h3 class="mb-4 font-lato text-xl text-grey-900 lg:text-2xl">
+            <strong>{t('videos.ndr.title')}</strong>&nbsp;|&nbsp;
+            <span class="text-base lg:text-lg text-grey-900/60">{t('videos.ndr.duration')}</span>
+          </h3>
+          <p class="text-grey-900/80 leading-relaxed">{t('videos.ndr.description')}</p>
+          <p class="mt-4 text-sm text-grey-900/60">{ndrFeature.attribution}</p>
+        </div>
+      </article>
+    </div>
   </div>
 </section>

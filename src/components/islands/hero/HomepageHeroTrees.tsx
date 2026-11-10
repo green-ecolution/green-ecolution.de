@@ -40,7 +40,7 @@ function HomepageHeroTrees() {
       >
         <LottiePlayer
           aria-hidden="true"
-          className="relative -z-20 h-[36svh] max-h-[18rem] md:max-h-none md:min-h-96 md:h-[60vh]"
+          className="relative -z-20 h-[36svh] max-h-[18rem] md:max-h-none md:min-h-80 md:h-[42vh] lg:min-h-96 lg:h-[60vh]"
           animationData={treeLightGreenAnimation}
           autoplay={!reducedMotion}
         />
@@ -64,7 +64,7 @@ function HomepageHeroTrees() {
       >
         <LottiePlayer
           aria-hidden="true"
-          className="relative -z-30 h-[55vh] md:h-[60vh] md:min-h-96"
+          className="relative -z-30 h-[55vh] md:h-[48vh] md:min-h-80 lg:min-h-96 lg:h-[60vh]"
           animationData={treeDarkGreenAnimation}
           autoplay={!reducedMotion}
         />

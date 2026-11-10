@@ -1,7 +1,7 @@
 ---
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
-import { targetGroups } from '../../data/targetGroups'
+import { targetGroupIds } from '../../data/targetGroups'
 import { Image } from 'astro:assets'
 import fieldPhoto from '../../assets/photos/einsatz-jungbaum-tablet.jpg'
 import Arrow from '../icons/Arrow.astro'
@@ -19,42 +19,32 @@ const t = getTranslations(language, 'home')
   id="zielgruppen"
   class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
 >
-  <div class="text-center mb-6 lg:mb-8">
-    <div class="inline-block">
-      <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
-        {t('targetGroups.sectionLabel')}
-      </span>
-      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 mx-auto"></div>
+  <div class="mb-8 lg:mb-12 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-end">
+    <div class="lg:col-span-5">
+      <div class="inline-block mb-4">
+        <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
+          {t('targetGroups.sectionLabel')}
+        </span>
+        <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+      </div>
+      <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:mb-0 lg:text-3xl xl:text-4xl">
+        {t('targetGroups.title')}
+      </h2>
     </div>
+    <p class="text-grey-900/70 leading-relaxed lg:col-span-7">{t('targetGroups.description')}</p>
   </div>
 
-  <article class="mb-8 lg:mb-14 text-center">
-    <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl">
-      {t('targetGroups.title')}
-    </h2>
-    <p class="text-grey-900/70 max-w-2xl mx-auto leading-relaxed">
-      {t('targetGroups.description')}
-    </p>
-  </article>
-
-  <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
-    {targetGroups.map((group) => {
-      const Icon = group.icon
-
-      return (
-        <li class="h-full rounded-2xl border border-green-dark-900/10 bg-white p-5 lg:p-6">
-          <span class="flex w-10 h-10 rounded-lg bg-green-light-900/15 items-center justify-center mb-4">
-            <Icon className="w-5 h-5 text-green-dark-900" aria-hidden="true" />
-          </span>
-          <h3 class="font-lato font-bold text-base md:text-xl mb-2 text-grey-900">
-            {t(`targetGroups.items.${group.id}.role`)}
-          </h3>
-          <p class="text-grey-900/70 leading-relaxed">
-            {t(`targetGroups.items.${group.id}.description`)}
-          </p>
-        </li>
-      )
-    })}
+  <ul class="border-t border-grey-900/15">
+    {targetGroupIds.map((id) => (
+      <li class="grid gap-2 py-6 border-b border-grey-900/15 md:grid-cols-12 md:gap-10 lg:py-8">
+        <h3 class="font-lato font-bold text-lg text-grey-900 md:col-span-5 lg:text-xl">
+          {t(`targetGroups.items.${id}.role`)}
+        </h3>
+        <p class="text-grey-900/70 leading-relaxed md:col-span-7">
+          {t(`targetGroups.items.${id}.description`)}
+        </p>
+      </li>
+    ))}
   </ul>
 
   <div class="mt-10 lg:mt-14 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-center">
@@ -81,7 +71,7 @@ const t = getTranslations(language, 'home')
     </div>
   </div>
 
-  <p class="text-grey-900/60 leading-relaxed mt-10 text-center max-w-2xl mx-auto lg:mt-14">
+  <p class="text-grey-900/70 leading-relaxed mt-10 max-w-2xl lg:mt-14">
     {t('targetGroups.closing')}
   </p>
 </section>

@@ -23,7 +23,7 @@ const lastIndex = workflowSteps.length - 1
   <div class="flex items-end justify-between mb-8 lg:mb-12">
     <div>
       <div class="inline-block mb-4">
-        <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+        <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
           {t('workflow.sectionLabel')}
         </span>
         <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
@@ -32,6 +32,7 @@ const lastIndex = workflowSteps.length - 1
       <h2 class="font-lato font-bold text-2xl text-grey-900 lg:text-3xl xl:text-4xl">
         {t('workflow.title')}
       </h2>
+      <p class="mt-4 max-w-2xl text-grey-900/70 leading-relaxed">{t('workflow.description')}</p>
     </div>
 
     <a
@@ -59,7 +60,7 @@ const lastIndex = workflowSteps.length - 1
           >
             <Icon className="w-8 h-8 text-green-dark-900/40 mb-5 lg:w-10 lg:h-10" />
 
-            <span class="text-xs font-semibold tracking-widest uppercase text-green-dark-900/60 block mb-2">
+            <span class="text-xs font-semibold tracking-widest uppercase text-green-dark-900 block mb-2">
               {step.number} · {t(`workflow.steps.${step.id}.category`)}
             </span>
 
@@ -67,7 +68,7 @@ const lastIndex = workflowSteps.length - 1
               {t(`workflow.steps.${step.id}.title`)}
             </h3>
 
-            <p class="text-grey-600 text-sm leading-relaxed">
+            <p class="text-grey-900/70 text-sm leading-relaxed">
               {t(`workflow.steps.${step.id}.description`)}
             </p>
           </article>
