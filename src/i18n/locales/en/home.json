@@ -77,11 +77,13 @@
     "items": {
       "dashboard": {
         "label": "Real-time dashboard",
-        "description": "All key KPIs at a glance: soil moisture values, upcoming tours, team availability and vehicle status in one central dashboard."
+        "description": "All key KPIs at a glance: soil moisture values, upcoming tours, team availability and vehicle status in one central dashboard.",
+        "screenshotAlt": "Dashboard of an irrigation group with irrigation status, soil temperature, last measurement and the water supply over time"
       },
       "grouping": {
         "label": "Intelligent grouping",
-        "description": "Group trees into irrigation units. Automatic calculation of water demand per cluster."
+        "description": "Group trees into irrigation units. Automatic calculation of water demand per cluster.",
+        "screenshotAlt": "Overview of irrigation groups with status, number of trees and sensors per group"
       },
       "fleet": {
         "label": "Fleet Management",
@@ -91,17 +93,21 @@
         "label": "Tour planning",
         "description": "Optimized irrigation schedules with real-time status: from “planned” through “active” to “completed”.",
         "linkLabel": "How the route optimisation works",
-        "linkAriaLabel": "Go to the route optimisation page"
+        "linkAriaLabel": "Go to the route optimisation page",
+        "screenshotAlt": "Operations board with the columns suggestions, planned, en route and done"
       },
       "teamManagement": {
         "label": "Team management",
-        "description": "Manage drivers by license class and availability. Optimize deployment planning."
+        "description": "Manage drivers by license class and availability. Optimize deployment planning.",
+        "screenshotAlt": "Team management with staff, roles, availability and driving licence classes"
       },
       "analysis": {
         "label": "Post-analysis",
-        "description": "Document actual water consumption per cluster and tour. Analyze trends and optimize future planning based on data."
+        "description": "Document actual water consumption per cluster and tour. Analyze trends and optimize future planning based on data.",
+        "screenshotAlt": "Evaluation page with the number of irrigation groups, trees, sensors and watering plans as well as the water consumption"
       }
-    }
+    },
+    "previewLabel": "View"
   },
   "sensorProbe": {
     "illustrationAriaLabel": "Schematic diagram of a soil probe measuring at several depths",
@@ -109,6 +115,17 @@
       "fineRoots": "Fine roots",
       "mainRoots": "Main roots",
       "deepRoots": "Deep roots"
+    },
+    "soak": {
+      "groupLabel": "How was it watered?",
+      "shower": {
+        "label": "Light shower",
+        "status": "Only the top layer is moist. The probe reports moisture at the fine roots, the deeper measuring points stay dry."
+      },
+      "soak": {
+        "label": "Deep watering",
+        "status": "The water has reached the root zone. All three measuring points report moisture."
+      }
     },
     "sectionLabel": "Hardware",
     "title": "The soil probe",
@@ -175,17 +192,20 @@
       "measure": {
         "category": "Capture",
         "title": "Measure",
-        "description": "Soil moisture sensors capture soil moisture and temperature at variable depths. The data is transmitted energy-efficiently via LoRaWAN."
+        "description": "Soil moisture sensors capture soil moisture and temperature at variable depths. The data is transmitted energy-efficiently via LoRaWAN.",
+        "screenshotAlt": "Sensor detail in Green Ecolution showing soil moisture over time at 40 and 80 centimetres, battery level, reception and the location on the map"
       },
       "understand": {
         "category": "Analyze",
         "title": "Understand",
-        "description": "A traffic-light system shows the current irrigation need on a map. Staff can see at a glance which green spaces need water. Time series enable detailed analyses."
+        "description": "A traffic-light system shows the current irrigation need on a map. Staff can see at a glance which green spaces need water. Time series enable detailed analyses.",
+        "screenshotAlt": "Map of Flensburg with coloured markers for irrigation needs and the number of trees per group"
       },
       "act": {
         "category": "Execute",
         "title": "Act",
-        "description": "Automated dispatch and route planning generates optimized irrigation routes, taking into account water capacity, vehicle size, and road restrictions."
+        "description": "Automated dispatch and route planning generates optimized irrigation routes, taking into account water capacity, vehicle size, and road restrictions.",
+        "screenshotAlt": "Route planning on the map with selected irrigation groups and the drawn tour"
       }
     },
     "photoLead": "In the end it comes down to the run. The route is settled before the vehicle leaves: which sites need water, how much has to be carried and in what order they are visited. Instead of a blanket round, it follows what the sensors in the ground have measured.",

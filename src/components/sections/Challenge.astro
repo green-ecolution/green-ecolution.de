@@ -58,8 +58,11 @@ const CROSSHATCH =
             ]}
           >
             <dt class="mb-3">
-              <span class="font-lato text-3xl font-bold text-white tracking-tight lg:text-4xl xl:text-5xl">
-                {t(`challenge.figures.${figure.id}.value`)}
+              <span class="font-lato text-3xl font-bold text-white tracking-tight tabular-nums lg:text-4xl xl:text-5xl">
+                <span data-count-up aria-hidden="true" class="inline-block">
+                  {t(`challenge.figures.${figure.id}.value`)}
+                </span>
+                <span class="sr-only">{t(`challenge.figures.${figure.id}.value`)}</span>
               </span>
               <span class="block mt-2 text-xs font-semibold tracking-widest uppercase text-green-light-100">
                 {t(`challenge.figures.${figure.id}.unit`)}
@@ -74,3 +77,7 @@ const CROSSHATCH =
     </div>
   </div>
 </section>
+
+<script>
+  import '../../scripts/countUp'
+</script>
