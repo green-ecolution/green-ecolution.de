@@ -65,7 +65,7 @@ export default function StakeholderSlider({
                   {company.label}
                 </h3>
                 {company.role && (
-                  <span className="inline-block mt-1 text-xs font-semibold tracking-wider uppercase text-green-light-900">
+                  <span className="inline-block mt-1 text-xs font-semibold tracking-wider uppercase text-green-dark-900">
                     {company.role}
                   </span>
                 )}

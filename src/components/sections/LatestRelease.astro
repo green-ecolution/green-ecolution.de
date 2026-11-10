@@ -25,7 +25,7 @@ const latest = releases[0]
       <div class="mb-8 md:mb-0">
         <div class="mb-6 lg:mb-8">
           <div class="inline-block">
-            <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+            <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
               {t('latest.eyebrow')}
             </span>
             <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
@@ -47,26 +47,26 @@ const latest = releases[0]
       <div>
         <a
           href={`/${language}/releases/${releaseSlug(latest)}`}
-          class="group block bg-gradient-to-br from-green-dark-900 to-green-middle-900 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+          class="group block bg-green-dark-900 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
         >
           <div class="flex items-center gap-3 mb-3">
-            <span class="bg-white/20 text-white px-3 py-1 rounded-full text-sm font-bold">
+            <span class="bg-white/10 text-white px-3 py-1 rounded-full text-sm font-bold ring-1 ring-white/30">
               v{latest.data.version}
             </span>
-            <span class="bg-green-light-900/30 text-white px-3 py-1 rounded-full text-sm font-bold">
+            <span class="bg-green-light-900/20 text-white px-3 py-1 rounded-full text-sm font-bold">
               {t('badge.current')}
             </span>
           </div>
-          <time datetime={isoDate(latest.data.date)} class="text-white/60 text-sm block mb-2">
+          <time datetime={isoDate(latest.data.date)} class="text-white/85 text-sm block mb-2">
             {formatLongDate(latest.data.date, language)}
           </time>
           <h3 class="font-lato font-bold text-xl text-white mb-2 group-hover:underline">
             {latest.data.title}
           </h3>
           {latest.data.summary && (
-            <p class="text-white/80 text-sm leading-relaxed line-clamp-2">{latest.data.summary}</p>
+            <p class="text-white/90 text-sm leading-relaxed line-clamp-2">{latest.data.summary}</p>
           )}
-          <div class="flex items-center gap-2 text-white/70 group-hover:text-white group-hover:gap-3 transition-all duration-300 mt-4">
+          <div class="flex items-center gap-2 text-white/90 group-hover:text-white group-hover:gap-3 transition-all duration-300 mt-4">
             <span class="text-sm font-medium">{t('latest.viewDetails')}</span>
             <span>→</span>
           </div>
