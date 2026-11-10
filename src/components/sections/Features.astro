@@ -82,7 +82,10 @@ const PREVIEWS: Partial<Record<FeatureId, { src: ImageMetadata; alt: string }>> 
     <p class="text-grey-900/70 max-w-2xl leading-relaxed">{t('features.description')}</p>
   </div>
 
-  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:grid-rows-2">
+  <div
+    data-feature-grid
+    class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:grid-rows-2"
+  >
     {FEATURES.map((feature, index) => {
       const Icon = feature.Icon
       const preview = PREVIEWS[feature.id]
@@ -92,8 +95,9 @@ const PREVIEWS: Partial<Record<FeatureId, { src: ImageMetadata; alt: string }>> 
         <div class:list={[feature.large && 'sm:col-span-2', index === 0 && 'lg:row-span-1']}>
           <div
             data-preview={preview ? 'closed' : undefined}
+            data-preview-size={preview ? (feature.large ? 'large' : 'small') : undefined}
             class:list={[
-              'group relative overflow-hidden h-full rounded-xl p-5 md:rounded-2xl md:p-6 lg:p-8 border transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5',
+              'group relative overflow-hidden h-full rounded-xl p-5 md:rounded-2xl md:p-6 lg:p-8 border transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 data-[preview=open]:z-30 data-[preview=open]:overflow-visible',
               feature.large && 'lg:flex lg:items-start lg:gap-x-6',
               BORDER_CLASSES[feature.color],
               COLOR_CLASSES[feature.color],
@@ -138,21 +142,22 @@ const PREVIEWS: Partial<Record<FeatureId, { src: ImageMetadata; alt: string }>> 
 
             {preview && (
               <>
-                <div class="pointer-events-none absolute inset-0 z-10 bg-white opacity-0 transition-opacity duration-300 group-data-[preview=open]:opacity-100 group-has-[[data-preview-toggle]:hover]:opacity-100 group-has-[[data-preview-toggle]:focus-visible]:opacity-100 motion-reduce:transition-none">
+                <div
+                  class:list={[
+                    'feature-preview pointer-events-none absolute inset-y-0 z-10 overflow-hidden rounded-[inherit] bg-white opacity-0 group-data-[preview=open]:opacity-100',
+                    // Hovering a small card would make it grow under the pointer,
+                    // so only the large ones peek on hover and focus.
+                    feature.large &&
+                      'group-has-[[data-preview-toggle]:hover]:opacity-100 group-has-[[data-preview-toggle]:focus-visible]:opacity-100',
+                  ]}
+                >
                   <Image
                     src={preview.src}
                     alt={preview.alt}
                     widths={[480, 800, 1200]}
-                    sizes={
-                      feature.large
-                        ? '(min-width: 1024px) 50vw, 100vw'
-                        : '(min-width: 1024px) 25vw, 100vw'
-                    }
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     loading="lazy"
-                    class:list={[
-                      'w-full h-full object-cover',
-                      feature.large ? 'object-left-top' : 'object-[22%_0%]',
-                    ]}
+                    class="w-full h-full object-cover object-left-top"
                   />
                 </div>
                 <button
@@ -173,6 +178,47 @@ const PREVIEWS: Partial<Record<FeatureId, { src: ImageMetadata; alt: string }>> 
     })}
   </div>
 </section>
+
+<style>
+  .feature-preview {
+    left: 0;
+    width: 100%;
+    transition:
+      opacity 300ms ease-out,
+      width 450ms var(--ease-spring-settle),
+      box-shadow 300ms ease-out;
+  }
+
+  /* A small card's preview grows to two columns over its neighbour instead of
+     reflowing the grid; at the right edge it grows to the left. */
+  [data-grow='left'] > .feature-preview {
+    left: auto;
+    right: 0;
+  }
+
+  [data-preview='open'][data-preview-width] > .feature-preview {
+    width: var(--preview-width);
+    box-shadow: 0 24px 48px -16px rgb(0 0 0 / 0.3);
+  }
+
+  [data-preview-toggle] {
+    transition:
+      background-color 150ms,
+      color 150ms,
+      translate 450ms var(--ease-spring-settle);
+  }
+
+  [data-preview='open'][data-preview-width] > [data-preview-toggle] {
+    translate: var(--preview-extra, 0) 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feature-preview,
+    [data-preview-toggle] {
+      transition: none;
+    }
+  }
+</style>
 
 <script>
   import '../../scripts/featurePreview'
