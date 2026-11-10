@@ -1,18 +1,11 @@
-import { useState } from 'react'
-import { useT } from '../../../i18n/useT'
 import LottiePlayer from '../LottiePlayer'
 import treeLightGreenAnimation from '../../../json/treeLightGreenAnimation.json'
 import treeMiddleGreenAnimation from '../../../json/treeMiddleGreenAnimation.json'
 import treeDarkGreenAnimation from '../../../json/treeDarkGreenAnimation.json'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
-import AdoptTreeModal from './AdoptTreeModal'
-import { generateAdoptionData } from './adoptTreeData'
-import type { AdoptionData } from './adoptTreeData'
 
 function HomepageHeroTrees() {
-  const t = useT()
   const reducedMotion = useReducedMotion()
-  const [adoption, setAdoption] = useState<AdoptionData | null>(null)
 
   return (
     <div>
@@ -41,11 +34,6 @@ function HomepageHeroTrees() {
         </svg>
       </figure>
 
-      {/* Tree layers — the negative z-index lives on the Lottie itself (so the
-          tree sits behind the ground hill) while the figure stays in the
-          default stacking context. That lets the click overlay inside the
-          figure match the tree's bounding box exactly AND still receive
-          pointer events above foreground content. */}
       <figure
         aria-hidden="true"
         className="absolute bottom-10 right-[5%] xs:bottom-16 md:right-96 lg:right-[28rem] xl:bottom-32 2xl:right-[40rem] 3xl:right-[40%] md:landscape:bottom-0 lg:landscape:bottom-16"
@@ -55,12 +43,6 @@ function HomepageHeroTrees() {
           className="relative -z-20 h-[36svh] max-h-[18rem] md:max-h-none md:min-h-96 md:h-[60vh]"
           animationData={treeLightGreenAnimation}
           autoplay={!reducedMotion}
-        />
-        <button
-          type="button"
-          aria-label={t('hero.adoptTreeAriaLabel')}
-          className="pointer-events-auto absolute inset-0 cursor-pointer"
-          onClick={() => setAdoption(generateAdoptionData('light'))}
         />
       </figure>
 
@@ -74,12 +56,6 @@ function HomepageHeroTrees() {
           animationData={treeMiddleGreenAnimation}
           autoplay={!reducedMotion}
         />
-        <button
-          type="button"
-          aria-label={t('hero.adoptTreeAriaLabel')}
-          className="pointer-events-auto absolute inset-0 cursor-pointer"
-          onClick={() => setAdoption(generateAdoptionData('middle'))}
-        />
       </figure>
 
       <figure
@@ -92,15 +68,7 @@ function HomepageHeroTrees() {
           animationData={treeDarkGreenAnimation}
           autoplay={!reducedMotion}
         />
-        <button
-          type="button"
-          aria-label={t('hero.adoptTreeAriaLabel')}
-          className="pointer-events-auto absolute inset-0 cursor-pointer"
-          onClick={() => setAdoption(generateAdoptionData('dark'))}
-        />
       </figure>
-
-      <AdoptTreeModal data={adoption} onClose={() => setAdoption(null)} />
     </div>
   )
 }
