@@ -40,6 +40,7 @@ function setup() {
     if (!stage || !track) continue
 
     const steps = root.querySelectorAll('[data-step]').length
+    const weights = Array.from({ length: steps }, (_, step) => phasesOf(root, step))
     root.dataset.enhanced = ''
     root.dataset.activeStep = '0'
     root.dataset.activeVisual = '0:0'
@@ -49,9 +50,9 @@ function setup() {
         root.style.removeProperty('--step-fill')
         return
       }
-      const { index, fill } = pinnedStep(progress, steps)
+      const { index, fill } = pinnedStep(progress, weights)
       root.style.setProperty('--step-fill', fill.toFixed(3))
-      activate(root, index, phaseOfStep(fill, phasesOf(root, index)))
+      activate(root, index, phaseOfStep(fill, weights[index]))
     })
 
     for (const trigger of root.querySelectorAll<HTMLElement>('[data-step-trigger]')) {
@@ -61,7 +62,7 @@ function setup() {
           const index = Number(trigger.dataset.stepTrigger)
           // While pinned the scroll position owns the state, so a click moves
           // the page there instead of fighting the next scroll event.
-          if (pin.isPinned()) pin.scrollToProgress(progressForStep(index, steps))
+          if (pin.isPinned()) pin.scrollToProgress(progressForStep(index, weights))
           else activate(root, index)
         },
         { signal },

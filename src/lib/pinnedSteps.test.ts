@@ -20,25 +20,39 @@ describe('pinProgress', () => {
 })
 
 describe('pinnedStep', () => {
-  it('teilt den Fortschritt gleichmäßig auf die Schritte auf', () => {
-    expect(pinnedStep(0, 3)).toEqual({ index: 0, fill: 0 })
-    expect(pinnedStep(0.5, 3)).toEqual({ index: 1, fill: 0.5 })
+  it('teilt den Fortschritt bei gleichen Gewichten gleichmäßig auf', () => {
+    expect(pinnedStep(0, [1, 1, 1])).toEqual({ index: 0, fill: 0 })
+    expect(pinnedStep(0.5, [1, 1, 1])).toEqual({ index: 1, fill: 0.5 })
+  })
+
+  it('gibt schwereren Schritten mehr Scrollstrecke', () => {
+    expect(pinnedStep(0.25, [1, 1, 2])).toEqual({ index: 1, fill: 0 })
+    expect(pinnedStep(0.5, [1, 1, 2])).toEqual({ index: 2, fill: 0 })
+    expect(pinnedStep(0.75, [1, 1, 2])).toEqual({ index: 2, fill: 0.5 })
   })
 
   it('bleibt am Ende beim letzten Schritt mit voller Linie', () => {
-    expect(pinnedStep(1, 3)).toEqual({ index: 2, fill: 1 })
+    expect(pinnedStep(1, [1, 1, 2])).toEqual({ index: 2, fill: 1 })
   })
 })
 
 describe('progressForStep', () => {
   it('springt in die Mitte des Abschnitts eines Schritts', () => {
-    expect(progressForStep(0, 4)).toBe(0.125)
-    expect(progressForStep(3, 4)).toBe(0.875)
+    expect(progressForStep(0, [1, 1, 1, 1])).toBe(0.125)
+    expect(progressForStep(3, [1, 1, 1, 1])).toBe(0.875)
+  })
+
+  it('öffnet einen Schritt mit mehreren Bildern beim ersten Bild', () => {
+    const weights = [1, 1, 2]
+    const { index, fill } = pinnedStep(progressForStep(2, weights), weights)
+    expect(index).toBe(2)
+    expect(phaseOfStep(fill, 2)).toBe(0)
   })
 
   it('führt zurück auf denselben Schritt', () => {
-    for (let index = 0; index < 3; index++) {
-      expect(pinnedStep(progressForStep(index, 3), 3).index).toBe(index)
+    const weights = [1, 1, 2]
+    for (let index = 0; index < weights.length; index++) {
+      expect(pinnedStep(progressForStep(index, weights), weights).index).toBe(index)
     }
   })
 })

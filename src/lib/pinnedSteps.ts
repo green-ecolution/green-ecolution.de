@@ -9,16 +9,25 @@ export function pinProgress(scrolled: number, distance: number): number {
   return Math.min(1, Math.max(0, scrolled / distance))
 }
 
-export function pinnedStep(progress: number, steps: number): PinnedStep {
-  const position = Math.min(1, Math.max(0, progress)) * steps
-  if (position >= steps) return { index: steps - 1, fill: 1 }
+// Each step claims a share of the scroll distance proportional to its weight.
+export function pinnedStep(progress: number, weights: number[]): PinnedStep {
+  const total = weights.reduce((sum, weight) => sum + weight, 0)
+  let position = Math.min(1, Math.max(0, progress)) * total
+  if (position >= total) return { index: weights.length - 1, fill: 1 }
 
-  const index = Math.floor(position)
-  return { index, fill: position - index }
+  for (const [index, weight] of weights.entries()) {
+    if (position < weight) return { index, fill: position / weight }
+    position -= weight
+  }
+  return { index: weights.length - 1, fill: 1 }
 }
 
-export function progressForStep(index: number, steps: number): number {
-  return (index + 0.5) / steps
+// Lands in the middle of the step's first unit, so a step with several
+// visuals opens on its first one.
+export function progressForStep(index: number, weights: number[]): number {
+  const total = weights.reduce((sum, weight) => sum + weight, 0)
+  const start = weights.slice(0, index).reduce((sum, weight) => sum + weight, 0)
+  return (start + Math.min(0.5, weights[index] / 2)) / total
 }
 
 export function phaseOfStep(fill: number, phases: number): number {

@@ -55,10 +55,11 @@ const VISUALS = {
     },
   ],
 }
+const pinDistance = `${Object.values(VISUALS).flat().length * 50}svh`
 ---
 
 <section class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
-  <div data-pin-track>
+  <div data-pin-track style={`--pin-distance: ${pinDistance}`}>
     <div data-pin-stage>
       <div class="w-full mb-8 lg:grid lg:grid-cols-12 lg:gap-x-10 lg:items-start lg:mb-8 xl:gap-x-16">
         <div class="lg:contents">
