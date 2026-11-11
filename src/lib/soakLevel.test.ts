@@ -1,13 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import {
-  SHOWER_LEVEL,
+  AUTO_SOAK_TOTAL_MS,
+  autoSoakProgress,
   hardwareChapter,
   progressForChapter,
-  progressForLevel,
-  progressForSoak,
   reachedPoints,
   soakLevel,
-  soakOption,
 } from './soakLevel'
 
 describe('soakLevel', () => {
@@ -15,25 +13,30 @@ describe('soakLevel', () => {
     expect(reachedPoints(soakLevel(0))).toBe(1)
     expect(soakLevel(1)).toBe(1)
   })
-
-  it('lässt sich in einen Fortschritt zurückrechnen', () => {
-    expect(soakLevel(progressForLevel(SHOWER_LEVEL))).toBeCloseTo(SHOWER_LEVEL)
-  })
 })
 
 describe('reachedPoints', () => {
   it('zählt die Messpunkte, die das Wasser schon erreicht hat', () => {
     expect(reachedPoints(0.1)).toBe(0)
-    expect(reachedPoints(SHOWER_LEVEL)).toBe(1)
+    expect(reachedPoints(0.3)).toBe(1)
     expect(reachedPoints(0.6)).toBe(2)
     expect(reachedPoints(1)).toBe(3)
   })
 })
 
-describe('soakOption', () => {
-  it('meldet gründliches Gießen erst, wenn der tiefste Punkt erreicht ist', () => {
-    expect(soakOption(0.6)).toBe('shower')
-    expect(soakOption(0.9)).toBe('soak')
+describe('autoSoakProgress', () => {
+  it('bleibt erst kurz beim Schauer und sickert dann bis ganz unten', () => {
+    expect(autoSoakProgress(0, false)).toBe(0)
+    expect(autoSoakProgress(1000, false)).toBe(0)
+    expect(autoSoakProgress(AUTO_SOAK_TOTAL_MS, false)).toBe(1)
+    expect(autoSoakProgress(AUTO_SOAK_TOTAL_MS + 5000, false)).toBe(1)
+  })
+
+  it('springt mit reduzierter Bewegung von Messpunkt zu Messpunkt', () => {
+    const reachedAt = (ms: number) => reachedPoints(soakLevel(autoSoakProgress(ms, true)))
+    expect(reachedAt(0)).toBe(1)
+    expect(reachedAt(AUTO_SOAK_TOTAL_MS * 0.8)).toBe(2)
+    expect(reachedAt(AUTO_SOAK_TOTAL_MS)).toBe(3)
   })
 })
 
@@ -53,8 +56,6 @@ describe('hardwareChapter', () => {
   })
 
   it('führt mit den Sprungzielen zurück auf die passende Station', () => {
-    expect(hardwareChapter(progressForSoak(1)).chapter).toBe(0)
-    expect(reachedPoints(soakLevel(hardwareChapter(progressForSoak(1)).soakProgress))).toBe(3)
     for (const chapter of [0, 1, 2]) {
       expect(hardwareChapter(progressForChapter(chapter)).chapter).toBe(chapter)
     }

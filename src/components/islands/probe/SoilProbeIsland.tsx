@@ -8,7 +8,7 @@ import {
   useSyncExternalStore,
 } from 'react'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
-import { SHOWER_LEVEL } from '../../../lib/soakLevel'
+import { soakLevel } from '../../../lib/soakLevel'
 import { supportsWebgl } from '../../../lib/webgl'
 import type { SoakSource } from './SoilProbe3D'
 
@@ -30,14 +30,13 @@ interface Props {
   zones: string[]
 }
 
-// The 3d view of the probe. It only draws: the buttons and the pinned scroll
-// keep writing the water level to [data-soak-root], and this reads it there.
+// The 3d view of the probe. It only draws: the pinned scroll or the autoplay
+// writes the water level to [data-soak-root], and this reads it there.
 export default function SoilProbeIsland({ zones }: Props) {
   const host = useRef<HTMLDivElement>(null)
   const labels = useRef<(HTMLElement | null)[]>([])
   const source = useRef<SoakSource>({
-    target: SHOWER_LEVEL,
-    scrollDriven: false,
+    target: soakLevel(0),
     onChange: null,
   })
   const prefersReducedMotion = useReducedMotion()
@@ -57,12 +56,8 @@ export default function SoilProbeIsland({ zones }: Props) {
     let onScreen = true
 
     const read = () => {
-      const scrollDriven = root.hasAttribute('data-scroll-driven')
       const level = Number.parseFloat(root.style.getPropertyValue('--soak-level'))
-      const pressed = root.dataset.soak === 'soak' ? 1 : SHOWER_LEVEL
-
-      source.current.scrollDriven = scrollDriven
-      source.current.target = scrollDriven && Number.isFinite(level) ? level : pressed
+      if (Number.isFinite(level)) source.current.target = level
       source.current.onChange?.()
       setIsActive(onScreen && chapter?.dataset.active !== 'false')
     }
@@ -70,7 +65,7 @@ export default function SoilProbeIsland({ zones }: Props) {
     const attributes = new MutationObserver(read)
     attributes.observe(root, {
       attributes: true,
-      attributeFilter: ['style', 'data-soak', 'data-scroll-driven'],
+      attributeFilter: ['style'],
     })
     if (chapter) {
       attributes.observe(chapter, { attributes: true, attributeFilter: ['data-active'] })
@@ -88,6 +83,12 @@ export default function SoilProbeIsland({ zones }: Props) {
       viewport.disconnect()
     }
   }, [canRenderModel])
+
+  useEffect(() => {
+    host.current
+      ?.closest<HTMLElement>('[data-soak-root]')
+      ?.toggleAttribute('data-model-ready', isReady)
+  }, [isReady])
 
   return (
     <div

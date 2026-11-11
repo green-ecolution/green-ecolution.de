@@ -118,16 +118,14 @@
       "deepRoots": "Deep roots"
     },
     "soak": {
-      "groupLabel": "How was it watered?",
+      "title": "How deep does the water get?",
       "shower": {
-        "label": "Light shower",
         "status": "Only the top layer is moist. The probe reports moisture at the fine roots, the deeper measuring points stay dry."
       },
       "midway": {
         "status": "The water has reached the main roots. The deepest measuring point is still dry."
       },
       "soak": {
-        "label": "Deep watering",
         "status": "The water has reached the root zone. All three measuring points report moisture."
       }
     },

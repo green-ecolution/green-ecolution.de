@@ -1,12 +1,9 @@
 import {
-  SHOWER_LEVEL,
+  AUTO_SOAK_TOTAL_MS,
+  autoSoakProgress,
   hardwareChapter,
-  progressForLevel,
-  progressForSoak,
   reachedPoints,
   soakLevel,
-  soakOption,
-  type SoakOption,
 } from '../lib/soakLevel'
 import { bindPinnedStage } from './pinStage'
 
@@ -21,16 +18,20 @@ function setup() {
   const { signal } = page
 
   for (const root of document.querySelectorAll<HTMLElement>('[data-soak-root]')) {
-    const options = [...root.querySelectorAll<HTMLButtonElement>('[data-soak-option]')]
     const points = [...root.querySelectorAll<SVGElement>('.soak-point')]
     const text = root.querySelector<HTMLElement>('[data-soak-text]')
-    const statusFor = (option: SoakOption) =>
-      options.find((button) => button.dataset.soakOption === option)?.dataset.soakStatus ?? ''
+    const statuses = [
+      root.dataset.soakStatusShower,
+      root.dataset.soakStatusMidway,
+      root.dataset.soakStatusSoak,
+    ]
 
-    const show = (pressed: SoakOption | null, status: string) => {
-      for (const option of options) {
-        option.setAttribute('aria-pressed', String(option.dataset.soakOption === pressed))
-      }
+    // The 3d island and the sketch both read the level from --soak-level.
+    const render = (level: number) => {
+      const reached = reachedPoints(level)
+      root.style.setProperty('--soak-level', level.toFixed(3))
+      points.forEach((point, index) => point.toggleAttribute('data-reached', index < reached))
+      const status = statuses[Math.max(0, reached - 1)] ?? ''
       if (text && text.textContent !== status) text.textContent = status
     }
 
@@ -53,12 +54,8 @@ function setup() {
       })
     }
 
-    const leaveScrollDriven = () => {
-      if (!root.hasAttribute('data-scroll-driven')) return
-      root.removeAttribute('data-scroll-driven')
-      root.dataset.soak = 'shower'
-      show('shower', statusFor('shower'))
-    }
+    let autoplay: 'idle' | 'playing' | 'done' = 'idle'
+    let pinned: boolean | null = null
 
     const pin = bindPinnedStage(
       track,
@@ -66,44 +63,67 @@ function setup() {
       signal,
       (progress) => {
         if (progress === null) {
-          showChapter(null)
-          leaveScrollDriven()
+          if (pinned !== false) {
+            pinned = false
+            showChapter(null)
+            render(soakLevel(autoplay === 'done' ? 1 : 0))
+          }
           return
         }
 
+        pinned = true
         const { chapter, soakProgress } = hardwareChapter(progress)
         showChapter(chapter)
-
-        const level = soakLevel(soakProgress)
-        const reached = reachedPoints(level)
-        root.toggleAttribute('data-scroll-driven', true)
-        delete root.dataset.soak
-        root.style.setProperty('--soak-level', level.toFixed(3))
-        points.forEach((point, index) => point.toggleAttribute('data-reached', index < reached))
-
-        if (reached === 2) show(null, root.dataset.soakMidwayStatus ?? '')
-        else show(soakOption(level), statusFor(soakOption(level)))
+        render(soakLevel(soakProgress))
       },
       () => Math.max(...chapters.map((chapter) => chapter.offsetHeight)) + PROGRESS_PX,
     )
 
-    for (const option of options) {
-      option.addEventListener(
-        'click',
-        () => {
-          const choice = option.dataset.soakOption as SoakOption
-          if (pin.isPinned()) {
-            pin.scrollToProgress(
-              progressForSoak(choice === 'soak' ? 1 : progressForLevel(SHOWER_LEVEL)),
-            )
-            return
-          }
-          root.dataset.soak = choice
-          show(choice, statusFor(choice))
-        },
-        { signal },
-      )
+    const playOnce = () => {
+      if (autoplay !== 'idle') return
+      autoplay = 'playing'
+      const stepped = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      const start = performance.now()
+
+      const tick = (now: number) => {
+        if (signal.aborted || pin.isPinned()) {
+          autoplay = 'idle'
+          return
+        }
+        const elapsed = now - start
+        render(soakLevel(autoSoakProgress(elapsed, stepped)))
+        if (elapsed < AUTO_SOAK_TOTAL_MS) window.requestAnimationFrame(tick)
+        else autoplay = 'done'
+      }
+      window.requestAnimationFrame(tick)
     }
+
+    // While the poster still stands in, the water would sink where nobody can
+    // see it, so the play waits for the model or, without webgl, the sketch.
+    const canShowWater = () =>
+      root.hasAttribute('data-model-ready') || root.dataset.probeView === 'sketch'
+    let onScreen = false
+    const playWhenSeen = () => {
+      if (onScreen && canShowWater() && !pin.isPinned()) playOnce()
+    }
+
+    const viewport = new IntersectionObserver(
+      (entries) => {
+        onScreen = entries.some((entry) => entry.isIntersecting)
+        playWhenSeen()
+      },
+      { threshold: 0.6 },
+    )
+    viewport.observe(root)
+    const view = new MutationObserver(playWhenSeen)
+    view.observe(root, {
+      attributes: true,
+      attributeFilter: ['data-model-ready', 'data-probe-view'],
+    })
+    signal.addEventListener('abort', () => {
+      viewport.disconnect()
+      view.disconnect()
+    })
   }
 }
 

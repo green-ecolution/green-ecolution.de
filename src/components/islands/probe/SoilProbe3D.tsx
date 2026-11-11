@@ -20,7 +20,6 @@ import { SOAK_POINTS, reachedPoints } from '../../../lib/soakLevel'
 
 export interface SoakSource {
   target: number
-  scrollDriven: boolean
   onChange: (() => void) | null
 }
 
@@ -630,7 +629,7 @@ function Scene({ isStatic, source, labels, onReady }: Omit<Props, 'isActive'>) {
   useFrame(({ camera, size, clock }, delta) => {
     const state = motion.current
     const step = Math.min(delta, 0.05)
-    const { target, scrollDriven } = source.current
+    const { target } = source.current
 
     if (state.framedWidth !== size.width || state.framedHeight !== size.height) {
       const view = camera as OrthographicCamera
@@ -657,7 +656,7 @@ function Scene({ isStatic, source, labels, onReady }: Omit<Props, 'isActive'>) {
     const settled = isStatic || state.level < 0
     state.level = settled
       ? target
-      : state.level + (target - state.level) * (1 - Math.exp(-step * (scrollDriven ? 10 : 2.2)))
+      : state.level + (target - state.level) * (1 - Math.exp(-step * 10))
 
     bands.current ??= { water: waterBand(0.03, 0), front: waterBand(0.035, 1.7) }
     if (Math.abs(state.level - state.drawnLevel) > 0.0005) {

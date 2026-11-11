@@ -2,29 +2,28 @@
 // illustration (y 120, 200 and 280 on a layer from y 64, 250 units tall).
 export const SOAK_POINTS = [0.224, 0.544, 0.864]
 
-// The pinned play starts where a short shower ends, at the first point, so
-// there is no fully dry state that would need a text of its own.
+// The play starts at the first point, as after a short shower, so there is no
+// fully dry state that would need a text of its own.
 const SURFACE_LEVEL = 0.25
-
-// Just past the first point: what a short shower reaches.
-export const SHOWER_LEVEL = 0.3
-
-export type SoakOption = 'shower' | 'soak'
 
 export function soakLevel(progress: number): number {
   return SURFACE_LEVEL + Math.min(1, Math.max(0, progress)) * (1 - SURFACE_LEVEL)
-}
-
-export function progressForLevel(level: number): number {
-  return (level - SURFACE_LEVEL) / (1 - SURFACE_LEVEL)
 }
 
 export function reachedPoints(level: number): number {
   return SOAK_POINTS.filter((point) => level >= point).length
 }
 
-export function soakOption(level: number): SoakOption {
-  return reachedPoints(level) === SOAK_POINTS.length ? 'soak' : 'shower'
+// Without a pinned stage the water sinks in by itself once, after a moment on
+// the short shower. Stepped, it jumps from point to point instead of flowing.
+const AUTO_HOLD_MS = 1200
+const AUTO_SOAK_MS = 3600
+export const AUTO_SOAK_TOTAL_MS = AUTO_HOLD_MS + AUTO_SOAK_MS
+
+export function autoSoakProgress(elapsedMs: number, stepped: boolean): number {
+  const t = Math.min(1, Math.max(0, (elapsedMs - AUTO_HOLD_MS) / AUTO_SOAK_MS))
+  if (stepped) return Math.floor(t * (SOAK_POINTS.length - 1)) / (SOAK_POINTS.length - 1)
+  return 1 - (1 - t) ** 2
 }
 
 // The water gets the first half of the pinned stretch; installation and setup
@@ -35,11 +34,6 @@ const SOAK_SHARE = CHAPTER_STARTS[1]
 export function hardwareChapter(progress: number): { chapter: number; soakProgress: number } {
   const chapter = CHAPTER_STARTS.filter((start) => progress >= start).length - 1
   return { chapter: Math.max(0, chapter), soakProgress: Math.min(1, progress / SOAK_SHARE) }
-}
-
-// Stops just short of the chapter change, so the full soak stays on screen.
-export function progressForSoak(soakProgress: number): number {
-  return Math.min(soakProgress, 0.95) * SOAK_SHARE
 }
 
 export function progressForChapter(chapter: number): number {
