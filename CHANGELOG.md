@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.19.5](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.4...v1.19.5) (2026-11-11)
+
+
+### Features
+
+* **about:** restyle owner contact card with icons and portrait accent ([#575](https://github.com/green-ecolution/green-ecolution.de/issues/575)) ([35569c6](https://github.com/green-ecolution/green-ecolution.de/commit/35569c63b8f063e064676613d405e257ccf50091))
+* **contact:** add mobile number and WhatsApp contact ([#573](https://github.com/green-ecolution/green-ecolution.de/issues/573)) ([081c5f0](https://github.com/green-ecolution/green-ecolution.de/commit/081c5f037f42043d2f0a751466e283d9a507232d))
+* **contact:** replace channel cards with a single contact panel ([#576](https://github.com/green-ecolution/green-ecolution.de/issues/576)) ([3bff842](https://github.com/green-ecolution/green-ecolution.de/commit/3bff8427ecfbe5035872c35ba5f4a55bec162e92))
+
+
+### Bug Fixes
+
+* **hero:** remove tree adoption easter egg ([#577](https://github.com/green-ecolution/green-ecolution.de/issues/577)) ([88a1383](https://github.com/green-ecolution/green-ecolution.de/commit/88a1383a799de0a14a5bdc1e913d4e975f1f1473))
+
 ## [1.19.4](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.3...v1.19.4) (2026-10-30)
 
 
