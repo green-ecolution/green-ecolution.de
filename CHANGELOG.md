@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.19.6](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.5...v1.19.6) (2026-11-11)
+
+
+### Features
+
+* **assets:** add logo for the email signature ([90ab062](https://github.com/green-ecolution/green-ecolution.de/commit/90ab0620c0cd11f4c269060567d599335a4536bc))
+
 ## [1.19.5](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.4...v1.19.5) (2026-11-11)
 
 
