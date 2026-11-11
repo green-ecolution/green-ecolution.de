@@ -202,13 +202,15 @@
         "category": "Capture",
         "title": "Measure",
         "description": "Soil moisture sensors capture soil moisture and temperature at variable depths. The data is transmitted energy-efficiently via LoRaWAN.",
-        "screenshotAlt": "Transmitter unit of the soil moisture sensor with antenna and QR code, connected to the two soil moisture probes with their prongs"
+        "screenshotAlt": "Transmitter unit of the soil moisture sensor with antenna and QR code, connected to the two soil moisture probes with their prongs",
+        "installationAlt": "Sketch of the sensor installation next to a young tree: the transmitter sits in a ground box just below the surface, the two probes are placed at 40 and 80 cm depth, each tilted 45 degrees towards the tree"
       },
       "understand": {
         "category": "Analyze",
         "title": "Understand",
         "description": "A traffic-light system shows the current irrigation need on a map. Staff can see at a glance which green spaces need water. Time series enable detailed analyses.",
-        "screenshotAlt": "Map of Flensburg with coloured traffic light markers for the irrigation needs of tree groups and filters for very dry and slightly dry groups"
+        "screenshotAlt": "Map of Flensburg with coloured traffic light markers for the irrigation needs of tree groups and filters for very dry and slightly dry groups",
+        "dashboardAlt": "Detail page of a very dry irrigation group with soil temperature, last measurement and the water supply over seven days below the moderate and critical thresholds"
       },
       "act": {
         "category": "Execute",

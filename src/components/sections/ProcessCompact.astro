@@ -4,7 +4,9 @@ import { ChevronDown } from 'lucide-react'
 import Arrow from '../icons/Arrow.astro'
 import wateringPhoto from '../../assets/photos/bewaesserung-jungbaum-tbz.jpg'
 import measurePhoto from '../../assets/photos/sensor-ges-1000.jpg'
+import sensorInstallation from '../../assets/illustrations/sensor-installation.png'
 import mapOverview from '../../assets/releases/v0.3.0-karte-uebersicht.png'
+import groupDashboard from '../../assets/releases/v0.5.0-gruppen-dashboard.png'
 import routePlanning from '../../assets/releases/v0.4.0-route-nachfuellpunkte.png'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
@@ -21,8 +23,9 @@ const t = getTranslations(language, 'home')
 // straight into the href.
 const moreHref = `/${language}/product#process`
 // Screenshots crop from the top left, where the app's navigation anchors them;
-// photos keep their subjects in the middle. A step with several visuals plays
-// them in turn while it is open: acting first plans the route, then waters.
+// photos keep their subjects in the middle. The installation sketch anchors at
+// the bottom so a 16:9 crop trims the treetop, not the depth labels. A step
+// with several visuals plays them in turn while it is open.
 const VISUALS = {
   measure: [
     {
@@ -31,12 +34,24 @@ const VISUALS = {
       alt: t('workflow.steps.measure.screenshotAlt'),
       caption: null,
     },
+    {
+      src: sensorInstallation,
+      position: 'object-bottom',
+      alt: t('workflow.steps.measure.installationAlt'),
+      caption: null,
+    },
   ],
   understand: [
     {
       src: mapOverview,
       position: 'object-left-top',
       alt: t('workflow.steps.understand.screenshotAlt'),
+      caption: null,
+    },
+    {
+      src: groupDashboard,
+      position: 'object-left-top',
+      alt: t('workflow.steps.understand.dashboardAlt'),
       caption: null,
     },
   ],
