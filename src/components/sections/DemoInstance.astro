@@ -1,9 +1,10 @@
 ---
 import { Image } from 'astro:assets'
-import { ExternalLink } from 'lucide-react'
+import { CalendarDays, ExternalLink } from 'lucide-react'
 import dashboard from '../../assets/releases/v0.1.0-dashboard.png'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
+import { company } from '../../data/company'
 
 interface Props {
   language: Language
@@ -37,7 +38,7 @@ const STRIPES =
 
         <p class="text-white/70 leading-relaxed mb-8 max-w-lg">{t('demo.description')}</p>
 
-        <div>
+        <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
           <a
             href="https://demo.green-ecolution.de"
             target="_blank"
@@ -47,6 +48,16 @@ const STRIPES =
           >
             <span>{t('demo.cta')}</span>
             <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+          <a
+            href={company.booking.liveDemoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('demo.bookingAriaLabel')}
+            class="group inline-flex items-center justify-center gap-x-3 rounded-xl font-semibold px-8 py-4 border-2 border-white/70 text-white transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-105 active:scale-100"
+          >
+            <CalendarDays className="w-4 h-4" />
+            <span>{t('demo.bookingCta')}</span>
           </a>
         </div>
       </div>

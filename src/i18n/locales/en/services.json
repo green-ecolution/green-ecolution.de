@@ -78,7 +78,8 @@
     "steps": {
       "talk": {
         "title": "First conversation",
-        "description": "We clarify which areas and processes you want to map and which data is already available. After that you receive a quote."
+        "description": "We clarify which areas and processes you want to map and which data is already available. After that you receive a quote.",
+        "bookingCta": "Book an initial call"
       },
       "setup": {
         "title": "Setup",

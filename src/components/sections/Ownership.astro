@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-import { Leaf, Mail, Phone, Smartphone } from 'lucide-react'
+import { CalendarDays, Leaf, Mail, Phone, Smartphone } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { company } from '../../data/company'
@@ -33,6 +33,13 @@ const contactChannels = [
     label: t('owners.contact.mobileLabel'),
     href: company.mobile.href,
     display: company.mobile.display,
+  },
+  {
+    icon: CalendarDays,
+    label: t('owners.contact.bookingLabel'),
+    href: company.booking.overviewUrl,
+    display: t('owners.contact.bookingDisplay'),
+    isExternal: true,
   },
 ]
 
@@ -106,6 +113,8 @@ const LINK_CLASS =
               <li>
                 <a
                   href={channel.href}
+                  target={channel.isExternal ? '_blank' : undefined}
+                  rel={channel.isExternal ? 'noopener noreferrer' : undefined}
                   class="group -mx-2 flex items-center gap-3 rounded-xl px-2 py-1.5 text-sm font-medium text-grey-900 transition-colors hover:bg-green-dark-900/5 focus-visible:outline-2 focus-visible:outline-green-dark-900"
                 >
                   <span

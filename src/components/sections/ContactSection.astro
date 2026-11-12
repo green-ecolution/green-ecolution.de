@@ -1,5 +1,5 @@
 ---
-import { Mail, MessageCircle } from 'lucide-react'
+import { Mail, CalendarDays } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { company } from '../../data/company'
@@ -55,14 +55,14 @@ const t = getTranslations(language, 'contact')
             <span>{t('cta.mailButtonLabel')}</span>
           </a>
           <a
-            href={company.whatsappUrl}
+            href={company.booking.overviewUrl}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={t('cta.whatsappAriaLabel')}
+            aria-label={t('cta.bookingAriaLabel')}
             class="group inline-flex items-center justify-center gap-x-3 rounded-xl font-semibold px-8 py-4 border-2 border-white/70 text-white transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-105 active:scale-100"
           >
-            <MessageCircle className="w-5 h-5 transition-transform group-hover:-rotate-12" />
-            <span>{t('cta.whatsappButtonLabel')}</span>
+            <CalendarDays className="w-5 h-5 transition-transform group-hover:-rotate-12" />
+            <span>{t('cta.bookingButtonLabel')}</span>
           </a>
         </div>
       </div>

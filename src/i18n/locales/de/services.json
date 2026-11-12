@@ -78,7 +78,8 @@
     "steps": {
       "talk": {
         "title": "Erstes Gespräch",
-        "description": "Wir klären, welche Flächen und Abläufe du abbilden willst und welche Daten schon vorliegen. Danach bekommst du ein Angebot."
+        "description": "Wir klären, welche Flächen und Abläufe du abbilden willst und welche Daten schon vorliegen. Danach bekommst du ein Angebot.",
+        "bookingCta": "Erstgespräch buchen"
       },
       "setup": {
         "title": "Einrichtung",

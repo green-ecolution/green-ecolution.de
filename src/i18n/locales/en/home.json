@@ -223,7 +223,9 @@
     "description": "The publicly accessible demo instance shows the current feature set: map view with a traffic-light system, dashboard with sensor data, and automated route calculation. No installation needed, directly in the browser.",
     "cta": "Open demo",
     "ctaAriaLabel": "Open the Green Ecolution demo in the browser",
-    "screenshotAlt": "Green Ecolution demo, dashboard with map view and sensor data"
+    "screenshotAlt": "Green Ecolution demo, dashboard with map view and sensor data",
+    "bookingCta": "Book a guided demo",
+    "bookingAriaLabel": "Book a guided demo of Green Ecolution"
   },
   "stakeholder": {
     "sectionLabel": "Partners",

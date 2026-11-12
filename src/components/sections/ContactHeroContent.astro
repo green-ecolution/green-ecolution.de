@@ -1,5 +1,5 @@
 ---
-import { Mail, ExternalLink, ArrowRight, Phone, MessageCircle } from 'lucide-react'
+import { Mail, ExternalLink, ArrowRight, Phone, MessageCircle, CalendarDays } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { company } from '../../data/company'
@@ -25,6 +25,13 @@ const channels = [
     label: t('channels.phone.label'),
     value: company.mobile.display,
     isExternal: false,
+  },
+  {
+    href: company.booking.overviewUrl,
+    icon: CalendarDays,
+    label: t('channels.booking.label'),
+    value: t('channels.booking.cta'),
+    isExternal: true,
   },
   {
     href: company.whatsappUrl,

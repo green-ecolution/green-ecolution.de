@@ -1,7 +1,9 @@
 ---
+import { CalendarDays } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { splitSlot } from '../../lib/slotText'
+import { company } from '../../data/company'
 
 interface Props {
   language: Language
@@ -52,6 +54,17 @@ const requirements = splitSlot(t('onboarding.descriptionRich'), 'requirements')
           {t(`onboarding.steps.${id}.title`)}
         </h3>
         <p class="text-grey-900/70 leading-relaxed">{t(`onboarding.steps.${id}.description`)}</p>
+        {id === 'talk' && (
+          <a
+            href={company.booking.introCallUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group mt-3 inline-flex items-center gap-2 font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
+          >
+            <CalendarDays className="w-4 h-4 shrink-0" aria-hidden="true" />
+            <span>{t('onboarding.steps.talk.bookingCta')}</span>
+          </a>
+        )}
       </li>
     ))}
   </ol>

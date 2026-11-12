@@ -223,7 +223,9 @@
     "description": "Die öffentlich zugängliche Demo-Instanz zeigt den aktuellen Funktionsumfang: Kartenansicht mit Ampelsystem, Dashboard mit Sensordaten und automatisierte Routenberechnung. Keine Installation nötig, direkt im Browser.",
     "cta": "Demo öffnen",
     "ctaAriaLabel": "Demo von Green Ecolution im Browser öffnen",
-    "screenshotAlt": "Green Ecolution Demo, Dashboard mit Kartenansicht und Sensordaten"
+    "screenshotAlt": "Green Ecolution Demo, Dashboard mit Kartenansicht und Sensordaten",
+    "bookingCta": "Geführte Demo buchen",
+    "bookingAriaLabel": "Termin für eine geführte Demo von Green Ecolution buchen"
   },
   "stakeholder": {
     "sectionLabel": "Partner",

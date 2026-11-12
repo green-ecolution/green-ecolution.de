@@ -52,7 +52,9 @@
       "photoAlt": "Porträt von {{name}}",
       "mailLabel": "E-Mail",
       "phoneLabel": "Telefon",
-      "mobileLabel": "Mobil"
+      "mobileLabel": "Mobil",
+      "bookingLabel": "Termin",
+      "bookingDisplay": "Termin buchen"
     },
     "pressRich": "Für Presseanfragen, Logos und Bilder gibt es die <press>Presseseite</press>."
   }

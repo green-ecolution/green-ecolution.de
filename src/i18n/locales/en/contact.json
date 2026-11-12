@@ -11,12 +11,16 @@
   "channels": {
     "badge": "We look forward to hearing from you",
     "title": "A direct line to us",
-    "description": "Pick whichever way suits you best. For questions and offers you can reach us by email, phone or WhatsApp. Our source code is open and available to everyone on GitHub.",
+    "description": "Pick whichever way suits you best. For questions and offers you can reach us by email, phone or WhatsApp. If you would rather talk to us directly, just book a meeting. Our source code is open and available to everyone on GitHub.",
     "mail": {
       "label": "Write to us"
     },
     "phone": {
       "label": "Call us"
+    },
+    "booking": {
+      "label": "Book a meeting",
+      "cta": "Schedule a meeting"
     },
     "whatsapp": {
       "label": "WhatsApp",
@@ -32,7 +36,7 @@
     "description": "Do you have questions, feedback, or a request? We welcome your message and will get back to you as soon as possible.",
     "mailAriaLabel": "Feel free to contact us by email",
     "mailButtonLabel": "Write to us",
-    "whatsappAriaLabel": "Message us on WhatsApp",
-    "whatsappButtonLabel": "WhatsApp"
+    "bookingAriaLabel": "Book a meeting with us",
+    "bookingButtonLabel": "Book a meeting"
   }
 }
