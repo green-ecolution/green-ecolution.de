@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.19.8](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.7...v1.19.8) (2026-11-12)
+
+
+### Features
+
+* **contact:** add calendly booking links ([d79d2d1](https://github.com/green-ecolution/green-ecolution.de/commit/d79d2d167d07005b1ede3a3fb2db5c65b93f7220))
+
 ## [1.19.7](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.6...v1.19.7) (2026-11-11)
 
 
