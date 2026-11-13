@@ -256,6 +256,10 @@
     "aboutLink": "Mehr über uns",
     "sliderAriaLabel": "Unsere Partner",
     "items": {
+      "progeek": {
+        "role": "Umsetzung",
+        "description": "Die PROGEEK GmbH hat Green Ecolution im Landesprogramm „Offene Innovation“ vom Forschungsprojekt zur Produktionsreife weiterentwickelt."
+      },
       "smarteGrenzregion": {
         "role": "Koordination",
         "description": "Das Projekt „Smarte Grenzregion zwischen den Meeren\" will die digitale Transformation in der Region vorantreiben, um eine integrierte und nachhaltige Stadt- und Regionalentwicklung zu gestalten und das Gemeinwohl zu stärken."
