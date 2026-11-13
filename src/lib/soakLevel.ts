@@ -26,9 +26,9 @@ export function autoSoakProgress(elapsedMs: number, stepped: boolean): number {
   return 1 - (1 - t) ** 2
 }
 
-// The water gets the first half of the pinned stretch; installation and setup
-// share the rest. Each later chapter starts where the previous one ends.
-const CHAPTER_STARTS = [0, 0.5, 0.75]
+// Water, installation and setup each get a third of the pinned stretch. Each
+// later chapter starts where the previous one ends.
+const CHAPTER_STARTS = [0, 1 / 3, 2 / 3]
 const SOAK_SHARE = CHAPTER_STARTS[1]
 
 export function hardwareChapter(progress: number): { chapter: number; soakProgress: number } {
@@ -36,8 +36,29 @@ export function hardwareChapter(progress: number): { chapter: number; soakProgre
   return { chapter: Math.max(0, chapter), soakProgress: Math.min(1, progress / SOAK_SHARE) }
 }
 
+// Lands late enough in a chapter that its parts have all arrived.
+const LANDING_SHARE = 0.75
+
 export function progressForChapter(chapter: number): number {
   const start = CHAPTER_STARTS[chapter] ?? 0
   const end = CHAPTER_STARTS[chapter + 1] ?? 1
-  return (start + end) / 2
+  return start + (end - start) * LANDING_SHARE
+}
+
+export function chapterProgress(progress: number, chapter: number): number {
+  const start = CHAPTER_STARTS[chapter] ?? 0
+  const end = CHAPTER_STARTS[chapter + 1] ?? 1
+  return Math.min(1, Math.max(0, (progress - start) / (end - start)))
+}
+
+// The parts of a chapter arrive one after another and are all there well
+// before it ends, so the last one can still be read.
+const REVEAL_START = 0.15
+const REVEAL_END = 0.6
+
+export function revealedCount(progress: number, count: number): number {
+  if (progress < REVEAL_START) return 0
+  if (count <= 1) return count
+  const share = (progress - REVEAL_START) / (REVEAL_END - REVEAL_START)
+  return Math.min(count, Math.floor(share * (count - 1) + 1e-9) + 1)
 }

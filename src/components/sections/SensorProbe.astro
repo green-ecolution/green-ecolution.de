@@ -3,6 +3,7 @@ import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { sensorSpecs, sensorFeatures } from '../../data/sensorSpecs'
 import { Image } from 'astro:assets'
+import { Check } from 'lucide-react'
 import sensorPhoto from '../../assets/photos/sensor-einbau-erdbohrer.jpg'
 import setupPhoto from '../../assets/photos/sensor-einrichtung-app-qr.jpg'
 import probePoster from '../../assets/illustrations/soil-probe-poster.png'
@@ -24,7 +25,12 @@ const depths = [
 
 const START_LEVEL = soakLevel(0)
 const START_REACHED = reachedPoints(START_LEVEL)
-const CHAPTERS = 3
+const CHAPTER_LABELS = [
+  t('sensorProbe.sectionLabel'),
+  t('sensorProbe.installation.sectionLabel'),
+  t('sensorSetup.sectionLabel'),
+]
+const SETUP_STEPS = ['scan', 'assign', 'done'] as const
 
 const FINE_ROOTS = [
   { d: 'M160,75 Q130,90 100,100 Q80,105 65,95', width: '1.5' },
@@ -42,7 +48,7 @@ const DEEP_ROOTS = [
 ]
 ---
 
-<section class="my-20 lg:my-28 xl:my-36">
+<section data-pin-section class="my-20 lg:my-28 xl:my-36">
   <div class="px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl">
     <div data-pin-track>
       <div data-pin-stage>
@@ -61,7 +67,7 @@ const DEEP_ROOTS = [
                 style={`--soak-level: ${START_LEVEL}`}
                 class="relative bg-gradient-to-b from-green-light-100/60 to-white rounded-2xl p-4 lg:p-6 border border-green-dark-900/5 shadow-sm"
               >
-                <div class="relative w-full max-w-sm mx-auto aspect-[8/9]">
+                <div class="probe-model relative w-full max-w-sm mx-auto aspect-[8/9]">
                   <Image
                     src={probePoster}
                     alt=""
@@ -324,20 +330,44 @@ const DEEP_ROOTS = [
                   )
                 })}
               </ul>
+
+              <div class="mt-6 border-t border-green-dark-900/10 pt-5">
+                <p class="mb-2 text-xs font-semibold tracking-widest uppercase text-green-dark-900">
+                  {t('sensorProbe.readings.title')}
+                </p>
+                <ul>
+                  {depths.map((depth, index) => (
+                    <li
+                      data-soak-reading
+                      data-reached={index < START_REACHED ? '' : undefined}
+                      class="reading flex items-center justify-between gap-4 border-b border-green-dark-900/10 py-2 last:border-b-0"
+                    >
+                      <span class="font-lato font-semibold text-sm text-grey-900">
+                        {depth.zone}
+                      </span>
+                      <span class="reading-pill inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+                        <span class="reading-dot h-1.5 w-1.5 rounded-full"></span>
+                        <span class="reading-dry">{t('sensorProbe.readings.dry')}</span>
+                        <span class="reading-moist">{t('sensorProbe.readings.moist')}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </article>
 
           <article
             data-chapter="1"
             data-active="false"
-            class="hardware-chapter lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16 lg:items-center"
+            class="hardware-chapter lg:grid lg:grid-cols-12 lg:gap-x-12 xl:gap-x-16 lg:items-center"
           >
-            <figure class="mb-10 lg:mb-0">
+            <figure class="mb-10 lg:mb-0 lg:col-span-7">
               <Image
                 src={sensorPhoto}
                 alt={t('sensorProbe.photoAlt')}
-                widths={[640, 960, 1280]}
-                sizes="(min-width: 1024px) 45vw, 100vw"
+                widths={[640, 960, 1280, 1600]}
+                sizes="(min-width: 1280px) 692px, (min-width: 1024px) 56vw, 100vw"
                 loading="lazy"
                 class="w-full aspect-[4/3] object-cover rounded-2xl"
               />
@@ -346,7 +376,7 @@ const DEEP_ROOTS = [
               </figcaption>
             </figure>
 
-            <div>
+            <div class="lg:col-span-5">
               <div class="inline-block mb-6">
                 <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
                   {t('sensorProbe.installation.sectionLabel')}
@@ -365,7 +395,10 @@ const DEEP_ROOTS = [
 
               <ul class="flex flex-wrap gap-3">
                 {sensorSpecs.map((spec) => (
-                  <li class="flex items-center gap-2 border border-green-light-900/40 rounded-full px-4 py-2">
+                  <li
+                    data-reveal-item
+                    class="spec-pill flex items-center gap-2 border border-green-light-900/40 rounded-full px-4 py-2"
+                  >
                     <span class="font-lato font-bold text-green-dark-900">
                       {t(`sensorProbe.specs.${spec}.value`)}
                     </span>
@@ -381,23 +414,32 @@ const DEEP_ROOTS = [
           <article
             data-chapter="2"
             data-active="false"
-            class="hardware-chapter lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16 lg:items-center"
+            class="hardware-chapter lg:grid lg:grid-cols-12 lg:gap-x-12 xl:gap-x-16 lg:items-center"
           >
-            <figure class="mb-10 lg:mb-0">
-              <Image
-                src={setupPhoto}
-                alt={t('sensorSetup.photoAlt')}
-                widths={[640, 960, 1280]}
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                loading="lazy"
-                class="w-full aspect-[4/3] object-cover rounded-2xl"
-              />
+            <figure class="mb-10 lg:mb-0 lg:col-span-7">
+              <div class="relative overflow-hidden rounded-2xl">
+                <Image
+                  src={setupPhoto}
+                  alt={t('sensorSetup.photoAlt')}
+                  widths={[640, 960, 1280, 1600]}
+                  sizes="(min-width: 1280px) 692px, (min-width: 1024px) 56vw, 100vw"
+                  loading="lazy"
+                  class="w-full aspect-[4/3] object-cover"
+                />
+                <span class="scan-frame" aria-hidden="true"></span>
+                <span class="setup-connected absolute left-3 bottom-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 py-1 pl-2 pr-3 text-xs font-semibold text-green-dark-900 shadow-sm">
+                  <span class="flex h-4 w-4 items-center justify-center rounded-full bg-green-dark-900 text-white">
+                    <Check aria-hidden="true" className="h-3 w-3" />
+                  </span>
+                  {t('sensorSetup.connected')}
+                </span>
+              </div>
               <figcaption class="mt-3 text-sm text-grey-900/60">
                 {t('sensorSetup.photoCaption')}
               </figcaption>
             </figure>
 
-            <div>
+            <div class="lg:col-span-5">
               <div class="inline-block mb-6">
                 <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
                   {t('sensorSetup.sectionLabel')}
@@ -408,20 +450,45 @@ const DEEP_ROOTS = [
                 {t('sensorSetup.title')}
               </h3>
 
-              <p class="text-grey-900/70 leading-relaxed mb-4">{t('sensorSetup.description')}</p>
+              <p class="text-grey-900/70 leading-relaxed mb-5">{t('sensorSetup.description')}</p>
+
+              <ol class="mb-5 space-y-2">
+                {SETUP_STEPS.map((step) => (
+                  <li data-reveal-item class="setup-step flex items-center gap-3">
+                    <span class="setup-check flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-green-dark-900 bg-green-dark-900 text-white">
+                      <Check aria-hidden="true" className="h-3.5 w-3.5" />
+                    </span>
+                    <span class="setup-label font-lato font-semibold text-grey-900">
+                      {t(`sensorSetup.steps.${step}`)}
+                    </span>
+                  </li>
+                ))}
+              </ol>
 
               <p class="text-grey-900/70 leading-relaxed">{t('sensorProbe.probeCarrier')}</p>
             </div>
           </article>
         </div>
 
-        <div class="hardware-progress mt-6 gap-2" aria-hidden="true">
-          {Array.from({ length: CHAPTERS }, (_, index) => (
-            <span
+        <div
+          class="hardware-progress mt-3 gap-4"
+          role="group"
+          aria-label={t('sensorProbe.chaptersLabel')}
+        >
+          {CHAPTER_LABELS.map((label, index) => (
+            <button
+              type="button"
               data-chapter-marker={index}
               data-active={String(index === 0)}
-              class="h-1 w-10 rounded-full bg-green-dark-900/15 transition-colors duration-300 data-[active=true]:bg-green-dark-900"
-            ></span>
+              class="group/marker w-28 cursor-pointer rounded-sm py-3 text-left"
+            >
+              <span class="block h-1 overflow-hidden rounded-full bg-green-dark-900/15">
+                <span class="chapter-fill block h-full origin-left bg-green-dark-900"></span>
+              </span>
+              <span class="mt-1.5 block text-xs font-semibold tracking-widest uppercase text-grey-900/60 transition-colors duration-300 group-hover/marker:text-green-dark-900 group-data-[active=true]/marker:text-green-dark-900">
+                {label}
+              </span>
+            </button>
           ))}
         </div>
       </div>
@@ -481,8 +548,9 @@ const DEEP_ROOTS = [
     display: none;
   }
 
+  /* 150svh for each of the three chapters. */
   [data-pin-track][data-pinned] {
-    --pin-distance: 300svh;
+    --pin-distance: 450svh;
   }
 
   [data-pin-track][data-pinned] .hardware-chapters {
@@ -506,6 +574,176 @@ const DEEP_ROOTS = [
 
   [data-pin-track][data-pinned] .hardware-progress {
     display: flex;
+  }
+
+  .chapter-fill {
+    transform: scaleX(0);
+  }
+
+  [data-chapter-marker][data-passed] .chapter-fill {
+    transform: scaleX(1);
+  }
+
+  [data-chapter-marker][data-active='true'] .chapter-fill {
+    transform: scaleX(var(--chapter-fill, 0));
+  }
+
+  /* A tall window leaves the model room to grow. Tied to the window, not to
+     the pinned state, so the pinning decision measures a stable height. */
+  @media (min-width: 1024px) and (min-height: 1000px) {
+    .probe-model {
+      max-width: 28rem;
+    }
+  }
+
+  .hardware-chapters {
+    --ease-pop: cubic-bezier(0.34, 1.5, 0.64, 1);
+  }
+
+  .reading-pill {
+    border-color: color-mix(in oklab, var(--color-grey-900) 20%, transparent);
+    color: color-mix(in oklab, var(--color-grey-900) 65%, transparent);
+    transition:
+      color 0.3s ease-out,
+      border-color 0.3s ease-out;
+  }
+
+  .reading-dot {
+    background-color: currentColor;
+    opacity: 0.5;
+  }
+
+  .reading-moist,
+  .reading[data-reached] .reading-dry {
+    display: none;
+  }
+
+  .reading[data-reached] .reading-moist {
+    display: inline;
+  }
+
+  .reading[data-reached] .reading-pill {
+    border-color: #3b6e8f;
+    color: #2f5a76;
+    animation: reading-pop 0.45s ease-out;
+  }
+
+  .reading[data-reached] .reading-dot {
+    opacity: 1;
+  }
+
+  @keyframes reading-pop {
+    0% {
+      scale: 0.85;
+    }
+    55% {
+      scale: 1.08;
+    }
+    100% {
+      scale: 1;
+    }
+  }
+
+  /* Everything below plays only on the pinned stage. Unpinned, and without
+     scripts, the parts are simply there in their final state. */
+  [data-pin-track][data-pinned] .spec-pill {
+    transition:
+      opacity 0.25s ease-out,
+      translate 0.45s var(--ease-pop),
+      scale 0.45s var(--ease-pop);
+  }
+
+  [data-pin-track][data-pinned] .spec-pill:not([data-shown]) {
+    opacity: 0;
+    translate: 0 0.6rem;
+    scale: 0.9;
+  }
+
+  [data-pin-track][data-pinned] .setup-check {
+    transition:
+      background-color 0.25s ease-out,
+      border-color 0.25s ease-out,
+      color 0.25s ease-out,
+      scale 0.45s var(--ease-pop);
+  }
+
+  [data-pin-track][data-pinned] .setup-label {
+    transition: color 0.25s ease-out;
+  }
+
+  [data-pin-track][data-pinned] .setup-step:not([data-shown]) .setup-check {
+    border-color: color-mix(in oklab, var(--color-grey-900) 30%, transparent);
+    background-color: transparent;
+    color: transparent;
+    scale: 0.85;
+  }
+
+  [data-pin-track][data-pinned] .setup-step:not([data-shown]) .setup-label {
+    color: color-mix(in oklab, var(--color-grey-900) 55%, transparent);
+  }
+
+  /* Sits on the qr code of the sensor unit in the photo, so both the photo's
+     4:3 crop and these percentages have to change together. */
+  .scan-frame {
+    --corner: 30%;
+    position: absolute;
+    left: 42.8%;
+    top: 47%;
+    width: 15%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border: 2px solid white;
+    border-radius: 0.5rem;
+    opacity: 0;
+    mask:
+      linear-gradient(#000 0 0) top left / var(--corner) var(--corner) no-repeat,
+      linear-gradient(#000 0 0) top right / var(--corner) var(--corner) no-repeat,
+      linear-gradient(#000 0 0) bottom left / var(--corner) var(--corner) no-repeat,
+      linear-gradient(#000 0 0) bottom right / var(--corner) var(--corner) no-repeat;
+    transition:
+      opacity 0.3s ease-out,
+      border-color 0.3s ease-out,
+      scale 0.45s var(--ease-pop);
+  }
+
+  [data-pin-track][data-pinned] .hardware-chapter[data-active='true'] .scan-frame {
+    opacity: 1;
+  }
+
+  [data-pin-track][data-pinned] .hardware-chapter[data-revealed='0'] .scan-frame {
+    animation: scan-seek 1.4s ease-in-out infinite;
+  }
+
+  [data-pin-track][data-pinned] .hardware-chapter:not([data-revealed='0']) .scan-frame {
+    border-color: #acb63b;
+    scale: 0.86;
+  }
+
+  [data-pin-track][data-pinned] .hardware-chapter[data-revealed='3'] .scan-frame {
+    opacity: 0;
+  }
+
+  @keyframes scan-seek {
+    0%,
+    100% {
+      scale: 1.15;
+    }
+    50% {
+      scale: 1;
+    }
+  }
+
+  [data-pin-track][data-pinned] .setup-connected {
+    transition:
+      opacity 0.3s ease-out,
+      translate 0.45s var(--ease-pop),
+      scale 0.45s var(--ease-pop);
+  }
+
+  [data-pin-track][data-pinned] .hardware-chapter:not([data-revealed='3']) .setup-connected {
+    opacity: 0;
+    translate: 0 0.5rem;
+    scale: 0.9;
   }
 
   @media (prefers-reduced-motion: reduce) {

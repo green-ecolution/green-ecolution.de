@@ -164,14 +164,26 @@
       }
     },
     "photoAlt": "Einbau einer Bodensonde am Baumstandort: Ein Mitarbeiter in Warnkleidung öffnet mit dem Spaten das vom Erdbohrer vorbereitete Loch, daneben wird die Sonde mit ihrem Kabel bereitgehalten.",
-    "photoCaption": "Einbau gemeinsam mit dem Technischen Betriebszentrum Flensburg."
+    "photoCaption": "Einbau gemeinsam mit dem Technischen Betriebszentrum Flensburg.",
+    "readings": {
+      "title": "Was die Sonde meldet",
+      "moist": "feucht",
+      "dry": "trocken"
+    },
+    "chaptersLabel": "Stationen der Hardware"
   },
   "sensorSetup": {
     "sectionLabel": "Einrichtung",
     "title": "Vor Ort in wenigen Schritten einsatzbereit",
     "description": "Für die Einrichtung steht bereits eine mobile App zur Verfügung: Ein Scan des QR-Codes auf dem Sensor genügt, um ihn dem jeweiligen Baum und Standort zuzuordnen und mit der Plattform zu verbinden. So ist ein Sensor in wenigen Schritten vor Ort einsatzbereit.",
     "photoAlt": "Eine Hand hält einen LoRaWAN-Sensor mit QR-Code, daneben zeigt ein Smartphone den ersten Schritt der Sensoreinrichtung in der Green-Ecolution-App.",
-    "photoCaption": "Einrichtung eines Sensors mit der mobilen App."
+    "photoCaption": "Einrichtung eines Sensors mit der mobilen App.",
+    "steps": {
+      "scan": "QR-Code scannen",
+      "assign": "Baum zuordnen",
+      "done": "Fertig"
+    },
+    "connected": "Sensoreinheit verbunden"
   },
   "videos": {
     "title": "Lerne Green Ecolution per Video kennen",
