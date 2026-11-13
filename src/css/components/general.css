@@ -115,6 +115,12 @@ summary:focus-visible,
     height: calc(100svh - 4.5rem + var(--pin-distance, 150svh));
   }
 
+  /* The stage already centres its content in the window, so the section's own
+     margins would stack on top of that room. */
+  [data-pin-section]:has([data-pin-track][data-pinned]) {
+    margin-block: 4rem;
+  }
+
   [data-pin-track][data-pinned] > [data-pin-stage] {
     position: sticky;
     top: 4.5rem;
