@@ -76,7 +76,7 @@ describe('storyState', () => {
     expect(state.camera.to).toBe('winter')
     expect(state.examples[0].resolved).toBe(true)
     expect(state.examples[1]).toMatchObject({ alert: true, resolved: false })
-    expect(state.examples[2]).toEqual({ signal: 0, alert: false, approach: 0, resolved: false })
+    expect(state.examples[2]).toEqual({ signal: 0, alert: false, resolved: false })
     expect(state.vehicle.route).toBe(1)
   })
 
@@ -116,9 +116,9 @@ describe('storyStill', () => {
     const still = storyStill(3)
     expect(still.camera).toEqual({ from: 'rain', to: 'town', blend: 1 })
     expect(still.examples).toEqual([
-      { signal: 1, alert: true, approach: 0, resolved: false },
-      { signal: 1, alert: true, approach: 0, resolved: false },
-      { signal: 1, alert: true, approach: 0, resolved: false },
+      { signal: 1, alert: true, resolved: false },
+      { signal: 1, alert: true, resolved: false },
+      { signal: 1, alert: true, resolved: false },
     ])
   })
 })

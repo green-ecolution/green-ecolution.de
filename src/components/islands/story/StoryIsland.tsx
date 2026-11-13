@@ -43,10 +43,7 @@ export default function StoryIsland({ labels }: Props) {
 
   useEffect(() => {
     const root = host.current?.closest<HTMLElement>('[data-story-root]')
-    if (!root) return
-
-    root.dataset.storyView = canRenderModel ? 'model' : 'poster'
-    if (!canRenderModel) return
+    if (!root || !canRenderModel) return
 
     let onScreen = true
 

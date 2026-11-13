@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { phaseOfStep, pinProgress, pinnedStep, progressForStep } from './pinnedSteps'
+import { pinProgress, pinnedStep } from './pinnedSteps'
 
 describe('pinProgress', () => {
   it('bleibt vor dem Pin-Bereich bei 0', () => {
@@ -33,61 +33,5 @@ describe('pinnedStep', () => {
 
   it('bleibt am Ende beim letzten Schritt mit voller Linie', () => {
     expect(pinnedStep(1, [1, 1, 2])).toEqual({ index: 2, fill: 1 })
-  })
-})
-
-describe('progressForStep', () => {
-  it('springt in die Mitte des Abschnitts eines Schritts', () => {
-    expect(progressForStep(0, [1, 1, 1, 1])).toBe(0.125)
-    expect(progressForStep(3, [1, 1, 1, 1])).toBe(0.875)
-  })
-
-  it('öffnet einen Schritt mit mehreren Bildern beim ersten Bild', () => {
-    const weights = [1, 1, 2]
-    const { index, fill } = pinnedStep(progressForStep(2, weights), weights)
-    expect(index).toBe(2)
-    expect(phaseOfStep(fill, 2)).toBe(0)
-  })
-
-  it('führt zurück auf denselben Schritt', () => {
-    const weights = [1, 1, 2]
-    for (let index = 0; index < weights.length; index++) {
-      expect(pinnedStep(progressForStep(index, weights), weights).index).toBe(index)
-    }
-  })
-})
-
-describe('phaseOfStep', () => {
-  it('teilt einen Schritt mit mehreren Bildern in gleich lange Phasen', () => {
-    expect(phaseOfStep(0.2, 2)).toBe(0)
-    expect(phaseOfStep(0.6, 2)).toBe(1)
-  })
-
-  it('bleibt am Ende des Schritts bei der letzten Phase', () => {
-    expect(phaseOfStep(1, 2)).toBe(1)
-  })
-
-  it('hat bei nur einem Bild immer Phase 0', () => {
-    expect(phaseOfStep(0.9, 1)).toBe(0)
-  })
-})
-
-describe('progressForStep mit Ansicht', () => {
-  const weights = [2, 2, 2]
-
-  it('landet ohne Angabe in der ersten Ansicht des Schritts', () => {
-    const { index, fill } = pinnedStep(progressForStep(1, weights), weights)
-    expect(index).toBe(1)
-    expect(phaseOfStep(fill, weights[1])).toBe(0)
-  })
-
-  it('landet mitten in der gewünschten Ansicht', () => {
-    const { index, fill } = pinnedStep(progressForStep(1, weights, 1), weights)
-    expect(index).toBe(1)
-    expect(phaseOfStep(fill, weights[1])).toBe(1)
-  })
-
-  it('bleibt im Schritt, auch wenn es die Ansicht nicht gibt', () => {
-    expect(pinnedStep(progressForStep(2, weights, 5), weights).index).toBe(2)
   })
 })

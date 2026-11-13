@@ -14,8 +14,6 @@ export interface CameraCut {
 export interface ExampleState {
   signal: number
   alert: boolean
-  /** How far the vehicle is along its way to the spot. */
-  approach: number
   resolved: boolean
 }
 
@@ -58,8 +56,8 @@ const span = (value: number, from: number, to: number) => clamp01((value - from)
 const ease = (t: number) => t * t * (3 - 2 * t)
 const hold = (shot: ShotId): CameraCut => ({ from: shot, to: shot, blend: 1 })
 
-const IDLE: ExampleState = { signal: 0, alert: false, approach: 0, resolved: false }
-const DONE: ExampleState = { signal: 0, alert: false, approach: 1, resolved: true }
+const IDLE: ExampleState = { signal: 0, alert: false, resolved: false }
+const DONE: ExampleState = { signal: 0, alert: false, resolved: true }
 const PARKED: VehicleState = { route: 'tour', at: 0, shown: 0 }
 
 export function progressAt(act: number, fill: number): number {
@@ -85,7 +83,6 @@ function exampleState(local: number): ExampleState {
   return {
     signal: resolved ? 0 : span(local, 0.3, 0.45),
     alert: local >= 0.45 && !resolved,
-    approach: span(local, 0.5, 0.85),
     resolved,
   }
 }
@@ -206,7 +203,7 @@ export function storyStill(act: number): StoryState {
   return {
     ...state,
     invite: 0,
-    examples: EXAMPLES.map(() => ({ signal: 1, alert: true, approach: 0, resolved: false })),
+    examples: EXAMPLES.map(() => ({ signal: 1, alert: true, resolved: false })),
   }
 }
 

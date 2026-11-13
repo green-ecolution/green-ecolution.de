@@ -21,16 +21,3 @@ export function pinnedStep(progress: number, weights: number[]): PinnedStep {
   }
   return { index: weights.length - 1, fill: 1 }
 }
-
-// Lands in the middle of one unit of the step: the first by default, so a step
-// with several visuals opens on its first one, or the unit of a later visual.
-export function progressForStep(index: number, weights: number[], phase = 0): number {
-  const total = weights.reduce((sum, weight) => sum + weight, 0)
-  const start = weights.slice(0, index).reduce((sum, weight) => sum + weight, 0)
-  const lastMiddle = Math.max(weights[index] - 0.5, weights[index] / 2)
-  return (start + Math.min(phase + 0.5, lastMiddle)) / total
-}
-
-export function phaseOfStep(fill: number, phases: number): number {
-  return Math.min(phases - 1, Math.floor(Math.max(0, fill) * phases))
-}
