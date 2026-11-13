@@ -6,7 +6,8 @@ import Button from '../Button.astro'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { workflowSteps } from '../../data/workflowSteps'
-import { ACT_WEIGHTS, EXAMPLES } from '../../lib/storyTimeline'
+import { SCROLL_WEIGHTS } from '../../lib/storyScroll'
+import { EXAMPLES } from '../../lib/storyTimeline'
 import StoryIsland from '../islands/story/StoryIsland'
 import storyAct1 from '../../assets/illustrations/story-act-1.png'
 import storyAct2 from '../../assets/illustrations/story-act-2.png'
@@ -23,7 +24,9 @@ const t = getTranslations(language, 'home')
 const moreHref = `/${language}/product#process`
 const finaleIndex = workflowSteps.length
 const finalePanelId = 'workflow-panel-more'
-const pinDistance = `${ACT_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * 50}svh`
+// Scrolling per unit of act weight: more plays the story slower, but takes longer to get past.
+const SCROLL_PER_WEIGHT_SVH = 100
+const pinDistance = `${SCROLL_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * SCROLL_PER_WEIGHT_SVH}svh`
 const sceneLabels = [
   t('workflow.scene.needsWater'),
   ...EXAMPLES.map((example) => t(`workflow.more.examples.${example}.status`)),
@@ -66,7 +69,10 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
       </a>
     </div>
   </div>
-  <div data-pin-track style={`--pin-distance: ${pinDistance}`}>
+  <div
+    data-pin-track
+    style={`--pin-distance: ${pinDistance}; --scroll-per-weight: ${SCROLL_PER_WEIGHT_SVH}svh`}
+  >
     <div data-pin-stage>
       <div
         data-story
@@ -129,44 +135,47 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
               <li
                 data-step={index}
                 data-active={String(index === 0)}
-                class="group relative border-b border-green-dark-900/15"
+                style={`--act-weight: ${SCROLL_WEIGHTS[index]}`}
+                class="group border-b border-green-dark-900/15"
               >
-                <span
-                  aria-hidden="true"
-                  class="absolute left-0 top-0 h-full w-0.5 bg-transparent transition-colors duration-300 group-data-[active=true]:bg-green-dark-900/15"
-                >
-                  <span class="block h-full w-full origin-top bg-green-dark-900 scale-y-0 group-data-[active=true]:scale-y-(--step-fill,1)"></span>
-                </span>
-                <h3>
-                  <button
-                    type="button"
-                    data-step-trigger={index}
-                    aria-expanded={index === 0 ? 'true' : 'false'}
-                    aria-controls={panelId}
-                    class="flex w-full items-center gap-x-4 py-4 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+                <div data-step-body class="story-step-body relative">
+                  <span
+                    aria-hidden="true"
+                    class="absolute left-0 top-0 h-full w-0.5 bg-transparent transition-colors duration-300 group-data-[active=true]:bg-green-dark-900/15"
                   >
-                    <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
-                      <Icon className="w-5 h-5" aria-hidden="true" />
-                    </span>
-                    <span class="flex-1">
-                      <span class="block text-xs font-semibold tracking-widest uppercase text-green-dark-900 mb-1">
-                        {step.number}
+                    <span class="block h-full w-full origin-top bg-green-dark-900 scale-y-0 group-data-[active=true]:scale-y-(--step-fill,1)"></span>
+                  </span>
+                  <h3>
+                    <button
+                      type="button"
+                      data-step-trigger={index}
+                      aria-expanded="true"
+                      aria-controls={panelId}
+                      class="flex w-full items-center gap-x-4 py-4 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+                    >
+                      <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
+                        <Icon className="w-5 h-5" aria-hidden="true" />
                       </span>
-                      <span class="block font-lato font-bold text-xl text-grey-900 lg:text-2xl">
-                        {t(`workflow.steps.${step.id}.title`)}
+                      <span class="flex-1">
+                        <span class="block text-xs font-semibold tracking-widest uppercase text-green-dark-900 mb-1">
+                          {step.number}
+                        </span>
+                        <span class="block font-lato font-bold text-xl text-grey-900 lg:text-2xl">
+                          {t(`workflow.steps.${step.id}.title`)}
+                        </span>
                       </span>
-                    </span>
-                    <ChevronDown
-                      aria-hidden="true"
-                      className="story-chevron w-5 h-5 shrink-0 text-green-dark-900 transition-transform duration-300 group-data-[active=true]:rotate-180 motion-reduce:transition-none"
-                    />
-                  </button>
-                </h3>
-                <div id={panelId} class="story-panel">
-                  <div>
-                    <p class="pb-6 pl-5 pr-2 sm:pl-[4.75rem] text-grey-900/70 leading-relaxed">
-                      {t(`workflow.steps.${step.id}.description`)}
-                    </p>
+                      <ChevronDown
+                        aria-hidden="true"
+                        className="story-chevron w-5 h-5 shrink-0 text-green-dark-900 transition-transform duration-300 group-data-[active=true]:rotate-180 motion-reduce:transition-none"
+                      />
+                    </button>
+                  </h3>
+                  <div id={panelId} class="story-panel">
+                    <div>
+                      <p class="pb-6 pl-5 pr-2 sm:pl-[4.75rem] text-grey-900/70 leading-relaxed">
+                        {t(`workflow.steps.${step.id}.description`)}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </li>
@@ -176,77 +185,80 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
           <li
             data-step={finaleIndex}
             data-active="false"
-            class="group relative border-b border-green-dark-900/15"
+            style={`--act-weight: ${SCROLL_WEIGHTS[finaleIndex]}`}
+            class="group border-b border-green-dark-900/15"
           >
-            <span
-              aria-hidden="true"
-              class="absolute left-0 top-0 h-full w-0.5 bg-transparent transition-colors duration-300 group-data-[active=true]:bg-green-dark-900/15"
-            >
-              <span class="block h-full w-full origin-top bg-green-dark-900 scale-y-0 group-data-[active=true]:scale-y-(--step-fill,1)"></span>
-            </span>
-            <h3>
-              <button
-                type="button"
-                data-step-trigger={finaleIndex}
-                aria-expanded="false"
-                aria-controls={finalePanelId}
-                class="flex w-full items-center gap-x-4 py-4 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+            <div data-step-body class="story-step-body relative">
+              <span
+                aria-hidden="true"
+                class="absolute left-0 top-0 h-full w-0.5 bg-transparent transition-colors duration-300 group-data-[active=true]:bg-green-dark-900/15"
               >
-                <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
-                  <Sparkles className="w-5 h-5" aria-hidden="true" />
-                </span>
-                <span class="flex-1 font-lato font-bold text-xl text-grey-900 lg:text-2xl">
-                  {t('workflow.more.title')}
-                </span>
-                <ChevronDown
-                  aria-hidden="true"
-                  className="story-chevron w-5 h-5 shrink-0 text-green-dark-900 transition-transform duration-300 group-data-[active=true]:rotate-180 motion-reduce:transition-none"
-                />
-              </button>
-            </h3>
-            <div id={finalePanelId} class="story-panel">
-              <div>
-                <div class="pb-6 pl-5 pr-2 sm:pl-[4.75rem]">
-                  <p class="text-grey-900/70 leading-relaxed">{t('workflow.more.description')}</p>
+                <span class="block h-full w-full origin-top bg-green-dark-900 scale-y-0 group-data-[active=true]:scale-y-(--step-fill,1)"></span>
+              </span>
+              <h3>
+                <button
+                  type="button"
+                  data-step-trigger={finaleIndex}
+                  aria-expanded="true"
+                  aria-controls={finalePanelId}
+                  class="flex w-full items-center gap-x-4 py-4 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+                >
+                  <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
+                    <Sparkles className="w-5 h-5" aria-hidden="true" />
+                  </span>
+                  <span class="flex-1 font-lato font-bold text-xl text-grey-900 lg:text-2xl">
+                    {t('workflow.more.title')}
+                  </span>
+                  <ChevronDown
+                    aria-hidden="true"
+                    className="story-chevron w-5 h-5 shrink-0 text-green-dark-900 transition-transform duration-300 group-data-[active=true]:rotate-180 motion-reduce:transition-none"
+                  />
+                </button>
+              </h3>
+              <div id={finalePanelId} class="story-panel">
+                <div>
+                  <div class="pb-6 pl-5 pr-2 sm:pl-[4.75rem]">
+                    <p class="text-grey-900/70 leading-relaxed">{t('workflow.more.description')}</p>
 
-                  <div
-                    role="group"
-                    aria-label={t('workflow.more.examplesLabel')}
-                    class="mt-4 flex flex-wrap gap-2"
-                  >
-                    {EXAMPLES.map((example, index) => (
-                      <button
-                        type="button"
-                        data-example-trigger={index}
-                        aria-pressed={index === 0 ? 'true' : 'false'}
-                        class="cursor-pointer rounded-full px-3.5 py-1.5 text-sm font-semibold text-green-dark-900 ring-1 ring-green-dark-900/20 transition-colors hover:bg-green-light-100 aria-pressed:bg-green-dark-900 aria-pressed:text-white aria-pressed:ring-green-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
-                      >
-                        {t(`workflow.more.examples.${example}.label`)}
-                      </button>
-                    ))}
-                  </div>
-
-                  {EXAMPLES.map((example, index) => (
-                    <p data-example-text={index} class="mt-3 text-grey-900/70 leading-relaxed">
-                      <strong class="font-semibold text-grey-900">
-                        {t(`workflow.more.examples.${example}.label`)}:
-                      </strong>{' '}
-                      {t(`workflow.more.examples.${example}.description`)}
-                    </p>
-                  ))}
-
-                  <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
-                    <div class="story-cta w-max origin-left">
-                      <Button
-                        href={`/${language}/contact`}
-                        ariaLabel={t('workflow.more.ctaAriaLabel')}
-                        isDark
-                      >
-                        <span>{t('workflow.more.cta')}</span>
-                        <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
-                      </Button>
+                    <div
+                      role="group"
+                      aria-label={t('workflow.more.examplesLabel')}
+                      class="mt-4 flex flex-wrap gap-2"
+                    >
+                      {EXAMPLES.map((example, index) => (
+                        <button
+                          type="button"
+                          data-example-trigger={index}
+                          aria-pressed={index === 0 ? 'true' : 'false'}
+                          class="cursor-pointer rounded-full px-3.5 py-1.5 text-sm font-semibold text-green-dark-900 ring-1 ring-green-dark-900/20 transition-colors hover:bg-green-light-100 aria-pressed:bg-green-dark-900 aria-pressed:text-white aria-pressed:ring-green-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+                        >
+                          {t(`workflow.more.examples.${example}.label`)}
+                        </button>
+                      ))}
                     </div>
-                    <p class="text-sm text-grey-900/60">{t('workflow.more.hint')}</p>
+
+                    {EXAMPLES.map((example, index) => (
+                      <p data-example-text={index} class="mt-3 text-grey-900/70 leading-relaxed">
+                        <strong class="font-semibold text-grey-900">
+                          {t(`workflow.more.examples.${example}.label`)}:
+                        </strong>{' '}
+                        {t(`workflow.more.examples.${example}.description`)}
+                      </p>
+                    ))}
+
+                    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+                      <div class="story-cta w-max origin-left">
+                        <Button
+                          href={`/${language}/contact`}
+                          ariaLabel={t('workflow.more.ctaAriaLabel')}
+                          isDark
+                        >
+                          <span>{t('workflow.more.cta')}</span>
+                          <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+                        </Button>
+                      </div>
+                      <p class="text-sm text-grey-900/60">{t('workflow.more.hint')}</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -288,11 +300,25 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
     overflow: hidden;
   }
 
-  /* Collapsing waits for the script, so without it every step stays readable. */
+  /* Collapsing waits for the script, so without it every step stays readable.
+     A closed panel also leaves the tab order and the accessibility tree, once
+     it has finished closing. */
   @media (min-width: 768px) {
     [data-story][data-enhanced] [data-step]:not([data-active='true']) .story-panel {
       grid-template-rows: 0fr;
     }
+
+    [data-story][data-enhanced] [data-step]:not([data-active='true']) .story-panel > div {
+      visibility: hidden;
+      transition: visibility 0s linear 0.35s;
+    }
+  }
+
+  /* Never taller than the room below the header, so a short window still
+     shows all of it. Pinning needs 1.5rem more room than this leaves, so the
+     cap never decides whether the stage pins. */
+  .story-stage {
+    max-height: calc(100svh - 4.5rem - 1rem);
   }
 
   @media (max-width: 767.98px) {
@@ -300,6 +326,14 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
       [data-step]:not([data-active='true'])
       .story-panel {
       grid-template-rows: 0fr;
+    }
+
+    [data-story][data-enhanced][data-story-mode='autoplay']
+      [data-step]:not([data-active='true'])
+      .story-panel
+      > div {
+      visibility: hidden;
+      transition: visibility 0s linear 0.35s;
     }
 
     /* The picture holds still below the header while the steps scroll past
@@ -313,8 +347,22 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
       background: var(--color-white);
     }
 
-    [data-story][data-story-mode='scrub'] [data-step] {
-      min-height: 55svh;
+    /* Each step's text sticks under the picture while its act plays, for as
+       long as the act's weight asks. howItWorks.ts reads the same stretch.
+       A text taller than the room below the picture sticks higher, with its
+       end on the window's lower edge, so the finale's examples stay in view. */
+    [data-story][data-story-mode='scrub'] [data-step]::after {
+      content: '';
+      display: block;
+      height: calc(var(--act-weight, 1) * var(--scroll-per-weight, 100svh));
+    }
+
+    [data-story][data-story-mode='scrub'] .story-step-body {
+      position: sticky;
+      top: min(
+        calc(4.5rem + var(--story-frame-height, 0px)),
+        calc(100svh - var(--step-body-height, 0px))
+      );
     }
 
     [data-story][data-story-mode='scrub'] .story-chevron {
@@ -365,12 +413,8 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
     transition: opacity 0.3s ease-out;
   }
 
-  [data-story][data-enhanced] [data-story-root][data-act='3'] .story-captions {
+  [data-story][data-enhanced][data-story-example] .story-captions {
     opacity: 1;
-  }
-
-  [data-story][data-enhanced][data-invite] [data-story-root] .story-captions {
-    opacity: 0;
   }
 
   @media (min-width: 768px) {
@@ -394,11 +438,16 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
 
   @media (prefers-reduced-motion: reduce) {
     .story-panel,
+    .story-panel > div,
     .story-poster,
-    .story-replay,
     .story-captions,
     .story-cta {
-      transition: none;
+      transition: none !important;
+    }
+
+    /* Nothing plays by itself here, so there is nothing to replay. */
+    .story-replay {
+      display: none;
     }
   }
 </style>
@@ -416,6 +465,7 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
     z-index: 2147483647;
     width: 100vw;
     height: 100vh;
+    max-height: none;
     aspect-ratio: auto;
     border-radius: 0;
     box-shadow: none;

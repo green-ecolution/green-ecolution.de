@@ -1,6 +1,12 @@
-import { offsetForProgress, progressFromSteps, type StepBox } from '../lib/storyScroll'
 import {
-  ACT_WEIGHTS,
+  offsetForProgress,
+  progressFromSteps,
+  SCROLL_WEIGHTS,
+  scrollForStory,
+  storyFromScroll,
+  type StepBox,
+} from '../lib/storyScroll'
+import {
   autoStoryProgress,
   progressForAct,
   progressForExample,
@@ -12,15 +18,18 @@ import { bindPinnedStage } from './pinStage'
 const WIDE_ENOUGH = '(min-width: 768px)'
 // The fixed site header the picture sticks below.
 const HEADER_REM = 4.5
-// Room the text needs below the standing picture on a narrow screen.
-const NARROW_ROOM_PX = 220
-// How far below the picture the line sits that decides which step is read.
-const READING_LINE = 0.35
+// The padding the narrow scrub layout puts around the picture.
+const FRAME_PADDING_REM = 1.5
+// Room the text needs below the standing picture on a narrow screen: the
+// finale's chips, selected sentence and contact button.
+const NARROW_ROOM_PX = 300
 
 type Mode = 'scrub' | 'autoplay'
 type Play = 'idle' | 'playing' | 'done'
 
 let page: AbortController | null = null
+
+const remPx = () => Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
 
 function setup() {
   page?.abort()
@@ -57,6 +66,7 @@ function setup() {
     }
 
     const steps = [...root.querySelectorAll<HTMLElement>('[data-step]')]
+    const bodies = steps.map((step) => step.querySelector<HTMLElement>('[data-step-body]') ?? step)
     const triggers = [...root.querySelectorAll<HTMLElement>('[data-step-trigger]')]
     const chips = [...root.querySelectorAll<HTMLElement>('[data-example-trigger]')]
     const texts = [...root.querySelectorAll<HTMLElement>('[data-example-text]')]
@@ -83,6 +93,14 @@ function setup() {
       }
     }
 
+    // Scrubbing on a narrow screen every panel stays open.
+    const syncExpanded = () => {
+      const allOpen = mode === 'scrub' && !wide.matches
+      triggers.forEach((trigger, index) =>
+        trigger.setAttribute('aria-expanded', String(allOpen || index === shownAct)),
+      )
+    }
+
     const showAct = (act: number) => {
       if (act === shownAct) return
       shownAct = act
@@ -90,9 +108,7 @@ function setup() {
       steps.forEach((step, index) => {
         step.dataset.active = String(index === act)
       })
-      triggers.forEach((trigger, index) =>
-        trigger.setAttribute('aria-expanded', String(index === act)),
-      )
+      syncExpanded()
     }
 
     const render = (progress: number) => {
@@ -104,6 +120,7 @@ function setup() {
       else delete scene.dataset.storyStill
       root.style.setProperty('--step-fill', state.actProgress.toFixed(3))
       root.toggleAttribute('data-invite', state.invite >= 0.5)
+      root.toggleAttribute('data-story-example', state.activeExample !== null)
       showAct(state.act)
       if (state.activeExample !== null) showExample(state.activeExample)
     }
@@ -135,6 +152,7 @@ function setup() {
       if (mode === next) return
       mode = next
       root.dataset.storyMode = next
+      syncExpanded()
       setPlay('idle')
       if (next === 'autoplay') {
         render(0)
@@ -142,21 +160,54 @@ function setup() {
       }
     }
 
-    const narrowFits = () => {
-      if (wide.matches) return false
-      const rem = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
-      return window.innerHeight - HEADER_REM * rem - frame.offsetHeight >= NARROW_ROOM_PX
+    // Decided once per width. The scrub layout pads the frame, and a mobile
+    // toolbar collapsing while scrolling changes the window's height; reacting
+    // to either would flip the mode back and forth.
+    let narrowScrub = false
+    let decidedWidth = 0
+    const decideNarrow = () => {
+      decidedWidth = window.innerWidth
+      const rem = remPx()
+      const framed = scene.offsetHeight + FRAME_PADDING_REM * rem
+      narrowScrub =
+        !wide.matches && window.innerHeight - HEADER_REM * rem - framed >= NARROW_ROOM_PX
     }
+    decideNarrow()
+    window.addEventListener(
+      'resize',
+      () => {
+        if (window.innerWidth !== decidedWidth) decideNarrow()
+      },
+      { signal },
+    )
+    wide.addEventListener('change', syncExpanded, { signal })
 
-    const stepBoxes = (): StepBox[] =>
-      steps.map((step) => {
-        const { top, height } = step.getBoundingClientRect()
-        return { top, height }
+    // Where the picture's lower edge stands once it is stuck under the header,
+    // which is also where each step's text sticks while its act plays.
+    const stuckLine = () => HEADER_REM * remPx() + frame.offsetHeight
+
+    const sizes = new ResizeObserver(() => {
+      root.style.setProperty('--story-frame-height', `${frame.offsetHeight}px`)
+      for (const body of bodies)
+        body.style.setProperty('--step-body-height', `${body.offsetHeight}px`)
+    })
+    for (const element of [frame, ...bodies]) sizes.observe(element)
+
+    // A step's act plays while its text stands stuck: from the step's top
+    // reaching the text's sticky top until its bottom starts pushing the text
+    // away. That stretch is the step's spacer, sized by its weight. A text
+    // sticking above the line is shifted onto it, so one line serves all.
+    const stepBoxes = (): StepBox[] => {
+      const line = stuckLine()
+      return steps.map((step, index) => {
+        const body = bodies[index]
+        const stuckAt = Number.parseFloat(getComputedStyle(body).top)
+        return {
+          top:
+            step.getBoundingClientRect().top + line - (Number.isFinite(stuckAt) ? stuckAt : line),
+          height: step.offsetHeight - body.offsetHeight,
+        }
       })
-
-    const readingLine = () => {
-      const { bottom } = frame.getBoundingClientRect()
-      return bottom + (window.innerHeight - bottom) * READING_LINE
     }
 
     // The finale has the tallest panel. Measuring with it open keeps the stage
@@ -182,10 +233,10 @@ function setup() {
       (progress) => {
         if (progress !== null) {
           setMode('scrub')
-          render(progress)
-        } else if (narrowFits()) {
+          render(storyFromScroll(progress))
+        } else if (narrowScrub) {
           setMode('scrub')
-          render(progressFromSteps(readingLine(), stepBoxes(), ACT_WEIGHTS))
+          render(storyFromScroll(progressFromSteps(stuckLine(), stepBoxes(), SCROLL_WEIGHTS)))
         } else {
           setMode('autoplay')
         }
@@ -195,12 +246,13 @@ function setup() {
 
     const jumpTo = (progress: number) => {
       if (pin.isPinned()) {
-        pin.scrollToProgress(progress)
+        pin.scrollToProgress(scrollForStory(progress))
         return
       }
       if (mode === 'scrub') {
+        const scroll = scrollForStory(progress)
         window.scrollBy({
-          top: offsetForProgress(progress, stepBoxes(), ACT_WEIGHTS) - readingLine(),
+          top: offsetForProgress(scroll, stepBoxes(), SCROLL_WEIGHTS) - stuckLine(),
           behavior: reduced.matches ? 'auto' : 'smooth',
         })
         return
@@ -259,6 +311,7 @@ function setup() {
     viewport.observe(scene)
     signal.addEventListener('abort', () => {
       viewport.disconnect()
+      sizes.disconnect()
       window.cancelAnimationFrame(frameId)
     })
   }
