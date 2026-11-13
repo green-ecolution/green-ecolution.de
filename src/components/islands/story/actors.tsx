@@ -27,7 +27,16 @@ import { pinsShown, type StoryState } from '../../../lib/storyTimeline'
 import { appendRibbon, ribbonGeometry, type RibbonArrays } from '../scene3d/ribbon'
 import { lobes, treePit } from '../scene3d/trees'
 import { Vehicle, WHEEL_RADIUS } from '../scene3d/Vehicle'
-import { PIN_POST, PIN_RADIUS, SENSOR_X, SENSOR_Z, pinHeight, type Anchor } from './anchors'
+import {
+  PIN_HULL,
+  PIN_POST,
+  PIN_RADIUS,
+  SENSOR_X,
+  SENSOR_Z,
+  pinHeadScale,
+  pinHeight,
+  type Anchor,
+} from './anchors'
 import { PIT_TOP, damp, dampAngle, type ActorProps, type Story } from './shared'
 
 const WATER = '#2B7FBF'
@@ -176,10 +185,11 @@ interface PinProps extends ActorProps {
 
 export function Pin({ at, height, story, look, isStatic }: PinProps) {
   const group = useRef<Group>(null)
+  const headGroup = useRef<Group>(null)
   const head = useRef<MeshBasicMaterial>(null)
   const size = useRef(0)
 
-  useFrame(({ clock }, delta) => {
+  useFrame(({ camera, clock }, delta) => {
     const { tone, shown } = look(story.current)
     const goal = shown ? 1 : 0
     const fresh = size.current < 0.05
@@ -190,6 +200,7 @@ export function Pin({ at, height, story, look, isStatic }: PinProps) {
       if (fresh || isStatic) head.current.color.copy(pinTints[tone])
       else head.current.color.lerp(pinTints[tone], 1 - Math.exp(-delta * 8))
     }
+    headGroup.current?.scale.setScalar(pinHeadScale(camera.zoom))
     if (!group.current) return
     const pulse = tone === 'ok' || isStatic ? 1 : 1 + Math.sin(clock.getElapsedTime() * 4) * 0.08
     group.current.visible = size.current > 0.01
@@ -202,14 +213,16 @@ export function Pin({ at, height, story, look, isStatic }: PinProps) {
         <cylinderGeometry args={[0.07, 0.07, PIN_POST, 6]} />
         <meshBasicMaterial color={tourColors.vehicleBody} />
       </mesh>
-      <mesh scale={1.14}>
-        <sphereGeometry args={[PIN_RADIUS, 20, 14]} />
-        <meshBasicMaterial color="#FFFFFF" side={BackSide} />
-      </mesh>
-      <mesh>
-        <sphereGeometry args={[PIN_RADIUS, 20, 14]} />
-        <meshBasicMaterial ref={head} color={pinColors.ok} />
-      </mesh>
+      <group ref={headGroup}>
+        <mesh scale={PIN_HULL}>
+          <sphereGeometry args={[PIN_RADIUS, 20, 14]} />
+          <meshBasicMaterial color="#FFFFFF" side={BackSide} />
+        </mesh>
+        <mesh>
+          <sphereGeometry args={[PIN_RADIUS, 20, 14]} />
+          <meshBasicMaterial ref={head} color={pinColors.ok} />
+        </mesh>
+      </group>
     </group>
   )
 }
@@ -257,12 +270,15 @@ interface LabelsProps {
 // The labels are html over the canvas; this keeps each above its pin.
 export function Labels({ story, nodes, anchors }: LabelsProps) {
   useFrame(({ camera, size }) => {
+    // Every label stands over a pin, so it clears the enlarged head by as much as the head grew.
+    const lift = (pinHeadScale(camera.zoom) - 1) * PIN_RADIUS * PIN_HULL * camera.zoom
+
     anchors.forEach((anchor, index) => {
       const node = nodes.current[index]
       if (!node) return
       projected.set(anchor.at[0], anchor.at[1], anchor.at[2]).project(camera)
       const left = ((projected.x + 1) / 2) * size.width
-      const top = ((1 - projected.y) / 2) * size.height
+      const top = ((1 - projected.y) / 2) * size.height - lift
       node.style.transform = `translate(${left.toFixed(1)}px, ${top.toFixed(1)}px) translate(-50%, -100%)`
       node.dataset.shown = String(anchor.shown(story.current))
     })
