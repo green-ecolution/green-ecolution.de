@@ -184,7 +184,7 @@ const pinDistance = `${Object.values(VISUALS).flat().length * 50}svh`
                   <button
                     type="button"
                     data-step-trigger={index}
-                    aria-expanded={String(index === 0)}
+                    aria-expanded={index === 0 ? 'true' : 'false'}
                     aria-controls={panelId}
                     class="flex w-full items-center gap-x-4 py-4 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
                   >
