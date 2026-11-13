@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets'
 import { ChevronDown, RotateCcw, Sparkles } from 'lucide-react'
 import Arrow from '../icons/Arrow.astro'
 import Button from '../Button.astro'
@@ -7,6 +8,10 @@ import { getTranslations } from '../../i18n/t'
 import { workflowSteps } from '../../data/workflowSteps'
 import { ACT_WEIGHTS, EXAMPLES } from '../../lib/storyTimeline'
 import StoryIsland from '../islands/story/StoryIsland'
+import storyAct1 from '../../assets/illustrations/story-act-1.png'
+import storyAct2 from '../../assets/illustrations/story-act-2.png'
+import storyAct3 from '../../assets/illustrations/story-act-3.png'
+import storyAct4 from '../../assets/illustrations/story-act-4.png'
 
 interface Props {
   language: Language
@@ -23,6 +28,7 @@ const sceneLabels = [
   t('workflow.scene.needsWater'),
   ...EXAMPLES.map((example) => t(`workflow.more.examples.${example}.status`)),
 ]
+const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
 ---
 
 <section
@@ -74,6 +80,17 @@ const sceneLabels = [
             class="story-stage relative aspect-[16/10] overflow-hidden rounded-2xl bg-gradient-to-b from-green-light-100/60 to-white shadow-xl ring-1 ring-grey-900/10 lg:aspect-video"
           >
             <div data-story-visual aria-hidden="true" class="absolute inset-0">
+              {posters.map((poster, index) => (
+                <Image
+                  src={poster}
+                  alt=""
+                  widths={[640, 960, 1280]}
+                  sizes="(min-width: 1024px) 58vw, (min-width: 768px) 50vw, 100vw"
+                  loading="lazy"
+                  data-story-poster={index}
+                  class="story-poster absolute inset-0 h-full w-full object-cover"
+                />
+              ))}
               <StoryIsland client:visible={{ rootMargin: '600px' }} labels={sceneLabels} />
             </div>
             <div
@@ -305,6 +322,26 @@ const sceneLabels = [
     }
   }
 
+  /* Stills of the 3d scene, one per act. They cover the wait for the model
+     and stay where webgl or scripts are missing. */
+  .story-poster {
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+  }
+
+  [data-story-root][data-act='0'] [data-story-poster='0'],
+  [data-story-root][data-act='1'] [data-story-poster='1'],
+  [data-story-root][data-act='2'] [data-story-poster='2'],
+  [data-story-root][data-act='3'] [data-story-poster='3'] {
+    opacity: 1;
+  }
+
+  /* Fades only once the model has faded in on top, so the picture never dips. */
+  [data-story-root][data-model-ready] .story-poster {
+    opacity: 0;
+    transition: opacity 0.3s ease-out 0.5s;
+  }
+
   /* Only where the story plays by itself, and only once it has. */
   .story-replay {
     visibility: hidden;
@@ -357,6 +394,7 @@ const sceneLabels = [
 
   @media (prefers-reduced-motion: reduce) {
     .story-panel,
+    .story-poster,
     .story-replay,
     .story-captions,
     .story-cta {
@@ -367,6 +405,11 @@ const sceneLabels = [
 
 <style is:global>
   /* The capture mode of howItWorks.ts, development only. */
+  :root[data-story-capture] {
+    overflow: hidden;
+    scrollbar-gutter: auto;
+  }
+
   :root[data-story-capture] [data-story-root] {
     position: fixed;
     inset: 0;
