@@ -3,7 +3,7 @@ import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { sensorSpecs, sensorFeatures } from '../../data/sensorSpecs'
 import { Image } from 'astro:assets'
-import { Check } from 'lucide-react'
+import { Check, RotateCcw } from 'lucide-react'
 import sensorPhoto from '../../assets/photos/sensor-einbau-erdbohrer.jpg'
 import setupPhoto from '../../assets/photos/sensor-einrichtung-app-qr.jpg'
 import probePoster from '../../assets/illustrations/soil-probe-poster.png'
@@ -67,6 +67,14 @@ const DEEP_ROOTS = [
                 style={`--soak-level: ${START_LEVEL}`}
                 class="relative bg-gradient-to-b from-green-light-100/60 to-white rounded-2xl p-4 lg:p-6 border border-green-dark-900/5 shadow-sm"
               >
+                <button
+                  type="button"
+                  data-soak-replay
+                  aria-label={t('sensorProbe.soak.replay')}
+                  class="soak-replay absolute right-3 top-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/90 text-green-dark-900 shadow-sm ring-1 ring-green-dark-900/10"
+                >
+                  <RotateCcw aria-hidden="true" className="h-5 w-5" />
+                </button>
                 <div class="probe-model relative w-full max-w-sm mx-auto aspect-[8/9]">
                   <Image
                     src={probePoster}
@@ -521,6 +529,45 @@ const DEEP_ROOTS = [
 
   [data-model-ready] .probe-poster {
     opacity: 0;
+  }
+
+  /* Only where the water sinks in by itself, and only once it has: before
+     that there is nothing to play again. While it runs the arrow turns once
+     and the control steps back. */
+  .soak-replay {
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 0.3s ease-out,
+      visibility 0s linear 0.3s;
+  }
+
+  [data-soak-played] .soak-replay {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+  }
+
+  [data-soak-played][data-soak-play='playing'] .soak-replay {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  [data-soak-play='playing'] .soak-replay :global(svg) {
+    animation: soak-replay-turn 0.7s var(--ease-spring-settle);
+  }
+
+  [data-pin-track][data-pinned] .soak-replay {
+    display: none;
+  }
+
+  @keyframes soak-replay-turn {
+    from {
+      rotate: 0deg;
+    }
+    to {
+      rotate: -360deg;
+    }
   }
 
   .soak-water {

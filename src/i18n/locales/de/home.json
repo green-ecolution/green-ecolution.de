@@ -119,6 +119,7 @@
     },
     "soak": {
       "title": "Wie tief kommt das Wasser an?",
+      "replay": "Noch einmal abspielen",
       "shower": {
         "status": "Nur die oberste Schicht ist feucht. Die Sonde meldet Feuchte bei den Feinwurzeln, die tieferen Messpunkte bleiben trocken."
       },

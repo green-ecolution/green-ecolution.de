@@ -81,6 +81,13 @@ function setup() {
     }
 
     let autoplay: 'idle' | 'playing' | 'done' = 'idle'
+    // The replay control shows once the play has run through, and reads the
+    // state to step back while it runs again.
+    const setAutoplay = (state: typeof autoplay) => {
+      autoplay = state
+      root.dataset.soakPlay = state
+      if (state === 'done') root.dataset.soakPlayed = ''
+    }
     let pinned: boolean | null = null
 
     const pin = bindPinnedStage(
@@ -117,22 +124,35 @@ function setup() {
 
     const playOnce = () => {
       if (autoplay !== 'idle') return
-      autoplay = 'playing'
+      setAutoplay('playing')
       const stepped = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       const start = performance.now()
 
       const tick = (now: number) => {
         if (signal.aborted || pin.isPinned()) {
-          autoplay = 'idle'
+          setAutoplay('idle')
           return
         }
         const elapsed = now - start
         render(soakLevel(autoSoakProgress(elapsed, stepped)))
         if (elapsed < AUTO_SOAK_TOTAL_MS) window.requestAnimationFrame(tick)
-        else autoplay = 'done'
+        else setAutoplay('done')
       }
       window.requestAnimationFrame(tick)
     }
+
+    // Unpinned the water sinks in only once, so whoever missed it can ask for
+    // it again. Pinned, scrolling back does the same and the control is hidden.
+    root.querySelector<HTMLElement>('[data-soak-replay]')?.addEventListener(
+      'click',
+      () => {
+        if (pin.isPinned() || autoplay === 'playing') return
+        setAutoplay('idle')
+        render(soakLevel(0))
+        playOnce()
+      },
+      { signal },
+    )
 
     // While the poster still stands in, the water would sink where nobody can
     // see it, so the play waits for the model or, without webgl, the sketch.

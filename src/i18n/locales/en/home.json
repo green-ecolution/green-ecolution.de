@@ -119,6 +119,7 @@
     },
     "soak": {
       "title": "How deep does the water get?",
+      "replay": "Play again",
       "shower": {
         "status": "Only the top layer is moist. The probe reports moisture at the fine roots, the deeper measuring points stay dry."
       },
