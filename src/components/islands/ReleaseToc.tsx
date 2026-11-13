@@ -55,7 +55,7 @@ function Toc({ entries }: { entries: TocEntry[] }) {
       <span className="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
         {t('toc.title')}
       </span>
-      <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 mb-4" />
+      <div className="label-rule mb-4" />
 
       <ul className="space-y-1 border-l border-grey-900/10">
         {entries.map((entry) => (

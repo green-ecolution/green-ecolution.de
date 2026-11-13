@@ -1,13 +1,30 @@
-import { reachableRange, scrollProgress } from '../lib/scrollProgress'
+import { reachableRange, scrollProgress, type ProgressRange } from '../lib/scrollProgress'
 
-const DEFAULT_START = 0.85
-const DEFAULT_END = 0.5
+const DEFAULT_RANGE: ProgressRange = { start: 0.85, end: 0.5 }
+// The short rules under the section labels grow while they travel up the lower
+// part of the window. There are dozens of them, so they carry no attributes.
+const RULE_SELECTOR = '.label-rule'
+const RULE_RANGE: ProgressRange = { start: 0.92, end: 0.68 }
+
+interface Tracked {
+  element: HTMLElement
+  range: ProgressRange
+  written: string
+}
 
 let page: AbortController | null = null
 
-// Writes how far each [data-scroll-progress] element has travelled through the
-// window to --scroll-progress. Styles fall back to 1, so without the script,
-// and with reduced motion, everything stands in its final state.
+function rangeOf(element: HTMLElement): ProgressRange {
+  if (!element.hasAttribute('data-scroll-progress')) return RULE_RANGE
+  return {
+    start: Number(element.dataset.progressStart ?? DEFAULT_RANGE.start),
+    end: Number(element.dataset.progressEnd ?? DEFAULT_RANGE.end),
+  }
+}
+
+// Writes how far each tracked element has travelled through the window to
+// --scroll-progress. Styles fall back to 1, so without the script, and with
+// reduced motion, everything stands in its final state.
 function setup() {
   page?.abort()
   page = new AbortController()
@@ -15,25 +32,26 @@ function setup() {
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-  const elements = [...document.querySelectorAll<HTMLElement>('[data-scroll-progress]')]
-  if (elements.length === 0) return
+  const tracked: Tracked[] = [
+    ...document.querySelectorAll<HTMLElement>(`[data-scroll-progress], ${RULE_SELECTOR}`),
+  ]
+    // React owns the markup inside an island and would not expect the style.
+    .filter((element) => !element.closest('astro-island'))
+    .map((element) => ({ element, range: rangeOf(element), written: '' }))
+  if (tracked.length === 0) return
 
   let frame = 0
   const update = () => {
     frame = 0
     const viewport = window.innerHeight
     const scrollLeft = document.documentElement.scrollHeight - viewport - window.scrollY
-    for (const element of elements) {
-      const rect = element.getBoundingClientRect()
-      const range = reachableRange(
-        {
-          start: Number(element.dataset.progressStart ?? DEFAULT_START),
-          end: Number(element.dataset.progressEnd ?? DEFAULT_END),
-        },
-        (rect.bottom - scrollLeft) / viewport,
-      )
-      const progress = scrollProgress(rect.top, rect.height, viewport, range)
-      element.style.setProperty('--scroll-progress', progress.toFixed(3))
+    for (const item of tracked) {
+      const rect = item.element.getBoundingClientRect()
+      const range = reachableRange(item.range, (rect.bottom - scrollLeft) / viewport)
+      const progress = scrollProgress(rect.top, rect.height, viewport, range).toFixed(3)
+      if (progress === item.written) continue
+      item.written = progress
+      item.element.style.setProperty('--scroll-progress', progress)
     }
   }
   const schedule = () => {

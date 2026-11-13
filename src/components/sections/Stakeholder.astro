@@ -76,12 +76,7 @@ const sliderTranslations = {
         <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
           {t('stakeholder.sectionLabel')}
         </span>
-        <div
-          class:list={[
-            'h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1',
-            hasDesktopList && 'lg:mx-auto',
-          ]}
-        ></div>
+        <div class:list={['label-rule', hasDesktopList && 'lg:mx-auto']}></div>
       </div>
     </div>
 

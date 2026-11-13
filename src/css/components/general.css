@@ -14,6 +14,20 @@ summary:focus-visible,
   @apply outline outline-2 outline-offset-4 outline-green-light-900;
 }
 
+/* The short rule under a section label. Utilities on the element, such as
+   another gradient colour, still win over it. It grows from the left while its
+   label travels up the lower part of the window: src/scripts/scrollProgress.ts
+   writes the progress, and without it the rule stands at full length. A
+   scroll-driven css animation would not do here, because many sections sit in
+   an overflow-hidden wrapper, which such an animation takes for its scroller. */
+@layer components {
+  .label-rule {
+    @apply mt-1 h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent;
+    transform-origin: left center;
+    scale: var(--scroll-progress, 1) 1;
+  }
+}
+
 /* A snapping strip already shows it can move: the next item is cut off at the
    edge and the arrows say the rest out loud. The native bar only adds a chunky
    band under the content. */
