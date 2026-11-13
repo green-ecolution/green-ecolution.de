@@ -19,6 +19,10 @@ const moreHref = `/${language}/product#process`
 const finaleIndex = workflowSteps.length
 const finalePanelId = 'workflow-panel-more'
 const pinDistance = `${ACT_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * 50}svh`
+const sceneLabels = [
+  t('workflow.scene.needsWater'),
+  ...EXAMPLES.map((example) => t(`workflow.more.examples.${example}.status`)),
+]
 ---
 
 <section
@@ -70,7 +74,7 @@ const pinDistance = `${ACT_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * 50
             class="story-stage relative aspect-[16/10] overflow-hidden rounded-2xl bg-gradient-to-b from-green-light-100/60 to-white shadow-xl ring-1 ring-grey-900/10 lg:aspect-video"
           >
             <div data-story-visual aria-hidden="true" class="absolute inset-0">
-              <StoryIsland client:visible={{ rootMargin: '600px' }} />
+              <StoryIsland client:visible={{ rootMargin: '600px' }} labels={sceneLabels} />
             </div>
             <div
               aria-hidden="true"

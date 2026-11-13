@@ -5,6 +5,17 @@ import { plate, shots } from '../../../data/storyTown'
 import { tourColors } from '../../../data/streamletTour'
 import { storyState, storyStill, type StoryState } from '../../../lib/storyTimeline'
 import ReleaseContextOnNavigate from '../scene3d/ReleaseContextOnNavigate'
+import {
+  HeroTree,
+  Labels,
+  Route,
+  Sensor,
+  SignalRings,
+  StoryVehicle,
+  TreePins,
+  Watering,
+} from './actors'
+import { heroLabel, sensorAnchor } from './anchors'
 import type { Story, StorySource } from './shared'
 import { groundGeometry, shadowGeometry, townGeometry } from './town'
 
@@ -12,6 +23,7 @@ interface Props {
   isStatic: boolean
   isActive: boolean
   source: RefObject<StorySource>
+  labels: RefObject<(HTMLElement | null)[]>
   onReady: () => void
 }
 
@@ -115,7 +127,9 @@ function Town() {
   )
 }
 
-function StoryScene3D({ isStatic, isActive, source, onReady }: Props) {
+const anchors = [heroLabel]
+
+function StoryScene3D({ isStatic, isActive, source, labels, onReady }: Props) {
   const story = useRef<StoryState>(storyState(0))
   const frameloop = !isActive ? 'never' : isStatic ? 'demand' : 'always'
 
@@ -142,6 +156,19 @@ function StoryScene3D({ isStatic, isActive, source, onReady }: Props) {
       <ambientLight intensity={2.2} />
       <directionalLight position={[-30, 60, 80]} intensity={1.35} />
       <Town />
+      <HeroTree story={story} isStatic={isStatic} />
+      <Sensor story={story} />
+      <SignalRings
+        at={sensorAnchor}
+        story={story}
+        isStatic={isStatic}
+        strength={(state) => state.signal}
+      />
+      <Route story={story} />
+      <StoryVehicle story={story} isStatic={isStatic} />
+      <Watering story={story} isStatic={isStatic} />
+      <TreePins story={story} isStatic={isStatic} />
+      <Labels story={story} nodes={labels} anchors={anchors} />
     </Canvas>
   )
 }

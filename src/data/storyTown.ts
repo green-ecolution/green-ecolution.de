@@ -138,13 +138,14 @@ export const blocks: CityBlock[] = [
 export const lawn: Lawn = { x: -22, z: 24, width: 30, depth: 30 }
 
 // From the depot gate down the first side road, along the main road and into
-// the second side road, where our tree stands.
+// the second side road, where our tree stands. It ends short of the tree so the
+// cab parks beside it and not between the camera and the tree pit.
 export const tourPath = roundedPath(
   [
     [0, -24],
     [0, 0],
     [20, 0],
-    [20, 18],
+    [20, 13],
   ],
   5,
 )

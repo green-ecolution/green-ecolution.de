@@ -25,10 +25,15 @@ function subscribeToNothing() {
   return () => undefined
 }
 
+interface Props {
+  labels: string[]
+}
+
 // The 3d view of the story. It only draws: the script in howItWorks.ts writes
 // the progress to [data-story-root], and this reads it there.
-export default function StoryIsland() {
+export default function StoryIsland({ labels }: Props) {
   const host = useRef<HTMLDivElement>(null)
+  const labelNodes = useRef<(HTMLElement | null)[]>([])
   const source = useRef<StorySource>({ target: 0, still: null, onChange: null })
   const prefersReducedMotion = useReducedMotion()
   const canRenderModel = useSyncExternalStore(subscribeToNothing, hasWebgl, () => false)
@@ -86,14 +91,31 @@ export default function StoryIsland() {
       className="absolute inset-0 opacity-0 transition-opacity duration-500 data-[ready=true]:opacity-100"
     >
       {canRenderModel && (
-        <Suspense fallback={null}>
-          <StoryScene3D
-            isStatic={prefersReducedMotion}
-            isActive={isActive}
-            source={source}
-            onReady={markReady}
-          />
-        </Suspense>
+        <>
+          <Suspense fallback={null}>
+            <StoryScene3D
+              isStatic={prefersReducedMotion}
+              isActive={isActive}
+              source={source}
+              labels={labelNodes}
+              onReady={markReady}
+            />
+          </Suspense>
+
+          {labels.map((label, index) => (
+            <span
+              key={label}
+              ref={(node) => {
+                labelNodes.current[index] = node
+              }}
+              data-story-label
+              data-shown="false"
+              className="pointer-events-none absolute left-0 top-0 whitespace-nowrap rounded-full bg-white/95 px-2.5 py-1 font-lato text-xs font-semibold text-grey-900 opacity-0 shadow-sm ring-1 ring-green-dark-900/10 transition-opacity duration-300 data-[shown=true]:opacity-100"
+            >
+              {label}
+            </span>
+          ))}
+        </>
       )}
     </div>
   )
