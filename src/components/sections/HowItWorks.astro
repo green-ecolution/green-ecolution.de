@@ -6,6 +6,7 @@ import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { workflowSteps } from '../../data/workflowSteps'
 import { ACT_WEIGHTS, EXAMPLES } from '../../lib/storyTimeline'
+import StoryIsland from '../islands/story/StoryIsland'
 
 interface Props {
   language: Language
@@ -68,7 +69,9 @@ const pinDistance = `${ACT_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * 50
             style="--story: 0"
             class="story-stage relative aspect-[16/10] overflow-hidden rounded-2xl bg-gradient-to-b from-green-light-100/60 to-white shadow-xl ring-1 ring-grey-900/10 lg:aspect-video"
           >
-            <div data-story-visual aria-hidden="true" class="absolute inset-0"></div>
+            <div data-story-visual aria-hidden="true" class="absolute inset-0">
+              <StoryIsland client:visible={{ rootMargin: '600px' }} />
+            </div>
             <div
               aria-hidden="true"
               class="story-captions pointer-events-none absolute inset-x-3 bottom-3 z-10 hidden md:block"
@@ -355,6 +358,27 @@ const pinDistance = `${ACT_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * 50
     .story-cta {
       transition: none;
     }
+  }
+</style>
+
+<style is:global>
+  /* The capture mode of howItWorks.ts, development only. */
+  :root[data-story-capture] [data-story-root] {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    width: 100vw;
+    height: 100vh;
+    aspect-ratio: auto;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: var(--color-white);
+  }
+
+  :root[data-story-capture] [data-story-replay],
+  :root[data-story-capture] [data-story-poster],
+  :root[data-story-capture=''] [data-story-label] {
+    display: none;
   }
 </style>
 

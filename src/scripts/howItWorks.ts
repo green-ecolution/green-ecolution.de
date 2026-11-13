@@ -35,6 +35,27 @@ function setup() {
     const list = root.querySelector<HTMLElement>('[data-story-steps]')
     if (!stage || !track || !scene || !frame || !list) continue
 
+    // Development only: holds the story still and shows nothing but the
+    // stage, for scripts/render-story-stills.mjs and for checking a moment.
+    // `storyStill` picks the still of an act, `storyAt` any progress.
+    if (import.meta.env.DEV) {
+      const params = new URLSearchParams(window.location.search)
+      const still = params.get('storyStill')
+      const at = params.get('storyAt')
+      if (still !== null || at !== null) {
+        if (still !== null) {
+          scene.dataset.act = still
+          scene.dataset.storyStill = still
+        } else {
+          const progress = Number(at)
+          scene.style.setProperty('--story', progress.toFixed(4))
+          scene.dataset.act = String(storyState(progress).act)
+        }
+        document.documentElement.dataset.storyCapture = params.has('storyLabels') ? 'labels' : ''
+        continue
+      }
+    }
+
     const steps = [...root.querySelectorAll<HTMLElement>('[data-step]')]
     const triggers = [...root.querySelectorAll<HTMLElement>('[data-step-trigger]')]
     const chips = [...root.querySelectorAll<HTMLElement>('[data-example-trigger]')]
