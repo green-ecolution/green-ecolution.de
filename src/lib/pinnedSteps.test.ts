@@ -71,3 +71,23 @@ describe('phaseOfStep', () => {
     expect(phaseOfStep(0.9, 1)).toBe(0)
   })
 })
+
+describe('progressForStep mit Ansicht', () => {
+  const weights = [2, 2, 2]
+
+  it('landet ohne Angabe in der ersten Ansicht des Schritts', () => {
+    const { index, fill } = pinnedStep(progressForStep(1, weights), weights)
+    expect(index).toBe(1)
+    expect(phaseOfStep(fill, weights[1])).toBe(0)
+  })
+
+  it('landet mitten in der gewünschten Ansicht', () => {
+    const { index, fill } = pinnedStep(progressForStep(1, weights, 1), weights)
+    expect(index).toBe(1)
+    expect(phaseOfStep(fill, weights[1])).toBe(1)
+  })
+
+  it('bleibt im Schritt, auch wenn es die Ansicht nicht gibt', () => {
+    expect(pinnedStep(progressForStep(2, weights, 5), weights).index).toBe(2)
+  })
+})

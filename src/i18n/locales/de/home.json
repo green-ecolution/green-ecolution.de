@@ -207,6 +207,7 @@
     "description": "Green Ecolution verbindet drei Schritte zu einer Plattform. Sensoren messen, was vor Ort passiert, die Software macht daraus ein Lagebild und die Einsatzplanung setzt es in Touren um. Angefangen haben wir mit der Bewässerung von Stadtbäumen, die Plattform ist für weitere Aufgaben ausgelegt.",
     "moreLink": "Mehr erfahren",
     "moreLinkAriaLabel": "Mehr über den Prozess erfahren",
+    "nextVisual": "Nächste Ansicht zeigen",
     "steps": {
       "measure": {
         "category": "Erfassen",

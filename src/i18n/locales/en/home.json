@@ -207,6 +207,7 @@
     "description": "Green Ecolution combines three steps into one platform. Sensors measure what is happening on site, the software turns that into a situation overview, and operations planning converts it into tours. We started with the irrigation of urban trees, and the platform is designed for further tasks.",
     "moreLink": "Learn more",
     "moreLinkAriaLabel": "Learn more about the process",
+    "nextVisual": "Show the next view",
     "steps": {
       "measure": {
         "category": "Capture",

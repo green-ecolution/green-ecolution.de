@@ -73,6 +73,19 @@ function setup() {
       )
     }
 
+    // Every step has more than one picture. Pinned, scrolling walks through
+    // them; this is the only way to the others where nothing is pinned.
+    root.querySelector<HTMLElement>('[data-visual-next]')?.addEventListener(
+      'click',
+      () => {
+        const [step, phase] = (root.dataset.activeVisual ?? '0:0').split(':').map(Number)
+        const next = (phase + 1) % phasesOf(root, step)
+        if (pin.isPinned()) pin.scrollToProgress(progressForStep(step, weights, next))
+        else activate(root, step, next)
+      },
+      { signal },
+    )
+
     for (const trigger of root.querySelectorAll<HTMLElement>('[data-step-trigger]')) {
       trigger.addEventListener(
         'click',

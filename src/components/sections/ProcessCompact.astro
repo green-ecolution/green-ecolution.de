@@ -155,6 +155,12 @@ const pinDistance = `${Object.values(VISUALS).flat().length * 50}svh`
               )
             }),
           )}
+          <button
+            type="button"
+            data-visual-next
+            aria-label={t('workflow.nextVisual')}
+            class="workflow-next absolute inset-0 z-10 cursor-pointer rounded-2xl"
+          ></button>
         </div>
 
         <ol class="border-t border-green-dark-900/15 md:col-span-6 lg:col-span-5">
@@ -247,6 +253,12 @@ const pinDistance = `${Object.values(VISUALS).flat().length * 50}svh`
       opacity 0.5s ease-out,
       translate 0.6s var(--ease-spring-settle),
       scale 0.6s var(--ease-spring-settle);
+  }
+
+  /* The whole picture is the control for its other view. The frame clips
+     anything outside, so the focus ring has to sit inside it. */
+  .workflow-next:focus-visible {
+    outline-offset: -4px;
   }
 
   /* A tall window leaves the picture room to grow. Tied to the window, not to
