@@ -39,6 +39,7 @@ function setup() {
     const triggers = [...root.querySelectorAll<HTMLElement>('[data-step-trigger]')]
     const chips = [...root.querySelectorAll<HTMLElement>('[data-example-trigger]')]
     const texts = [...root.querySelectorAll<HTMLElement>('[data-example-text]')]
+    const captions = [...root.querySelectorAll<HTMLElement>('[data-example-caption]')]
     const wide = window.matchMedia(WIDE_ENOUGH)
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
 
@@ -54,9 +55,11 @@ function setup() {
       chips.forEach((chip, position) =>
         chip.setAttribute('aria-pressed', String(position === index)),
       )
-      texts.forEach((text, position) => {
-        text.hidden = position !== index
-      })
+      for (const group of [texts, captions]) {
+        group.forEach((element, position) => {
+          element.hidden = position !== index
+        })
+      }
     }
 
     const showAct = (act: number) => {

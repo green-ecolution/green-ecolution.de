@@ -69,6 +69,22 @@ const pinDistance = `${ACT_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * 50
             class="story-stage relative aspect-[16/10] overflow-hidden rounded-2xl bg-gradient-to-b from-green-light-100/60 to-white shadow-xl ring-1 ring-grey-900/10 lg:aspect-video"
           >
             <div data-story-visual aria-hidden="true" class="absolute inset-0"></div>
+            <div
+              aria-hidden="true"
+              class="story-captions pointer-events-none absolute inset-x-3 bottom-3 z-10 hidden md:block"
+            >
+              {EXAMPLES.map((example, index) => (
+                <p
+                  data-example-caption={index}
+                  class="w-fit max-w-full rounded-2xl bg-white/95 px-3.5 py-2 text-sm leading-snug text-grey-900 shadow-sm ring-1 ring-green-dark-900/10"
+                >
+                  <strong class="font-semibold">
+                    {t(`workflow.more.examples.${example}.label`)}:
+                  </strong>{' '}
+                  {t(`workflow.more.examples.${example}.description`)}
+                </p>
+              ))}
+            </div>
             <button
               type="button"
               data-story-replay
@@ -206,7 +222,7 @@ const pinDistance = `${ACT_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * 50
                         <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
                       </Button>
                     </div>
-                    <p class="max-w-[15rem] text-sm text-grey-900/60">{t('workflow.more.hint')}</p>
+                    <p class="text-sm text-grey-900/60">{t('workflow.more.hint')}</p>
                   </div>
                 </div>
               </div>
@@ -297,6 +313,33 @@ const pinDistance = `${ACT_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * 50
     transition: opacity 0.3s ease-out;
   }
 
+  /* From tablet width up the sentence of the selected example sits on the
+     picture, next to what the camera shows, and the list keeps its copy for
+     screen readers only. That keeps the finale short enough to pin. */
+  .story-captions {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+
+  [data-story][data-enhanced] [data-story-root][data-act='3'] .story-captions {
+    opacity: 1;
+  }
+
+  [data-story][data-enhanced][data-invite] [data-story-root] .story-captions {
+    opacity: 0;
+  }
+
+  @media (min-width: 768px) {
+    [data-story][data-enhanced] [data-example-text] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+
   .story-cta {
     transition: scale 0.6s var(--ease-spring-settle);
   }
@@ -308,6 +351,7 @@ const pinDistance = `${ACT_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * 50
   @media (prefers-reduced-motion: reduce) {
     .story-panel,
     .story-replay,
+    .story-captions,
     .story-cta {
       transition: none;
     }
