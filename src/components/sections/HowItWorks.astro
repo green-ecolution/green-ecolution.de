@@ -1,0 +1,319 @@
+---
+import { ChevronDown, RotateCcw, Sparkles } from 'lucide-react'
+import Arrow from '../icons/Arrow.astro'
+import Button from '../Button.astro'
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+import { workflowSteps } from '../../data/workflowSteps'
+import { ACT_WEIGHTS, EXAMPLES } from '../../lib/storyTimeline'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'home')
+
+const moreHref = `/${language}/product#process`
+const finaleIndex = workflowSteps.length
+const finalePanelId = 'workflow-panel-more'
+const pinDistance = `${ACT_WEIGHTS.reduce((sum, weight) => sum + weight, 0) * 50}svh`
+---
+
+<section
+  id="workflow"
+  data-pin-section
+  class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
+>
+  <div data-pin-track style={`--pin-distance: ${pinDistance}`}>
+    <div data-pin-stage>
+      <div class="w-full mb-8 lg:grid lg:grid-cols-12 lg:gap-x-10 lg:items-start lg:mb-8 xl:gap-x-16">
+        <div class="lg:contents">
+          <div class="mb-4 lg:col-span-12">
+            <div class="inline-block">
+              <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
+                {t('workflow.sectionLabel')}
+              </span>
+              <div class="label-rule"></div>
+            </div>
+          </div>
+
+          <h2 class="font-lato font-bold text-2xl text-grey-900 lg:col-span-5 lg:text-3xl xl:text-4xl">
+            {t('workflow.title')}
+          </h2>
+        </div>
+
+        <div class="lg:col-span-7">
+          <p class="mt-4 max-w-2xl text-grey-900/70 leading-relaxed lg:mt-0">
+            {t('workflow.description')}
+          </p>
+          <a
+            href={moreHref}
+            aria-label={t('workflow.moreLinkAriaLabel')}
+            class="hidden lg:inline-flex mt-3 group items-center gap-x-2 font-semibold text-green-dark-900 hover:text-green-light-900 transition-colors duration-300 whitespace-nowrap"
+          >
+            {t('workflow.moreLink')}
+            <Arrow class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </a>
+        </div>
+      </div>
+
+      <div
+        data-story
+        class="w-full md:grid md:grid-cols-12 md:items-center md:gap-8 lg:gap-10 xl:gap-16"
+      >
+        <div data-story-frame class="story-frame mb-6 md:mb-0 md:col-span-6 lg:col-span-7">
+          <div
+            data-story-root
+            data-act="0"
+            style="--story: 0"
+            class="story-stage relative aspect-[16/10] overflow-hidden rounded-2xl bg-gradient-to-b from-green-light-100/60 to-white shadow-xl ring-1 ring-grey-900/10 lg:aspect-video"
+          >
+            <div data-story-visual aria-hidden="true" class="absolute inset-0"></div>
+            <button
+              type="button"
+              data-story-replay
+              aria-label={t('workflow.replay')}
+              class="story-replay absolute right-3 top-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/90 text-green-dark-900 shadow-sm ring-1 ring-green-dark-900/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+            >
+              <RotateCcw aria-hidden="true" className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        <ol data-story-steps class="border-t border-green-dark-900/15 md:col-span-6 lg:col-span-5">
+          {workflowSteps.map((step, index) => {
+            const Icon = step.icon
+            const panelId = `workflow-panel-${step.id}`
+
+            return (
+              <li
+                data-step={index}
+                data-active={String(index === 0)}
+                class="group relative border-b border-green-dark-900/15"
+              >
+                <span
+                  aria-hidden="true"
+                  class="absolute left-0 top-0 h-full w-0.5 bg-transparent transition-colors duration-300 group-data-[active=true]:bg-green-dark-900/15"
+                >
+                  <span class="block h-full w-full origin-top bg-green-dark-900 scale-y-0 group-data-[active=true]:scale-y-(--step-fill,1)"></span>
+                </span>
+                <h3>
+                  <button
+                    type="button"
+                    data-step-trigger={index}
+                    aria-expanded={index === 0 ? 'true' : 'false'}
+                    aria-controls={panelId}
+                    class="flex w-full items-center gap-x-4 py-4 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+                  >
+                    <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
+                      <Icon className="w-5 h-5" aria-hidden="true" />
+                    </span>
+                    <span class="flex-1">
+                      <span class="block text-xs font-semibold tracking-widest uppercase text-green-dark-900 mb-1">
+                        {step.number}
+                      </span>
+                      <span class="block font-lato font-bold text-xl text-grey-900 lg:text-2xl">
+                        {t(`workflow.steps.${step.id}.title`)}
+                      </span>
+                    </span>
+                    <ChevronDown
+                      aria-hidden="true"
+                      className="story-chevron w-5 h-5 shrink-0 text-green-dark-900 transition-transform duration-300 group-data-[active=true]:rotate-180 motion-reduce:transition-none"
+                    />
+                  </button>
+                </h3>
+                <div id={panelId} class="story-panel">
+                  <div>
+                    <p class="pb-6 pl-5 pr-2 sm:pl-[4.75rem] text-grey-900/70 leading-relaxed">
+                      {t(`workflow.steps.${step.id}.description`)}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            )
+          })}
+
+          <li
+            data-step={finaleIndex}
+            data-active="false"
+            class="group relative border-b border-green-dark-900/15"
+          >
+            <span
+              aria-hidden="true"
+              class="absolute left-0 top-0 h-full w-0.5 bg-transparent transition-colors duration-300 group-data-[active=true]:bg-green-dark-900/15"
+            >
+              <span class="block h-full w-full origin-top bg-green-dark-900 scale-y-0 group-data-[active=true]:scale-y-(--step-fill,1)"></span>
+            </span>
+            <h3>
+              <button
+                type="button"
+                data-step-trigger={finaleIndex}
+                aria-expanded="false"
+                aria-controls={finalePanelId}
+                class="flex w-full items-center gap-x-4 py-4 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+              >
+                <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
+                  <Sparkles className="w-5 h-5" aria-hidden="true" />
+                </span>
+                <span class="flex-1 font-lato font-bold text-xl text-grey-900 lg:text-2xl">
+                  {t('workflow.more.title')}
+                </span>
+                <ChevronDown
+                  aria-hidden="true"
+                  className="story-chevron w-5 h-5 shrink-0 text-green-dark-900 transition-transform duration-300 group-data-[active=true]:rotate-180 motion-reduce:transition-none"
+                />
+              </button>
+            </h3>
+            <div id={finalePanelId} class="story-panel">
+              <div>
+                <div class="pb-6 pl-5 pr-2 sm:pl-[4.75rem]">
+                  <p class="text-grey-900/70 leading-relaxed">{t('workflow.more.description')}</p>
+
+                  <div
+                    role="group"
+                    aria-label={t('workflow.more.examplesLabel')}
+                    class="mt-4 flex flex-wrap gap-2"
+                  >
+                    {EXAMPLES.map((example, index) => (
+                      <button
+                        type="button"
+                        data-example-trigger={index}
+                        aria-pressed={index === 0 ? 'true' : 'false'}
+                        class="cursor-pointer rounded-full px-3.5 py-1.5 text-sm font-semibold text-green-dark-900 ring-1 ring-green-dark-900/20 transition-colors hover:bg-green-light-100 aria-pressed:bg-green-dark-900 aria-pressed:text-white aria-pressed:ring-green-dark-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+                      >
+                        {t(`workflow.more.examples.${example}.label`)}
+                      </button>
+                    ))}
+                  </div>
+
+                  {EXAMPLES.map((example, index) => (
+                    <p data-example-text={index} class="mt-3 text-grey-900/70 leading-relaxed">
+                      <strong class="font-semibold text-grey-900">
+                        {t(`workflow.more.examples.${example}.label`)}:
+                      </strong>{' '}
+                      {t(`workflow.more.examples.${example}.description`)}
+                    </p>
+                  ))}
+
+                  <p class="mt-4 text-sm text-grey-900/60">{t('workflow.more.hint')}</p>
+
+                  <div class="story-cta mt-5 w-max origin-left">
+                    <Button
+                      href={`/${language}/contact`}
+                      ariaLabel={t('workflow.more.ctaAriaLabel')}
+                      isDark
+                    >
+                      <span>{t('workflow.more.cta')}</span>
+                      <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center mt-8 lg:hidden">
+    <a
+      href={moreHref}
+      aria-label={t('workflow.moreLinkAriaLabel')}
+      class="group flex items-center gap-x-2 font-semibold text-green-dark-900 hover:text-green-light-900 transition-colors duration-300"
+    >
+      {t('workflow.moreLink')}
+      <Arrow class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+    </a>
+  </div>
+</section>
+
+<style>
+  /* A tall window leaves the picture room to grow. Tied to the window, not to
+     the pinned state, so the pinning decision measures a stable height. */
+  @media (min-width: 1024px) and (min-height: 1000px) {
+    .story-stage {
+      aspect-ratio: 3 / 2;
+    }
+  }
+
+  .story-panel {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .story-panel > div {
+    overflow: hidden;
+  }
+
+  /* Collapsing waits for the script, so without it every step stays readable. */
+  @media (min-width: 768px) {
+    [data-story][data-enhanced] [data-step]:not([data-active='true']) .story-panel {
+      grid-template-rows: 0fr;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    [data-story][data-enhanced][data-story-mode='autoplay']
+      [data-step]:not([data-active='true'])
+      .story-panel {
+      grid-template-rows: 0fr;
+    }
+
+    /* The picture holds still below the header while the steps scroll past
+       underneath; its backing keeps them from showing through the gaps. */
+    [data-story][data-story-mode='scrub'] .story-frame {
+      position: sticky;
+      top: 4.5rem;
+      z-index: 10;
+      margin-inline: -1rem;
+      padding: 0.75rem 1rem;
+      background: var(--color-white);
+    }
+
+    [data-story][data-story-mode='scrub'] [data-step] {
+      min-height: 55svh;
+    }
+
+    [data-story][data-story-mode='scrub'] .story-chevron {
+      display: none;
+    }
+  }
+
+  /* Only where the story plays by itself, and only once it has. */
+  .story-replay {
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 0.3s ease-out,
+      visibility 0s linear 0.3s;
+  }
+
+  [data-story][data-story-mode='autoplay'][data-story-play='done'] .story-replay {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+  }
+
+  .story-cta {
+    transition: scale 0.6s var(--ease-spring-settle);
+  }
+
+  [data-story][data-invite] .story-cta {
+    scale: 1.06;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .story-panel,
+    .story-replay,
+    .story-cta {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import '../../scripts/howItWorks'
+</script>

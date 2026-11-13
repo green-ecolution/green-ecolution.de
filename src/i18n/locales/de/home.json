@@ -203,41 +203,54 @@
     }
   },
   "workflow": {
-    "sectionLabel": "Lösung",
-    "title": "Der durchgängige Workflow",
-    "description": "Green Ecolution verbindet drei Schritte zu einer Plattform. Sensoren messen, was vor Ort passiert, die Software macht daraus ein Lagebild und die Einsatzplanung setzt es in Touren um. Angefangen haben wir mit der Bewässerung von Stadtbäumen, die Plattform ist für weitere Aufgaben ausgelegt.",
+    "sectionLabel": "So funktioniert es",
+    "title": "Wie funktioniert Green Ecolution?",
+    "description": "Drei Schritte führen vom trockenen Boden zum gegossenen Baum. Die kleine Stadt zeigt, wie sie ineinandergreifen.",
     "moreLink": "Mehr erfahren",
     "moreLinkAriaLabel": "Mehr über den Prozess erfahren",
-    "nextVisual": "Nächste Ansicht zeigen",
+    "replay": "Noch einmal abspielen",
     "steps": {
       "measure": {
-        "category": "Erfassen",
         "title": "Messen",
-        "description": "Bodenfeuchtesensoren erfassen Bodenfeuchte und Temperatur in variablen Tiefen. Die Daten werden energieeffizient über LoRaWAN übertragen.",
-        "screenshotAlt": "Sendeeinheit des Bodenfeuchtesensors mit Antenne und QR-Code, daran die beiden Bodenfeuchtefühler mit ihren Messspitzen",
-        "installationAlt": "Skizze des Sensoreinbaus neben einem Jungbaum: Die Sendeeinheit liegt in einer Bodeneinbaudose knapp unter der Oberfläche, die beiden Fühler stecken in 40 und 80 cm Tiefe, jeweils um 45 Grad zum Baum geneigt",
-        "screenshotCaption": "Sensoreinheit mit zwei Sonden",
-        "installationCaption": "Einbau neben dem Baum"
+        "description": "Ein Sensor im Boden misst, wie feucht die Erde an den Wurzeln ist. Die Werte schickt er von selbst los."
       },
       "understand": {
-        "category": "Analysieren",
         "title": "Verstehen",
-        "description": "Ein Ampelsystem zeigt auf einer Karte den aktuellen Bewässerungsbedarf. Mitarbeiter erkennen auf einen Blick, welche Grünflächen Wasser brauchen. Zeitverläufe ermöglichen detaillierte Analysen.",
-        "screenshotAlt": "Kartenansicht von Flensburg mit farbigen Ampelpunkten für den Bewässerungsbedarf der Baumgruppen und Filtern für sehr trockene und leicht trockene Gruppen",
-        "dashboardAlt": "Detailseite einer sehr trockenen Bewässerungsgruppe mit Bodentemperatur, letzter Messung und dem Verlauf der Wasserversorgung über sieben Tage unterhalb der Schwellen mäßig und kritisch",
-        "screenshotCaption": "Karte mit Bewässerungsstatus",
-        "dashboardCaption": "Verlauf einer Bewässerungsgruppe"
+        "description": "Auf der Karte hat jeder Baum eine Ampelfarbe. Ein Blick genügt, um zu sehen, wo Wasser fehlt."
       },
       "act": {
-        "category": "Ausführen",
         "title": "Handeln",
-        "description": "Automatisierte Einsatz- und Routenplanung erzeugt optimierte Bewässerungstouren unter Berücksichtigung von Wasserkapazität, Fahrzeuggröße und Straßenrestriktionen.",
-        "screenshotAlt": "Routenplanung auf der Karte mit ausgewählten Bewässerungsgruppen, eingezeichneter Tour und Nachfüllpunkten",
-        "screenshotCaption": "Tour mit Nachfüllpunkten"
+        "description": "Green Ecolution schlägt eine Tour vor. Das Team fährt los und gießt genau dort, wo es nötig ist."
       }
     },
-    "photoAlt": "Ein Mitarbeiter des Technischen Betriebszentrums wässert mit einem Schlauch einen jungen Baum, der von einem Holzgerüst gestützt wird.",
-    "photoCaption": "Bewässerung durch das Technische Betriebszentrum Flensburg."
+    "more": {
+      "title": "Der Baum ist nur der Anfang.",
+      "description": "Das Prinzip passt überall, wo sich etwas messen lässt und am Ende jemand losfahren muss. Drei Beispiele, die damit denkbar sind:",
+      "examplesLabel": "Beispiele",
+      "examples": {
+        "bin": {
+          "label": "Mülleimer",
+          "description": "Füllstand messen, volle Behälter auf der Karte sehen, Leerung gezielt planen.",
+          "status": "ist voll"
+        },
+        "winter": {
+          "label": "Winterdienst",
+          "description": "Fahrbahntemperatur messen, Glätte früh erkennen, dort streuen, wo es nötig ist.",
+          "status": "Glätte droht"
+        },
+        "rain": {
+          "label": "Regenwasser",
+          "description": "Wasserstand messen, Staustellen sehen, reinigen, bevor der nächste Starkregen kommt.",
+          "status": "staut sich"
+        }
+      },
+      "hint": "Neue Anwendungsfälle entwickeln wir gemeinsam mit dir.",
+      "cta": "Was möchtest du messen?",
+      "ctaAriaLabel": "Was möchtest du messen? Kontakt aufnehmen"
+    },
+    "scene": {
+      "needsWater": "braucht Wasser"
+    }
   },
   "demo": {
     "sectionLabel": "Live Demo",

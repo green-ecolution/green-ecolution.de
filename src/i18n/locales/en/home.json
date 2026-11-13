@@ -203,41 +203,54 @@
     }
   },
   "workflow": {
-    "sectionLabel": "Solution",
-    "title": "The end-to-end workflow",
-    "description": "Green Ecolution combines three steps into one platform. Sensors measure what is happening on site, the software turns that into a situation overview, and operations planning converts it into tours. We started with the irrigation of urban trees, and the platform is designed for further tasks.",
+    "sectionLabel": "How it works",
+    "title": "How does Green Ecolution work?",
+    "description": "Three steps lead from dry soil to a watered tree. The little town shows how they work together.",
     "moreLink": "Learn more",
     "moreLinkAriaLabel": "Learn more about the process",
-    "nextVisual": "Show the next view",
+    "replay": "Play again",
     "steps": {
       "measure": {
-        "category": "Capture",
         "title": "Measure",
-        "description": "Soil moisture sensors capture soil moisture and temperature at variable depths. The data is transmitted energy-efficiently via LoRaWAN.",
-        "screenshotAlt": "Transmitter unit of the soil moisture sensor with antenna and QR code, connected to the two soil moisture probes with their prongs",
-        "installationAlt": "Sketch of the sensor installation next to a young tree: the transmitter sits in a ground box just below the surface, the two probes are placed at 40 and 80 cm depth, each tilted 45 degrees towards the tree",
-        "screenshotCaption": "Sensor unit with two probes",
-        "installationCaption": "Installation next to the tree"
+        "description": "A sensor in the ground measures how moist the soil is around the roots. It sends the readings off by itself."
       },
       "understand": {
-        "category": "Analyze",
         "title": "Understand",
-        "description": "A traffic-light system shows the current irrigation need on a map. Staff can see at a glance which green spaces need water. Time series enable detailed analyses.",
-        "screenshotAlt": "Map of Flensburg with coloured traffic light markers for the irrigation needs of tree groups and filters for very dry and slightly dry groups",
-        "dashboardAlt": "Detail page of a very dry irrigation group with soil temperature, last measurement and the water supply over seven days below the moderate and critical thresholds",
-        "screenshotCaption": "Map with watering status",
-        "dashboardCaption": "History of a watering group"
+        "description": "On the map, every tree has a traffic-light colour. One glance shows where water is missing."
       },
       "act": {
-        "category": "Execute",
         "title": "Act",
-        "description": "Automated dispatch and route planning generates optimized irrigation routes, taking into account water capacity, vehicle size, and road restrictions.",
-        "screenshotAlt": "Route planning on the map with selected irrigation groups, the drawn tour and refill points",
-        "screenshotCaption": "Tour with refill points"
+        "description": "Green Ecolution suggests a tour. The team heads out and waters exactly where it is needed."
       }
     },
-    "photoAlt": "A worker from the municipal service centre waters a young tree supported by a wooden frame, using a hose.",
-    "photoCaption": "Watering by the municipal service centre of Flensburg."
+    "more": {
+      "title": "The tree is only the beginning.",
+      "description": "The principle fits wherever something can be measured and someone has to head out in the end. Three examples it could cover:",
+      "examplesLabel": "Examples",
+      "examples": {
+        "bin": {
+          "label": "Litter bins",
+          "description": "Measure the fill level, see full bins on the map, plan emptying where it is due.",
+          "status": "is full"
+        },
+        "winter": {
+          "label": "Winter service",
+          "description": "Measure the road temperature, spot ice early, grit where it is needed.",
+          "status": "ice ahead"
+        },
+        "rain": {
+          "label": "Rainwater",
+          "description": "Measure the water level, see where it backs up, clean before the next downpour.",
+          "status": "backing up"
+        }
+      },
+      "hint": "We develop new use cases together with you.",
+      "cta": "What would you like to measure?",
+      "ctaAriaLabel": "What would you like to measure? Get in touch"
+    },
+    "scene": {
+      "needsWater": "needs water"
+    }
   },
   "demo": {
     "sectionLabel": "Live Demo",
