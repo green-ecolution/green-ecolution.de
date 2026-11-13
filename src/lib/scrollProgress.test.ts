@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { reachableRange, scrollProgress } from './scrollProgress'
+import { activeIndex, reachableRange, scrollProgress } from './scrollProgress'
 
 describe('scrollProgress', () => {
   const viewport = 1000
@@ -24,6 +24,20 @@ describe('scrollProgress', () => {
 
   it('kommt ohne Strecke zwischen Start und Ziel aus', () => {
     expect(scrollProgress(100, 0, viewport, { start: 0.5, end: 0.5 })).toBe(1)
+  })
+})
+
+describe('activeIndex', () => {
+  it('nimmt den letzten Abschnitt, der die Leselinie schon erreicht hat', () => {
+    expect(activeIndex([100, 300, 600], 350)).toBe(1)
+  })
+
+  it('bleibt beim ersten Abschnitt, solange noch keiner die Linie erreicht hat', () => {
+    expect(activeIndex([400, 600, 900], 350)).toBe(0)
+  })
+
+  it('endet beim letzten Abschnitt', () => {
+    expect(activeIndex([-600, -300, -100], 350)).toBe(2)
   })
 })
 

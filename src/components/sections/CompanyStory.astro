@@ -7,7 +7,21 @@ interface Props {
   language: Language
 }
 
-const PARAGRAPHS = ['p1', 'p2', 'p3', 'p4', 'p5'] as const
+// The year each paragraph tells of; the text itself names them.
+const PARAGRAPHS = [
+  { id: 'p1', year: 2024 },
+  { id: 'p2', year: 2024 },
+  { id: 'p3', year: 2025 },
+  { id: 'p4', year: 2026 },
+  { id: 'p5', year: 2026 },
+] as const
+const YEARS = [...new Set(PARAGRAPHS.map((paragraph) => paragraph.year))]
+// One column per digit. A digit that differs between the years gets a strip
+// with one entry per year, so only that digit rolls.
+const DIGITS = [...String(YEARS[0])].map((_, position) => {
+  const values = YEARS.map((year) => String(year)[position])
+  return new Set(values).size === 1 ? values.slice(0, 1) : values
+})
 
 const { language } = Astro.props
 const t = getTranslations(language, 'about')
@@ -25,9 +39,78 @@ const t = getTranslations(language, 'about')
     {t('story.title')}
   </h2>
 
-  <div class="max-w-2xl space-y-4 text-grey-900/80 leading-relaxed lg:text-lg">
-    {PARAGRAPHS.map((id) => (
-      <p>{t(`story.${id}`, { company: company.name })}</p>
-    ))}
+  <div data-story class="lg:grid lg:grid-cols-[minmax(0,42rem)_1fr] lg:gap-x-12">
+    <div class="max-w-2xl space-y-4 text-grey-900/80 leading-relaxed lg:text-lg">
+      {PARAGRAPHS.map((paragraph) => (
+        <p data-story-part data-year-index={YEARS.indexOf(paragraph.year)}>
+          {t(`story.${paragraph.id}`, { company: company.name })}
+        </p>
+      ))}
+    </div>
+
+    <div class="story-aside relative hidden lg:block" aria-hidden="true">
+      <div class="story-year absolute right-0 top-0 flex font-lato font-bold tabular-nums text-green-dark-900/15">
+        {DIGITS.map((values) => (
+          <span class="story-digit">
+            <span class:list={['story-strip', values.length > 1 && 'story-strip-rolling']}>
+              {values.map((value) => (
+                <span>{value}</span>
+              ))}
+            </span>
+          </span>
+        ))}
+      </div>
+    </div>
   </div>
 </section>
+
+<style>
+  /* The year belongs to the paragraph being read, so it only shows once the
+     script can tell which one that is. */
+  .story-aside {
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+  }
+
+  [data-story][data-enhanced] .story-aside {
+    opacity: 1;
+  }
+
+  .story-year {
+    font-size: 5.5rem;
+    line-height: 1;
+    translate: 0 var(--year-y, 0);
+    transition: translate 0.7s var(--ease-spring-settle);
+  }
+
+  .story-digit {
+    display: block;
+    height: 1em;
+    overflow: hidden;
+  }
+
+  .story-strip {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .story-strip > span {
+    height: 1em;
+  }
+
+  .story-strip-rolling {
+    translate: 0 calc(var(--year-index, 0) * -1em);
+    transition: translate 0.7s var(--ease-spring-settle);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .story-year,
+    .story-strip-rolling {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import '../../scripts/storyYear'
+</script>
