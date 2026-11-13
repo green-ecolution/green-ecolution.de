@@ -136,15 +136,13 @@ function setup() {
     // from growing out of the window once the story gets there. The panels may
     // still be mid-transition, so only their current height is taken out.
     const tallestStage = () => {
-      const header = stage.firstElementChild as HTMLElement
-      const gap = Number.parseFloat(getComputedStyle(header).marginBottom) || 0
       const shown = list.querySelectorAll<HTMLElement>('.story-panel')
       const shownHeight = [...shown].reduce((sum, panel) => sum + panel.offsetHeight, 0)
       const tallestPanel = Math.max(
         ...[...shown].map((panel) => panel.firstElementChild?.scrollHeight ?? 0),
       )
       const tallestList = list.offsetHeight - shownHeight + tallestPanel
-      return header.offsetHeight + gap + Math.max(frame.offsetHeight, tallestList)
+      return Math.max(frame.offsetHeight, tallestList)
     }
 
     showExample(0)
