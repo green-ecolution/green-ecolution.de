@@ -4,6 +4,7 @@ import Arrow from '../icons/Arrow.astro'
 import HeroTreesIsland from '../islands/hero/HeroTreesIsland'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
+import { workflowSteps } from '../../data/workflowSteps'
 
 interface Props {
   language: Language
@@ -11,6 +12,11 @@ interface Props {
 
 const { language } = Astro.props
 const t = getTranslations(language, 'home')
+
+// Each word of the tagline names one step of the workflow further down, in the
+// same order, so it can jump there.
+const taglineWords = t('hero.tagline').split(' ')
+const taglineJumps = taglineWords.length === workflowSteps.length
 ---
 
 <section>
@@ -43,7 +49,15 @@ const t = getTranslations(language, 'home')
           class="hero-rise mb-4 font-lato text-sm tracking-widest uppercase text-green-dark-900 lg:text-base"
           style="--rise-delay: 250ms"
         >
-          {t('hero.tagline')}
+          {taglineJumps
+            ? taglineWords.map((word, index) => (
+                <>
+                  <a href="#workflow" data-workflow-jump={index} class="tagline-jump">
+                    {word}
+                  </a>{' '}
+                </>
+              ))
+            : t('hero.tagline')}
         </p>
 
         <p
@@ -81,3 +95,24 @@ const t = getTranslations(language, 'home')
     <HeroTreesIsland client:visible />
   </div>
 </section>
+
+<style>
+  /* A line that draws itself under the word says it leads somewhere, without
+     underlining the tagline at rest. */
+  .tagline-jump {
+    padding-bottom: 0.2em;
+    background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+    transition: background-size 0.3s var(--ease-brand);
+  }
+
+  .tagline-jump:hover,
+  .tagline-jump:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tagline-jump {
+      transition: none;
+    }
+  }
+</style>

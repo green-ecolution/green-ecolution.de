@@ -55,6 +55,24 @@ function setup() {
       activate(root, index, phaseOfStep(fill, weights[index]))
     })
 
+    // Links elsewhere on the page that name a step, such as the hero tagline.
+    for (const jump of document.querySelectorAll<HTMLElement>('[data-workflow-jump]')) {
+      jump.addEventListener(
+        'click',
+        (event) => {
+          const index = Number(jump.dataset.workflowJump)
+          if (pin.isPinned()) {
+            // The link's own target is the section top, which is step one.
+            event.preventDefault()
+            pin.scrollToProgress(progressForStep(index, weights))
+          } else {
+            activate(root, index)
+          }
+        },
+        { signal },
+      )
+    }
+
     for (const trigger of root.querySelectorAll<HTMLElement>('[data-step-trigger]')) {
       trigger.addEventListener(
         'click',
