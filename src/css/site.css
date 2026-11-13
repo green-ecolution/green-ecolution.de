@@ -103,6 +103,11 @@
     0.999
   );
 
+  /* The curve the brand's design language prescribes for transitions. Every
+     transition utility that names no curve of its own uses it. */
+  --ease-brand: cubic-bezier(0.32, 0.72, 0, 1);
+  --default-transition-timing-function: var(--ease-brand);
+
   /* Shadows */
   --shadow-main-nav: -4px 0px 20px 8px rgba(0, 0, 0, 0.1);
   /* Diffuse enough to read as the edge of a floating layer rather than as a
