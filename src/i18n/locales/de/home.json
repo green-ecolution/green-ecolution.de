@@ -213,20 +213,25 @@
         "title": "Messen",
         "description": "Bodenfeuchtesensoren erfassen Bodenfeuchte und Temperatur in variablen Tiefen. Die Daten werden energieeffizient über LoRaWAN übertragen.",
         "screenshotAlt": "Sendeeinheit des Bodenfeuchtesensors mit Antenne und QR-Code, daran die beiden Bodenfeuchtefühler mit ihren Messspitzen",
-        "installationAlt": "Skizze des Sensoreinbaus neben einem Jungbaum: Die Sendeeinheit liegt in einer Bodeneinbaudose knapp unter der Oberfläche, die beiden Fühler stecken in 40 und 80 cm Tiefe, jeweils um 45 Grad zum Baum geneigt"
+        "installationAlt": "Skizze des Sensoreinbaus neben einem Jungbaum: Die Sendeeinheit liegt in einer Bodeneinbaudose knapp unter der Oberfläche, die beiden Fühler stecken in 40 und 80 cm Tiefe, jeweils um 45 Grad zum Baum geneigt",
+        "screenshotCaption": "Sensoreinheit mit zwei Sonden",
+        "installationCaption": "Einbau neben dem Baum"
       },
       "understand": {
         "category": "Analysieren",
         "title": "Verstehen",
         "description": "Ein Ampelsystem zeigt auf einer Karte den aktuellen Bewässerungsbedarf. Mitarbeiter erkennen auf einen Blick, welche Grünflächen Wasser brauchen. Zeitverläufe ermöglichen detaillierte Analysen.",
         "screenshotAlt": "Kartenansicht von Flensburg mit farbigen Ampelpunkten für den Bewässerungsbedarf der Baumgruppen und Filtern für sehr trockene und leicht trockene Gruppen",
-        "dashboardAlt": "Detailseite einer sehr trockenen Bewässerungsgruppe mit Bodentemperatur, letzter Messung und dem Verlauf der Wasserversorgung über sieben Tage unterhalb der Schwellen mäßig und kritisch"
+        "dashboardAlt": "Detailseite einer sehr trockenen Bewässerungsgruppe mit Bodentemperatur, letzter Messung und dem Verlauf der Wasserversorgung über sieben Tage unterhalb der Schwellen mäßig und kritisch",
+        "screenshotCaption": "Karte mit Bewässerungsstatus",
+        "dashboardCaption": "Verlauf einer Bewässerungsgruppe"
       },
       "act": {
         "category": "Ausführen",
         "title": "Handeln",
         "description": "Automatisierte Einsatz- und Routenplanung erzeugt optimierte Bewässerungstouren unter Berücksichtigung von Wasserkapazität, Fahrzeuggröße und Straßenrestriktionen.",
-        "screenshotAlt": "Routenplanung auf der Karte mit ausgewählten Bewässerungsgruppen, eingezeichneter Tour und Nachfüllpunkten"
+        "screenshotAlt": "Routenplanung auf der Karte mit ausgewählten Bewässerungsgruppen, eingezeichneter Tour und Nachfüllpunkten",
+        "screenshotCaption": "Tour mit Nachfüllpunkten"
       }
     },
     "photoAlt": "Ein Mitarbeiter des Technischen Betriebszentrums wässert mit einem Schlauch einen jungen Baum, der von einem Holzgerüst gestützt wird.",
