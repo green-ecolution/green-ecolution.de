@@ -87,7 +87,11 @@ function setup() {
       if (state.activeExample !== null) showExample(state.activeExample)
     }
 
+    // Never more than one pending frame: every state other than playing cancels it.
+    let frameId = 0
+
     const setPlay = (next: Play) => {
+      if (next !== 'playing') window.cancelAnimationFrame(frameId)
       play = next
       root.dataset.storyPlay = next
     }
@@ -98,21 +102,20 @@ function setup() {
       const start = performance.now()
 
       const tick = (now: number) => {
-        if (signal.aborted || mode !== 'autoplay' || play !== 'playing') return
         const progress = autoStoryProgress(now - start)
         render(progress)
-        if (progress < 1) window.requestAnimationFrame(tick)
+        if (progress < 1) frameId = window.requestAnimationFrame(tick)
         else setPlay('done')
       }
-      window.requestAnimationFrame(tick)
+      frameId = window.requestAnimationFrame(tick)
     }
 
     const setMode = (next: Mode) => {
       if (mode === next) return
       mode = next
       root.dataset.storyMode = next
+      setPlay('idle')
       if (next === 'autoplay') {
-        setPlay('idle')
         render(0)
         if (onScreen) playOnce()
       }
@@ -233,7 +236,10 @@ function setup() {
       { threshold: 0.5 },
     )
     viewport.observe(scene)
-    signal.addEventListener('abort', () => viewport.disconnect())
+    signal.addEventListener('abort', () => {
+      viewport.disconnect()
+      window.cancelAnimationFrame(frameId)
+    })
   }
 }
 
