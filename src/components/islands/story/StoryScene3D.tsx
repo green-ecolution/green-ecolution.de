@@ -15,7 +15,8 @@ import {
   TreePins,
   Watering,
 } from './actors'
-import { heroLabel, sensorAnchor } from './anchors'
+import { exampleLabels, heroLabel, sensorAnchor } from './anchors'
+import { ExampleSpots, Troubles } from './examples'
 import type { Story, StorySource } from './shared'
 import { groundGeometry, shadowGeometry, townGeometry } from './town'
 
@@ -127,7 +128,7 @@ function Town() {
   )
 }
 
-const anchors = [heroLabel]
+const anchors = [heroLabel, ...exampleLabels]
 
 function StoryScene3D({ isStatic, isActive, source, labels, onReady }: Props) {
   const story = useRef<StoryState>(storyState(0))
@@ -168,6 +169,8 @@ function StoryScene3D({ isStatic, isActive, source, labels, onReady }: Props) {
       <StoryVehicle story={story} isStatic={isStatic} />
       <Watering story={story} isStatic={isStatic} />
       <TreePins story={story} isStatic={isStatic} />
+      <Troubles story={story} isStatic={isStatic} />
+      <ExampleSpots story={story} isStatic={isStatic} />
       <Labels story={story} nodes={labels} anchors={anchors} />
     </Canvas>
   )

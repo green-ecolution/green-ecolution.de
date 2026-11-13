@@ -1,4 +1,4 @@
-import { heroTree } from '../../../data/storyTown'
+import { exampleSpots, heroTree } from '../../../data/storyTown'
 import { canopyCenterHeight, type Tree } from '../../../data/streamletTour'
 import type { StoryState } from '../../../lib/storyTimeline'
 import { PIT_TOP } from './shared'
@@ -31,3 +31,8 @@ export const heroLabel: Anchor = {
   at: [heroTree.at[0], pinHeight(heroTree) + PIN_RADIUS + 0.5, heroTree.at[1]],
   shown: (state) => state.alert,
 }
+
+export const exampleLabels: Anchor[] = exampleSpots.map((spot, index) => ({
+  at: [spot.at[0], spot.pinHeight + PIN_RADIUS + 0.5, spot.at[1]],
+  shown: (state) => state.examples[index].alert,
+}))

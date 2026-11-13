@@ -84,7 +84,6 @@ export const blocks: CityBlock[] = [
     tone: 0,
     door: '+z',
   },
-  // Far enough from the first side road to keep the winter close-up clear.
   {
     x: 19,
     z: -34,
@@ -205,44 +204,53 @@ export interface ExampleSpot {
   approach: GroundPoint[]
 }
 
-// Same order as EXAMPLES in storyTimeline.ts.
+// Same order as EXAMPLES in storyTimeline.ts. Each approach starts outside its
+// shot. A pin's head stands above the signal rings, and the vehicle stops where
+// it is not behind the pin on screen: past a spot on the near side of the road,
+// short of one on the far side.
 export const exampleSpots: ExampleSpot[] = [
   {
     id: 'bin',
     at: [-6, 4.6],
     tone: 'alert',
-    // Clear of the heap that grows out of the bin.
-    pinHeight: 4.5,
+    pinHeight: 6,
     approach: [
-      [-36, 0],
-      [-11, 0],
+      [-36.8, 0],
+      [-1.5, 0],
     ],
   },
   {
     id: 'winter',
-    at: [3.9, -35],
+    at: [-3.9, -12],
     tone: 'info',
-    pinHeight: 2.1,
-    approach: [
-      [0, -41],
-      [0, -29],
-    ],
+    pinHeight: 5,
+    // On past the depot, so it does not park behind the pin of the tree opposite.
+    approach: roundedPath(
+      [
+        [37, 0],
+        [0, 0],
+        [0, -30],
+      ],
+      5,
+    ),
   },
   {
     id: 'rain',
-    at: [31, 3.9],
+    // A little past the gully, clear of the tree up the road.
+    at: [38.3, -3.9],
     tone: 'warn',
-    pinHeight: 2.1,
+    pinHeight: 5,
     approach: [
-      [8, 0],
-      [24, 0],
+      [-8, 0],
+      [29, 0],
     ],
   },
 ]
 
-export const icePatch = { at: [0, -35] as GroundPoint, width: roadWidth, length: 10 } as const
-export const gully = { at: [31, 1.9] as GroundPoint } as const
-export const puddle = { at: [31, 1.4] as GroundPoint, radius: 2.6 } as const
+export const binHeight = 2.1
+export const icePatch = { at: [0, -12] as GroundPoint, width: roadWidth, length: 8 } as const
+export const gully = { at: [37, -1.9] as GroundPoint } as const
+export const puddle = { at: [37, -1.3] as GroundPoint, radius: 2.4 } as const
 
 export interface Shot {
   /** The point the camera looks at. */
@@ -255,7 +263,7 @@ export const shots: Record<ShotId, Shot> = {
   tree: { at: [13.6, 2.6, 18], zoom: 3.6 },
   town: { at: [0, 1, 0], zoom: 1 },
   watering: { at: [16.5, 2, 17], zoom: 2.3 },
-  bin: { at: [-8, 1.5, 3], zoom: 2.5 },
-  winter: { at: [1, 1.5, -34], zoom: 2.5 },
-  rain: { at: [28, 1.5, 1], zoom: 2.5 },
+  bin: { at: [-3, 1.5, -3], zoom: 3.5 },
+  winter: { at: [0, 1.5, -16], zoom: 3.5 },
+  rain: { at: [33, 1.5, -1], zoom: 3.5 },
 }

@@ -1,5 +1,6 @@
 import { Matrix4, type BufferGeometry } from 'three'
 import {
+  binHeight,
   blocks,
   depotAt,
   exampleSpots,
@@ -64,10 +65,15 @@ function roadGeometry(road: Road): BufferGeometry[] {
   ]
 }
 
+// Larger than life, so it still reads as a bin on a small stage.
 function binGeometry([x, z]: GroundPoint): BufferGeometry[] {
   return [
-    painted(unitCylinder, placed([x, 0.8, z], [0.7, 1.6, 0.7]), tourColors.depot),
-    painted(unitCylinder, placed([x, 1.68, z], [0.8, 0.16, 0.8]), tourColors.depotRoof),
+    painted(unitCylinder, placed([x, binHeight / 2, z], [0.8, binHeight, 0.8]), tourColors.depot),
+    painted(
+      unitCylinder,
+      placed([x, binHeight + 0.08, z], [0.92, 0.16, 0.92]),
+      tourColors.depotRoof,
+    ),
   ]
 }
 
