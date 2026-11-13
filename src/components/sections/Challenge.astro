@@ -2,6 +2,7 @@
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { challengeFigures } from '../../data/challengeFigures'
+import { ringPath, ringPointCount } from '../../lib/growthRings'
 
 interface Props {
   language: Language
@@ -10,11 +11,28 @@ interface Props {
 const { language } = Astro.props
 const t = getTranslations(language, 'home')
 
+// The growth rings of the brand's decor set, from the centre outwards. Each is
+// a path rather than a circle, because src/scripts/growthRings.ts lets the
+// pointer pluck them like strings.
+const RINGS = [
+  { r: 30, width: 3, opacity: 0.8, turn: -90 },
+  { r: 60, width: 2, opacity: 0.6, turn: 40 },
+  { r: 90, width: 2, opacity: 0.5, turn: 170 },
+  { r: 120, width: 2, opacity: 0.4, turn: -20 },
+  { r: 150, width: 2, opacity: 0.3, turn: 110 },
+  { r: 180, width: 2, opacity: 0.2, turn: -140 },
+]
+
 const CROSSHATCH =
   'linear-gradient(45deg, white 1px, transparent 1px), linear-gradient(-45deg, white 1px, transparent 1px)'
 ---
 
-<section class="relative overflow-hidden">
+<section
+  data-scroll-progress
+  data-progress-start="0.8"
+  data-progress-end="1"
+  class="relative overflow-hidden"
+>
   <div class="bg-gradient-to-b from-[#1e3a1a] to-green-dark-900">
     <div
       class="absolute inset-0 opacity-[0.03]"
@@ -22,6 +40,32 @@ const CROSSHATCH =
     ></div>
 
     <div class="relative z-10 max-w-208 mx-auto px-4 py-20 md:px-6 lg:py-28 lg:max-w-screen-lg xl:py-36 xl:max-w-screen-xl">
+      <svg
+        data-rings
+        viewBox="0 0 400 400"
+        aria-hidden="true"
+        style={`--rings: ${RINGS.length}`}
+        class="pointer-events-none absolute -z-10 hidden overflow-visible lg:block lg:-right-20 lg:top-24 lg:w-[20rem] xl:right-6 xl:top-24 xl:w-[28rem]"
+      >
+        <circle class="ring-seed" cx="200" cy="200" r="10" fill="#E8EBCC"></circle>
+        {RINGS.map((ring, index) => (
+          <path
+            data-ring
+            data-radius={ring.r}
+            data-turn={ring.turn}
+            class="ring"
+            d={ringPath(ring.r, new Float32Array(ringPointCount(ring.r)), ring.turn)}
+            fill="none"
+            stroke="#E8EBCC"
+            stroke-width={ring.width}
+            stroke-linecap="round"
+            opacity={ring.opacity}
+            pathLength="1"
+            style={`--i: ${index}`}
+          />
+        ))}
+      </svg>
+
       <div class="mb-12 lg:mb-16 xl:mb-20">
         <div>
           <span
@@ -78,6 +122,22 @@ const CROSSHATCH =
   </div>
 </section>
 
+<style>
+  /* One ring after the other draws itself as the section travels up the
+     window. Without the script the progress is 1 and all of them are drawn. */
+  .ring {
+    stroke-dasharray: 1;
+    stroke-dashoffset: clamp(0, 1 - (var(--scroll-progress, 1) * var(--rings) - var(--i)), 1);
+    transition: stroke-dashoffset 0.2s linear;
+  }
+
+  .ring-seed {
+    opacity: clamp(0, var(--scroll-progress, 1) * var(--rings) * 2, 0.9);
+  }
+</style>
+
 <script>
   import '../../scripts/countUp'
+  import '../../scripts/scrollProgress'
+  import '../../scripts/growthRings'
 </script>
