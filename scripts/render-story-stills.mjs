@@ -2,7 +2,15 @@
 //   node scripts/render-story-stills.mjs                                   posters for the site
 //   node scripts/render-story-stills.mjs --labels --size=1000x625 --scale=5 out   labelled, for print
 import { spawn } from 'node:child_process'
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
+import {
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+} from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { setTimeout as sleep } from 'node:timers/promises'
@@ -18,6 +26,17 @@ const chromium = process.env.CHROMIUM ?? 'chromium'
 const attempts = 4
 // A scene-less capture is a plain gradient, about 0.013 bytes per pixel.
 const minBytesPerPixel = 0.05
+
+function fail(message) {
+  console.error(message)
+  process.exit(1)
+}
+
+try {
+  await fetch(base, { signal: AbortSignal.timeout(5000) })
+} catch {
+  fail(`Cannot reach ${base}. Is the dev server running?`)
+}
 
 mkdirSync(out, { recursive: true })
 
@@ -40,8 +59,11 @@ const browser = spawn(
   ],
   { stdio: 'ignore' },
 )
+browser.on('error', (error) => fail(`could not start ${chromium}: ${error.message}`))
+browser.on('exit', () => fail(`${chromium} exited unexpectedly`))
 
 const cleanup = () => {
+  browser.removeAllListeners('exit')
   browser.kill()
   rmSync(profile, { recursive: true, force: true })
 }
@@ -57,7 +79,7 @@ async function debuggerUrl() {
       await sleep(100)
     }
   }
-  throw new Error(`could not reach ${chromium}`)
+  fail(`could not reach ${chromium}`)
 }
 
 const socket = new WebSocket(await debuggerUrl())
@@ -68,6 +90,7 @@ await new Promise((resolve, reject) => {
 
 let nextId = 0
 const pending = new Map()
+socket.onclose = () => fail('the browser connection closed unexpectedly')
 socket.onmessage = ({ data }) => {
   const message = JSON.parse(data)
   const call = pending.get(message.id)
@@ -80,7 +103,11 @@ socket.onmessage = ({ data }) => {
 const send = (method, params = {}, sessionId) =>
   new Promise((resolve, reject) => {
     const id = ++nextId
-    pending.set(id, { resolve, reject })
+    const timer = setTimeout(() => fail(`${method} got no answer from the browser`), 90_000)
+    pending.set(id, {
+      resolve: (result) => (clearTimeout(timer), resolve(result)),
+      reject: (error) => (clearTimeout(timer), reject(error)),
+    })
     socket.send(JSON.stringify({ id, method, params, sessionId }))
   })
 
@@ -99,9 +126,9 @@ const evaluate = async (expression) =>
   (await page('Runtime.evaluate', { expression, returnByValue: true })).result.value
 
 async function capture(act, file) {
-  await page('Page.navigate', {
-    url: `${base}?storyStill=${act}${labels ? '&storyLabels' : ''}`,
-  })
+  const url = `${base}?storyStill=${act}${labels ? '&storyLabels' : ''}`
+  const { errorText } = await page('Page.navigate', { url })
+  if (errorText) throw new Error(`could not load ${url}: ${errorText}`)
 
   const ready = `document.documentElement.dataset.storyCapture !== undefined &&
     document.querySelector('[data-story-root]')?.dataset.modelReady !== undefined`
@@ -113,13 +140,16 @@ async function capture(act, file) {
   await sleep(1500)
 
   const { data } = await page('Page.captureScreenshot', { format: 'png' })
-  writeFileSync(file, Buffer.from(data, 'base64'))
-  if (statSync(file).size < width * height * scale * scale * minBytesPerPixel) {
+  // Written under a temporary name so a failed run leaves nothing in `out`.
+  const partial = `${file}.partial`
+  writeFileSync(partial, Buffer.from(data, 'base64'))
+  if (statSync(partial).size < width * height * scale * scale * minBytesPerPixel) {
+    rmSync(partial)
     throw new Error('the picture looks empty')
   }
+  renameSync(partial, file)
 }
 
-let failed = false
 for (const act of [0, 1, 2, 3]) {
   const file = join(out, `story-act-${act + 1}.png`)
   for (let attempt = 1; ; attempt++) {
@@ -129,17 +159,11 @@ for (const act of [0, 1, 2, 3]) {
       break
     } catch (error) {
       console.error(`act ${act + 1}, attempt ${attempt}/${attempts}: ${error.message}`)
-      if (attempt === attempts) {
-        failed = true
-        break
-      }
+      if (attempt === attempts) fail(`Giving up on act ${act + 1} after ${attempts} attempts.`)
     }
   }
 }
 
+socket.onclose = null
 socket.close()
 cleanup()
-if (failed) {
-  console.error('Some stills could not be captured. Is the dev server running at ' + base + '?')
-  process.exit(1)
-}
