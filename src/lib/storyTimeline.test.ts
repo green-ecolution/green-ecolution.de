@@ -9,6 +9,7 @@ import {
   stillProgress,
   storyState,
   storyStill,
+  type CameraCut,
 } from './storyTimeline'
 
 describe('storyState', () => {
@@ -78,6 +79,40 @@ describe('storyState', () => {
     expect(state.examples[1]).toMatchObject({ alert: true, resolved: false })
     expect(state.examples[2]).toEqual({ signal: 0, alert: false, resolved: false })
     expect(state.vehicle.route).toBe(1)
+  })
+
+  it('behandelt Fortschritt außerhalb von 0 bis 1 wie den Rand', () => {
+    expect(storyState(-0.5)).toEqual(storyState(0))
+    expect(storyState(1.5)).toEqual(storyState(1))
+  })
+
+  it('springt an den Aktgrenzen weder mit der Kamera noch mit dem Fahrzeug', () => {
+    const shot = (cut: CameraCut) => (cut.blend > 0.5 ? cut.to : cut.from)
+    const settled = (cut: CameraCut) => Math.min(cut.blend, 1 - cut.blend) < 0.01
+    const step = 1e-4
+    let previous = storyState(0)
+    for (let progress = step; progress <= 1; progress += step) {
+      const state = storyState(progress)
+      if (state.camera.from !== previous.camera.from || state.camera.to !== previous.camera.to) {
+        expect(settled(previous.camera) && settled(state.camera)).toBe(true)
+        expect(shot(state.camera)).toBe(shot(previous.camera))
+      }
+      if (state.vehicle.route !== previous.vehicle.route) {
+        expect(previous.vehicle.shown).toBeLessThan(0.05)
+        expect(state.vehicle.shown).toBeLessThan(0.05)
+      }
+      expect(Math.abs(state.vehicle.shown - previous.vehicle.shown)).toBeLessThan(0.05)
+      previous = state
+    }
+
+    for (const act of [1, 2, 3]) {
+      const before = storyState(progressAt(act, 0) - 1e-6)
+      const after = storyState(progressAt(act, 0) + 1e-6)
+      expect([before.act, after.act]).toEqual([act - 1, act])
+      expect(shot(after.camera)).toBe(shot(before.camera))
+      expect(after.vehicle.route).toBe(before.vehicle.route)
+      expect(after.vehicle.shown).toBeCloseTo(before.vehicle.shown, 3)
+    }
   })
 
   it('endet auf der ganzen Stadt mit der Einladung', () => {
