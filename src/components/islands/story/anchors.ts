@@ -1,6 +1,6 @@
-import { exampleSpots, heroTree } from '../../../data/storyTown'
+import { exampleSpots, heroTree, storyTrees } from '../../../data/storyTown'
 import { canopyCenterHeight, type Tree } from '../../../data/streamletTour'
-import type { StoryState } from '../../../lib/storyTimeline'
+import { pinsShown, type StoryState } from '../../../lib/storyTimeline'
 import { PIT_TOP } from './shared'
 
 export const PIN_RADIUS = 0.78
@@ -17,6 +17,14 @@ export const pinHeadScale = (zoom: number) => Math.max(1, MIN_HEAD_PX / (PIN_RAD
 export const pinHeight = (tree: Tree) =>
   canopyCenterHeight(tree) + tree.canopyRadius + PIN_POST + 0.2
 
+/** The tree pins and ours, which comes up last. */
+export const PIN_TOTAL = storyTrees.length + 1
+
+export const heroPinUp = (state: StoryState) => pinsShown(state.pins, PIN_TOTAL) >= PIN_TOTAL
+
+/** Our tree's pin, once up, is red until the watering has brought the tree back. */
+export const heroPinRed = (state: StoryState) => heroPinUp(state) && state.health <= 0.5
+
 export const SENSOR_X = heroTree.at[0] + 1.2
 export const SENSOR_Z = heroTree.at[1] + 0.55
 
@@ -29,7 +37,7 @@ export interface Anchor {
 
 export const heroLabel: Anchor = {
   at: [heroTree.at[0], pinHeight(heroTree) + PIN_RADIUS + 0.5, heroTree.at[1]],
-  shown: (state) => state.alert,
+  shown: heroPinRed,
 }
 
 export const exampleLabels: Anchor[] = exampleSpots.map((spot, index) => ({

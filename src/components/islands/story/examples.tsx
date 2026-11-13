@@ -28,6 +28,7 @@ export function ExampleSpots({ story, isStatic }: ActorProps) {
               return {
                 shown: example.alert || example.resolved,
                 tone: example.resolved ? 'ok' : spot.tone,
+                alarm: example.alert,
               }
             }}
           />

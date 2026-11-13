@@ -31,8 +31,11 @@ import {
   PIN_HULL,
   PIN_POST,
   PIN_RADIUS,
+  PIN_TOTAL,
   SENSOR_X,
   SENSOR_Z,
+  heroPinRed,
+  heroPinUp,
   pinHeadScale,
   pinHeight,
   type Anchor,
@@ -180,7 +183,8 @@ interface PinProps extends ActorProps {
   at: GroundPoint
   /** Height of the middle of the pin's head. */
   height: number
-  look: (state: StoryState) => { tone: PinTone; shown: boolean }
+  /** Only a pin in alarm pulses. */
+  look: (state: StoryState) => { tone: PinTone; shown: boolean; alarm: boolean }
 }
 
 export function Pin({ at, height, story, look, isStatic }: PinProps) {
@@ -190,7 +194,7 @@ export function Pin({ at, height, story, look, isStatic }: PinProps) {
   const size = useRef(0)
 
   useFrame(({ camera, clock }, delta) => {
-    const { tone, shown } = look(story.current)
+    const { tone, shown, alarm } = look(story.current)
     const goal = shown ? 1 : 0
     const fresh = size.current < 0.05
     size.current = isStatic ? goal : damp(size.current, goal, 12, delta)
@@ -202,7 +206,7 @@ export function Pin({ at, height, story, look, isStatic }: PinProps) {
     }
     headGroup.current?.scale.setScalar(pinHeadScale(camera.zoom))
     if (!group.current) return
-    const pulse = tone === 'ok' || isStatic ? 1 : 1 + Math.sin(clock.getElapsedTime() * 4) * 0.08
+    const pulse = !alarm || isStatic ? 1 : 1 + Math.sin(clock.getElapsedTime() * 4) * 0.08
     group.current.visible = size.current > 0.01
     group.current.scale.setScalar(size.current * pulse)
   })
@@ -227,8 +231,6 @@ export function Pin({ at, height, story, look, isStatic }: PinProps) {
   )
 }
 
-const PIN_TOTAL = storyTrees.length + 1
-
 export function TreePins({ story, isStatic }: ActorProps) {
   return (
     <>
@@ -242,6 +244,7 @@ export function TreePins({ story, isStatic }: ActorProps) {
           look={(state) => ({
             shown: pinsShown(state.pins, PIN_TOTAL) > index,
             tone: tree.tone === 'warn' && state.drive < tree.servedAt ? 'warn' : 'ok',
+            alarm: false,
           })}
         />
       ))}
@@ -251,8 +254,9 @@ export function TreePins({ story, isStatic }: ActorProps) {
         story={story}
         isStatic={isStatic}
         look={(state) => ({
-          shown: pinsShown(state.pins, PIN_TOTAL) >= PIN_TOTAL,
+          shown: heroPinUp(state),
           tone: state.health > 0.5 ? 'ok' : 'alert',
+          alarm: heroPinRed(state),
         })}
       />
     </>
