@@ -39,6 +39,18 @@ http {
     sendfile        on;
     keepalive_timeout  65;
 
+    # Pages, styles and scripts shrink to about a quarter. text/html is always
+    # compressed once gzip is on, so it is not listed.
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_min_length 1024;
+    # nginx leaves a request uncompressed when it arrives with a Via header,
+    # which a proxy in front of the pod may add.
+    gzip_proxied any;
+    gzip_types text/css application/javascript text/javascript application/json
+               image/svg+xml text/xml application/xml application/rss+xml text/plain;
+
     client_body_temp_path   /var/cache/nginx/client_temp;
     proxy_temp_path         /var/cache/nginx/proxy_temp;
     fastcgi_temp_path       /var/cache/nginx/fastcgi_temp;
