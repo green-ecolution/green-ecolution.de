@@ -2,6 +2,7 @@
 import { getImage } from 'astro:assets'
 import StakeholderSlider from '../islands/StakeholderSlider'
 import type { StakeholderEntry } from '../islands/StakeholderSlider'
+import progeekLogo from '../../assets/logos/progeek.svg'
 import smarteGrenzregionLogo from '../../assets/logos/smarte-grenzregion.png'
 import hochschuleFlensburgLogo from '../../assets/logos/hochschule-flensburg.png'
 import type { Language } from '../../i18n/languages'
@@ -20,6 +21,12 @@ const t = getTranslations(language, 'home')
 const tc = getTranslations(language, 'common')
 
 const COMPANIES = [
+  {
+    id: 'progeek',
+    label: 'PROGEEK GmbH',
+    url: 'https://progeek.de/',
+    image: progeekLogo,
+  },
   {
     id: 'smarteGrenzregion',
     label: 'Smarte Grenzregion',
