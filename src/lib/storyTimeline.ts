@@ -66,8 +66,9 @@ export function progressAt(act: number, fill: number): number {
 }
 
 export function progressForAct(index: number): number {
-  // The finale opens on its title, before the first example takes over.
-  return progressAt(index, index === ACT_WEIGHTS.length - 1 ? 0.04 : ACT_LANDING)
+  // The finale opens on its title over the finished third act, before the
+  // watering truck starts to shrink away at 0.02.
+  return progressAt(index, index === ACT_WEIGHTS.length - 1 ? 0.01 : ACT_LANDING)
 }
 
 export function progressForExample(index: number): number {

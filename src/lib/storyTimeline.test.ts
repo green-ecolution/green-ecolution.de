@@ -130,6 +130,12 @@ describe('Sprungziele', () => {
     for (const act of [0, 1, 2, 3]) expect(storyState(progressForAct(act)).act).toBe(act)
   })
 
+  it('landen im Finale, solange der Bewässerungswagen noch ganz dasteht', () => {
+    const { vehicle, activeExample } = storyState(progressForAct(3))
+    expect(vehicle).toEqual({ route: 'tour', at: 1, shown: 1 })
+    expect(activeExample).toBeNull()
+  })
+
   it('landen beim jeweiligen Beispiel, wenn es Alarm zeigt', () => {
     for (const example of [0, 1, 2]) {
       const state = storyState(progressForExample(example))
