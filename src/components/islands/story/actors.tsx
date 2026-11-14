@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber'
-import { useRef, type RefObject } from 'react'
+import { useRef, type ComponentType, type RefObject } from 'react'
 import {
   BackSide,
   CatmullRomCurve3,
@@ -23,7 +23,7 @@ import {
 } from '../../../data/storyTown'
 import { canopyCenterHeight, roadHeight, tourColors } from '../../../data/streamletTour'
 import { pathLength, vehiclePose, type GroundPoint } from '../../../lib/storyPath'
-import { pinsShown, type StoryState } from '../../../lib/storyTimeline'
+import { pinsShown, type StoryState, type VehicleState } from '../../../lib/storyTimeline'
 import { appendRibbon, ribbonGeometry, type RibbonArrays } from '../scene3d/ribbon'
 import { lobes, treePit } from '../scene3d/trees'
 import { Vehicle, WHEEL_RADIUS } from '../scene3d/Vehicle'
@@ -41,6 +41,7 @@ import {
   type Anchor,
 } from './anchors'
 import { PIT_TOP, damp, type ActorProps, type Story } from './shared'
+import { Gritter, RefuseTruck, SewerTruck } from './vehicles'
 
 const WATER = '#2B7FBF'
 
@@ -322,32 +323,63 @@ export function Route({ story }: { story: Story }) {
 const approaches = exampleSpots.map((spot) => spot.approach)
 const tourLength = pathLength(tourPath)
 const approachLengths = approaches.map(pathLength)
-// From the rear wheels to the front ones in Vehicle.tsx, at z = -3 and z = 3.4.
+// From the rear wheels to the front ones in VehicleBase, at z = -3 and z = 3.4.
 const WHEELBASE = 6.4
+
+interface FleetMember {
+  route: VehicleState['route']
+  Truck: ComponentType<{ wheels: RefObject<Group[]> }>
+}
+
+// The watering truck drives the tour, each example gets the truck for its job.
+const fleet: FleetMember[] = [
+  { route: 'tour', Truck: Vehicle },
+  { route: 0, Truck: RefuseTruck },
+  { route: 1, Truck: Gritter },
+  { route: 2, Truck: SewerTruck },
+]
+
+function FleetTruck({ story, route, Truck }: FleetMember & { story: Story }) {
+  const body = useRef<Group>(null)
+  const wheels = useRef<Group[]>([])
+
+  useFrame(() => {
+    const { vehicle } = story.current
+    const inUse = vehicle.route === route
+    if (body.current) body.current.visible = inUse
+    if (!inUse) return
+    const length = route === 'tour' ? tourLength : approachLengths[route]
+    const spin = (vehicle.at * length) / WHEEL_RADIUS
+    for (const wheel of wheels.current) wheel.rotation.x = spin
+  })
+
+  return (
+    <group ref={body} visible={false}>
+      <Truck wheels={wheels} />
+    </group>
+  )
+}
 
 export function StoryVehicle({ story }: { story: Story }) {
   const group = useRef<Group>(null)
-  const wheels = useRef<Group[]>([])
 
   useFrame(() => {
     if (!group.current) return
     const { route, at, shown } = story.current.vehicle
     const path = route === 'tour' ? tourPath : approaches[route]
-    const length = route === 'tour' ? tourLength : approachLengths[route]
     const pose = vehiclePose(path, at, WHEELBASE)
 
     group.current.visible = shown > 0.01
     group.current.scale.setScalar(Math.max(0.001, shown))
     group.current.position.set(pose.at[0], roadHeight, pose.at[1])
     group.current.rotation.y = pose.heading
-
-    const spin = (at * length) / WHEEL_RADIUS
-    for (const wheel of wheels.current) wheel.rotation.x = spin
   })
 
   return (
     <group ref={group} visible={false}>
-      <Vehicle wheels={wheels} />
+      {fleet.map((member) => (
+        <FleetTruck key={member.route} story={story} {...member} />
+      ))}
     </group>
   )
 }
