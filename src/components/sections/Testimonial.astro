@@ -9,6 +9,7 @@ interface Props {
 
 const { language, compact = false } = Astro.props
 const t = getTranslations(language, 'common')
+const words = t('testimonial.quote').split(' ')
 ---
 
 <section
@@ -27,12 +28,22 @@ const t = getTranslations(language, 'common')
   <figure class="border-l-2 border-green-light-900/30 pl-6 lg:pl-8">
     <blockquote>
       <p
+        data-scroll-progress
+        data-progress-start="0.6"
+        data-progress-end="0.35"
+        style={`--words: ${words.length}`}
         class:list={[
           'max-w-4xl font-lato text-grey-900 leading-snug',
           compact ? 'text-lg lg:text-xl' : 'text-xl lg:text-2xl xl:text-3xl',
         ]}
       >
-        {t('testimonial.quote')}
+        {words.map((word, index) => (
+          <>
+            <span class="quote-word" style={`--i: ${index}`}>
+              {word}
+            </span>{' '}
+          </>
+        ))}
       </p>
     </blockquote>
     <figcaption class="mt-6 text-grey-900/70">
@@ -41,3 +52,24 @@ const t = getTranslations(language, 'common')
     </figcaption>
   </figure>
 </section>
+
+<style>
+  /* The words light up in reading order as the quote travels up the window,
+     starting around its middle, where it is actually being read.
+     --lead is how many of them are on their way at the same time. Without the
+     script the progress is 1 and the whole quote is simply there. */
+  .quote-word {
+    --lead: 5;
+    opacity: clamp(
+      0.25,
+      0.25 + (var(--scroll-progress, 1) * (var(--words) + var(--lead)) - var(--i)) / var(--lead) *
+        0.75,
+      1
+    );
+    transition: opacity 0.2s linear;
+  }
+</style>
+
+<script>
+  import '../../scripts/scrollProgress'
+</script>
