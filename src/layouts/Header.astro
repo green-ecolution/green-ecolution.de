@@ -15,23 +15,42 @@ const t = getTranslations(language, 'common')
 
 const pathname = Astro.url.pathname
 
-const links = [
-  { label: t('nav.product'), href: `/${language}/product` },
-  { label: t('nav.streamlet'), href: `/${language}/streamlet` },
-  { label: t('nav.services'), href: `/${language}/services` },
-  { label: t('nav.about'), href: `/${language}/about` },
-  { label: t('nav.blog'), href: `/${language}/blog` },
-  { label: t('nav.contact'), href: `/${language}/contact` },
-].map((link) => ({
-  ...link,
-  active: pathname === link.href || pathname.startsWith(`${link.href}/`),
-}))
+const link = (label: string, path: string, description?: string) => {
+  const href = `/${language}/${path}`
+  return {
+    label,
+    href,
+    description,
+    active: pathname === href || pathname.startsWith(`${href}/`),
+  }
+}
+
+const group = (id: string, label: string, items: ReturnType<typeof link>[]) => ({
+  id,
+  label,
+  items,
+  active: items.some((item) => item.active),
+})
+
+const entries = [
+  group('product', t('nav.product'), [
+    link(t('nav.platform'), 'product', t('nav.descriptions.platform')),
+    link(t('nav.streamlet'), 'streamlet', t('nav.descriptions.streamlet')),
+    link(t('nav.releases'), 'releases', t('nav.descriptions.releases')),
+  ]),
+  link(t('nav.services'), 'services'),
+  group('company', t('nav.company'), [
+    link(t('nav.about'), 'about', t('nav.descriptions.about')),
+    link(t('nav.blog'), 'blog', t('nav.descriptions.blog')),
+    link(t('nav.press'), 'presse', t('nav.descriptions.press')),
+  ]),
+  link(t('nav.contact'), 'contact'),
+]
 
 // Exactly the keys the island renders itself. The labels above and the language
 // switcher below are already resolved markup and need no entry here.
 const navStrings = pickStrings(language, 'common', [
   'nav.ariaLabel',
-  'nav.heading',
   'nav.tryNow',
   'nav.imprint',
   'nav.privacy',
@@ -72,11 +91,12 @@ const navStrings = pickStrings(language, 'common', [
       </p>
     </a>
 
-    <!-- Desktop shows the links as plain markup; only the mobile menu needs
-         state, so the island hydrates below the xl breakpoint. -->
+    <!-- Desktop shows the links as plain markup and src/scripts/navDropdown.ts
+         opens the panels; only the drawer needs state, so the island hydrates
+         below the lg breakpoint. -->
     <MainNavigation
-      client:media="(max-width: 1279px)"
-      links={links}
+      client:media="(max-width: 1023px)"
+      entries={entries}
       imprintHref={`/${language}/impressum`}
       privacyHref={`/${language}/datenschutz`}
       demoHref="https://demo.green-ecolution.de"

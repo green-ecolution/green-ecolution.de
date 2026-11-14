@@ -13,7 +13,6 @@
   },
   "nav": {
     "ariaLabel": "Main navigation",
-    "heading": "Main navigation",
     "product": "Product",
     "streamlet": "Route optimisation",
     "services": "Services",
@@ -22,7 +21,19 @@
     "tryNow": "Try it now",
     "imprint": "Imprint",
     "privacy": "Privacy Policy",
-    "blog": "Blog"
+    "blog": "Blog",
+    "company": "Company",
+    "platform": "Platform",
+    "releases": "Releases",
+    "press": "Press",
+    "descriptions": {
+      "platform": "Turns readings into decisions and deployments.",
+      "streamlet": "Streamlet plans tours with time windows and refill stations.",
+      "releases": "All versions with new features and bug fixes.",
+      "about": "How a question from the City of Flensburg became a company.",
+      "blog": "Reports from the field, the region and the platform.",
+      "press": "Logos, photos, pitch deck and press contact."
+    }
   },
   "footer": {
     "logoAriaLabel": "Go to homepage",
