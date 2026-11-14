@@ -23,3 +23,8 @@ export function scrollProgress(
 export function reachableRange(range: ProgressRange, bottomAtPageEnd: number): ProgressRange {
   return { start: range.start, end: Math.max(range.end, bottomAtPageEnd) }
 }
+
+// The last of several stacked parts whose top has reached the reading line.
+export function activeIndex(tops: number[], line: number): number {
+  return Math.max(0, tops.filter((top) => top <= line).length - 1)
+}
