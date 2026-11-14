@@ -52,7 +52,7 @@ function Toc({ entries }: { entries: TocEntry[] }) {
 
   return (
     <nav aria-label={t('toc.ariaLabel')} className="sticky top-28">
-      <span className="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+      <span className="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
         {t('toc.title')}
       </span>
       <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1 mb-4" />

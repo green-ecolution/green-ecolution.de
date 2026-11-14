@@ -10,7 +10,7 @@ interface Props {
 const STATUS_STYLES = {
   completed: { dot: 'bg-green-dark-900', labelColor: 'text-green-dark-900' },
   'in-progress': { dot: 'bg-green-light-900 animate-pulse', labelColor: 'text-green-light-900' },
-  planned: { dot: 'bg-grey-900/30', labelColor: 'text-grey-600' },
+  planned: { dot: 'bg-grey-900/30', labelColor: 'text-grey-900/70' },
 }
 
 const STATUS_LABEL_KEYS = {
@@ -29,7 +29,7 @@ const t = getTranslations(language, 'product')
     <div class="lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-12 xl:gap-16">
       <div class="mb-10 lg:mb-0">
         <div class="inline-block mb-6">
-          <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+          <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
             {t('vision.sectionLabel')}
           </span>
           <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
@@ -46,7 +46,7 @@ const t = getTranslations(language, 'product')
       </div>
 
       <div>
-        <h3 class="font-lato font-semibold text-sm tracking-wider uppercase text-grey-600 mb-6">
+        <h3 class="font-lato font-semibold text-sm tracking-wider uppercase text-grey-900/70 mb-6">
           {t('roadmap.title')}
         </h3>
 
@@ -80,7 +80,7 @@ const t = getTranslations(language, 'product')
                       {t(`roadmap.status.${STATUS_LABEL_KEYS[item.status]}`)}
                     </span>
                   </div>
-                  <p class="text-sm text-grey-600 leading-relaxed">
+                  <p class="text-sm text-grey-900/70 leading-relaxed">
                     {t(`roadmap.items.${item.id}.description`)}
                   </p>
                 </div>
@@ -97,7 +97,7 @@ const t = getTranslations(language, 'product')
               <div class="w-1 h-1 rounded-full bg-green-light-900/15 animate-pulse"></div>
             </div>
 
-            <p class="font-lato italic text-[13px] text-grey-600/60 leading-relaxed tracking-wide pt-0.5 self-center">
+            <p class="font-lato italic text-[13px] text-grey-900/50 leading-relaxed tracking-wide pt-0.5 self-center">
               <span class="mr-1 text-green-light-900/50 not-italic tracking-widest">···</span>
               {t('roadmap.moreInPlanningLabel')}
             </p>
