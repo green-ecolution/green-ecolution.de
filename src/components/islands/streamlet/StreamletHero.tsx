@@ -25,7 +25,7 @@ function StreamletHero({ language }: { language: string }) {
             <span className="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
               {t('hero.sectionLabel')}
             </span>
-            <div className="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1" />
+            <div className="label-rule" />
           </div>
 
           <h1 className="font-lato font-bold tracking-tight text-grey-900 text-[2.75rem] leading-[1.05] mb-5 md:text-[3.25rem] lg:text-[3.5rem] xl:text-[4.25rem]">
