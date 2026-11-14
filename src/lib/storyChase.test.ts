@@ -1,0 +1,76 @@
+import { describe, expect, it } from 'vitest'
+import { MAX_LAG, MAX_RATE, SETTLE_MS, chaseStory } from './storyChase'
+import { AUTO_STORY_MS } from './storyTimeline'
+
+const FRAME = 1 / 60
+
+describe('chaseStory', () => {
+  it('spielt höchstens dreimal so schnell wie das Autoplay', () => {
+    expect(MAX_RATE).toBeCloseTo(3 / (AUTO_STORY_MS / 1000))
+  })
+
+  it('bewegt sich nie schneller als MAX_RATE', () => {
+    for (const [current, target] of [
+      [0, 1],
+      [1, 0],
+      [0.2, 0.25],
+      [0.5, 0.49],
+      [0.3, 0.9],
+    ]) {
+      for (const delta of [FRAME, 1 / 144, 0.1]) {
+        const next = chaseStory(current, target, delta, 0)
+        expect(Math.abs(next - current)).toBeLessThanOrEqual(MAX_RATE * delta + 1e-12)
+      }
+    }
+  })
+
+  it('erreicht das Ziel ohne Überschwingen und bleibt dort', () => {
+    for (const [start, target] of [
+      [0.1, 0.2],
+      [0.2, 0.1],
+      [0, 0.12],
+    ]) {
+      let current = start
+      for (let frame = 0; frame < 600; frame++) {
+        const next = chaseStory(current, target, FRAME, frame * FRAME * 1000)
+        expect(Math.sign(target - next)).not.toBe(-Math.sign(target - start))
+        current = next
+      }
+      expect(current).toBe(target)
+      expect(chaseStory(current, target, FRAME, 10_000)).toBe(target)
+    }
+  })
+
+  it('springt nicht, solange sich das Ziel noch bewegt', () => {
+    expect(chaseStory(0, 0.9, FRAME, 0)).toBeCloseTo(MAX_RATE * FRAME)
+    expect(chaseStory(0.9, 0, FRAME, SETTLE_MS - 1)).toBeCloseTo(0.9 - MAX_RATE * FRAME)
+  })
+
+  it('holt nach einer Pause in beide Richtungen bis auf MAX_LAG auf', () => {
+    const forwards = chaseStory(0, 0.9, FRAME, SETTLE_MS)
+    expect(forwards).toBeGreaterThanOrEqual(0.9 - MAX_LAG)
+    expect(forwards).toBeLessThan(0.9)
+
+    const backwards = chaseStory(0.9, 0.1, FRAME, SETTLE_MS)
+    expect(backwards).toBeLessThanOrEqual(0.1 + MAX_LAG)
+    expect(backwards).toBeGreaterThan(0.1)
+  })
+
+  it('springt bei kleinem Abstand nie', () => {
+    const current = 0.5
+    const next = chaseStory(current, current + MAX_LAG * 0.9, FRAME, 10_000)
+    expect(next - current).toBeLessThanOrEqual(MAX_RATE * FRAME + 1e-12)
+  })
+
+  it('hängt nicht von der Bildrate ab', () => {
+    for (const [current, target] of [
+      [0.2, 0.201],
+      [0.2, 0.6],
+      [0.6, 0.2],
+    ]) {
+      const once = chaseStory(current, target, FRAME, 0)
+      const twice = chaseStory(chaseStory(current, target, FRAME / 2, 0), target, FRAME / 2, 0)
+      expect(twice).toBeCloseTo(once, 9)
+    }
+  })
+})

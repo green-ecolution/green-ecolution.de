@@ -3,6 +3,7 @@ import { useEffect, useRef, type RefObject } from 'react'
 import { Vector3 } from 'three'
 import { plate, shots } from '../../../data/storyTown'
 import { tourColors } from '../../../data/streamletTour'
+import { chaseStory } from '../../../lib/storyChase'
 import { storyState, storyStill, type StoryState } from '../../../lib/storyTimeline'
 import ReleaseContextOnNavigate from '../scene3d/ReleaseContextOnNavigate'
 import {
@@ -34,8 +35,6 @@ const SIDE = plate.half * 2
 // for the roofs at the back and a little air at the sides.
 const TOWN_WIDTH = SIDE * Math.SQRT2 + 4
 const TOWN_HEIGHT = (SIDE * 2) / Math.sqrt(6) + 12
-// How quickly the scene catches up with the scroll position.
-const FOLLOW = 7
 
 interface ClockProps {
   isStatic: boolean
@@ -47,12 +46,15 @@ interface ClockProps {
 // Mounted first, so every other part reads the state of the same frame.
 function StoryClock({ isStatic, sourceRef, storyRef, onReady }: ClockProps) {
   const current = useRef(0)
+  const lastTarget = useRef(0)
+  const restingMs = useRef(0)
   const ready = useRef(false)
   const invalidate = useThree((state) => state.invalidate)
 
   useEffect(() => {
     const live = sourceRef.current
     current.current = live.target
+    lastTarget.current = live.target
     live.onChange = () => invalidate()
     return () => {
       live.onChange = null
@@ -61,15 +63,19 @@ function StoryClock({ isStatic, sourceRef, storyRef, onReady }: ClockProps) {
 
   useFrame((_, delta) => {
     const { target, still } = sourceRef.current
+    if (target === lastTarget.current) {
+      restingMs.current += delta * 1000
+    } else {
+      lastTarget.current = target
+      restingMs.current = 0
+    }
 
     if (still !== null) {
       storyRef.current = storyStill(still)
     } else {
-      const gap = target - current.current
-      current.current =
-        isStatic || Math.abs(gap) < 0.0005
-          ? target
-          : current.current + gap * (1 - Math.exp(-delta * FOLLOW))
+      current.current = isStatic
+        ? target
+        : chaseStory(current.current, target, delta, restingMs.current)
       storyRef.current = storyState(current.current)
     }
 
