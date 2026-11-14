@@ -89,7 +89,7 @@ const tocEntries = sections.map((heading) => ({ id: heading.slug, label: heading
 
       <header class="mb-10">
         <div class="inline-block mb-4">
-          <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+          <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
             {t('detail.eyebrow')}
           </span>
           <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
@@ -192,20 +192,20 @@ const tocEntries = sections.map((heading) => ({ id: heading.slug, label: heading
         {prev ? (
           <a
             href={`/${language}/releases/${releaseSlug(prev)}`}
-            class="group p-5 rounded-2xl border border-grey-200 bg-white hover:border-green-dark-900/30 hover:shadow-lg transition-all"
+            class="group p-5 rounded-2xl border border-grey-100 bg-white hover:border-green-dark-900/30 hover:shadow-lg transition-all"
           >
-            <span class="text-xs text-grey-500 uppercase tracking-wide font-semibold">
+            <span class="text-xs text-grey-900/60 uppercase tracking-wide font-semibold">
               {t('detail.newerVersion')}
             </span>
             <div class="flex items-center gap-3 mt-2">
-              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-grey-100 text-grey-400 group-hover:bg-green-dark-900 group-hover:text-white transition-all flex-shrink-0">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-grey-100 text-grey-900/50 group-hover:bg-green-dark-900 group-hover:text-white transition-all flex-shrink-0">
                 <ArrowLeft className="w-4 h-4" aria-hidden="true" />
               </span>
               <div class="min-w-0">
                 <span class="font-lato font-bold text-grey-900 group-hover:text-green-dark-900 transition-colors">
                   v{prev.data.version}
                 </span>
-                <p class="text-sm text-grey-600 line-clamp-1">{prev.data.title}</p>
+                <p class="text-sm text-grey-900/70 line-clamp-1">{prev.data.title}</p>
               </div>
             </div>
           </a>
@@ -215,9 +215,9 @@ const tocEntries = sections.map((heading) => ({ id: heading.slug, label: heading
         {next ? (
           <a
             href={`/${language}/releases/${releaseSlug(next)}`}
-            class="group p-5 rounded-2xl border border-grey-200 bg-white hover:border-green-dark-900/30 hover:shadow-lg transition-all sm:text-right"
+            class="group p-5 rounded-2xl border border-grey-100 bg-white hover:border-green-dark-900/30 hover:shadow-lg transition-all sm:text-right"
           >
-            <span class="text-xs text-grey-500 uppercase tracking-wide font-semibold">
+            <span class="text-xs text-grey-900/60 uppercase tracking-wide font-semibold">
               {t('detail.olderVersion')}
             </span>
             <div class="flex items-center gap-3 mt-2 sm:justify-end">
@@ -225,9 +225,9 @@ const tocEntries = sections.map((heading) => ({ id: heading.slug, label: heading
                 <span class="font-lato font-bold text-grey-900 group-hover:text-green-dark-900 transition-colors">
                   v{next.data.version}
                 </span>
-                <p class="text-sm text-grey-600 line-clamp-1">{next.data.title}</p>
+                <p class="text-sm text-grey-900/70 line-clamp-1">{next.data.title}</p>
               </div>
-              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-grey-100 text-grey-400 group-hover:bg-green-dark-900 group-hover:text-white transition-all flex-shrink-0">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-grey-100 text-grey-900/50 group-hover:bg-green-dark-900 group-hover:text-white transition-all flex-shrink-0">
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </span>
             </div>

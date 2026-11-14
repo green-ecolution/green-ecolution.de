@@ -31,17 +31,17 @@ const t = getTranslations(language, 'press')
         >
           <div class="flex items-start justify-between gap-4">
             <div class="flex-1 min-w-0">
-              <p class="text-xs font-semibold tracking-widest text-green-light-900 uppercase mb-2">
+              <p class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase mb-2">
                 {mention.outlet}
               </p>
               <h3 class="font-lato font-semibold text-lg text-grey-900 mb-2 group-hover:text-green-dark-900 transition-colors">
                 {t(`mentions.items.${mention.id}.title`)}
               </h3>
-              <p class="text-grey-600 text-sm leading-relaxed">
+              <p class="text-grey-900/70 text-sm leading-relaxed">
                 {t(`mentions.items.${mention.id}.description`)}
               </p>
               {mention.date && (
-                <time datetime={isoDate(mention.date)} class="mt-3 block text-grey-600 text-sm">
+                <time datetime={isoDate(mention.date)} class="mt-3 block text-grey-900/70 text-sm">
                   {formatLongDate(mention.date, language)}
                 </time>
               )}
