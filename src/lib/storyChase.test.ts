@@ -1,12 +1,21 @@
 import { describe, expect, it } from 'vitest'
 import { MAX_LAG, MAX_RATE, SETTLE_MS, chaseStory } from './storyChase'
-import { AUTO_STORY_MS } from './storyTimeline'
+import { AUTO_STORY_MS, EXAMPLES, progressForExample, storyState } from './storyTimeline'
 
 const FRAME = 1 / 60
 
 describe('chaseStory', () => {
   it('spielt höchstens dreimal so schnell wie das Autoplay', () => {
     expect(MAX_RATE).toBeCloseTo(3 / (AUTO_STORY_MS / 1000))
+  })
+
+  it('landet nach dem Schnitt eines Sprungs im angesteuerten Beispiel', () => {
+    EXAMPLES.forEach((_, index) => {
+      const target = progressForExample(index)
+      const cut = chaseStory(0, target, 0, SETTLE_MS)
+      expect(target - cut).toBeCloseTo(MAX_LAG)
+      expect(storyState(cut).activeExample).toBe(index)
+    })
   })
 
   it('bewegt sich nie schneller als MAX_RATE', () => {
@@ -26,9 +35,9 @@ describe('chaseStory', () => {
 
   it('erreicht das Ziel ohne Überschwingen und bleibt dort', () => {
     for (const [start, target] of [
-      [0.1, 0.2],
-      [0.2, 0.1],
-      [0, 0.12],
+      [0.1, 0.1 + MAX_LAG * 0.9],
+      [0.2, 0.2 - MAX_LAG * 0.9],
+      [0, MAX_LAG * 0.5],
     ]) {
       let current = start
       for (let frame = 0; frame < 600; frame++) {
