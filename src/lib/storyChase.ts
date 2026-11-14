@@ -11,9 +11,17 @@ export const MAX_LAG = 0.06
 export const MAX_LEAD = 0.04
 // How long the scroll position has to stand still before the scene may cut.
 export const SETTLE_MS = 150
+// The longest frame that counts: a stalled or throttled page must neither
+// pass for rest nor make the scene leap.
+export const MAX_FRAME_SECONDS = 0.05
 // How quickly the scene eases in once it is close to the scroll position.
 const FOLLOW = 7
 const ARRIVED = 0.0005
+
+/** How long the scroll position has rested after one more frame of `seconds`. */
+export function restedFor(restingMs: number, seconds: number): number {
+  return restingMs + Math.min(seconds, MAX_FRAME_SECONDS) * 1000
+}
 
 /**
  * The scene's next progress on its way to the scroll position: an ease-in
@@ -35,6 +43,7 @@ export function chaseStory(
 
   const gap = target - from
   if (Math.abs(gap) < ARRIVED) return target
-  const eased = Math.abs(gap) * (1 - Math.exp(-seconds * FOLLOW))
-  return from + Math.sign(gap) * Math.min(eased, MAX_RATE * seconds)
+  const step = Math.min(seconds, MAX_FRAME_SECONDS)
+  const eased = Math.abs(gap) * (1 - Math.exp(-step * FOLLOW))
+  return from + Math.sign(gap) * Math.min(eased, MAX_RATE * step)
 }

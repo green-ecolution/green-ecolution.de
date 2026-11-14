@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { MAX_LAG, MAX_LEAD, MAX_RATE, SETTLE_MS, chaseStory } from './storyChase'
+import {
+  MAX_FRAME_SECONDS,
+  MAX_LAG,
+  MAX_LEAD,
+  MAX_RATE,
+  SETTLE_MS,
+  chaseStory,
+  restedFor,
+} from './storyChase'
 import { AUTO_STORY_MS, EXAMPLES, progressForExample, storyState } from './storyTimeline'
 
 const FRAME = 1 / 60
@@ -40,6 +48,28 @@ describe('chaseStory', () => {
         expect(Math.abs(next - current)).toBeLessThanOrEqual(MAX_RATE * delta + 1e-12)
       }
     }
+  })
+
+  it('macht nach einem langen Hänger keinen Satz', () => {
+    for (const seconds of [0.2, 1, 30]) {
+      expect(chaseStory(0, 1, seconds, 0)).toBeLessThanOrEqual(MAX_RATE * MAX_FRAME_SECONDS)
+      expect(chaseStory(1, 0, seconds, 0)).toBeGreaterThanOrEqual(1 - MAX_RATE * MAX_FRAME_SECONDS)
+    }
+  })
+
+  it('zählt einen langen Hänger nicht als Pause', () => {
+    for (const seconds of [0.2, 1, 30]) {
+      const resting = restedFor(0, seconds)
+      expect(resting).toBeLessThan(SETTLE_MS)
+      expect(chaseStory(0, 1, seconds, resting)).toBeLessThanOrEqual(MAX_RATE * MAX_FRAME_SECONDS)
+    }
+  })
+
+  it('zählt die Pause über gewöhnliche Bilder voll', () => {
+    let resting = 0
+    for (let frame = 0; frame < 9; frame++) resting = restedFor(resting, FRAME)
+    expect(resting).toBeCloseTo(9 * FRAME * 1000)
+    expect(restedFor(0, MAX_FRAME_SECONDS * 2)).toBeCloseTo(MAX_FRAME_SECONDS * 1000)
   })
 
   it('erreicht das Ziel ohne Überschwingen und bleibt dort', () => {

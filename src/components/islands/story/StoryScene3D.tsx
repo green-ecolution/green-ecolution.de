@@ -3,7 +3,7 @@ import { useEffect, useRef, type RefObject } from 'react'
 import { Vector3 } from 'three'
 import { plate, shots } from '../../../data/storyTown'
 import { tourColors } from '../../../data/streamletTour'
-import { chaseStory } from '../../../lib/storyChase'
+import { chaseStory, restedFor } from '../../../lib/storyChase'
 import { storyState, storyStill, type StoryState } from '../../../lib/storyTimeline'
 import ReleaseContextOnNavigate from '../scene3d/ReleaseContextOnNavigate'
 import {
@@ -74,7 +74,7 @@ function StoryClock({ isStatic, sourceRef, storyRef, onReady }: ClockProps) {
   useFrame((_, delta) => {
     const { target, still } = sourceRef.current
     if (target === lastTarget.current) {
-      restingMs.current += delta * 1000
+      restingMs.current = restedFor(restingMs.current, delta)
     } else {
       lastTarget.current = target
       restingMs.current = 0
