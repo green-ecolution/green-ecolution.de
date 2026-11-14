@@ -87,10 +87,9 @@ const DEEP_ROOTS = [
                   y={depth.y - 6}
                   text-anchor="start"
                   fill={depth.color}
-                  font-size="9"
+                  font-size="13"
                   style="font-family: var(--font-lato)"
                   font-weight="600"
-                  opacity="0.7"
                 >
                   {depth.zone}
                 </text>
@@ -173,7 +172,7 @@ const DEEP_ROOTS = [
 
       <div>
         <div class="inline-block mb-6">
-          <span class="text-xs font-semibold tracking-widest text-green-light-900 uppercase">
+          <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
             {t('sensorProbe.sectionLabel')}
           </span>
           <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
@@ -199,7 +198,7 @@ const DEEP_ROOTS = [
               <span class="font-lato font-bold text-green-dark-900">
                 {t(`sensorProbe.specs.${spec}.value`)}
               </span>
-              <span class="text-sm text-grey-600">{t(`sensorProbe.specs.${spec}.label`)}</span>
+              <span class="text-sm text-grey-900/70">{t(`sensorProbe.specs.${spec}.label`)}</span>
             </div>
           ))}
         </div>
@@ -217,7 +216,7 @@ const DEEP_ROOTS = [
                   <h3 class="font-lato font-semibold text-grey-900 mb-0.5">
                     {t(`sensorProbe.features.${feature.id}.label`)}
                   </h3>
-                  <p class="text-sm text-grey-600 leading-relaxed">
+                  <p class="text-sm text-grey-900/70 leading-relaxed">
                     {t(`sensorProbe.features.${feature.id}.description`)}
                   </p>
                 </div>

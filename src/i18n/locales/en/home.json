@@ -4,14 +4,14 @@
     "description": "Green Ecolution from Flensburg is developing an open platform that turns measurements into operations. We started with demand-based irrigation of urban trees."
   },
   "hero": {
-    "badge": "Digitalisierungspreis 2026 · Green Coding special prize",
     "headlinePrefix": "We enable ",
     "headlineHighlight": "smart irrigation",
     "headlineSuffix": " of green spaces!",
     "tagline": "Measure. Understand. Act.",
     "description": "Sensors in the soil show which trees need water, and route planning sends your team straight there. Irrigation is only the beginning.",
     "ctaContact": "Get in touch",
-    "ctaProduct": "Explore the product"
+    "ctaDemo": "Try the demo",
+    "ctaDemoNewTab": "(opens in a new tab)"
   },
   "award": {
     "sectionLabel": "Award",
@@ -20,30 +20,6 @@
     "description": "In September 2026 the state of Schleswig-Holstein honoured Green Ecolution for resource-efficient software and demand-based irrigation. Digital minister Dirk Schrödter presented the prize in Kiel.",
     "cta": "Read about the award ceremony",
     "imageAlt": "Digital minister Dirk Schrödter applauds two PROGEEK representatives holding trophy and certificate on stage, behind them a screen reading Green Ecolution"
-  },
-  "introduction": {
-    "sectionLabel": "Platform",
-    "title": "Measure. Understand. Act.",
-    "description": "Green Ecolution combines three steps into one platform. Sensors measure what is happening on site, the software turns that into a situation overview, and operations planning converts it into tours. We started with the irrigation of urban trees, and the platform is designed for further tasks.",
-    "sliderAriaLabel": "The platform in four points",
-    "facts": {
-      "measure": {
-        "label": "Measure",
-        "description": "Sensors deliver measurements from the city, for irrigation the soil moisture at variable depths."
-      },
-      "understand": {
-        "label": "Understand",
-        "description": "The platform analyses the measurement series and shows on a map and dashboard where action is needed."
-      },
-      "act": {
-        "label": "Act",
-        "description": "Operations and route planning turns the situation overview into tours that avoid unnecessary journeys."
-      },
-      "extend": {
-        "label": "Modularly extensible",
-        "description": "Further sensor types and use cases can be connected with some development work. Irrigation is the first."
-      }
-    }
   },
   "challenge": {
     "quoteLine1": "Cities water by feel.",
@@ -96,7 +72,6 @@
     "photoLead": "This is what it looks like day to day. The person watering sees what the site needs at the tree. The person planning sees it at their desk. Both work from the same data."
   },
   "features": {
-    "sectionLabel": "Features",
     "title": "Green Ecolution at a glance",
     "description": "From sensor data collection through intelligent route planning to detailed analysis: all the features for efficient and sustainable green space management",
     "items": {
@@ -175,7 +150,6 @@
     "photoCaption": "Setting up a sensor with the mobile app."
   },
   "videos": {
-    "sectionLabel": "Videos",
     "title": "Get to know Green Ecolution through video",
     "description": "Two films show what we are working on: the State of Schleswig-Holstein's video on our Digitalisierungspreis 2026 award and the television piece public broadcaster NDR filmed about the project.",
     "award": {
@@ -194,6 +168,7 @@
   "workflow": {
     "sectionLabel": "Solution",
     "title": "The end-to-end workflow",
+    "description": "Green Ecolution combines three steps into one platform. Sensors measure what is happening on site, the software turns that into a situation overview, and operations planning converts it into tours. We started with the irrigation of urban trees, and the platform is designed for further tasks.",
     "moreLink": "Learn more",
     "moreLinkAriaLabel": "Learn more about the process",
     "steps": {
@@ -274,7 +249,6 @@
     "ctaAriaLabel": "Go to the page with our services and the pricing model"
   },
   "faq": {
-    "sectionLabel": "FAQ",
     "title": "Frequently asked questions about Green Ecolution",
     "items": {
       "origin": {

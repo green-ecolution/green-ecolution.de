@@ -4,14 +4,14 @@
     "description": "Green Ecolution aus Flensburg entwickelt eine offene Plattform, die Messwerte zu Einsätzen macht. Angefangen haben wir mit der bedarfsgerechten Bewässerung von Stadtbäumen."
   },
   "hero": {
-    "badge": "Digitalisierungspreis 2026 · Sonderpreis Green Coding",
     "headlinePrefix": "Wir ermöglichen ",
     "headlineHighlight": "smarte Bewässerung",
     "headlineSuffix": " von Grünflächen!",
     "tagline": "Messen. Verstehen. Handeln.",
     "description": "Sensoren im Boden zeigen, welche Bäume Wasser brauchen. Die Einsatzplanung schickt dein Team gezielt dorthin. Die Bewässerung ist dabei erst der Anfang.",
     "ctaContact": "Kontakt aufnehmen",
-    "ctaProduct": "Produkt entdecken"
+    "ctaDemo": "Demo ausprobieren",
+    "ctaDemoNewTab": "(öffnet in neuem Tab)"
   },
   "award": {
     "sectionLabel": "Auszeichnung",
@@ -20,30 +20,6 @@
     "description": "Das Land Schleswig-Holstein hat Green Ecolution im September 2026 für ressourcenschonende Software und bedarfsgerechte Bewässerung ausgezeichnet. Überreicht hat den Preis Digitalisierungsminister Dirk Schrödter in Kiel.",
     "cta": "Zum Beitrag über die Preisverleihung",
     "imageAlt": "Digitalisierungsminister Dirk Schrödter applaudiert auf der Bühne zwei Vertretern von PROGEEK mit Trophäe und Urkunde, dahinter die Leinwand mit der Aufschrift Green Ecolution"
-  },
-  "introduction": {
-    "sectionLabel": "Plattform",
-    "title": "Messen. Verstehen. Handeln.",
-    "description": "Green Ecolution verbindet drei Schritte zu einer Plattform. Sensoren messen, was vor Ort passiert, die Software macht daraus ein Lagebild und die Einsatzplanung setzt es in Touren um. Angefangen haben wir mit der Bewässerung von Stadtbäumen, die Plattform ist für weitere Aufgaben ausgelegt.",
-    "sliderAriaLabel": "Die Plattform in vier Punkten",
-    "facts": {
-      "measure": {
-        "label": "Messen",
-        "description": "Sensoren liefern Messwerte aus der Stadt, bei der Bewässerung die Bodenfeuchte in variablen Tiefen."
-      },
-      "understand": {
-        "label": "Verstehen",
-        "description": "Die Plattform wertet die Messreihen aus und zeigt auf Karte und Dashboard, wo gehandelt werden muss."
-      },
-      "act": {
-        "label": "Handeln",
-        "description": "Die Einsatz- und Routenplanung macht aus dem Lagebild Touren, die ohne unnötige Wege auskommen."
-      },
-      "extend": {
-        "label": "Modular erweiterbar",
-        "description": "Weitere Sensortypen und Anwendungsfälle lassen sich mit etwas Entwicklungsarbeit anbinden. Die Bewässerung ist der erste."
-      }
-    }
   },
   "challenge": {
     "quoteLine1": "Städte gießen nach Gefühl.",
@@ -96,7 +72,6 @@
     "photoLead": "So sieht das im Alltag aus. Wer gießt, sieht am Baum, was dieser Standort braucht. Wer plant, sieht es am Schreibtisch. Beide arbeiten mit denselben Daten."
   },
   "features": {
-    "sectionLabel": "Features",
     "title": "Green Ecolution im Überblick",
     "description": "Von der Sensorerfassung über die intelligente Routenplanung bis zur detaillierten Auswertung: alle Funktionen für ein effizientes und nachhaltiges Grünflächenmanagement",
     "items": {
@@ -109,7 +84,7 @@
         "description": "Fasse Bäume zu Bewässerungs­einheiten zusammen. Automatische Berechnung des Wasserbedarfs pro Cluster."
       },
       "fleet": {
-        "label": "Fleet Management",
+        "label": "Fuhrparkverwaltung",
         "description": "Verwalte Transporter und Anhänger mit Wasserkapazitäten. Automatische Nachfüllstopps in der Routenplanung."
       },
       "tourPlanning": {
@@ -175,7 +150,6 @@
     "photoCaption": "Einrichtung eines Sensors mit der mobilen App."
   },
   "videos": {
-    "sectionLabel": "Videos",
     "title": "Lerne Green Ecolution per Video kennen",
     "description": "Zwei Filme zeigen, woran wir arbeiten: das Video des Landes Schleswig-Holstein zur Auszeichnung beim Digitalisierungspreis 2026 und der Fernsehbeitrag, den der NDR über das Projekt gedreht hat.",
     "award": {
@@ -194,6 +168,7 @@
   "workflow": {
     "sectionLabel": "Lösung",
     "title": "Der durchgängige Workflow",
+    "description": "Green Ecolution verbindet drei Schritte zu einer Plattform. Sensoren messen, was vor Ort passiert, die Software macht daraus ein Lagebild und die Einsatzplanung setzt es in Touren um. Angefangen haben wir mit der Bewässerung von Stadtbäumen, die Plattform ist für weitere Aufgaben ausgelegt.",
     "moreLink": "Mehr erfahren",
     "moreLinkAriaLabel": "Mehr über den Prozess erfahren",
     "steps": {
@@ -274,7 +249,6 @@
     "ctaAriaLabel": "Zur Seite mit unseren Leistungen und dem Preismodell"
   },
   "faq": {
-    "sectionLabel": "FAQ",
     "title": "Oft gestellte Fragen zu Green Ecolution",
     "items": {
       "origin": {
