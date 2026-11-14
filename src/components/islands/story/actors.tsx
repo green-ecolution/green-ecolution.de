@@ -22,7 +22,7 @@ import {
   type PinTone,
 } from '../../../data/storyTown'
 import { canopyCenterHeight, roadHeight, tourColors } from '../../../data/streamletTour'
-import { pathLength, pointAlong, type GroundPoint } from '../../../lib/storyPath'
+import { pathLength, vehiclePose, type GroundPoint } from '../../../lib/storyPath'
 import { pinsShown, type StoryState } from '../../../lib/storyTimeline'
 import { appendRibbon, ribbonGeometry, type RibbonArrays } from '../scene3d/ribbon'
 import { lobes, treePit } from '../scene3d/trees'
@@ -40,7 +40,7 @@ import {
   pinHeight,
   type Anchor,
 } from './anchors'
-import { PIT_TOP, damp, dampAngle, type ActorProps, type Story } from './shared'
+import { PIT_TOP, damp, type ActorProps, type Story } from './shared'
 
 const WATER = '#2B7FBF'
 
@@ -322,28 +322,24 @@ export function Route({ story }: { story: Story }) {
 const approaches = exampleSpots.map((spot) => spot.approach)
 const tourLength = pathLength(tourPath)
 const approachLengths = approaches.map(pathLength)
+// From the rear wheels to the front ones in Vehicle.tsx, at z = -3 and z = 3.4.
+const WHEELBASE = 6.4
 
-export function StoryVehicle({ story, isStatic }: ActorProps) {
+export function StoryVehicle({ story }: { story: Story }) {
   const group = useRef<Group>(null)
   const wheels = useRef<Group[]>([])
-  const heading = useRef<number | null>(null)
 
-  useFrame((_, delta) => {
+  useFrame(() => {
     if (!group.current) return
     const { route, at, shown } = story.current.vehicle
     const path = route === 'tour' ? tourPath : approaches[route]
     const length = route === 'tour' ? tourLength : approachLengths[route]
-    const pose = pointAlong(path, at)
+    const pose = vehiclePose(path, at, WHEELBASE)
 
     group.current.visible = shown > 0.01
     group.current.scale.setScalar(Math.max(0.001, shown))
     group.current.position.set(pose.at[0], roadHeight, pose.at[1])
-    // Turning eases in, except where the vehicle has just been put on a road.
-    heading.current =
-      heading.current === null || isStatic || shown < 0.05
-        ? pose.heading
-        : dampAngle(heading.current, pose.heading, 10, delta)
-    group.current.rotation.y = heading.current
+    group.current.rotation.y = pose.heading
 
     const spin = (at * length) / WHEEL_RADIUS
     for (const wheel of wheels.current) wheel.rotation.x = spin

@@ -70,6 +70,53 @@ export function pointAlong(points: readonly GroundPoint[], t: number): PathPoint
   }
 }
 
+// Beyond either end the path runs on straight in the direction of its end leg.
+function pointAtDistance(
+  points: readonly GroundPoint[],
+  lengths: number[],
+  distance: number,
+): GroundPoint {
+  const legs = lengths.map((_, leg) => leg).filter((leg) => lengths[leg] > 0)
+  if (legs.length === 0) return points[0]
+
+  const along = (leg: number, length: number): GroundPoint => {
+    const [ax, az] = points[leg]
+    const [bx, bz] = points[leg + 1]
+    const share = length / lengths[leg]
+    return [ax + (bx - ax) * share, az + (bz - az) * share]
+  }
+
+  if (distance <= 0) return along(legs[0], distance)
+  let left = distance
+  for (const leg of legs) {
+    if (left <= lengths[leg]) return along(leg, left)
+    left -= lengths[leg]
+  }
+  const last = legs[legs.length - 1]
+  return along(last, lengths[last] + left)
+}
+
+/**
+ * A vehicle with both axles on the path: it stands midway between them and
+ * faces from the rear axle to the front one, so its heading follows the road
+ * wherever it is, however it got there.
+ */
+export function vehiclePose(
+  points: readonly GroundPoint[],
+  t: number,
+  wheelbase: number,
+): PathPoint {
+  const lengths = legLengths(points)
+  const total = lengths.reduce((sum, length) => sum + length, 0)
+  const centre = Math.min(1, Math.max(0, t)) * total
+  const [rx, rz] = pointAtDistance(points, lengths, centre - wheelbase / 2)
+  const [fx, fz] = pointAtDistance(points, lengths, centre + wheelbase / 2)
+  return {
+    at: [(rx + fx) / 2, (rz + fz) / 2],
+    heading: Math.atan2(fx - rx, fz - rz),
+  }
+}
+
 export function fractionNear(points: readonly GroundPoint[], target: GroundPoint): number {
   const lengths = legLengths(points)
   const total = lengths.reduce((sum, length) => sum + length, 0)

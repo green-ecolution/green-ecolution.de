@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { fractionNear, pathLength, pointAlong, roundedPath, type GroundPoint } from './storyPath'
+import {
+  fractionNear,
+  pathLength,
+  pointAlong,
+  roundedPath,
+  vehiclePose,
+  type GroundPoint,
+} from './storyPath'
 
 const corner: GroundPoint[] = [
   [0, 0],
@@ -56,6 +63,66 @@ describe('pointAlong', () => {
   it('bleibt an den Enden stehen', () => {
     expect(pointAlong(corner, -1).at).toEqual([0, 0])
     expect(pointAlong(corner, 2).at).toEqual([10, 10])
+  })
+})
+
+describe('vehiclePose', () => {
+  const wheelbase = 4
+  const samples = Array.from({ length: 101 }, (_, index) => index / 100)
+
+  it('schaut auf einer Geraden überall in ihre Richtung, auch an den Enden', () => {
+    const diagonal: GroundPoint[] = [
+      [0, 0],
+      [10, 10],
+      [20, 20],
+    ]
+    for (const t of samples) {
+      const pose = vehiclePose(diagonal, t, wheelbase)
+      expect(pose.heading).toBeCloseTo(Math.PI / 4)
+      expect(pose.at[0]).toBeCloseTo(pointAlong(diagonal, t).at[0])
+      expect(pose.at[1]).toBeCloseTo(pointAlong(diagonal, t).at[1])
+    }
+  })
+
+  it('biegt erst ab, wenn die Vorderachse die Ecke erreicht, und nur in eine Richtung', () => {
+    // The corner lies at half the length, 20 in all; the axles are 2 either side.
+    for (const t of samples.filter((t) => t <= 0.4)) {
+      expect(vehiclePose(corner, t, wheelbase).heading).toBeCloseTo(0)
+    }
+    for (const t of samples.filter((t) => t >= 0.6)) {
+      expect(vehiclePose(corner, t, wheelbase).heading).toBeCloseTo(Math.PI / 2)
+    }
+    const turning = samples
+      .filter((t) => t > 0.4 && t < 0.6)
+      .map((t) => vehiclePose(corner, t, wheelbase).heading)
+    turning.slice(1).forEach((heading, index) => {
+      expect(heading).toBeGreaterThan(turning[index])
+    })
+  })
+
+  it('hängt nur von Weg, Stelle und Radstand ab', () => {
+    const path = roundedPath(corner, 3)
+    const forwards = samples.map((t) => vehiclePose(path, t, wheelbase))
+    const backwards = [...samples].reverse().map((t) => vehiclePose(path, t, wheelbase))
+    const jumping = samples.map((_, index) =>
+      vehiclePose(path, samples[(index * 37) % samples.length], wheelbase),
+    )
+    expect(backwards.reverse()).toEqual(forwards)
+    samples.forEach((_, index) => {
+      expect(jumping[index]).toEqual(forwards[(index * 37) % samples.length])
+    })
+  })
+
+  it('steht nie weiter als einen halben Radstand neben dem Weg', () => {
+    for (const path of [corner, roundedPath(corner, 3)]) {
+      for (const t of samples) {
+        const { at } = vehiclePose(path, t, wheelbase)
+        const nearest = pointAlong(path, fractionNear(path, at)).at
+        expect(Math.hypot(at[0] - nearest[0], at[1] - nearest[1])).toBeLessThanOrEqual(
+          wheelbase / 2,
+        )
+      }
+    }
   })
 })
 

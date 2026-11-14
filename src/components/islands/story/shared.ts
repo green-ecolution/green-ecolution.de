@@ -22,10 +22,3 @@ export const PIT_TOP = treePit.kerbHeight + treePit.soilHeight
 export function damp(current: number, target: number, rate: number, delta: number): number {
   return current + (target - current) * (1 - Math.exp(-rate * delta))
 }
-
-/** Like damp, but takes the short way round a full turn. */
-export function dampAngle(current: number, target: number, rate: number, delta: number): number {
-  const turn = Math.PI * 2
-  const gap = ((((target - current + Math.PI) % turn) + turn) % turn) - Math.PI
-  return current + gap * (1 - Math.exp(-rate * delta))
-}

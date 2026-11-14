@@ -166,7 +166,7 @@ function StoryScene3D({ isStatic, isActive, source, labels, onReady }: Props) {
         strength={(state) => state.signal}
       />
       <Route story={story} />
-      <StoryVehicle story={story} isStatic={isStatic} />
+      <StoryVehicle story={story} />
       <Watering story={story} isStatic={isStatic} />
       <TreePins story={story} isStatic={isStatic} />
       <Troubles story={story} isStatic={isStatic} />
