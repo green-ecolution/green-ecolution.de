@@ -28,8 +28,8 @@ const lugAngles = [0, 72, 144, 216, 288]
   ]}
 >
   <div class="relative bg-green-dark-900 rounded-2xl lg:rounded-3xl p-6 md:p-10 lg:p-12 shadow-xl overflow-hidden">
-    <div class="absolute top-0 right-0 w-96 h-96 bg-green-light-900/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-    <div class="absolute bottom-0 left-0 w-64 h-64 bg-green-middle-900/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+    <div class="glow-light absolute top-0 right-0 w-[44rem] h-[44rem] -translate-y-1/2 translate-x-1/2"></div>
+    <div class="glow-middle absolute bottom-0 left-0 w-[36rem] h-[36rem] translate-y-1/2 -translate-x-1/2"></div>
     <div
       class="absolute inset-0 opacity-5"
       style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"
@@ -67,7 +67,7 @@ const lugAngles = [0, 72, 144, 216, 288]
       </div>
 
       <div class="hidden lg:block flex-shrink-0 w-80 h-40 xl:w-96 xl:h-48">
-        <div class="relative w-full h-full overflow-hidden" aria-hidden="true">
+        <div class="@container relative w-full h-full overflow-hidden" aria-hidden="true">
           <div class="absolute top-2 cloud-slow">
             <svg class="w-12 h-6 opacity-30" viewBox="0 0 48 24">
               <ellipse cx="24" cy="14" rx="20" ry="10" fill="white"></ellipse>
@@ -338,18 +338,57 @@ const lugAngles = [0, 72, 144, 216, 288]
 </section>
 
 <style>
+  /* The two lights in the card's corners. The stops follow what a 64px blur
+     makes of a disc of 24rem and of 16rem, so they look the same without a
+     filter: the scene animates inside the same card, and a filter is computed
+     again for every frame that repaints what it covers. */
+  .glow-light {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-green-light-900) 9.94%, transparent) 0%,
+      color-mix(in srgb, var(--color-green-light-900) 9.85%, transparent) 10%,
+      color-mix(in srgb, var(--color-green-light-900) 9.52%, transparent) 20%,
+      color-mix(in srgb, var(--color-green-light-900) 8.71%, transparent) 30%,
+      color-mix(in srgb, var(--color-green-light-900) 7.27%, transparent) 40%,
+      color-mix(in srgb, var(--color-green-light-900) 5.3%, transparent) 50%,
+      color-mix(in srgb, var(--color-green-light-900) 3.23%, transparent) 60%,
+      color-mix(in srgb, var(--color-green-light-900) 1.6%, transparent) 70%,
+      color-mix(in srgb, var(--color-green-light-900) 0.6%, transparent) 80%,
+      color-mix(in srgb, var(--color-green-light-900) 0.17%, transparent) 90%,
+      transparent 100%
+    );
+  }
+  .glow-middle {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-green-middle-900) 17.38%, transparent) 0%,
+      color-mix(in srgb, var(--color-green-middle-900) 16.82%, transparent) 10%,
+      color-mix(in srgb, var(--color-green-middle-900) 15.16%, transparent) 20%,
+      color-mix(in srgb, var(--color-green-middle-900) 12.63%, transparent) 30%,
+      color-mix(in srgb, var(--color-green-middle-900) 9.42%, transparent) 40%,
+      color-mix(in srgb, var(--color-green-middle-900) 6.2%, transparent) 50%,
+      color-mix(in srgb, var(--color-green-middle-900) 3.54%, transparent) 60%,
+      color-mix(in srgb, var(--color-green-middle-900) 1.72%, transparent) 70%,
+      color-mix(in srgb, var(--color-green-middle-900) 0.72%, transparent) 80%,
+      color-mix(in srgb, var(--color-green-middle-900) 0.24%, transparent) 90%,
+      transparent 100%
+    );
+  }
+
   /* The truck stops with its spray landing on the small tree, which is anchored
-     to the right edge, hence the px offsets rather than percentages. */
+     to the right edge, hence the px offsets rather than percentages. It moves
+     by translate, not left, so driving costs no layout; cqw is the width of
+     the scene, which is the container. */
   @keyframes drive {
     0% {
-      left: -150px;
+      translate: -150px 0;
     }
     35%,
     55% {
-      left: calc(100% - 188px);
+      translate: calc(100cqw - 188px) 0;
     }
     100% {
-      left: calc(100% + 10px);
+      translate: calc(100cqw + 10px) 0;
     }
   }
   /* Same stops and easing as drive, so the wheels stand still with the truck. */
@@ -456,7 +495,8 @@ const lugAngles = [0, 72, 144, 216, 288]
     animation-delay: -8s;
   }
   .watering-truck {
-    left: -150px;
+    left: 0;
+    translate: -150px 0;
     animation: drive 10s ease-in-out infinite;
   }
   .truck-wheel {
@@ -497,7 +537,7 @@ const lugAngles = [0, 72, 144, 216, 288]
       transform: none;
     }
     .watering-truck {
-      left: calc(100% - 188px);
+      translate: calc(100cqw - 188px) 0;
     }
   }
 </style>
