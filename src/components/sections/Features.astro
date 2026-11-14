@@ -6,7 +6,17 @@ import {
   LayoutDashboard,
   Users,
   BarChart3,
+  Eye,
+  ArrowRight,
 } from 'lucide-react'
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import groupDashboard from '../../assets/screens/treecluster-dashboard.png'
+import groupOverview from '../../assets/screens/treecluster-list.png'
+import operationsBoard from '../../assets/screens/watering-plan-board.png'
+import evaluations from '../../assets/screens/evaluations.png'
+import teamSettings from '../../assets/screens/settings-team-members.png'
+import vehicleForm from '../../assets/screens/vehicle-form.png'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 
@@ -49,6 +59,21 @@ const FEATURES = [
 
 const { language } = Astro.props
 const t = getTranslations(language, 'home')
+
+type FeatureId = (typeof FEATURES)[number]['id']
+
+const PREVIEWS: Partial<Record<FeatureId, { src: ImageMetadata; alt: string }>> = {
+  dashboard: { src: groupDashboard, alt: t('features.items.dashboard.screenshotAlt') },
+  grouping: { src: groupOverview, alt: t('features.items.grouping.screenshotAlt') },
+  fleet: { src: vehicleForm, alt: t('features.items.fleet.screenshotAlt') },
+  tourPlanning: { src: operationsBoard, alt: t('features.items.tourPlanning.screenshotAlt') },
+  teamManagement: { src: teamSettings, alt: t('features.items.teamManagement.screenshotAlt') },
+  analysis: { src: evaluations, alt: t('features.items.analysis.screenshotAlt') },
+}
+
+// Two rows on wide screens, each with one large card. A small card that opens
+// takes the large card's second column, so the row trades widths.
+const ROWS = [FEATURES.slice(0, 3), FEATURES.slice(3)]
 ---
 
 <section
@@ -62,54 +87,276 @@ const t = getTranslations(language, 'home')
     <p class="text-grey-900/70 max-w-2xl leading-relaxed">{t('features.description')}</p>
   </div>
 
-  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:grid-rows-2">
-    {FEATURES.map((feature, index) => {
-      const Icon = feature.Icon
+  <div data-feature-grid class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:flex lg:flex-col">
+    {ROWS.map((row) => (
+      <div class="feature-row contents lg:flex lg:gap-4">
+        {row.map((feature) => {
+          const Icon = feature.Icon
+          const preview = PREVIEWS[feature.id]
+          const label = t(`features.items.${feature.id}.label`)
 
-      return (
-        <div class:list={[feature.large && 'sm:col-span-2', index === 0 && 'lg:row-span-1']}>
-          <div
-            class:list={[
-              'group h-full rounded-xl p-5 md:rounded-2xl md:p-6 lg:p-8 border transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5',
-              feature.large && 'lg:flex lg:items-start lg:gap-x-6',
-              BORDER_CLASSES[feature.color],
-              COLOR_CLASSES[feature.color],
-            ]}
-          >
-            <figure
+          return (
+            <div
+              data-preview={preview ? 'closed' : undefined}
+              data-preview-size={preview ? (feature.large ? 'large' : 'small') : undefined}
+              data-size={feature.large ? 'large' : 'small'}
               class:list={[
-                'shrink-0 w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4 transition-all duration-300 group-hover:scale-105',
-                feature.large && 'lg:mb-0',
-                ICON_COLOR_CLASSES[feature.color],
+                'feature-card group relative overflow-hidden rounded-xl p-5 md:rounded-2xl md:p-6 lg:p-8 border hover:shadow-lg',
+                feature.large && 'sm:col-span-2',
+                BORDER_CLASSES[feature.color],
+                COLOR_CLASSES[feature.color],
               ]}
             >
-              <span class="[&>svg]:w-5 [&>svg]:h-5 md:[&>svg]:w-6 md:[&>svg]:h-6 lg:[&>svg]:w-8 lg:[&>svg]:h-8">
-                <Icon />
-              </span>
-            </figure>
-            <div>
-              <h3 class="font-lato font-bold text-base md:text-xl mb-1 md:mb-2 text-grey-900">
-                {t(`features.items.${feature.id}.label`)}
-              </h3>
-              <p class="text-grey-900/70 text-sm md:text-base leading-relaxed">
-                {t(`features.items.${feature.id}.description`)}
-              </p>
-              {feature.href && (
-                // Only tourPlanning carries a link, so the label keys are literal:
-                // TranslationKey is derived from the german catalog and the other
-                // features have no linkLabel.
-                <a
-                  href={`/${language}/${feature.href}`}
-                  aria-label={t('features.items.tourPlanning.linkAriaLabel')}
-                  class="mt-3 inline-block text-sm font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
+              <div
+                class:list={[
+                  'feature-content',
+                  feature.large && 'lg:flex lg:items-start lg:gap-x-6',
+                ]}
+              >
+                <figure
+                  class:list={[
+                    'shrink-0 w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4',
+                    feature.large && 'lg:mb-0',
+                    ICON_COLOR_CLASSES[feature.color],
+                  ]}
                 >
-                  {t('features.items.tourPlanning.linkLabel')}
-                </a>
+                  <span class="[&>svg]:w-5 [&>svg]:h-5 md:[&>svg]:w-6 md:[&>svg]:h-6 lg:[&>svg]:w-8 lg:[&>svg]:h-8">
+                    <Icon />
+                  </span>
+                </figure>
+                <div>
+                  <h3
+                    class:list={[
+                      'font-lato font-bold text-base md:text-xl mb-1 md:mb-2 text-grey-900',
+                      preview && 'pr-24 lg:pr-0',
+                    ]}
+                  >
+                    {label}
+                  </h3>
+                  <p class="text-grey-900/70 text-sm md:text-base leading-relaxed">
+                    {t(`features.items.${feature.id}.description`)}
+                  </p>
+                  {feature.href && (
+                    // Only tourPlanning carries a link, so the label keys are literal:
+                    // TranslationKey is derived from the german catalog and the other
+                    // features have no linkLabel.
+                    <a
+                      href={`/${language}/${feature.href}`}
+                      aria-label={t('features.items.tourPlanning.linkAriaLabel')}
+                      class="mt-3 inline-block text-sm font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
+                    >
+                      {t('features.items.tourPlanning.linkLabel')}
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {feature.large && (
+                // A large card set for one column while a neighbour borrows its
+                // second one; slightly smaller type keeps it within the row height.
+                <div
+                  class="feature-compact pointer-events-none absolute inset-0 hidden p-8 lg:block"
+                  aria-hidden="true"
+                >
+                  <span
+                    class:list={[
+                      'flex w-14 h-14 rounded-xl items-center justify-center mb-4 [&>svg]:w-8 [&>svg]:h-8',
+                      ICON_COLOR_CLASSES[feature.color],
+                    ]}
+                  >
+                    <Icon />
+                  </span>
+                  <span class="block font-lato font-bold text-xl mb-2 text-grey-900">{label}</span>
+                  <span class="block text-sm text-grey-900/70 leading-relaxed">
+                    {t(`features.items.${feature.id}.description`)}
+                  </span>
+                </div>
+              )}
+
+              {preview && (
+                <>
+                  <div class="feature-preview pointer-events-none absolute inset-0 z-10 bg-white opacity-0 group-data-[preview=open]:opacity-100">
+                    <Image
+                      src={preview.src}
+                      alt={preview.alt}
+                      widths={[480, 800, 1200]}
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                      loading="lazy"
+                      class="feature-preview-image w-full h-full object-cover object-left-top"
+                    />
+                    <div class="absolute left-3 bottom-3 flex flex-wrap gap-2" aria-hidden="true">
+                      <span class="rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-grey-900 shadow-sm">
+                        {label}
+                      </span>
+                      {feature.href && (
+                        // The card's own link sits under the screenshot while it
+                        // shows, so a copy rides on top of it.
+                        <a
+                          href={`/${language}/${feature.href}`}
+                          tabindex="-1"
+                          class="pointer-events-auto inline-flex items-center gap-x-1 rounded-full bg-green-dark-900 px-3 py-1 text-xs font-semibold text-white shadow-sm hover:bg-green-middle-900"
+                        >
+                          {t('features.items.tourPlanning.linkLabel')}
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    data-preview-toggle
+                    aria-pressed="false"
+                    aria-label={`${t('features.previewLabel')}: ${label}`}
+                    class="feature-toggle absolute top-3 right-3 z-20 inline-flex items-center gap-x-1.5 h-9 px-3 rounded-full bg-white text-xs font-semibold text-green-dark-900 shadow-sm ring-1 ring-green-dark-900/20 cursor-pointer transition-colors hover:bg-green-dark-900 hover:text-white aria-pressed:bg-green-dark-900 aria-pressed:text-white before:absolute before:-inset-1 before:content-[''] md:top-4 md:right-4"
+                  >
+                    <Eye aria-hidden="true" className="w-4 h-4" />
+                    {t('features.previewLabel')}
+                  </button>
+                </>
               )}
             </div>
-          </div>
-        </div>
-      )
-    })}
+          )
+        })}
+      </div>
+    ))}
   </div>
 </section>
+
+<style>
+  .feature-preview {
+    transition: opacity 250ms ease-out;
+  }
+
+  .feature-card {
+    transition:
+      flex-basis 550ms var(--ease-spring-settle),
+      box-shadow 300ms ease-out,
+      border-color 300ms ease-out,
+      background-color 300ms ease-out;
+  }
+
+  .feature-content,
+  .feature-compact {
+    transition: opacity 200ms ease-out;
+  }
+
+  .feature-compact {
+    opacity: 0;
+  }
+
+  @media (min-width: 1024px) {
+    /* The row is the measure for every card, so text and screenshots can be
+       sized to a card's resting width and never rewrap while widths animate. */
+    .feature-row {
+      container-type: inline-size;
+    }
+
+    .feature-card {
+      --share: 0.25;
+      flex: 0 1 25%;
+      min-width: 0;
+    }
+
+    .feature-card[data-size='large'] {
+      --share: 0.5;
+      flex-basis: 50%;
+    }
+
+    /* 2rem are the row's two gaps, 4rem the card padding, 2px the border. */
+    .feature-content {
+      width: calc((100cqw - 2rem) * var(--share) - 4rem - 2px);
+    }
+
+    .feature-preview-image {
+      width: calc((100cqw - 2rem) * 0.5 - 2px);
+      max-width: none;
+    }
+  }
+
+  /* Trading widths: the small card takes the large card's second column. The
+     large card's text fades out before it narrows and its compact title fades
+     in once it has; the screenshot is revealed as the small card widens. */
+  @media (min-width: 1024px) {
+    .feature-card[data-size='small'][data-preview='open'] {
+      flex-basis: 50%;
+      transition-delay: 120ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview='open']) > [data-size='large'] {
+      flex-basis: 25%;
+      transition-delay: 120ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview='open'])
+      > [data-size='large']
+      .feature-content {
+      opacity: 0;
+      transition-delay: 0ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview='open'])
+      > [data-size='large']
+      .feature-compact {
+      opacity: 1;
+      transition-delay: 450ms;
+    }
+
+    .feature-card[data-preview='open'] .feature-preview {
+      transition-delay: 150ms;
+    }
+  }
+
+  @media (min-width: 1024px) and (hover: hover) {
+    .feature-card[data-size='small'][data-preview]:hover {
+      flex-basis: 50%;
+      transition-delay: 120ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview]:hover) > [data-size='large'] {
+      flex-basis: 25%;
+      transition-delay: 120ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview]:hover)
+      > [data-size='large']
+      .feature-content {
+      opacity: 0;
+      transition-delay: 0ms;
+    }
+
+    .feature-row:has(> [data-size='small'][data-preview]:hover)
+      > [data-size='large']
+      .feature-compact {
+      opacity: 1;
+      transition-delay: 450ms;
+    }
+
+    .feature-card[data-preview]:hover .feature-preview {
+      opacity: 1;
+      transition-delay: 150ms;
+    }
+
+    /* The button is for keyboards and touch; with a pointer the card opens itself. */
+    .feature-toggle:not(:focus-visible) {
+      opacity: 0;
+    }
+  }
+
+  /* Coming back, the text waits until its card is wide again. */
+  .feature-content {
+    transition-delay: 400ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feature-card,
+    .feature-preview,
+    .feature-content,
+    .feature-compact {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import '../../scripts/featurePreview'
+</script>

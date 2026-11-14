@@ -77,31 +77,38 @@
     "items": {
       "dashboard": {
         "label": "Echtzeit-Dashboard",
-        "description": "Alle wichtigen KPIs auf einen Blick: Bodenfeuchtewerte, anstehende Touren, Teamverfügbarkeit und Fahrzeugstatus in einem zentralen Dashboard."
+        "description": "Alle wichtigen KPIs auf einen Blick: Bodenfeuchtewerte, anstehende Touren, Teamverfügbarkeit und Fahrzeugstatus in einem zentralen Dashboard.",
+        "screenshotAlt": "Dashboard einer Bewässerungsgruppe mit Bewässerungszustand, Bodentemperatur, letzter Messung und dem Verlauf der Wasserversorgung"
       },
       "grouping": {
         "label": "Intelligente Gruppierung",
-        "description": "Fasse Bäume zu Bewässerungs­einheiten zusammen. Automatische Berechnung des Wasserbedarfs pro Cluster."
+        "description": "Fasse Bäume zu Bewässerungs­einheiten zusammen. Automatische Berechnung des Wasserbedarfs pro Cluster.",
+        "screenshotAlt": "Übersicht der Bewässerungsgruppen mit Zustand, Anzahl der Bäume und Sensoren je Gruppe"
       },
       "fleet": {
         "label": "Fuhrparkverwaltung",
-        "description": "Verwalte Transporter und Anhänger mit Wasserkapazitäten. Automatische Nachfüllstopps in der Routenplanung."
+        "description": "Verwalte Transporter und Anhänger mit Wasserkapazitäten. Automatische Nachfüllstopps in der Routenplanung.",
+        "screenshotAlt": "Formular zum Anlegen eines Fahrzeugs mit Kennzeichen, Fahrzeugtyp, Wasserkapazität, Führerscheinklasse und Abmessungen"
       },
       "tourPlanning": {
         "label": "Tour-Planung",
         "description": "Optimierte Bewässerungspläne mit Echtzeit-Status: Von „geplant“ über „aktiv“ bis „abgeschlossen“.",
         "linkLabel": "Wie die Tourenoptimierung rechnet",
-        "linkAriaLabel": "Zur Seite über die Tourenoptimierung"
+        "linkAriaLabel": "Zur Seite über die Tourenoptimierung",
+        "screenshotAlt": "Einsatzplan-Board mit den Spalten Vorschläge, Geplant, Unterwegs und Erledigt"
       },
       "teamManagement": {
         "label": "Teamverwaltung",
-        "description": "Verwalte Fahrer mit Führerscheinklassen und Verfügbarkeit. Optimiere die Einsatzplanung."
+        "description": "Verwalte Fahrer mit Führerscheinklassen und Verfügbarkeit. Optimiere die Einsatzplanung.",
+        "screenshotAlt": "Teamverwaltung mit Mitarbeitenden, Rollen, Verfügbarkeit und Führerscheinklassen"
       },
       "analysis": {
         "label": "Nachanalyse",
-        "description": "Dokumentiere den tatsächlichen Wasserverbrauch pro Cluster und Tour. Analysiere Trends und optimiere zukünftige Planungen datenbasiert."
+        "description": "Dokumentiere den tatsächlichen Wasserverbrauch pro Cluster und Tour. Analysiere Trends und optimiere zukünftige Planungen datenbasiert.",
+        "screenshotAlt": "Auswertungsseite mit der Anzahl der Bewässerungsgruppen, Bäume, Sensoren und Einsatzpläne sowie dem Wasserverbrauch"
       }
-    }
+    },
+    "previewLabel": "Ansicht"
   },
   "sensorProbe": {
     "illustrationAriaLabel": "Schematische Darstellung einer Bodensonde, die in mehreren Tiefen misst",
