@@ -4,6 +4,7 @@ import Arrow from '../Arrow'
 import StreamletTankGauge from './StreamletTankGauge'
 import StreamletTourSketch from './StreamletTourSketch'
 import { staticTankLevel, tourProjectedSize } from '../../../data/streamletTour'
+import { useOnScreen } from '../../../hooks/useOnScreen'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { supportsWebgl } from '../../../lib/webgl'
 import { splitSlot } from '../../../lib/slotText'
@@ -15,6 +16,8 @@ function StreamletHero({ language }: { language: string }) {
   const prefersReducedMotion = useReducedMotion()
   const [canRenderModel] = useState(supportsWebgl)
   const tankLevel = useRef<HTMLDivElement>(null)
+  const tour = useRef<HTMLDivElement>(null)
+  const isTourOnScreen = useOnScreen(tour)
   const origin = splitSlot(t('hero.originRich'), 'project')
 
   return (
@@ -51,10 +54,17 @@ function StreamletHero({ language }: { language: string }) {
         >
           <StreamletTankGauge levelRef={tankLevel} level={staticTankLevel} />
 
-          <div className="flex aspect-[var(--tour-aspect)] min-w-0 flex-1 items-center self-start lg:aspect-auto lg:h-full lg:self-stretch">
+          <div
+            ref={tour}
+            className="flex aspect-[var(--tour-aspect)] min-w-0 flex-1 items-center self-start lg:aspect-auto lg:h-full lg:self-stretch"
+          >
             {canRenderModel ? (
               <Suspense fallback={<StreamletTourSketch />}>
-                <StreamletTour3D isStatic={prefersReducedMotion} levelRef={tankLevel} />
+                <StreamletTour3D
+                  isStatic={prefersReducedMotion}
+                  isActive={isTourOnScreen}
+                  levelRef={tankLevel}
+                />
               </Suspense>
             ) : (
               <StreamletTourSketch />

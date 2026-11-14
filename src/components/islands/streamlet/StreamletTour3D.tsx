@@ -11,6 +11,7 @@ import {
   type MeshBasicMaterial,
 } from 'three'
 import { merged, painted, placed } from '../../../lib/paintedGeometry'
+import { MAX_DPR } from '../../../lib/sceneBudget'
 import {
   centerLine,
   cityBlocks,
@@ -244,6 +245,11 @@ interface TourProps {
   levelRef: RefObject<HTMLDivElement | null>
 }
 
+interface Props extends TourProps {
+  /** False while the tour is out of sight; it starts over when it comes back. */
+  isActive?: boolean
+}
+
 const rippleWaves = 2
 
 function TourAnimation({ isStatic, levelRef }: TourProps) {
@@ -396,13 +402,15 @@ function TourModel({ isStatic, levelRef }: TourProps) {
   )
 }
 
-function StreamletTour3D({ isStatic, levelRef }: TourProps) {
+function StreamletTour3D({ isStatic, isActive = true, levelRef }: Props) {
+  const frameloop = !isActive ? 'never' : isStatic ? 'demand' : 'always'
+
   return (
     <Canvas
       flat
       orthographic
-      dpr={[1, 2]}
-      frameloop={isStatic ? 'demand' : 'always'}
+      dpr={MAX_DPR}
+      frameloop={frameloop}
       camera={{ position: [1200, 1200, 1200], near: 1, far: 6000, zoom: 1 }}
       onCreated={({ camera }) => camera.lookAt(0, 0, 0)}
       gl={{ antialias: true, alpha: true }}
