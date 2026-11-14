@@ -16,7 +16,7 @@ const year = new Date().getFullYear()
 const version = APP_VERSION
 
 const metaLinkClasses =
-  'relative font-bold transition-all ease-in-out duration-300 hover:text-green-light-900 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-green-light-900 after:transition-all after:duration-300 hover:after:w-full'
+  'relative inline-block py-3 font-bold transition-all ease-in-out duration-300 hover:text-green-light-900 after:absolute after:bottom-3 after:left-0 after:w-0 after:h-0.5 after:bg-green-light-900 after:transition-all after:duration-300 hover:after:w-full'
 ---
 
 <footer class="py-10 bg-background-footer-mobile bg-no-repeat bg-cover text-white md:pt-16 lg:bg-background-footer-desktop lg:bg-[35%] xl:bg-[55%] 3xl:bg-contain 3xl:bg-center hyphens-auto">
@@ -60,7 +60,7 @@ const metaLinkClasses =
 
     <div class="mt-10 md:justify-self-end md:mt-0">
       <nav aria-label={t('footer.metaNavAriaLabel')}>
-        <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-start md:justify-end">
+        <ul class="flex flex-wrap items-center justify-center gap-x-6 sm:justify-start md:justify-end">
           <li>
             <a href={`/${language}/releases`} class={metaLinkClasses}>
               {t('footer.releases')}
@@ -83,11 +83,11 @@ const metaLinkClasses =
           </li>
         </ul>
       </nav>
-      <p class="text-xs text-center mt-3 text-white/60 sm:text-left md:text-right">
+      <p class="text-xs text-center mt-3 text-white sm:text-left md:text-right">
         © {year} Green Ecolution
         <span class="hidden sm:inline"> · </span>
         <br class="sm:hidden" />
-        <span class="text-white/40">{version}</span>
+        <span>{version}</span>
       </p>
     </div>
   </div>
