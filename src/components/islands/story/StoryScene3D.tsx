@@ -61,6 +61,16 @@ function StoryClock({ isStatic, sourceRef, storyRef, onReady }: ClockProps) {
     }
   }, [sourceRef, invalidate])
 
+  // Scrolling through the hold after an act leaves the target unchanged, so
+  // the scroll itself has to tell that the reader is still moving.
+  useEffect(() => {
+    const scrolled = () => {
+      restingMs.current = 0
+    }
+    window.addEventListener('scroll', scrolled, { passive: true })
+    return () => window.removeEventListener('scroll', scrolled)
+  }, [])
+
   useFrame((_, delta) => {
     const { target, still } = sourceRef.current
     if (target === lastTarget.current) {
