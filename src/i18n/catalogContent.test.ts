@@ -3,8 +3,14 @@ import de from './locales/de'
 import en from './locales/en'
 
 // legal names PROGEEK GmbH as the analytics processor; the award photo shows
-// people who were there for PROGEEK. Both are facts, not offers.
-const PROGEEK_ALLOWED = new Set(['legal', 'home.award.imageAlt'])
+// people who were there for PROGEEK; the partner card credits PROGEEK GmbH,
+// a different company than the group, for the implementation. All are facts,
+// not offers.
+const PROGEEK_ALLOWED = new Set([
+  'legal',
+  'home.award.imageAlt',
+  'home.stakeholder.items.progeek.description',
+])
 
 function flatten(value: unknown, prefix: string): [string, string][] {
   if (typeof value === 'string') return [[prefix, value]]
