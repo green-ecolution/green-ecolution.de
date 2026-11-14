@@ -22,7 +22,7 @@ const words = t('testimonial.quote').split(' ')
     <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
       {t('testimonial.sectionLabel')}
     </span>
-    <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+    <div class="label-rule"></div>
   </div>
 
   <figure class="border-l-2 border-green-light-900/30 pl-6 lg:pl-8">
@@ -56,8 +56,9 @@ const words = t('testimonial.quote').split(' ')
 <style>
   /* The words light up in reading order as the quote travels up the window,
      starting around its middle, where it is actually being read.
-     --lead is how many of them are on their way at the same time. Without the
-     script the progress is 1 and the whole quote is simply there. */
+     --lead is how many of them are on their way at the same time. The progress
+     comes from src/scripts/scrollProgress.ts, loaded by the layout; without it
+     the progress is 1 and the whole quote is simply there. */
   .quote-word {
     --lead: 5;
     opacity: clamp(
@@ -69,7 +70,3 @@ const words = t('testimonial.quote').split(' ')
     transition: opacity 0.2s linear;
   }
 </style>
-
-<script>
-  import '../../scripts/scrollProgress'
-</script>

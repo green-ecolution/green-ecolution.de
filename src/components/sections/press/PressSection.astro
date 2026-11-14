@@ -20,7 +20,7 @@ const { label, title, description, wide = false } = Astro.props
       <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
         {label}
       </span>
-      <div class="h-0.5 w-12 bg-gradient-to-r from-green-light-900 to-transparent mt-1"></div>
+      <div class="label-rule"></div>
     </div>
     <h2 class="font-lato font-bold text-2xl text-grey-900 lg:text-3xl">{title}</h2>
     {description && <p class="mt-6 text-grey-900/80 leading-relaxed">{description}</p>}
