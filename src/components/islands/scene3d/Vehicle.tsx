@@ -3,6 +3,8 @@ import type { Group } from 'three'
 import { tourColors } from '../../../data/streamletTour'
 
 export const WHEEL_RADIUS = 0.55
+/** From the rear wheels to the front ones. */
+export const WHEELBASE = 6.4
 
 const wheelPositions: readonly (readonly [number, number])[] = [
   [1.55, 3.4],
