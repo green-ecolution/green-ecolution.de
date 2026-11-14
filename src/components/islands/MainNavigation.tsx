@@ -422,7 +422,7 @@ function Navigation({
         aria-controls="main-navigation"
         aria-haspopup="menu"
         aria-label={t('header.openNavigation')}
-        className="relative w-10 h-10 p-2 z-50 group cursor-pointer transition-transform ease-out duration-100 active:scale-90 xl:hidden"
+        className="relative w-11 h-11 p-2.5 z-50 group cursor-pointer transition-transform ease-out duration-100 active:scale-90 xl:hidden"
         onClick={() => setOpen(!open)}
       >
         <span

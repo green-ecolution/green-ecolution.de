@@ -1,37 +1,18 @@
 /* Override default styles from splide slider package */
-.splide.splide--grid > .splide__track {
-  @apply lg:!pb-7;
-}
-
-.splide.splide--grid > .splide__track > .splide__list {
-  @apply lg:!grid lg:!grid-cols-2 lg:!gap-x-6 lg:!gap-y-8;
-}
-
-/* Staggered card layout for Introduction section */
-.splide.splide--grid > .splide__track > .splide__list > .splide__slide:first-child {
-  @apply lg:mb-16;
-}
-
-.splide.splide--grid > .splide__track > .splide__list > .splide__slide:nth-child(2) {
-  @apply lg:mt-16;
-}
-
-.splide.splide--grid > .splide__track > .splide__list > .splide__slide:nth-child(3) {
-  @apply lg:-mt-16 lg:mb-16;
-}
-
 .splide__pagination {
   @apply !bottom-0 lg:!-bottom-4;
 }
 
+/* The button is the 44px hit area; the visible dot is drawn by ::before. */
 .splide__pagination .splide__pagination__page {
-  @apply !w-2.5 !h-2.5;
+  @apply relative !w-7 !h-11 !m-0 !bg-transparent !opacity-100 !rounded-none;
+  @apply before:absolute before:top-1/2 before:left-1/2 before:size-2.5 before:-translate-1/2 before:rounded-full before:bg-grey-900/25;
 }
 
 .splide__pagination .splide__pagination__page.is-active {
-  @apply !bg-green-dark-900 !scale-100;
+  @apply !scale-100 before:bg-green-dark-900;
 }
 
 .splide__pagination__page:focus-visible {
-  @apply !outline !outline-2 !outline-offset-2 !outline-green-light-900;
+  @apply !outline !outline-2 !-outline-offset-4 !outline-green-dark-900 !rounded-full;
 }
