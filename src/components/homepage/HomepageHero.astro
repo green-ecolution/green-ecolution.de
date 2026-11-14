@@ -28,7 +28,7 @@ const taglineJumps = taglineWords.length === workflowSteps.length
     <article class="pointer-events-auto max-w-208 mx-auto px-4 pt-28 mb-8 md:px-6 lg:mb-14 lg:pt-36 lg:max-w-screen-lg xl:max-w-screen-xl xl:pt-44">
       <div class="max-w-[30rem] md:max-w-[34rem] xl:max-w-[38rem] 2xl:max-w-[42rem]">
         <h1
-          class="hero-rise font-lato font-bold text-4xl mb-6 text-grey-900 md:text-5xl xl:text-6xl"
+          class="hero-rise hero-rise-opaque font-lato font-bold text-4xl mb-6 text-grey-900 md:text-5xl xl:text-6xl"
           style="--rise-delay: 150ms"
         >
           {t('hero.headlinePrefix')}
@@ -89,7 +89,8 @@ const taglineJumps = taglineWords.length === workflowSteps.length
       </div>
     </article>
 
-    <HeroTreesIsland client:visible />
+    <!-- Decoration: react and lottie-web can wait until the first screen stands. -->
+    <HeroTreesIsland client:idle />
   </div>
 </section>
 
