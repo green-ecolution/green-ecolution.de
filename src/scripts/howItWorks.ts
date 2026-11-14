@@ -227,6 +227,9 @@ function setup() {
     showExample(0)
     root.dataset.enhanced = ''
 
+    // Scrubbing unpinned, the progress comes from where the steps stand.
+    let narrowProgress = 0
+
     const pin = bindPinnedStage(
       track,
       stage,
@@ -237,12 +240,16 @@ function setup() {
           render(storyFromScroll(progress))
         } else if (narrowScrub) {
           setMode('scrub')
-          render(storyFromScroll(progressFromSteps(stuckLine(), stepBoxes(), SCROLL_WEIGHTS)))
+          render(storyFromScroll(narrowProgress))
         } else {
           setMode('autoplay')
         }
       },
       tallestStage,
+      (pinned) => {
+        if (pinned || !narrowScrub) return
+        narrowProgress = progressFromSteps(stuckLine(), stepBoxes(), SCROLL_WEIGHTS)
+      },
     )
 
     const jumpTo = (progress: number) => {

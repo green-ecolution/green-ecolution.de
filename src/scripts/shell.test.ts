@@ -4,7 +4,7 @@ import { describe, expect, test, vi } from 'vitest'
 function mountShell() {
   document.body.innerHTML = [
     '<div id="scroll-progress"></div>',
-    '<header id="site-header" class="bg-white/0"><div id="site-header-blur"></div></header>',
+    '<header id="site-header"><div id="site-header-blur"></div></header>',
     '<button id="back-to-top"></button>',
     '<a data-lang-switch="en" href="/en"></a>',
   ].join('')
@@ -46,10 +46,8 @@ describe('shell', () => {
     document.dispatchEvent(new Event('astro:page-load'))
 
     const header = document.getElementById('site-header')!
-    const blur = document.getElementById('site-header-blur')!
-    expect(header.classList.contains('bg-white/80')).toBe(true)
+    expect(header.hasAttribute('data-material')).toBe(true)
     expect([...header.classList].some((name) => name.startsWith('backdrop-'))).toBe(false)
-    expect(blur.classList.contains('backdrop-blur-xl')).toBe(true)
 
     vi.unstubAllGlobals()
   })

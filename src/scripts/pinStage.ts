@@ -1,4 +1,5 @@
 import { pinProgress } from '../lib/pinnedSteps'
+import { bindScrollFrame } from './scrollFrame'
 
 // Must match the media query for [data-pin-track] in general.css.
 const WIDE_ENOUGH = '(min-width: 768px)'
@@ -26,10 +27,14 @@ export function bindPinnedStage(
   // Stages whose parts overlap once pinned report their pinned height here;
   // by default it is the height of the stage content as laid out.
   contentHeight?: () => number,
+  // Layout reads `onUpdate` needs besides the progress. They belong here
+  // because `onUpdate` runs among the writes of the frame, where a read would
+  // force a layout pass.
+  onMeasure?: (pinned: boolean) => void,
 ): PinnedStage {
   const wide = window.matchMedia(WIDE_ENOUGH)
   let pinned = false
-  let frame = 0
+  let measured = { scrolled: 0, distance: 0 }
 
   const decidePinning = () => {
     const rem = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
@@ -52,32 +57,23 @@ export function bindPinnedStage(
     distance: track.offsetHeight - stage.offsetHeight,
   })
 
+  const read = () => {
+    if (pinned) measured = measure()
+    onMeasure?.(pinned)
+  }
+
+  const write = () => {
+    onUpdate(pinned ? pinProgress(measured.scrolled, measured.distance) : null)
+  }
+
   const update = () => {
-    frame = 0
-    if (!pinned) {
-      onUpdate(null)
-      return
-    }
-    const { scrolled, distance } = measure()
-    onUpdate(pinProgress(scrolled, distance))
+    read()
+    write()
   }
 
-  const schedule = () => {
-    if (frame === 0) frame = window.requestAnimationFrame(update)
-  }
-
-  window.addEventListener('scroll', schedule, { passive: true, signal })
-  window.addEventListener(
-    'resize',
-    () => {
-      decidePinning()
-      schedule()
-    },
-    { signal },
-  )
-  signal.addEventListener('abort', () => {
-    if (frame !== 0) window.cancelAnimationFrame(frame)
-  })
+  // The resize also reaches the frame below, which then reads the new pinning.
+  bindScrollFrame({ read, write }, signal)
+  window.addEventListener('resize', decidePinning, { signal })
 
   decidePinning()
   update()
