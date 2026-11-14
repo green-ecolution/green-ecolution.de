@@ -510,13 +510,14 @@ const DEEP_ROOTS = [
 <style>
   /* The poster is a still of the 3d model; it covers the wait for the model
      and stays for readers without scripts. The drawing only stands in where
-     webgl is missing. */
+     webgl is missing. Until then it is not rendered at all: merely
+     transparent, its SMIL animations restyle the page on every frame. */
   .probe-sketch {
-    opacity: 0;
+    display: none;
   }
 
   [data-probe-view='sketch'] .probe-sketch {
-    opacity: 1;
+    display: block;
   }
 
   [data-probe-view='sketch'] .probe-poster {
@@ -775,7 +776,11 @@ const DEEP_ROOTS = [
     opacity: 1;
   }
 
-  [data-pin-track][data-pinned] .hardware-chapter[data-revealed='0'] .scan-frame {
+  /* Only in the chapter that shows: in a hidden one the animation would keep
+     restyling the page on every frame. */
+  [data-pin-track][data-pinned]
+    .hardware-chapter[data-active='true'][data-revealed='0']
+    .scan-frame {
     animation: scan-seek 1.4s ease-in-out infinite;
   }
 

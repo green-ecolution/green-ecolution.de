@@ -194,7 +194,20 @@ function setup() {
       { threshold: 0.6 },
     )
     viewport.observe(root)
-    const view = new MutationObserver(playWhenSeen)
+    // The sketch only shows where webgl is missing. Its SMIL animations
+    // restyle the page on every frame even while it is not rendered, so they
+    // stand still until it is.
+    const sketch = root.querySelector<SVGSVGElement>('svg.probe-sketch')
+    const syncSketch = () => {
+      if (root.dataset.probeView === 'sketch') sketch?.unpauseAnimations()
+      else sketch?.pauseAnimations()
+    }
+    syncSketch()
+
+    const view = new MutationObserver(() => {
+      syncSketch()
+      playWhenSeen()
+    })
     view.observe(root, {
       attributes: true,
       attributeFilter: ['data-model-ready', 'data-probe-view'],
