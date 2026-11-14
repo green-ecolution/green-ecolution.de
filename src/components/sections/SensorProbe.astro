@@ -129,6 +129,7 @@ const DEEP_ROOTS = [
                     </defs>
                     <rect
                       class="soak-water"
+                      style={`--soak-level: ${START_LEVEL}`}
                       x="0"
                       y="64"
                       width="320"
@@ -568,6 +569,14 @@ const DEEP_ROOTS = [
     to {
       rotate: -360deg;
     }
+  }
+
+  /* Written on every scrolled frame. Left to inherit from the scene's root it
+     would restyle the sketch, the poster and the model's labels each time. */
+  @property --soak-level {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
   }
 
   .soak-water {
