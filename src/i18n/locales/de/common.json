@@ -13,7 +13,6 @@
   },
   "nav": {
     "ariaLabel": "Hauptnavigation",
-    "heading": "Hauptnavigation",
     "product": "Produkt",
     "streamlet": "Tourenoptimierung",
     "services": "Leistungen",
@@ -22,7 +21,19 @@
     "tryNow": "Jetzt ausprobieren",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
-    "blog": "Blog"
+    "blog": "Blog",
+    "company": "Unternehmen",
+    "platform": "Plattform",
+    "releases": "Releases",
+    "press": "Presse",
+    "descriptions": {
+      "platform": "Macht aus Messwerten Entscheidungen und Einsätze.",
+      "streamlet": "Streamlet plant Touren mit Zeitfenstern und Nachfüllstationen.",
+      "releases": "Alle Versionen mit neuen Funktionen und behobenen Fehlern.",
+      "about": "Wie aus einer Frage der Stadt Flensburg eine Firma wurde.",
+      "blog": "Berichte aus dem Feld, aus der Region und von der Plattform.",
+      "press": "Logos, Bilder, Pitch Deck und Pressekontakt."
+    }
   },
   "footer": {
     "logoAriaLabel": "Zur Startseite navigieren",

@@ -20,9 +20,11 @@ export function useDialogFocus(ref: RefObject<HTMLElement | null>, open: boolean
 
     const previous = document.activeElement as HTMLElement | null
 
+    // Elements without a box (display: none) match the selector but refuse
+    // focus, which would leave the cycle stuck on them.
     const targets = () =>
       Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
-        (element) => element.closest('[inert]') === null,
+        (element) => element.closest('[inert]') === null && element.getClientRects().length > 0,
       )
 
     targets()[0]?.focus()

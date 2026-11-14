@@ -84,7 +84,7 @@ summary:focus-visible,
 /* The drawer is positioned at its open place and pushed out with a transform,
    so the gesture can write a px offset every frame without touching layout.
    --drawer-x lives on the root because the scrim reads the same progress.
-   Above xl the markup is a plain nav bar and must not be moved at all. */
+   From lg on the markup is a plain nav bar and must not be moved at all. */
 .main-navigation {
   /* The origin is the right edge, so the overshoot stretch pulls the panel open
      to the left without ever unsticking it from the side of the screen. */
@@ -92,9 +92,41 @@ summary:focus-visible,
   transform-origin: 100% 50%;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1024px) {
   .main-navigation {
     transform: none;
+  }
+
+  /* Visibility rides the same transition, so a closing panel stays visible
+     until it has faded and is out of the tab order afterwards. */
+  .nav-panel {
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -0.375rem;
+    transition:
+      opacity 180ms var(--ease-brand),
+      translate 180ms var(--ease-brand),
+      visibility 180ms;
+  }
+
+  .nav-group[data-open] > .nav-panel {
+    visibility: visible;
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .nav-group[data-open] .nav-chevron {
+    rotate: 180deg;
+  }
+}
+
+/* Without scripting nothing sets data-open, so hover and focus have to. */
+@media (min-width: 1024px) and (scripting: none) {
+  .nav-group:hover > .nav-panel,
+  .nav-group:focus-within > .nav-panel {
+    visibility: visible;
+    opacity: 1;
+    translate: 0 0;
   }
 }
 

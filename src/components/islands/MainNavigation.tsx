@@ -19,10 +19,20 @@ interface NavLink {
   label: string
   href: string
   active?: boolean
+  description?: string
 }
 
+interface NavGroup {
+  id: string
+  label: string
+  active: boolean
+  items: NavLink[]
+}
+
+type NavEntry = NavLink | NavGroup
+
 interface Props {
-  links: NavLink[]
+  entries: NavEntry[]
   imprintHref: string
   privacyHref: string
   demoHref: string
@@ -38,8 +48,20 @@ const VELOCITY_WINDOW_MS = 100
 // Widest the panel ever stretches when pulled past its open stop, as a fraction
 // of its own width. Small on purpose: it has to read as give, not as a resize.
 const MAX_OVERSHOOT_STRETCH = 0.045
+// Below this the navigation is a drawer, from here on a bar. Header.astro
+// hydrates the island on the other side of the same line.
+const DESKTOP_QUERY = '(min-width: 1024px)'
 
-function Arrow({ className }: { className: string }) {
+const CHEVRON_PATH = 'm19.5 8.25-7.5 7.5-7.5-7.5'
+
+const ACTIVE_UNDERLINE =
+  'underline underline-offset-4 decoration-2 decoration-green-light-900 lg:decoration-green-middle-900'
+const LABEL_HOVER =
+  'transition-colors ease-out duration-150 group-hover:text-green-light-900 group-active:text-green-light-900 lg:group-hover:text-green-middle-900 lg:group-active:text-green-middle-900'
+const DRAWER_ARROW =
+  'w-6 shrink-0 transition-all ease-out duration-200 group-hover:translate-x-2 group-hover:text-green-light-900 group-active:translate-x-2 group-active:text-green-light-900 lg:hidden'
+
+function Icon({ path, className }: { path: string; className: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -47,35 +69,93 @@ function Arrow({ className }: { className: string }) {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
+      aria-hidden="true"
       className={className}
     >
-      <path strokeLinecap="round" strokeLinejoin="round" d={ARROW_PATH} />
+      <path strokeLinecap="round" strokeLinejoin="round" d={path} />
     </svg>
   )
 }
 
 function NavItem({ label, href, active, onClick }: NavLink & { onClick: () => void }) {
   return (
-    <li className="mb-4 xl:mb-0">
+    <li className="mb-4 lg:mb-0">
       <a
         href={href}
         onClick={onClick}
         aria-current={active ? 'page' : undefined}
-        className="text-lg md:text-2xl font-bold flex justify-between items-center group cursor-pointer xl:text-base xl:font-medium xl:leading-none xl:my-1"
+        className="text-lg md:text-2xl font-bold flex justify-between items-center group cursor-pointer lg:text-base lg:font-medium lg:leading-none lg:my-1"
       >
-        <p
-          className={`whitespace-nowrap transition-colors ease-out duration-150 group-hover:text-green-light-900 group-active:text-green-light-900 xl:group-hover:text-green-middle-900 xl:group-active:text-green-middle-900 ${active ? 'underline underline-offset-4 decoration-2 decoration-green-light-900 xl:decoration-green-middle-900' : ''}`}
-        >
+        <p className={`whitespace-nowrap ${LABEL_HOVER} ${active ? ACTIVE_UNDERLINE : ''}`}>
           {label}
         </p>
-        <Arrow className="w-6 transition-all ease-out duration-200 group-hover:translate-x-2 group-hover:text-green-light-900 group-active:translate-x-2 group-active:text-green-light-900 xl:hidden" />
+        <Icon path={ARROW_PATH} className={DRAWER_ARROW} />
       </a>
     </li>
   )
 }
 
+// In the drawer a group is a small heading over its links. On the bar it is a
+// button with a panel; src/scripts/navDropdown.ts opens it, because the island
+// does not hydrate there.
+function NavGroupItem({ id, label, active, items, onClick }: NavGroup & { onClick: () => void }) {
+  const panelId = `nav-panel-${id}`
+
+  return (
+    <li data-nav-group className="nav-group my-6 first:mt-0 lg:relative lg:my-0">
+      <p className="mb-3 text-sm text-white/60 md:text-base lg:hidden">{label}</p>
+      <button
+        type="button"
+        data-nav-trigger
+        aria-expanded={false}
+        aria-controls={panelId}
+        className="hidden items-center gap-x-1 my-1 text-base font-medium leading-none cursor-pointer group lg:flex"
+      >
+        <span className={`whitespace-nowrap ${LABEL_HOVER} ${active ? ACTIVE_UNDERLINE : ''}`}>
+          {label}
+        </span>
+        <Icon
+          path={CHEVRON_PATH}
+          className="nav-chevron w-3.5 stroke-2 transition-transform duration-200"
+        />
+      </button>
+      <div id={panelId} className="nav-panel lg:absolute lg:top-full lg:-left-5 lg:w-80 lg:pt-5">
+        <ul
+          aria-label={label}
+          className="lg:p-2 lg:bg-white lg:rounded-2xl lg:border lg:border-grey-900/10 lg:shadow-nav-panel"
+        >
+          {items.map((item) => (
+            <li key={item.href} className="mb-3 last:mb-0 lg:mb-0">
+              <a
+                href={item.href}
+                onClick={onClick}
+                aria-current={item.active ? 'page' : undefined}
+                className="text-lg md:text-2xl font-bold flex justify-between items-center group cursor-pointer lg:block lg:px-4 lg:py-3 lg:rounded-xl lg:text-base lg:font-normal lg:transition-colors lg:duration-150 lg:hover:bg-green-light-100 lg:focus-visible:bg-green-light-100"
+              >
+                <span className="block">
+                  <span
+                    className={`block whitespace-nowrap lg:font-semibold ${LABEL_HOVER} ${item.active ? ACTIVE_UNDERLINE : ''}`}
+                  >
+                    {item.label}
+                  </span>
+                  {item.description && (
+                    <span className="hidden mt-1 text-sm text-grey-900/70 lg:block">
+                      {item.description}
+                    </span>
+                  )}
+                </span>
+                <Icon path={ARROW_PATH} className={DRAWER_ARROW} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </li>
+  )
+}
+
 function Navigation({
-  links,
+  entries,
   imprintHref,
   privacyHref,
   demoHref,
@@ -177,10 +257,10 @@ function Navigation({
   )
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(!window.matchMedia('(min-width: 1280px)').matches)
+    const checkMobile = () => setIsMobile(!window.matchMedia(DESKTOP_QUERY).matches)
     const handleResize = () => {
       checkMobile()
-      if (window.matchMedia('(min-width: 1280px)').matches) {
+      if (window.matchMedia(DESKTOP_QUERY).matches) {
         setOpen(false)
       }
     }
@@ -344,7 +424,7 @@ function Navigation({
   const navContent = (
     <>
       <div
-        className="fixed inset-0 bg-grey-900 z-[55] xl:hidden"
+        className="fixed inset-0 bg-grey-900 z-[55] lg:hidden"
         style={{
           opacity: 'calc(0.6 * var(--drawer-progress, 0))',
           pointerEvents: open ? 'auto' : 'none',
@@ -361,35 +441,37 @@ function Navigation({
         onPointerMove={handlePointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
-        className="main-navigation touch-pan-y fixed top-[calc(0.5rem+env(safe-area-inset-top))] bottom-[calc(0.5rem+env(safe-area-inset-bottom))] right-0 block px-4 w-[70vw] z-[60] bg-grey-900 max-w-100 rounded-tl-2xl rounded-bl-2xl shadow-main-nav md:px-6 xl:relative xl:inset-y-auto xl:right-auto xl:bg-transparent xl:shadow-none xl:w-auto xl:max-w-none xl:z-auto"
+        className="main-navigation touch-pan-y fixed top-[calc(0.5rem+env(safe-area-inset-top))] bottom-[calc(0.5rem+env(safe-area-inset-bottom))] right-0 flex flex-col overflow-y-auto overscroll-contain px-4 w-[70vw] z-[60] bg-grey-900 max-w-100 rounded-tl-2xl rounded-bl-2xl shadow-main-nav md:px-6 lg:block lg:overflow-visible lg:relative lg:inset-y-auto lg:right-auto lg:bg-transparent lg:shadow-none lg:w-auto lg:max-w-none lg:z-auto"
       >
-        <p className="pt-[20vh] text-white/80 mb-6 md:text-lg xl:hidden">{t('nav.heading')}</p>
-        <ul className="text-white xl:text-grey-900 xl:flex xl:gap-x-6 2xl:gap-x-10 xl:justify-center xl:items-center">
-          {links.map((link) => (
-            <NavItem
-              key={link.href}
-              label={link.label}
-              href={link.href}
-              active={link.active}
-              onClick={close}
-            />
-          ))}
-          <a
-            href={demoHref}
-            aria-label="demo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-x-4 rounded-2xl w-max font-semibold px-5 py-2 group cursor-pointer transition-all ease-out duration-200 text-white bg-green-dark-900 hover:bg-green-light-900 hover:shadow-lg hover:shadow-green-light-900/40 hover:-translate-y-0.5 active:bg-green-light-900 active:translate-y-0 active:scale-[0.97] active:duration-75 xl:gap-x-2 xl:px-4 xl:py-1.5 xl:text-sm"
-          >
-            <span className="whitespace-nowrap">{t('nav.tryNow')}</span>
-            <Arrow className="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2 xl:w-4 xl:group-hover:translate-x-0.5" />
-          </a>
-          <li className="mt-6 xl:mt-0 xl:border-l xl:border-grey-900/15 xl:pl-4" onClick={close}>
+        <ul className="pt-[min(5rem,9vh)] text-white md:pt-24 lg:pt-0 lg:text-grey-900 lg:flex lg:gap-x-6 xl:gap-x-8 2xl:gap-x-10 lg:justify-center lg:items-center">
+          {entries.map((entry) =>
+            'items' in entry ? (
+              <NavGroupItem key={entry.id} {...entry} onClick={close} />
+            ) : (
+              <NavItem key={entry.href} {...entry} onClick={close} />
+            ),
+          )}
+          <li>
+            <a
+              href={demoHref}
+              aria-label="demo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-x-4 rounded-2xl w-max font-semibold px-5 py-2 group cursor-pointer transition-all ease-out duration-200 text-white bg-green-dark-900 hover:bg-green-light-900 hover:shadow-lg hover:shadow-green-light-900/40 hover:-translate-y-0.5 active:bg-green-light-900 active:translate-y-0 active:scale-[0.97] active:duration-75 lg:gap-x-2 lg:px-4 lg:py-1.5 lg:text-sm"
+            >
+              <span className="whitespace-nowrap">{t('nav.tryNow')}</span>
+              <Icon
+                path={ARROW_PATH}
+                className="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2 lg:w-4 lg:group-hover:translate-x-0.5"
+              />
+            </a>
+          </li>
+          <li className="mt-4 lg:mt-0 lg:border-l lg:border-grey-900/15 lg:pl-4" onClick={close}>
             {children}
           </li>
         </ul>
 
-        <ul className="absolute bottom-6 text-white xl:text-grey-900 flex flex-wrap gap-x-5 items-center text-sm md:bottom-10 md:text-base xl:hidden">
+        <ul className="mt-auto pt-6 pb-6 text-white flex flex-wrap gap-x-5 items-center text-sm md:pb-10 md:text-base lg:hidden">
           <li>
             <a
               href={imprintHref}
@@ -422,7 +504,7 @@ function Navigation({
         aria-controls="main-navigation"
         aria-haspopup="menu"
         aria-label={t('header.openNavigation')}
-        className="relative w-11 h-11 p-2.5 z-50 group cursor-pointer transition-transform ease-out duration-100 active:scale-90 xl:hidden"
+        className="relative w-11 h-11 p-2.5 z-50 group cursor-pointer transition-transform ease-out duration-100 active:scale-90 lg:hidden"
         onClick={() => setOpen(!open)}
       >
         <span

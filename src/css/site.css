@@ -113,6 +113,7 @@
   /* Diffuse enough to read as the edge of a floating layer rather than as a
      card sitting on the page. */
   --shadow-header-edge: 0 1px 24px -10px rgba(0, 0, 0, 0.28);
+  --shadow-nav-panel: 0 20px 44px -20px rgba(0, 0, 0, 0.32), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
 
   /* Animations */
   --animate-move: move 35s linear infinite;
