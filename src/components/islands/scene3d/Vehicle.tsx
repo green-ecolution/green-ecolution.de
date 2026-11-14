@@ -1,4 +1,4 @@
-import type { RefObject } from 'react'
+import type { ReactNode, RefObject } from 'react'
 import type { Group } from 'three'
 import { tourColors } from '../../../data/streamletTour'
 
@@ -13,9 +13,15 @@ const wheelPositions: readonly (readonly [number, number])[] = [
   [-1.55, -3],
 ]
 
-// The truck is modelled facing its own +z. The wheels are grouped so the
+interface BaseProps {
+  wheels: RefObject<Group[]>
+  /** The body on the bed behind the cab, which starts at y = 1.55. */
+  children: ReactNode
+}
+
+// Every truck is modelled facing its own +z. The wheels are grouped so the
 // animation can spin each about its axle.
-export function Vehicle({ wheels }: { wheels: RefObject<Group[]> }) {
+export function VehicleBase({ wheels, children }: BaseProps) {
   return (
     <>
       <mesh position={[0, 0.85, 0]}>
@@ -47,32 +53,7 @@ export function Vehicle({ wheels }: { wheels: RefObject<Group[]> }) {
         </group>
       ))}
 
-      <mesh position={[0, 2.75, -1.2]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[1.55, 1.55, 6.4, 24]} />
-        <meshLambertMaterial color={tourColors.vehicleTank} />
-      </mesh>
-
-      {[-3.5, -1.2, 1.1].map((z) => (
-        <mesh key={z} position={[0, 2.75, z]} rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[1.62, 1.62, 0.28, 24]} />
-          <meshLambertMaterial color={tourColors.vehicleBody} />
-        </mesh>
-      ))}
-
-      <mesh position={[0, 2.75, -4.45]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[1.35, 1.55, 0.3, 24]} />
-        <meshLambertMaterial color={tourColors.vehicleTankBand} />
-      </mesh>
-
-      <mesh position={[0, 4.4, -1.2]}>
-        <cylinderGeometry args={[0.4, 0.4, 0.35, 12]} />
-        <meshLambertMaterial color={tourColors.vehicleBody} />
-      </mesh>
-
-      <mesh position={[1.35, 1.75, -1.2]}>
-        <boxGeometry args={[0.35, 0.5, 5.6]} />
-        <meshLambertMaterial color={tourColors.vehicleTrim} />
-      </mesh>
+      {children}
 
       <mesh position={[0, 2.5, 3.6]}>
         <boxGeometry args={[3.2, 2.5, 2.8]} />
@@ -125,5 +106,38 @@ export function Vehicle({ wheels }: { wheels: RefObject<Group[]> }) {
         />
       </mesh>
     </>
+  )
+}
+
+export function Vehicle({ wheels }: { wheels: RefObject<Group[]> }) {
+  return (
+    <VehicleBase wheels={wheels}>
+      <mesh position={[0, 2.75, -1.2]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[1.55, 1.55, 6.4, 24]} />
+        <meshLambertMaterial color={tourColors.vehicleTank} />
+      </mesh>
+
+      {[-3.5, -1.2, 1.1].map((z) => (
+        <mesh key={z} position={[0, 2.75, z]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[1.62, 1.62, 0.28, 24]} />
+          <meshLambertMaterial color={tourColors.vehicleBody} />
+        </mesh>
+      ))}
+
+      <mesh position={[0, 2.75, -4.45]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[1.35, 1.55, 0.3, 24]} />
+        <meshLambertMaterial color={tourColors.vehicleTankBand} />
+      </mesh>
+
+      <mesh position={[0, 4.4, -1.2]}>
+        <cylinderGeometry args={[0.4, 0.4, 0.35, 12]} />
+        <meshLambertMaterial color={tourColors.vehicleBody} />
+      </mesh>
+
+      <mesh position={[1.35, 1.75, -1.2]}>
+        <boxGeometry args={[0.35, 0.5, 5.6]} />
+        <meshLambertMaterial color={tourColors.vehicleTrim} />
+      </mesh>
+    </VehicleBase>
   )
 }
