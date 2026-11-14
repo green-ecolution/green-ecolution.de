@@ -17,6 +17,7 @@ export function setup() {
   const backToTop = document.getElementById('back-to-top')
 
   let frame = 0
+  let lastScrollTop = window.scrollY
 
   const update = () => {
     frame = 0
@@ -45,8 +46,12 @@ export function setup() {
         ?.setAttribute('content', scrolled ? '#fcfcfc' : '#4C7741')
     }
 
+    const scrollingDown = scrollTop > lastScrollTop
+    lastScrollTop = scrollTop
+
     if (backToTop) {
-      const hidden = scrollTop <= BACK_TO_TOP_THRESHOLD_PX
+      // Hidden while reading downwards so it never sits on top of the text.
+      const hidden = scrollTop <= BACK_TO_TOP_THRESHOLD_PX || scrollingDown
       backToTop.classList.toggle('opacity-0', hidden)
       backToTop.classList.toggle('translate-y-4', hidden)
       backToTop.classList.toggle('pointer-events-none', hidden)
