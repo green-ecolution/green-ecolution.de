@@ -176,3 +176,6 @@
    spans both heights of an iPad in landscape, whose Safari bars come and go
    while scrolling. */
 @custom-variant pin-short (@media (max-height: 54.99rem));
+
+/* Windows high enough for a column to stick below the header, from 680px. */
+@custom-variant stick (@media (min-height: 42.5rem));

@@ -1,6 +1,6 @@
 import { depot, townTrees, treeOfSite, type TownTree } from '../../../data/productTown'
 import { vehiclePose, type GroundPoint } from '../../../lib/storyPath'
-import type { TourFrame, TourScript } from '../../../lib/wateringDay'
+import type { TourFrame, TourScript, TourView } from '../../../lib/wateringDay'
 import { WHEELBASE } from '../scene3d/Vehicle'
 import type { DayLive } from './shared'
 
@@ -16,8 +16,12 @@ export interface TruckPose {
 export interface Stage {
   frame: TourFrame | null
   truck: TruckPose
-  /** The picture is taken from the truck. */
-  riding: boolean
+  /** Which camera draws the picture; always the slanted one under reduced motion. */
+  view: TourView
+  /** Set by the rig: where the slanted camera looks and how many world units its picture is high. */
+  iso: { at: [number, number, number]; height: number }
+  /** Set by the close-up camera: where it stands, or null while the slanted one draws. */
+  lens: [number, number, number] | null
 }
 
 // Nose to the north, the way the tour leaves the depot.
@@ -39,7 +43,8 @@ export function truckPose(script: TourScript | null, frame: TourFrame | null): T
   let travelled = frame.along * leg.length
   for (let index = 0; index < frame.leg; index++) travelled += script.legs[index].length
 
-  // Some stops are left the way the truck came. It turns on the spot while it
+  // A refill in the depot's yard, at the end of a dead end, is left the way the
+  // truck came; nowhere else does it turn round. It turns on the spot while it
   // still stands there, so the next leg starts facing the right way.
   let heading = pose.heading
   const next = script.legs[frame.leg + 1]
@@ -69,36 +74,17 @@ export interface Shot {
 export const OVERVIEW: Shot = { at: [0, 0, 0], zoom: 1 }
 
 const TREE_ZOOM = 2.1
-const FOLLOW_ZOOM = 1.7
-const WATER_ZOOM = 2.5
-const REFILL_ZOOM = 2.3
-/** How far ahead of the truck the camera looks while it follows. */
-const FOLLOW_LEAD = 7
+/** Held for the whole drive, stops included, so the camera never zooms in between. */
+const FOLLOW_ZOOM = 1.6
 
 export function shotFor(live: DayLive, stage: Stage): Shot {
   const { frame, truck } = stage
 
   if (live.script && frame && !frame.done) {
     if (frame.shot === 'plan' || frame.shot === 'home') return OVERVIEW
-
-    if (frame.shot === 'refill') return { at: [truck.at[0], 2, truck.at[1]], zoom: REFILL_ZOOM }
-
-    const tree = wateredTree(live.script, frame)
-    if (tree) {
-      return {
-        at: [(tree.at[0] + truck.at[0]) / 2, 2, (tree.at[1] + truck.at[1]) / 2],
-        zoom: WATER_ZOOM,
-      }
-    }
-
-    return {
-      at: [
-        truck.at[0] + Math.sin(truck.heading) * FOLLOW_LEAD,
-        1.5,
-        truck.at[1] + Math.cos(truck.heading) * FOLLOW_LEAD,
-      ],
-      zoom: FOLLOW_ZOOM,
-    }
+    // Only the truck's position: a point ahead of it would swing at every
+    // corner and wherever the truck turns on the spot.
+    return { at: [truck.at[0], 1.5, truck.at[1]], zoom: FOLLOW_ZOOM }
   }
 
   if (live.selected !== null && !live.script) {
@@ -107,4 +93,21 @@ export function shotFor(live: DayLive, stage: Stage): Shot {
   }
 
   return OVERVIEW
+}
+
+/** Starts and ends at rest. */
+export const glide = (share: number) => share * share * (3 - 2 * share)
+
+/** How far the picture has left the slanted view: 0 there, 1 in the close-ups. */
+export function showpieceWeight(view: TourView): number {
+  switch (view.mode) {
+    case 'iso':
+      return 0
+    case 'flyIn':
+      return glide(view.share)
+    case 'flyOut':
+      return 1 - glide(view.share)
+    default:
+      return 1
+  }
 }

@@ -90,7 +90,6 @@ export const blocks: CityBlock[] = [
   house(-26, 35, 9, 8, 2, 'gable', 2, '+z'),
   house(-51, -14, 10, 9, 2, 'gable', 3, '+x'),
   house(-50, 8, 11, 11, 3, 'flat', 0, '+x'),
-  // Narrow enough for the truck to turn on the spot at the hydrant.
   house(27, -12, 6, 8, 3, 'flat', 1, '+z'),
   house(25, 13, 9, 8, 2, 'gable', 2, '+z'),
 ]

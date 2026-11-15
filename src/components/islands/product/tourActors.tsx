@@ -9,16 +9,18 @@ import {
   type Mesh,
   type MeshBasicMaterial,
 } from 'three'
-import type { TownTree } from '../../../data/productTown'
+import { HYDRANT_SITE, hydrant, type TownTree } from '../../../data/productTown'
 import { roadHeight, tourColors } from '../../../data/streamletTour'
-import type { TourScript } from '../../../lib/wateringDay'
+import { WATER_SECONDS, type TourFrame, type TourScript } from '../../../lib/wateringDay'
 import { damp } from '../scene3d/damp'
 import { appendRibbon, ribbonGeometry, type RibbonArrays } from '../scene3d/ribbon'
 import { treePit } from '../scene3d/trees'
 import { Vehicle, WHEEL_RADIUS } from '../scene3d/Vehicle'
 import { WATER, jetGeometry, jetSpan, shapeJet, type JetArc } from '../scene3d/waterJet'
+import { hoseGeometry, shapeHose } from './hose'
 import type { DayLive } from './shared'
 import { turned, wateredTree, type Stage, type TruckPose } from './stage'
+import { HYDRANT_ARM } from './town'
 
 interface TourProps {
   live: RefObject<DayLive>
@@ -174,6 +176,18 @@ function aimJet(truck: TruckPose, tree: TownTree) {
   arc.rise = (climb * climb) / (4 * (climb + drop))
 }
 
+// The jet starts and stops as at a plain stop; a longer one, held for its
+// card, keeps it running in between.
+function jetShare(script: TourScript, frame: TourFrame): number {
+  const { start, end } = script.dwells[frame.dwell]
+  const standing = end - start
+  const since = frame.dwellShare * standing
+  const plain = Math.min(standing, WATER_SECONDS)
+  if (since < plain / 2) return since / plain
+  if (standing - since < plain / 2) return 1 - (standing - since) / plain
+  return 0.5
+}
+
 const WET_RADIUS = treePit.radius - treePit.kerbWidth
 // One jet for the one truck; the frame loop reshapes it and aims the arc.
 const jet = jetGeometry()
@@ -186,9 +200,10 @@ export function WaterJet({ live, stage, isStatic }: TourProps) {
 
   useFrame(({ clock }) => {
     const { frame, truck } = stage.current
-    const tree = isStatic ? null : wateredTree(live.current.script, frame)
+    const { script } = live.current
+    const tree = isStatic ? null : wateredTree(script, frame)
     const watering = tree && frame ? frame.dwellShare : 0
-    const { tail, head } = jetSpan(watering)
+    const { tail, head } = jetSpan(tree && frame && script ? jetShare(script, frame) : 0)
     const time = clock.getElapsedTime()
 
     if (tree) aimJet(truck, tree)
@@ -234,14 +249,21 @@ export function WaterJet({ live, stage, isStatic }: TourProps) {
 }
 
 /** Rings of water spreading under the truck while it stands at a water point. */
-export function RefillPulse({ stage, isStatic }: TourProps) {
+export function RefillPulse({ live, stage, isStatic }: TourProps) {
   const ring = useRef<Mesh>(null)
 
   useFrame(({ clock }) => {
     const node = ring.current
     if (!node) return
     const { frame, truck } = stage.current
-    const isRefilling = !isStatic && frame !== null && !frame.done && frame.shot === 'refill'
+    const { script } = live.current
+    const isRefilling =
+      !isStatic &&
+      script !== null &&
+      frame !== null &&
+      !frame.done &&
+      frame.dwell >= 0 &&
+      script.dwells[frame.dwell].stop.kind === 'refill'
     node.visible = isRefilling
     if (!isRefilling) return
 
@@ -261,6 +283,49 @@ export function RefillPulse({ stage, isStatic }: TourProps) {
         depthWrite={false}
         side={DoubleSide}
       />
+    </mesh>
+  )
+}
+
+// The filler dome on the crown of the tank in scene3d/Vehicle, its top.
+const DOME = { y: 4.575, z: -1.2 } as const
+/** Seconds the hose takes to reach the truck, and to come off it again. */
+const HOSE_REACH = 0.45
+const hose = hoseGeometry()
+const outlet = new Vector3()
+const dome = new Vector3()
+
+/** From the hydrant up to the tank while the truck refills there, with water running through. */
+export function RefillHose({ live, stage, isStatic }: TourProps) {
+  const mesh = useRef<Mesh>(null)
+
+  useFrame(({ clock }) => {
+    const node = mesh.current
+    if (!node) return
+    const { frame, truck } = stage.current
+    const { script } = live.current
+    const dwell =
+      script && frame && !frame.done && frame.dwell >= 0 ? script.dwells[frame.dwell] : null
+    const isFilling = !isStatic && dwell?.stop.kind === 'refill' && dwell.stop.site === HYDRANT_SITE
+    node.visible = isFilling
+    if (!isFilling || !dwell || !frame) return
+
+    const standing = dwell.end - dwell.start
+    const since = frame.dwellShare * standing
+    const reach = Math.min(1, since / HOSE_REACH, (standing - since) / HOSE_REACH)
+    const side = Math.sign(truck.at[0] - hydrant.at[0]) || -1
+    outlet.set(hydrant.at[0] + side * HYDRANT_ARM.half, HYDRANT_ARM.height, hydrant.at[1])
+    dome.set(
+      truck.at[0] + Math.sin(truck.heading) * DOME.z,
+      roadHeight + DOME.y,
+      truck.at[1] + Math.cos(truck.heading) * DOME.z,
+    )
+    shapeHose(hose, outlet, dome, reach, clock.getElapsedTime())
+  })
+
+  return (
+    <mesh ref={mesh} geometry={hose} visible={false} frustumCulled={false}>
+      <meshLambertMaterial vertexColors />
     </mesh>
   )
 }

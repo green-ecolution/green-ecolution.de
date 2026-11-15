@@ -1,6 +1,7 @@
 // Drives the watering day of the product page in a headless browser and checks
-// what stills cannot show: the tour runs, refills on the way, cuts into the
-// ride and ends where it should.
+// what stills cannot show: the tour runs, refills on the way, flies into the
+// close-ups and out again without a cut, never turns round at a stop and ends
+// where it should.
 //   node scripts/probe-product-day.mjs [outDir]
 import { mkdirSync } from 'node:fs'
 import { join } from 'node:path'
@@ -22,6 +23,16 @@ const DRY = `document.querySelectorAll('#process [data-state=dry]').length`
 // the stage; only one of them is laid out.
 const button = (text) =>
   `[...document.querySelectorAll('#process button')].find((node) => node.getClientRects().length > 0 && node.textContent.includes(${JSON.stringify(text)}))`
+const STRIP_CARD = `(() => {
+  const card = document.querySelector('#process [data-day-strip] [data-day-card]')
+  if (!card) return null
+  const { top, bottom } = card.getBoundingClientRect()
+  return {
+    title: card.children[1].textContent.trim(),
+    inView: top >= 0 && bottom <= innerHeight,
+    next: [...card.querySelectorAll('button')].some((node) => node.textContent.includes('Weiterfahren')),
+  }
+})()`
 const STRIP = `(() => {
   const strip = document.querySelector('#process [data-day-strip]')
   if (!strip || strip.getClientRects().length === 0) return null
@@ -34,28 +45,100 @@ const STRIP = `(() => {
   }
 })()`
 
-// Runs inside the page: polling from outside misses the short dips and status
-// changes when software rendering is slow.
+// Runs inside the page: polling from outside misses the short close-ups and
+// status changes when software rendering is slow.
 const RECORDER = `(() => {
   const status = document.querySelector('#process [role=status]')
   const root = document.querySelector('#process [data-day-root]')
-  const record = (window.__probe = { statuses: [status.textContent.trim()], dips: 0, lowestTank: 1, dimmed: false })
+  const stage = document.querySelector('#process [data-day-stage]')
+  const caption = document.querySelector('#process [data-day-caption]')
+  const record = (window.__probe = {
+    statuses: [status.textContent.trim()],
+    cameras: [stage.dataset.dayCamera],
+    turns: [],
+    caption: {},
+    cards: {},
+    holds: { watering: [], refilling: [] },
+    lowestOpacity: 1,
+    lowestTank: 1,
+  })
   new MutationObserver(() => record.statuses.push(status.textContent.trim())).observe(status, {
     childList: true,
     characterData: true,
     subtree: true,
   })
+  new MutationObserver(() => {
+    if (record.cameras.at(-1) !== stage.dataset.dayCamera) record.cameras.push(stage.dataset.dayCamera)
+    if (stage.dataset.dayTurn && record.turns.at(-1) !== stage.dataset.dayTurn) record.turns.push(stage.dataset.dayTurn)
+  }).observe(stage, { attributes: true, attributeFilter: ['data-day-camera', 'data-day-turn'] })
   const sample = () => {
     const canvas = document.querySelector('#process canvas')
-    const dimmed = Number(canvas?.style.opacity || 1) < 0.7
-    if (dimmed && !record.dimmed) record.dips++
-    record.dimmed = dimmed
+    record.lowestOpacity = Math.min(record.lowestOpacity, Number(getComputedStyle(canvas).opacity))
+    const shown = Number(getComputedStyle(caption).opacity)
+    const camera = stage.dataset.dayCamera
+    record.caption[camera] = Math.max(record.caption[camera] ?? 0, shown)
+    const shownCards = [...document.querySelectorAll('#process [data-day-card]')].filter(
+      (card) =>
+        card.getClientRects().length > 0 &&
+        card.dataset.shown !== 'false' &&
+        getComputedStyle(card).visibility !== 'hidden',
+    )
+    for (const card of shownCards) {
+      if (card.dataset.dayCard === 'watering') record.wateringAt ??= status.textContent.trim()
+      const seen = (record.cards[camera] ??= {})
+      const title = card.children[1].textContent.trim()
+      seen[title] = (seen[title] ?? 0) + 1
+    }
+    if (camera in record.holds) {
+      record.holds[camera].push(Number(root.style.getPropertyValue('--day-hold') || 1))
+    }
     const share = Number(root.style.getPropertyValue('--day-tank') || 1)
     record.lowestTank = Math.min(record.lowestTank, share)
     requestAnimationFrame(sample)
   }
   requestAnimationFrame(sample)
 })()`
+
+// The first tree gets the ride and the watering close-up, the hydrant later on
+// its own close-up.
+const CAMERAS = [
+  'iso',
+  'fly-in',
+  'ride',
+  'to-watering',
+  'watering',
+  'fly-out',
+  'iso',
+  'fly-in',
+  'refilling',
+  'fly-out',
+  'iso',
+]
+
+const WATERING_TITLE = 'Wasser nur dort, wo es fehlt'
+const REFILL_TITLE = 'Das Auffüllen ist mitgeplant'
+// The scene ends a hold within a frame; React may take one more to hide the card.
+const CARD_LAG_SAMPLES = 2
+
+/** The cards seen in each camera mode where none belongs, beyond a frame of lag. */
+const strayCards = (cards) =>
+  Object.entries(cards).flatMap(([camera, titles]) =>
+    Object.entries(titles)
+      .filter(([title, samples]) => {
+        const due =
+          (camera === 'watering' && title === WATERING_TITLE) ||
+          (camera === 'refilling' && title === REFILL_TITLE)
+        return !due && samples > CARD_LAG_SAMPLES
+      })
+      .map(([title, samples]) => `${title} in ${camera} (${samples})`),
+  )
+
+/** Stops at a tree or the hydrant the truck left facing another way than it came. */
+const turnedRound = (turns) =>
+  turns.filter((turn) => {
+    const [, place, degrees] = turn.split(':')
+    return place !== 'depot' && Number(degrees) > 10
+  })
 
 const failures = []
 const check = (name, ok, detail = '') => {
@@ -76,6 +159,13 @@ async function pressEnter(page) {
   const enter = { key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 }
   await page.call('Input.dispatchKeyEvent', { type: 'keyDown', ...enter, text: '\r' })
   await page.call('Input.dispatchKeyEvent', { type: 'keyUp', ...enter })
+}
+
+async function pressKey(page, key) {
+  const codes = { Tab: 9 }
+  const event = { key, code: key, windowsVirtualKeyCode: codes[key] }
+  await page.call('Input.dispatchKeyEvent', { type: 'keyDown', ...event })
+  await page.call('Input.dispatchKeyEvent', { type: 'keyUp', ...event })
 }
 
 async function moveMouse(page, x, y) {
@@ -151,29 +241,33 @@ for (const size of sizes) {
 
     await page.evaluate(RECORDER)
     await clickButton(page, 'Tour planen')
-    let shot = false
+    // A resting mouse holds a close-up wherever its card appears under it.
+    await moveMouse(page, 1, 1)
+    const photographed = new Set()
+    const stripCards = {}
     let stripOnTour = null
     // Software rendering runs the tour slower than a real machine does.
-    const deadline = Date.now() + 120_000
+    const deadline = Date.now() + 420_000
     let status = ''
     while (Date.now() < deadline) {
-      const [now, dips, dimmed] = await Promise.all([
+      const [now, camera] = await Promise.all([
         page.evaluate(STATUS),
-        page.evaluate(`window.__probe.dips`),
-        page.evaluate(`window.__probe.dimmed`),
+        page.evaluate(`document.querySelector('#process [data-day-stage]').dataset.dayCamera`),
       ])
       status = now
       if (!stripOnTour && status.startsWith('Gießt '))
         stripOnTour = { strip: await page.evaluate(STRIP) }
-      if (dips >= 1 && !dimmed && !shot) {
-        shot = true
-        await sleep(600)
-        await page.screenshot(join(out, `${size.name}-2-ride.png`))
+      if (['refilling', 'ride', 'watering'].includes(camera) && !photographed.has(camera)) {
+        photographed.add(camera)
+        await sleep(400)
+        await page.screenshot(join(out, `${size.name}-2-${camera}.png`))
+        if (size.mobile && camera !== 'ride') stripCards[camera] = await page.evaluate(STRIP_CARD)
       }
       if (status.startsWith('Fertig.')) break
       await sleep(50)
     }
-    const { statuses, dips, lowestTank } = await page.evaluate(`window.__probe`)
+    const { statuses, cameras, turns, caption, cards, holds, lowestOpacity, lowestTank } =
+      await page.evaluate(`window.__probe`)
     const watering = new Set(statuses.filter((s) => s.startsWith('Gießt ')))
     check(
       `${size.name}: the tour announces six stops with a refill`,
@@ -184,7 +278,48 @@ for (const size of sizes) {
       `${size.name}: it tops up on the way`,
       statuses.some((s) => s.startsWith('Füllt unterwegs auf')),
     )
-    check(`${size.name}: the picture cuts into the ride and out again`, dips === 2, `${dips} dips`)
+    check(`${size.name}: the picture never dims`, lowestOpacity === 1, `lowest ${lowestOpacity}`)
+    check(
+      `${size.name}: the camera rides to the first tree, watches the watering, flies to the hydrant and comes back`,
+      cameras.join() === CAMERAS.join(),
+      cameras.join(' > '),
+    )
+    const captionElsewhere = Object.entries(caption).filter(
+      ([camera, shown]) => !['ride', 'to-watering'].includes(camera) && shown > 0,
+    )
+    check(
+      `${size.name}: the caption stands in the picture during the ride and only then`,
+      (caption.ride ?? 0) > 0.95 && captionElsewhere.length === 0,
+      JSON.stringify(caption),
+    )
+    check(
+      `${size.name}: a card explains the watering and the refill while they hold, at no other time`,
+      (cards.watering?.[WATERING_TITLE] ?? 0) > 0 &&
+        (cards.refilling?.[REFILL_TITLE] ?? 0) > 0 &&
+        strayCards(cards).length === 0,
+      JSON.stringify(cards),
+    )
+    const falls = (values) => values.length > 2 && values[0] > values.at(-1) + 0.3
+    check(
+      `${size.name}: the card's bar runs down over each hold`,
+      falls(holds.watering) && falls(holds.refilling),
+      `watering ${holds.watering[0]} to ${holds.watering.at(-1)}, refilling ${holds.refilling[0]} to ${holds.refilling.at(-1)}`,
+    )
+    if (size.mobile) {
+      const both = [stripCards.refilling, stripCards.watering]
+      check(
+        `${size.name}: during each hold the card stands in the strip, in view, with its way on`,
+        both.every((card) => card?.inView && card.next) &&
+          both[0]?.title === REFILL_TITLE &&
+          both[1]?.title === WATERING_TITLE,
+        JSON.stringify(stripCards),
+      )
+    }
+    check(
+      `${size.name}: the truck never turns round at a tree or the hydrant`,
+      turns.length >= 7 && turnedRound(turns).length === 0,
+      turns.join(' '),
+    )
     check(`${size.name}: the tank gauge falls`, lowestTank <= 0.3, `lowest ${lowestTank}`)
     check(`${size.name}: it ends with six trees watered`, status.startsWith('Fertig. 6 Bäume'))
     check(`${size.name}: no tree needs water afterwards`, (await page.evaluate(DRY)) === 0)
@@ -252,7 +387,8 @@ try {
   )
   await unseen.evaluate(RECORDER)
   await clickButton(unseen, 'Tour planen')
-  await unseen.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour to end', 1500)
+  await moveMouse(unseen, 1, 1)
+  await unseen.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour to end', 4200)
   const { statuses } = await unseen.evaluate(`window.__probe`)
   check(
     'phone, stage never in view: the tour is played',
@@ -394,13 +530,14 @@ try {
 
   await pointer.evaluate(`(window.__primary = ${button('Tour planen')}).focus()`)
   const focusKept = `document.activeElement === window.__primary`
+  await moveMouse(pointer, 1, 1)
   await pressEnter(pointer)
   await pointer.waitFor(`${STATUS}.startsWith('Gießt ')`, 'the tour to run', 600)
   check(
     'desktop, keyboard: the button keeps focus while the tour runs',
     await pointer.evaluate(`${focusKept} && window.__primary.textContent.includes('Überspringen')`),
   )
-  await pointer.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour to end', 1500)
+  await pointer.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour to end', 4200)
   check(
     'desktop, keyboard: the button keeps focus when the tour is done',
     await pointer.evaluate(`${focusKept} && window.__primary.textContent.includes('Noch einmal')`),
@@ -409,6 +546,226 @@ try {
   check(`desktop pointer and keyboard: ${error.message}`, false)
 } finally {
   pointer.close()
+}
+
+// One tree at five days: it still gets its close-up and card.
+const five = await openPage(sizes[0])
+try {
+  await load(five, { name: 'desktop, five days' })
+  await setDays(five, 5)
+  await five.evaluate(RECORDER)
+  await clickButton(five, 'Tour planen')
+  await moveMouse(five, 1, 1)
+  await five.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour at five days to end', 4200)
+  const { cards, wateringAt } = await five.evaluate(`window.__probe`)
+  check(
+    'desktop, five days: the one tree gets the watering close-up with its card',
+    (cards.watering?.[WATERING_TITLE] ?? 0) > 0 && wateringAt === 'Gießt Am Markt.',
+    `${wateringAt}, ${JSON.stringify(cards)}`,
+  )
+} catch (error) {
+  check(`desktop, five days: ${error.message}`, false)
+} finally {
+  five.close()
+}
+
+// At eight days the old planner turned the truck round on the cross street.
+const eight = await openPage(sizes[0])
+try {
+  await load(eight, { name: 'desktop, eight days' })
+  await setDays(eight, 8)
+  await eight.evaluate(RECORDER)
+  await clickButton(eight, 'Tour planen')
+  await moveMouse(eight, 1, 1)
+  await eight.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour at eight days to end', 4200)
+  const { turns } = await eight.evaluate(`window.__probe`)
+  check(
+    'desktop, eight days: the truck never turns round at a tree or the hydrant',
+    turns.length >= 6 && turnedRound(turns).length === 0,
+    turns.join(' '),
+  )
+} catch (error) {
+  check(`desktop, eight days: ${error.message}`, false)
+} finally {
+  eight.close()
+}
+
+const CAMERA = `document.querySelector('#process [data-day-stage]').dataset.dayCamera`
+const HOLD = `Number(document.querySelector('#process [data-day-root]').style.getPropertyValue('--day-hold') || 1)`
+const STAGE_CARD = `document.querySelector('#process [data-day-stage] [data-day-card]')`
+const nextIn = (card) =>
+  `[...${card}.querySelectorAll('button')].find((node) => node.textContent.includes('Weiterfahren'))`
+const PICTURE = `document.querySelector('#process [data-day-stage] [role=img]')`
+
+/** Two readings of the card's bar a second apart. */
+async function barOverASecond(page) {
+  const first = await page.evaluate(HOLD)
+  await sleep(1000)
+  return [first, await page.evaluate(HOLD)]
+}
+
+// Reading the card holds the tour; „Weiterfahren“ ends the hold at once.
+const reader = await openPage(sizes[0])
+try {
+  await load(reader, { name: 'desktop card' })
+  check(
+    "desktop: the stage card's „Weiterfahren“ stands outside the image role",
+    await reader.evaluate(`(() => {
+      const next = ${nextIn(STAGE_CARD)}
+      return next !== undefined && next.closest('[role=img]') === null && ${PICTURE} !== null
+    })()`),
+  )
+  await reader.evaluate(RECORDER)
+  await clickButton(reader, 'Tour planen')
+  // Where the card will appear, before it does; the mouse then stays put.
+  const parked = await reader.evaluate(middleOf(STAGE_CARD))
+  await moveMouse(reader, parked.x, parked.y)
+  const camera = CAMERA
+  const hold = HOLD
+  const card = STAGE_CARD
+  await reader.waitFor(`${camera} === 'watering'`, 'the watering shot', 4200)
+  await sleep(300)
+  const resting = await barOverASecond(reader)
+  const underMouse = await reader.evaluate(
+    `document.elementFromPoint(${parked.x}, ${parked.y})?.closest('[data-day-card]') !== null`,
+  )
+  check(
+    'desktop: a mouse resting where the card appears does not hold the bar',
+    underMouse && resting[1] < resting[0],
+    `${resting.join(' to ')}, card under the mouse: ${underMouse}`,
+  )
+  await reader.waitFor(`${hold} < 0.6`, 'the bar to pass half way', 600)
+  await reader.screenshot(join(out, 'desktop-7-card-half.png'))
+  const tree = await reader.evaluate(`(() => {
+    const title = document.querySelector('#process [role=status]').textContent
+    return title.replace(/^Gießt (.*)\.$/, '$1')
+  })()`)
+  const next = await reader.evaluate(middleOf(nextIn(card)))
+  await moveMouse(reader, next.x, next.y)
+  await clickAt(reader, next.x, next.y)
+  const clicked = Date.now()
+  await reader.waitFor(`${camera} !== 'watering'`, 'the hold to end', 50)
+  const left = Date.now() - clicked
+  const after = await reader.evaluate(camera)
+  await reader.screenshot(join(out, 'desktop-8-after-next.png'))
+  await moveMouse(reader, 40, 40)
+  await reader.waitFor(
+    `${rowOf(tree)}.textContent.includes('gegossen')`,
+    `${tree} to count as watered`,
+    100,
+  )
+  check(
+    'desktop: „Weiterfahren“ flies out within a second and the tree counts as watered',
+    after === 'fly-out' && left < 1000,
+    `${tree}: ${after} after ${left} ms`,
+  )
+  check(
+    'desktop: after „Weiterfahren“ the focus waits at the picture, not on the tour button',
+    await reader.evaluate(`document.activeElement === ${PICTURE}`),
+    await reader.evaluate(`document.activeElement?.outerHTML.slice(0, 60)`),
+  )
+  await reader.waitFor(`${camera} === 'refilling'`, 'the refill close-up', 4200)
+  await sleep(800)
+  const box = await reader.evaluate(middleOf(card))
+  await moveMouse(reader, box.x, box.y)
+  await sleep(300)
+  const first = await reader.evaluate(hold)
+  await sleep(1000)
+  const second = await reader.evaluate(hold)
+  await reader.screenshot(join(out, 'desktop-6-card-read.png'))
+  await moveMouse(reader, 40, 40)
+  await sleep(1000)
+  const third = await reader.evaluate(hold)
+  check(
+    'desktop: the bar stops while the pointer rests on the card and runs on when it leaves',
+    first === second && third < second && first < 1,
+    `${first} ${second} ${third}`,
+  )
+  await pressKey(reader, 'Tab')
+  check(
+    "desktop, keyboard: Tab from the picture reaches the refill card's „Weiterfahren“",
+    await reader.evaluate(`document.activeElement === ${nextIn(card)}`),
+    await reader.evaluate(`document.activeElement?.textContent.trim()`),
+  )
+  await pressEnter(reader)
+  await reader.waitFor(`${camera} !== 'refilling'`, 'the refill hold to end', 50)
+  await pressEnter(reader)
+  await sleep(500)
+  check(
+    'desktop, keyboard: Enter on the card moves on, a second Enter does not skip the tour',
+    (await reader.evaluate(`document.activeElement === ${PICTURE}`)) &&
+      !(await reader.evaluate(STATUS)).startsWith('Fertig.'),
+    await reader.evaluate(STATUS),
+  )
+} catch (error) {
+  check(`desktop card: ${error.message}`, false)
+} finally {
+  reader.close()
+}
+
+// Below lg the strip's card goes away under a mouse that clicked „Weiterfahren“:
+// no pointerleave tells the island, and the next hold must still run.
+const narrow = await openPage({ width: 900, height: 900 })
+try {
+  await load(narrow, { name: 'narrow, mouse' })
+  await clickButton(narrow, 'Tour planen')
+  await moveMouse(narrow, 1, 1)
+  const stripCard = `document.querySelector('#process [data-day-strip] [data-day-card]')`
+  await narrow.waitFor(
+    `${CAMERA} === 'watering' && ${stripCard} !== null`,
+    'the watering card',
+    4200,
+  )
+  await sleep(500)
+  const next = await narrow.evaluate(middleOf(nextIn(stripCard)))
+  await moveMouse(narrow, next.x, next.y)
+  await clickAt(narrow, next.x, next.y)
+  await narrow.waitFor(`${CAMERA} !== 'watering'`, 'the watering hold to end', 50)
+  await narrow.waitFor(`${CAMERA} === 'refilling'`, 'the refill hold', 4200)
+  await sleep(500)
+  const bar = await barOverASecond(narrow)
+  check(
+    'narrow, mouse: after „Weiterfahren“ in the strip the refill bar runs under the resting mouse',
+    bar[1] < bar[0],
+    `${bar.join(' to ')}, mouse at ${Math.round(next.x)},${Math.round(next.y)}`,
+  )
+} catch (error) {
+  check(`narrow, mouse: ${error.message}`, false)
+} finally {
+  narrow.close()
+}
+
+// Tall enough windows keep the stage in view beside the panel, so the tour
+// starts in a whole picture, not one cut off by the header.
+for (const [width, height] of [
+  [1194, 702],
+  [1366, 768],
+]) {
+  const name = `${width} × ${height}`
+  const sticky = await openPage({ width, height })
+  try {
+    await load(sticky, { name })
+    await clickButton(sticky, 'Tour planen')
+    await sleep(2500)
+    const seen = await sticky.evaluate(`(() => {
+      const stage = document.querySelector('#process [data-day-stage]')
+      const header = document.getElementById('site-header')
+      if (!stage || !header) return null
+      const { top, bottom } = stage.getBoundingClientRect()
+      return { top, bottom, header: header.getBoundingClientRect().bottom, window: innerHeight }
+    })()`)
+    if (!seen) throw new Error('the stage or the header is missing, nothing to measure')
+    check(
+      `${name}: after the tour button the stage lies between the header and the window's bottom`,
+      seen.top >= seen.header && seen.bottom <= seen.window,
+      JSON.stringify(seen),
+    )
+    await sticky.screenshot(join(out, `sticky-${width}x${height}.png`))
+  } catch (error) {
+    check(`${name}, stage in view: ${error.message}`, false)
+  } finally {
+    sticky.close()
+  }
 }
 
 const still = await openPage({ width: 1440, height: 900, reducedMotion: true })

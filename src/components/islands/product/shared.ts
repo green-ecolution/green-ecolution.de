@@ -1,4 +1,4 @@
-import type { TourScript } from '../../../lib/wateringDay'
+import type { Hold, TourScript } from '../../../lib/wateringDay'
 
 /** What the island knows and the scene reads every frame, without a render in between. */
 export interface DayLive {
@@ -16,6 +16,8 @@ export interface DayLive {
   /** Seconds into the tour; the scene's clock advances it while `running`. */
   elapsed: number
   running: boolean
+  /** The pointer or the keyboard focus is on a close-up's card: its hold waits. */
+  isReading: boolean
   /** Set by the scene: something in here changed, draw again. */
   onChange: (() => void) | null
 }
@@ -32,4 +34,8 @@ export interface DayEvents {
   onReady: () => void
   onProgress: (progress: TourProgress) => void
   onSelect: (tree: number | null) => void
+  /** A close-up's hold began or ended. */
+  onHold: (kind: Hold['kind'] | null) => void
+  /** A flight into a close-up began: its card may take that text while still hidden. */
+  onCloseUp: (kind: Hold['kind']) => void
 }
