@@ -11,6 +11,7 @@ import {
 import { bindPinnedStage } from './pinStage'
 
 // The chapter markers below the stage and their top margin, once pinned.
+// SensorProbe.astro sizes the model with the same value.
 const PROGRESS_PX = 62
 
 let page: AbortController | null = null

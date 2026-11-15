@@ -167,3 +167,7 @@
 
 /* Custom variant for landscape orientation */
 @custom-variant landscape (@media (orientation: landscape));
+
+/* Windows too short for a pinned stage at full size, such as a 13-inch laptop
+   in Safari with its bars shown. */
+@custom-variant short (@media (max-height: 47.99rem));
