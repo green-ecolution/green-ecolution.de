@@ -31,6 +31,8 @@ export const PROBE_HOLD_SECONDS = 7
 export const WATERING_HOLD_SECONDS = 7
 export const REFILL_HOLD_SECONDS = 8
 export const RESULT_HOLD_SECONDS = 8
+/** The message's way from the antenna to the depot, before the route draws. */
+export const RELAY_SECONDS = 2.2
 /** A beat of the slanted view after „Tour planen“ before the camera flies to the probe. */
 const PROBE_DELAY = 0.3
 /** The slanted view between two close-ups lasts at least this long. */
@@ -101,6 +103,15 @@ export interface RefillShot extends HeldShot {
   stop: number
 }
 
+/**
+ * The probe's message on its way to the depot: up to the antenna while the
+ * camera flies back from the probe, then over to the depot.
+ */
+export interface Relay {
+  up: TimeWindow
+  over: TimeWindow
+}
+
 export interface TourScript {
   /** legs[i] ends at dwells[i]; the last dwell is the arrival at the depot. */
   legs: TourLeg[]
@@ -113,6 +124,8 @@ export interface TourScript {
   duration: number
   /** The probe at the first tree reports before the truck leaves; null on a tour without a tree. */
   probeShot: HeldShot | null
+  /** Null on a tour without a probe. */
+  relay: Relay | null
   showpiece: Showpiece | null
   refillShot: RefillShot | null
   /** The day's result at the depot; the tour is over when its fly-out ends. */
@@ -212,7 +225,9 @@ export function tourScript(
 
   const last = plan.stops.length - 1
   const probing =
-    ridden >= 0 ? PROBE_DELAY + FLY_IN_SECONDS + PROBE_HOLD_SECONDS + FLY_OUT_SECONDS : 0
+    ridden >= 0
+      ? PROBE_DELAY + FLY_IN_SECONDS + PROBE_HOLD_SECONDS + FLY_OUT_SECONDS + RELAY_SECONDS
+      : 0
 
   // Every time in the tour is a multiple of `pace`, so the tour at pace 1 tells
   // how far it has to be slowed down to fit and which close-ups crowd each other.
@@ -237,6 +252,10 @@ export function tourScript(
         shot: { start: landed, end: held },
         flyOut: { start: held, end: held + FLY_OUT_SECONDS * pace },
       }
+    }
+    const relay: Relay | null = probeShot && {
+      up: probeShot.flyOut,
+      over: { start: probeShot.flyOut.end, end: probing * pace },
     }
     const planWindow = {
       start: probing * pace,
@@ -333,6 +352,7 @@ export function tourScript(
       lead: planWindow.end,
       duration: home.end,
       probeShot,
+      relay,
       showpiece,
       refillShot,
       resultShot,
@@ -398,6 +418,18 @@ export function nextElapsed(
 ): number {
   if (isReading && holdAt(script, elapsed)) return elapsed
   return Math.min(script.duration, elapsed + delta)
+}
+
+/** Where the probe's message is on its way to the depot at this time, if it is under way. */
+export function relayAt(
+  { relay }: TourScript,
+  seconds: number,
+): { hop: keyof Relay; share: number } | null {
+  if (!relay) return null
+  const hop = seconds < relay.up.end ? 'up' : 'over'
+  const { start, end } = relay[hop]
+  if (seconds < start || seconds >= end) return null
+  return { hop, share: (seconds - start) / (end - start) }
 }
 
 /** What the slanted camera aims at. */

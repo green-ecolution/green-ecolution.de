@@ -9,6 +9,7 @@ import {
   ISO_VIEW,
   holdAt,
   nextElapsed,
+  relayAt,
   tourFrame,
   type Hold,
   type ViewMode,
@@ -19,7 +20,16 @@ import { Crowns, HitAreas, Labels, TreePins } from './actors'
 import type { DayEvents, DayLive, TourProgress } from './shared'
 import { ShowpieceCamera } from './showpieceCamera'
 import { OVERVIEW, PARKED, showpieceWeight, shotFor, truckPose, type Stage } from './stage'
-import { ProbeRings, RefillHose, RefillPulse, RouteRibbon, Truck, WaterJet } from './tourActors'
+import {
+  AntennaRings,
+  ProbeRings,
+  RefillHose,
+  RefillPulse,
+  RelayMessage,
+  RouteRibbon,
+  Truck,
+  WaterJet,
+} from './tourActors'
 import { groundGeometry, shadowGeometry, townGeometry } from './town'
 
 interface Props {
@@ -73,6 +83,7 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
   const ready = useRef(false)
   const camera = useRef<ViewMode | null>(null)
   const holding = useRef<Hold['kind'] | null>(null)
+  const relaying = useRef(false)
   const standing = useRef<{ dwell: number; heading: number }>({ dwell: -1, heading: 0 })
 
   // The stage tells the page which camera draws: the caption and the probe read it.
@@ -81,6 +92,7 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
     return () => {
       node?.removeAttribute('data-day-camera')
       node?.removeAttribute('data-day-turn')
+      node?.removeAttribute('data-day-relay')
     }
   }, [canvas])
 
@@ -117,6 +129,13 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
       if (view.mode === 'flyIn' && view.piece) events.onCloseUp(view.piece)
       camera.current = view.mode
       canvas.closest('[data-day-stage]')?.setAttribute('data-day-camera', CAMERA_NAMES[view.mode])
+    }
+
+    // The message's way to the depot has a caption of its own.
+    const isRelaying = !isStatic && script !== null && relayAt(script, state.elapsed) !== null
+    if (isRelaying !== relaying.current) {
+      relaying.current = isRelaying
+      canvas.closest('[data-day-stage]')?.toggleAttribute('data-day-relay', isRelaying)
     }
 
     // For the probe: how far the truck turned at the stop it just left.
@@ -324,6 +343,8 @@ function WateringDayScene3D({ isStatic, isActive, isReady, live, events, labels,
       <RefillPulse live={live} stage={stage} isStatic={isStatic} />
       <RefillHose live={live} stage={stage} isStatic={isStatic} />
       <ProbeRings live={live} stage={stage} isStatic={isStatic} />
+      <AntennaRings live={live} stage={stage} isStatic={isStatic} />
+      <RelayMessage live={live} isStatic={isStatic} />
       <Crowns live={live} isStatic={isStatic} />
       <TreePins live={live} stage={stage} isStatic={isStatic} />
       <HitAreas live={live} events={events} />
