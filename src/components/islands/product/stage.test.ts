@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { START_DAYS, depot, townTrees } from '../../../data/productTown'
+import { DEPOT_SITE, START_DAYS, depot, townTrees } from '../../../data/productTown'
 import { tourFrame } from '../../../lib/wateringDay'
 import { NOT_WATERED, NO_ORDER, planDay } from './dayModel'
 import type { DayLive } from './shared'
@@ -52,6 +52,21 @@ describe('truckPose', () => {
       const next = stageAt(script.legs[index + 1].start + 1e-6).truck.heading
       expect(Math.cos(leaving - next)).toBeCloseTo(1, 3)
     })
+  })
+
+  it('verlässt an jedem Reglerstand jeden Halt in der Richtung, in der er ankam', () => {
+    for (let days = 5; days <= 14; days++) {
+      const planned = planDay(days)
+      if (!planned) continue
+      const tour = planned.script
+      tour.dwells.slice(0, -1).forEach((dwell) => {
+        // The depot is a yard at a dead end: there the truck may turn.
+        if (dwell.stop.site === DEPOT_SITE) return
+        const arrived = truckPose(tour, tourFrame(tour, dwell.start + 1e-6)).heading
+        const leaving = truckPose(tour, tourFrame(tour, dwell.end - 1e-6)).heading
+        expect(Math.cos(arrived - leaving), `${days} days`).toBeGreaterThan(0.99)
+      })
+    }
   })
 
   it('zählt die gefahrene Strecke über alle Abschnitte', () => {

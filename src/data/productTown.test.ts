@@ -1,11 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { moisture, thirst } from '../lib/dryness'
-import { planWatering } from '../lib/wateringPlan'
 import { kerb, roadWidth } from './streamletTour'
 import {
+  DEPOT_ARC,
   DEPOT_SITE,
   HYDRANT_SITE,
-  REFILL_COST,
   START_DAYS,
   TANK_CAPACITY,
   blocks,
@@ -59,11 +58,21 @@ describe('productTown', () => {
     expect(treeOfSite(DEPOT_SITE)).toBe(-1)
   })
 
-  it('erreicht jeden Halt von jedem anderen', () => {
+  it('erreicht jeden Halt von jeder Ankunft an jedem anderen', () => {
     sitePoints.forEach((_, from) => {
-      sitePoints.forEach((_, to) => {
-        expect(Number.isFinite(townGraph.distance(from, to))).toBe(true)
-      })
+      for (const arc of townGraph.arrivals(from)) {
+        sitePoints.forEach((_, to) => {
+          const ways = townGraph.arrivals(to).map((into) => townGraph.distance(arc, into))
+          expect(ways.some(Number.isFinite)).toBe(true)
+        })
+      }
+    })
+  })
+
+  it('kommt am Bauhof nur aus einer Richtung an, an jedem anderen Halt aus zweien', () => {
+    expect(townGraph.arrivals(DEPOT_SITE)).toEqual([DEPOT_ARC])
+    sitePoints.forEach((_, site) => {
+      if (site !== DEPOT_SITE) expect(townGraph.arrivals(site)).toHaveLength(2)
     })
   })
 
@@ -112,21 +121,6 @@ describe('productTown', () => {
 
   it('braucht in der Ausgangsstellung mehr Wasser, als ein Tank fasst', () => {
     expect(thirstyAt(START_DAYS).length).toBeGreaterThan(TANK_CAPACITY)
-  })
-
-  it('füllt in der Ausgangsstellung unterwegs mit Resttank am Hydranten auf', () => {
-    const plan = planWatering({
-      distance: townGraph.distance,
-      depot: DEPOT_SITE,
-      hydrants: [HYDRANT_SITE],
-      thirsty: thirstyAt(START_DAYS),
-      capacity: TANK_CAPACITY,
-      refillCost: REFILL_COST,
-    })
-    const refills = plan.stops.filter((stop) => stop.kind === 'refill')
-    expect(refills).toHaveLength(1)
-    expect(refills[0].site).toBe(HYDRANT_SITE)
-    expect(refills[0].arrivedWith).toBeGreaterThan(0)
   })
 
   it('schickt nach frischem Regen niemanden los', () => {

@@ -175,6 +175,8 @@ export const sitePoints: GroundPoint[] = [
 ]
 
 export const townGraph = roadGraph(streets, sitePoints)
+/** The depot lies at the end of a dead end, so there is one way to stand there. */
+export const DEPOT_ARC = townGraph.arrivals(DEPOT_SITE)[0]
 
 /** Trees one tank waters. */
 export const TANK_CAPACITY = 4

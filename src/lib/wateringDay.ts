@@ -47,14 +47,15 @@ const dwellSeconds = (stop: PlanStop) =>
 
 export function tourScript(
   plan: Plan,
-  pathBetween: (from: number, to: number) => GroundPoint[],
-  depot: number,
+  pathBetween: (fromArc: number, toArc: number) => GroundPoint[],
+  /** Where the tour starts: the depot's site and the arc the truck stands on there. */
+  depot: { site: number; arc: number },
   capacity: number,
 ): TourScript {
   if (plan.stops.length === 0) throw new Error('a tour needs at least one stop')
   const paths = plan.stops.map((stop, index) =>
     roundedPath(
-      pathBetween(index === 0 ? depot : plan.stops[index - 1].site, stop.site),
+      pathBetween(index === 0 ? depot.arc : plan.stops[index - 1].arc, stop.arc),
       CORNER_RADIUS,
     ),
   )
