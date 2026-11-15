@@ -2,8 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import Hero from '../../components/Hero.astro'
 import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro'
-import BeyondIrrigation from '../../components/sections/BeyondIrrigation.astro'
-import Architecture from '../../components/sections/Architecture.astro'
 import ContactSection from '../../components/sections/ContactSection.astro'
 import FurtherLinks from '../../components/sections/FurtherLinks.astro'
 import MediaFeature from '../../components/sections/MediaFeature.astro'
@@ -47,8 +45,6 @@ const tc = getTranslations(language, 'common')
       description={t('hero.description')}
     />
     <WateringDay language={language} />
-    <Architecture language={language} />
-    <BeyondIrrigation language={language} />
     <Requirements language={language} />
     <VisionRoadmap language={language} />
     <MediaFeature language={language} />

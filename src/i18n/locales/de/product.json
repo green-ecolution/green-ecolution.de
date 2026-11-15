@@ -118,47 +118,32 @@
       "ctaAriaLabel": "Termin für eine Live-Demo buchen"
     }
   },
-  "architecture": {
-    "sectionLabel": "System-Architektur",
-    "title": "Der Weg der Daten",
-    "description": "So gelangen die Messwerte vom Sensor bis zur fertigen Tour. Jeder Baustein ist über offene Schnittstellen verbunden und lässt sich ergänzen.",
-    "streamletRich": "Die Routenoptimierung im Backend übernimmt <streamlet>Streamlet</streamlet>, ein eigener Dienst von uns, der sich auch außerhalb von Green Ecolution einsetzen lässt.",
-    "steps": {
-      "sensor": {
-        "label": "Sensor",
-        "description": "Misst vor Ort, etwa die Bodenfeuchte am Baum"
+  "tech": {
+    "summary": "Für die IT: die technischen Details",
+    "items": {
+      "probe": {
+        "term": "Sonde",
+        "name": "Sensor",
+        "text": "Misst Bodenfeuchte und Bodentemperatur."
       },
-      "gateway": {
-        "label": "Gateway",
-        "description": "LoRaWAN Übertragung"
+      "antenna": {
+        "term": "Antenne",
+        "name": "Gateway",
+        "text": "Funk über LoRaWAN und das offene The Things Network. Wo das Netz fehlt, hilft ein eigenes Gateway oder NB-IoT mit SIM-Karte."
       },
-      "backend": {
-        "label": "Backend",
-        "description": "Datenverarbeitung & Analyse"
+      "server": {
+        "term": "Rechner",
+        "name": "Backend",
+        "text": "Offene Schnittstellen für die Anbindung an vorhandene Systeme, IoT-Hubs und Open-Data-Portale. Baumdaten kommen über Import-Plugins aus Baumkataster, CSV oder Datenbank. Der Quellcode ist offen und lizenzkostenfrei. Den Betrieb übernehmen wir oder eure eigene IT."
       },
-      "dashboard": {
-        "label": "Dashboard",
-        "description": "Visualisierung & Tourenplanung"
+      "map": {
+        "term": "Karte",
+        "name": "Dashboard",
+        "text": "Auswertung und Tourenplanung im Browser."
       }
     },
-    "modules": {
-      "plugin": {
-        "title": "Plugin-System",
-        "description": "Modulare Erweiterungen für kommunenspezifische Anpassungen ohne Änderung der Kernsoftware. Import-Plugins für Baumkataster, CSV, Datenbanken."
-      },
-      "api": {
-        "title": "API-first",
-        "description": "Offene Schnittstellen für Integration in kommunale IT-Landschaften. Anbindung an IoT-Hubs und Open-Data-Portale."
-      }
-    }
-  },
-  "beyond": {
-    "sectionLabel": "Ausblick",
-    "title": "Über die Bewässerung hinaus",
-    "p1": "Die Bewässerung von Stadtbäumen ist der erste Anwendungsfall, für den wir Green Ecolution gebaut haben. Die Plattform selbst ist allgemeiner gedacht: Überall dort, wo sich etwas messen lässt, die Werte ausgewertet werden müssen und am Ende ein Einsatz vor Ort steht, passt das Prinzip aus Messen, Verstehen und Handeln.",
-    "p2": "Die Architektur ist darauf ausgelegt, weitere Sensortypen und Anwendungsfälle aufzunehmen. Ein neuer Anwendungsfall bedeutet trotzdem Entwicklungsarbeit, etwa für die Anbindung der Sensoren und die Auswertung der Daten. Diese Arbeit übernehmen wir für dich.",
-    "cta": "Zu unseren Leistungen",
-    "ctaAriaLabel": "Zur Seite mit unseren Leistungen"
+    "streamletRich": "Die Touren rechnet <streamlet>Streamlet</streamlet>, unser eigener Dienst für die Tourenoptimierung.",
+    "beyondRich": "Die Plattform kann mehr als Bewässerung. Was wir für euch bauen und betreiben, steht bei den <services>Leistungen</services>."
   },
   "requirements": {
     "sectionLabel": "Voraussetzungen",
