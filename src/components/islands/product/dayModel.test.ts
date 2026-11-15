@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { START_DAYS, townTrees } from '../../../data/productTown'
 import { pinColors } from '../../../data/storyTown'
+import de from '../../../i18n/locales/de/product.json'
+import en from '../../../i18n/locales/en/product.json'
 import {
   NOT_STARTED,
   NOT_WATERED,
   NO_ORDER,
+  STATUS_KEYS,
   dayStatus,
   finished,
   planDay,
@@ -119,6 +122,22 @@ describe('dayStatus', () => {
       key: 'day.status.done',
       vars: { watered: 6, rest: 6 },
     })
+  })
+})
+
+describe('STATUS_KEYS', () => {
+  const lookUp = (catalog: unknown, key: string) =>
+    key
+      .split('.')
+      .reduce<unknown>(
+        (node, part) =>
+          node && typeof node === 'object' ? (node as Record<string, unknown>)[part] : undefined,
+        catalog,
+      )
+
+  it.each(STATUS_KEYS)('%s steht in beiden Katalogen', (key) => {
+    expect(typeof lookUp(de, key)).toBe('string')
+    expect(typeof lookUp(en, key)).toBe('string')
   })
 })
 
