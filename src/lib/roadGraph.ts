@@ -5,11 +5,26 @@ export interface Street {
   to: GroundPoint
 }
 
+/**
+ * Ways along the streets that never turn round, except at a dead end. They run
+ * between arcs, the directed stretches of street between neighbouring points:
+ * standing at the end of an arc means standing there facing its direction.
+ */
 export interface RoadGraph {
-  /** Length of the shortest way along the streets between two sites. */
-  distance: (from: number, to: number) => number
-  /** The corners of that way, both sites included. */
-  path: (from: number, to: number) => GroundPoint[]
+  /** The arcs that end at a site: two in the middle of a street, one in a dead end. */
+  arrivals: (site: number) => number[]
+  /** Where an arc starts and ends. */
+  arcEnds: (arc: number) => readonly [GroundPoint, GroundPoint]
+  /** Road driven from standing at the end of one arc until standing at the end of the other. */
+  distance: (fromArc: number, toArc: number) => number
+  /** The corners of that way, both ends included. */
+  path: (fromArc: number, toArc: number) => GroundPoint[]
+}
+
+interface Arc {
+  from: number
+  to: number
+  length: number
 }
 
 const EPSILON = 1e-6
@@ -41,14 +56,7 @@ export function roadGraph(streets: readonly Street[], sites: readonly GroundPoin
     remember(street.to)
   }
 
-  const count = points.length
-  const length = Array.from({ length: count }, (_, row) =>
-    Array.from({ length: count }, (_, column) => (row === column ? 0 : Infinity)),
-  )
-  const next = Array.from({ length: count }, (_, row) =>
-    Array.from({ length: count }, (_, column) => (row === column ? row : -1)),
-  )
-
+  const arcs: Arc[] = []
   for (const street of streets) {
     const onStreet = points
       .map((point, index) => ({ index, share: shareAlong(street, point) }))
@@ -59,24 +67,38 @@ export function roadGraph(streets: readonly Street[], sites: readonly GroundPoin
       const a = onStreet[i - 1].index
       const b = onStreet[i].index
       const span = Math.hypot(points[a][0] - points[b][0], points[a][1] - points[b][1])
-      if (span < length[a][b]) {
-        length[a][b] = length[b][a] = span
-        next[a][b] = b
-        next[b][a] = a
-      }
+      arcs.push({ from: a, to: b, length: span }, { from: b, to: a, length: span })
     }
   }
 
   sites.forEach((site, index) => {
-    if (next[index].every((step, other) => other === index || step < 0)) {
-      if (streets.every((street) => shareAlong(street, site) === null)) {
-        throw new Error(`site ${index} at ${site.join()} is not on a street`)
-      }
+    if (!arcs.some((arc) => arc.to === index)) {
+      throw new Error(`site ${index} at ${site.join()} is not on a street`)
     }
+  })
+
+  const neighbours = points.map((_, point) => arcs.filter((arc) => arc.from === point).length)
+  const count = arcs.length
+  const length = Array.from({ length: count }, (_, row) =>
+    Array.from({ length: count }, (_, column) => (row === column ? 0 : Infinity)),
+  )
+  const next = Array.from({ length: count }, (_, row) =>
+    Array.from({ length: count }, (_, column) => (row === column ? row : -1)),
+  )
+
+  arcs.forEach((into, a) => {
+    arcs.forEach((onward, b) => {
+      if (a === b || onward.from !== into.to) return
+      // Only a dead end lets the truck turn round.
+      if (onward.to === into.from && neighbours[into.to] > 1) return
+      length[a][b] = onward.length
+      next[a][b] = b
+    })
   })
 
   for (let via = 0; via < count; via++) {
     for (let from = 0; from < count; from++) {
+      if (length[from][via] === Infinity) continue
       for (let to = 0; to < count; to++) {
         const detour = length[from][via] + length[via][to]
         if (detour < length[from][to] - EPSILON) {
@@ -88,22 +110,26 @@ export function roadGraph(streets: readonly Street[], sites: readonly GroundPoin
   }
 
   return {
+    arrivals: (site) => arcs.flatMap((arc, index) => (arc.to === site ? [index] : [])),
+    arcEnds: (arc) => [points[arcs[arc].from], points[arcs[arc].to]],
     distance: (from, to) => length[from][to],
     path: (from, to) => {
-      if (next[from][to] < 0) throw new Error(`no way from site ${from} to site ${to}`)
-      const way: GroundPoint[] = [points[from]]
+      if (next[from][to] < 0) throw new Error(`no way from arc ${from} to arc ${to}`)
+      const way: GroundPoint[] = [points[arcs[from].to]]
       let at = from
       while (at !== to) {
         at = next[at][to]
-        way.push(points[at])
+        way.push(points[arcs[at].to])
       }
-      // A site or a junction in the middle of a straight stretch is no corner.
+      // A site or a junction in the middle of a straight stretch is no corner;
+      // a dead end the way turns round in is.
       return way.filter((point, index) => {
         if (index === 0 || index === way.length - 1) return true
         const [ax, az] = way[index - 1]
         const [cx, cz] = way[index + 1]
-        const cross = (point[0] - ax) * (cz - az) - (point[1] - az) * (cx - ax)
-        return Math.abs(cross) > EPSILON
+        const cross = (point[0] - ax) * (cz - point[1]) - (point[1] - az) * (cx - point[0])
+        const ahead = (point[0] - ax) * (cx - point[0]) + (point[1] - az) * (cz - point[1])
+        return Math.abs(cross) > EPSILON || ahead < 0
       })
     },
   }

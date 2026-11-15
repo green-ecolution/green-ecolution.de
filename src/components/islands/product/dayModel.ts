@@ -1,4 +1,5 @@
 import {
+  DEPOT_ARC,
   DEPOT_SITE,
   HYDRANT_SITE,
   REFILL_COST,
@@ -72,12 +73,14 @@ export function planDay(days: number): PlannedDay | null {
   if (thirsty.length === 0) return null
 
   const plan = planWatering({
+    arrivals: townGraph.arrivals,
     distance: townGraph.distance,
     depot: DEPOT_SITE,
     hydrants: [HYDRANT_SITE],
     thirsty,
     capacity: TANK_CAPACITY,
     refillCost: REFILL_COST,
+    urgency: (site) => 1 - moisture(townTrees[treeOfSite(site)].rate, days),
   })
 
   const order = townTrees.map(() => 0)
@@ -87,7 +90,7 @@ export function planDay(days: number): PlannedDay | null {
   }
 
   return {
-    script: tourScript(plan, townGraph.path, DEPOT_SITE, TANK_CAPACITY),
+    script: tourScript(plan, townGraph.path, { site: DEPOT_SITE, arc: DEPOT_ARC }, TANK_CAPACITY),
     order,
     treeStops,
     refills: plan.stops.filter((stop) => stop.kind === 'refill').length,

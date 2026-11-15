@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { START_DAYS, townTrees } from '../../../data/productTown'
+import { HYDRANT_SITE, START_DAYS, townTrees } from '../../../data/productTown'
 import { pinColors } from '../../../data/storyTown'
 import de from '../../../i18n/locales/de/product.json'
 import en from '../../../i18n/locales/en/product.json'
@@ -54,6 +54,17 @@ describe('planDay', () => {
     expect(day.treeStops).toBe(6)
     expect(day.refills).toBe(1)
     expect(day.order.filter((number) => number > 0).sort()).toEqual([1, 2, 3, 4, 5, 6])
+  })
+})
+
+describe('planDay in der Ausgangsstellung', () => {
+  const day = planDay(START_DAYS)
+
+  it('füllt genau einmal nach, unterwegs an der Wasserstelle und mit Resttank', () => {
+    const refills = day?.script.dwells.filter(({ stop }) => stop.kind === 'refill') ?? []
+    expect(refills).toHaveLength(1)
+    expect(refills[0].stop.site).toBe(HYDRANT_SITE)
+    expect(refills[0].stop.arrivedWith).toBeGreaterThan(0)
   })
 })
 
@@ -148,6 +159,6 @@ describe('tankShare', () => {
     expect(tankShare(null, NOT_STARTED)).toBe(1)
     expect(tankShare(day, NOT_STARTED)).toBe(1)
     expect(tankShare(day, { served: 1, dwell: -1, done: false })).toBeCloseTo(0.75)
-    expect(tankShare(day, finished(day.script))).toBeCloseTo(0.25)
+    expect(tankShare(day, finished(day.script))).toBe(0)
   })
 })

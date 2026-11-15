@@ -1,15 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import {
-  DEPOT_SITE,
-  HYDRANT_SITE,
-  REFILL_COST,
-  START_DAYS,
-  TANK_CAPACITY,
-  siteOfTree,
-  townGraph,
-  townTrees,
-} from '../data/productTown'
-import { moisture, thirst } from './dryness'
+import { planDay } from '../components/islands/product/dayModel'
+import { DEPOT_SITE, START_DAYS, TANK_CAPACITY } from '../data/productTown'
 import type { GroundPoint } from './storyPath'
 import {
   CUT_SECONDS,
@@ -20,22 +11,13 @@ import {
   tourScript,
   type TourScript,
 } from './wateringDay'
-import { planWatering, type Plan } from './wateringPlan'
+import type { Plan } from './wateringPlan'
 
+// The town's tours as the page plans them.
 function townScript(days: number): TourScript {
-  const thirsty = townTrees
-    .map((tree, index) => ({ index, state: thirst(moisture(tree.rate, days)) }))
-    .filter((tree) => tree.state === 'dry')
-    .map((tree) => siteOfTree(tree.index))
-  const plan = planWatering({
-    distance: townGraph.distance,
-    depot: DEPOT_SITE,
-    hydrants: [HYDRANT_SITE],
-    thirsty,
-    capacity: TANK_CAPACITY,
-    refillCost: REFILL_COST,
-  })
-  return tourScript(plan, townGraph.path, DEPOT_SITE, TANK_CAPACITY)
+  const day = planDay(days)
+  if (!day) throw new Error(`nothing to water at ${days} days`)
+  return day.script
 }
 
 // depot at x = 0, a tree at 60 and one at 80, all on one road
@@ -44,18 +26,20 @@ const sites: GroundPoint[] = [
   [60, 0],
   [80, 0],
 ]
+// One arrival per site, so a site is its own arc.
 const straight = (from: number, to: number): GroundPoint[] => [sites[from], sites[to]]
+const AT_DEPOT = { site: 0, arc: 0 }
 const twoTrees: Plan = {
   stops: [
-    { site: 1, kind: 'tree', arrivedWith: 2, leftWith: 1 },
-    { site: 2, kind: 'tree', arrivedWith: 1, leftWith: 0 },
-    { site: 0, kind: 'depot', arrivedWith: 0, leftWith: 0 },
+    { site: 1, arc: 1, kind: 'tree', arrivedWith: 2, leftWith: 1 },
+    { site: 2, arc: 2, kind: 'tree', arrivedWith: 1, leftWith: 0 },
+    { site: 0, arc: 0, kind: 'depot', arrivedWith: 0, leftWith: 0 },
   ],
   length: 160,
 }
 
 describe('tourScript', () => {
-  const script = tourScript(twoTrees, straight, 0, 2)
+  const script = tourScript(twoTrees, straight, AT_DEPOT, 2)
 
   it('reiht Abschnitte und Halte lückenlos aneinander', () => {
     expect(script.legs).toHaveLength(3)
@@ -91,20 +75,41 @@ describe('tourScript', () => {
     const short = tourScript(
       {
         stops: [
-          { site: 1, kind: 'tree', arrivedWith: 1, leftWith: 0 },
-          { site: 0, kind: 'depot', arrivedWith: 0, leftWith: 0 },
+          { site: 1, arc: 1, kind: 'tree', arrivedWith: 1, leftWith: 0 },
+          { site: 0, arc: 0, kind: 'depot', arrivedWith: 0, leftWith: 0 },
         ],
         length: 12,
       },
       (from, to) => [near[from], near[to]],
-      0,
+      AT_DEPOT,
       1,
     )
     expect(short.pov).toBeNull()
   })
 
   it('lehnt einen Plan ohne Halte ab', () => {
-    expect(() => tourScript({ stops: [], length: 0 }, straight, 0, 2)).toThrow(/at least one stop/)
+    expect(() => tourScript({ stops: [], length: 0 }, straight, AT_DEPOT, 2)).toThrow(
+      /at least one stop/,
+    )
+  })
+
+  it('legt die Abschnitte so, dass das Band nirgends zurückfaltet, außer am Bauhof', () => {
+    const heading = (from: GroundPoint, to: GroundPoint) => {
+      const length = Math.hypot(to[0] - from[0], to[1] - from[1])
+      return [(to[0] - from[0]) / length, (to[1] - from[1]) / length]
+    }
+    for (let days = 5; days <= 14; days++) {
+      const town = townScript(days)
+      town.legs.slice(1).forEach((leg, index) => {
+        if (town.dwells[index].stop.site === DEPOT_SITE) return
+        const before = town.legs[index].path
+        const arrived = heading(before[before.length - 2], before[before.length - 1])
+        const leaving = heading(leg.path[0], leg.path[1])
+        expect(arrived[0] * leaving[0] + arrived[1] * leaving[1], `${days} days`).toBeGreaterThan(
+          0.99,
+        )
+      })
+    }
   })
 
   it('bleibt in der Stadt an jedem Reglerstand unter der Höchstdauer', () => {
@@ -119,7 +124,7 @@ describe('tourScript', () => {
 })
 
 describe('tourFrame', () => {
-  const script = tourScript(twoTrees, straight, 0, 2)
+  const script = tourScript(twoTrees, straight, AT_DEPOT, 2)
 
   it('zeichnet zuerst die Route und fährt dann los', () => {
     const early = tourFrame(script, script.lead / 2)
