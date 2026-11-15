@@ -192,6 +192,8 @@ export function Labels({ live, stage, nodes }: LabelsProps) {
   useFrame(({ camera, size }) => {
     // A label over a pin clears the enlarged head by as much as the head grew.
     const lift = (pinHeadScale(camera.zoom) - 1) * PIN_RADIUS * PIN_HULL * camera.zoom
+    // A fade would carry the labels over into the ride, so at the cut they go at once.
+    const transitionDuration = (stage.current.frame?.cut ?? 0) > 0 ? '0s' : ''
 
     labelAnchors.forEach((anchor, index) => {
       const node = nodes.current[index]
@@ -201,6 +203,7 @@ export function Labels({ live, stage, nodes }: LabelsProps) {
       const top = ((1 - projected.y) / 2) * size.height - (index < townTrees.length ? lift : 0)
       const shift = index === HANGING_LABEL ? 'translate(-30%, 4px)' : 'translate(-50%, -100%)'
       node.style.transform = `translate(${left.toFixed(1)}px, ${top.toFixed(1)}px) ${shift}`
+      node.style.transitionDuration = transitionDuration
       node.dataset.shown = String(!stage.current.riding && labelShown(live.current, index))
     })
   })
