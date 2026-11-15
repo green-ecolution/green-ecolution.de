@@ -92,6 +92,9 @@ export function HeroTree({ story, isStatic }: ActorProps) {
 
 const SENSOR_REST = PIT_TOP + 0.12
 const SENSOR_DROP = 4.5
+// The camera looks along -(1, 1, 1), so falling in along that axis as well leaves
+// the drop on screen as it was but takes it past the crown instead of through it.
+const SENSOR_LEAD = 20
 
 export function Sensor({ story }: { story: Story }) {
   const body = useRef<Group>(null)
@@ -99,13 +102,17 @@ export function Sensor({ story }: { story: Story }) {
   useFrame(() => {
     if (!body.current) return
     const { sensorDrop } = story.current
-    const settled = 1 - (1 - sensorDrop) ** 3
+    const lift = (1 - sensorDrop) ** 3
     body.current.visible = sensorDrop > 0
-    body.current.position.y = SENSOR_REST + (1 - settled) * SENSOR_DROP
+    body.current.position.set(
+      SENSOR_X + lift * SENSOR_LEAD,
+      SENSOR_REST + lift * (SENSOR_DROP + SENSOR_LEAD),
+      SENSOR_Z + lift * SENSOR_LEAD,
+    )
   })
 
   return (
-    <group ref={body} position={[SENSOR_X, SENSOR_REST + SENSOR_DROP, SENSOR_Z]} visible={false}>
+    <group ref={body} position={[SENSOR_X, SENSOR_REST, SENSOR_Z]} visible={false}>
       <mesh>
         <boxGeometry args={[0.8, 0.5, 0.8]} />
         <meshLambertMaterial color="#2B2E2B" />
