@@ -9,7 +9,7 @@ import {
   type Mesh,
   type MeshBasicMaterial,
 } from 'three'
-import { HYDRANT_SITE, antenna, hydrant, type TownTree } from '../../../data/productTown'
+import { HYDRANT_SITE, gateway, hydrant, type TownTree } from '../../../data/productTown'
 import type { GroundPoint } from '../../../lib/storyPath'
 import { roadHeight, tourColors } from '../../../data/streamletTour'
 import { WATER_SECONDS, relayAt, type TourFrame, type TourScript } from '../../../lib/wateringDay'
@@ -22,7 +22,7 @@ import { showpieceStop } from './closeView'
 import { hoseGeometry, shapeHose } from './hose'
 import { PROBE_TOP, probeAt } from './probe'
 import { RadioRings, type RingSource } from './RadioRings'
-import { ANTENNA_TIP, relayDot } from './relay'
+import { GATEWAY_TIP, relayDot, type RelayHop } from './relay'
 import type { DayLive } from './shared'
 import { showpieceWeight, turned, wateredTree, type Stage, type TruckPose } from './stage'
 import { HYDRANT_ARM } from './town'
@@ -360,14 +360,32 @@ export function ProbeRings({ live, stage, isStatic }: TourProps) {
 const DOT_RADIUS = 0.42
 // Smallest radius in css pixels: in the picture of the whole town the dot
 // would otherwise be two pixels wide.
-const MIN_DOT_PX = 5
-/** The dot and the tail it draws behind it. */
-const TAIL = 5
-const TAIL_SECONDS = 0.07
+const MIN_DOT_PX = 6
+/** The dots of the trail the message leaves behind, per hop, and their size next to the message. */
+const TRAIL = { up: 9, over: 16 } as const
+const TRAIL_SIZE = 0.45
+const HALO_SIZE = 2.1
+// The camera follows the message closely: right at the lens it would fill the picture.
+const NEAR_LENS = { hidden: 3, shown: 9 } as const
 
-/** The probe's message: a dot of light from the probe up to the antenna and over to the depot. */
-export function RelayMessage({ live, isStatic }: Omit<TourProps, 'stage'>) {
-  const dots = useRef<(Mesh | null)[]>([])
+interface TrailDot {
+  hop: RelayHop
+  /** Where on its hop the dot lies, 0 to 1. */
+  share: number
+}
+
+const trail: TrailDot[] = (['up', 'over'] as const).flatMap((hop) =>
+  Array.from({ length: TRAIL[hop] }, (_, index) => ({ hop, share: (index + 0.5) / TRAIL[hop] })),
+)
+
+/**
+ * The probe's message: a dot of light that travels from the probe up to the
+ * gateway and over to the depot, and the dotted trail it leaves on its way.
+ */
+export function RelayMessage({ live, stage, isStatic }: TourProps) {
+  const dot = useRef<Mesh>(null)
+  const halo = useRef<Mesh>(null)
+  const marks = useRef<(Mesh | null)[]>([])
   const sender = useRef<{ script: TourScript | null; tree: TownTree | null }>({
     script: null,
     tree: null,
@@ -377,61 +395,91 @@ export function RelayMessage({ live, isStatic }: Omit<TourProps, 'stage'>) {
     const { script, elapsed } = live.current
     if (sender.current.script !== script) {
       sender.current = { script, tree: (script && showpieceStop(script)?.tree) ?? null }
+      // The trail lies where this tour's first tree stands.
+      const { tree } = sender.current
+      marks.current.forEach((mark, index) => {
+        if (!mark || !tree) return
+        const { at } = relayDot(tree, trail[index].hop, trail[index].share)
+        mark.position.set(at[0], at[1], at[2])
+      })
     }
     const { tree } = sender.current
+    const relay = script && tree && !isStatic ? relayAt(script, elapsed) : null
     // An orthographic zoom is css pixels per world unit.
     const radius = Math.max(DOT_RADIUS, MIN_DOT_PX / camera.zoom)
 
-    dots.current.forEach((dot, index) => {
-      if (!dot) return
-      const relay =
-        script && tree && !isStatic ? relayAt(script, elapsed - index * TAIL_SECONDS) : null
-      if (!relay || !tree) {
-        dot.visible = false
-        return
-      }
-      const { at, size } = relayDot(tree, relay.hop, relay.share)
-      dot.visible = size > 0.01
-      dot.position.set(at[0], at[1], at[2])
-      dot.scale.setScalar(size * radius * (1 - index / (TAIL + 2)))
+    marks.current.forEach((mark, index) => {
+      if (!mark) return
+      const { hop, share } = trail[index]
+      mark.visible = relay !== null && relay[hop] >= share
+      mark.scale.setScalar(radius * TRAIL_SIZE)
     })
+
+    if (!dot.current || !halo.current) return
+    if (!relay || !tree) {
+      dot.current.visible = false
+      halo.current.visible = false
+      return
+    }
+    const { at, size } =
+      relay.over > 0 ? relayDot(tree, 'over', relay.over) : relayDot(tree, 'up', relay.up)
+    const { lens } = stage.current
+    const away = lens ? Math.hypot(at[0] - lens[0], at[1] - lens[1], at[2] - lens[2]) : Infinity
+    const near = Math.min(
+      1,
+      Math.max(0, (away - NEAR_LENS.hidden) / (NEAR_LENS.shown - NEAR_LENS.hidden)),
+    )
+    const shown = size * near
+    dot.current.visible = halo.current.visible = shown > 0.01
+    dot.current.position.set(at[0], at[1], at[2])
+    halo.current.position.copy(dot.current.position)
+    dot.current.scale.setScalar(shown * radius)
+    halo.current.scale.setScalar(shown * radius * HALO_SIZE)
   })
 
+  // Drawn over crowns and roofs: the message and its way are never out of sight.
   return (
     <>
-      {Array.from({ length: TAIL + 1 }, (_, index) => (
+      {trail.map((mark, index) => (
         <mesh
-          key={index}
+          key={`${mark.hop}-${mark.share}`}
           ref={(node) => {
-            dots.current[index] = node
+            marks.current[index] = node
           }}
           visible={false}
           renderOrder={2}
         >
-          <sphereGeometry args={[1, 16, 12]} />
-          {/* Drawn over crowns and roofs: the message is never out of sight. */}
-          <meshBasicMaterial
-            color={tourColors.refill}
-            transparent
-            opacity={1 - index * 0.15}
-            depthTest={false}
-            depthWrite={false}
-          />
+          <sphereGeometry args={[1, 8, 6]} />
+          <meshBasicMaterial color={tourColors.refill} depthTest={false} depthWrite={false} />
         </mesh>
       ))}
+      <mesh ref={halo} visible={false} renderOrder={2}>
+        <sphereGeometry args={[1, 16, 12]} />
+        <meshBasicMaterial
+          color={tourColors.refill}
+          transparent
+          opacity={0.28}
+          depthTest={false}
+          depthWrite={false}
+        />
+      </mesh>
+      <mesh ref={dot} visible={false} renderOrder={3}>
+        <sphereGeometry args={[1, 16, 12]} />
+        <meshBasicMaterial color={tourColors.refill} depthTest={false} depthWrite={false} />
+      </mesh>
     </>
   )
 }
 
-/** Radio rings at the antenna while it passes the message on to the depot. */
-export function AntennaRings({ live, stage, isStatic }: TourProps) {
+/** Radio rings at the gateway while the message rests there and as it leaves for the depot. */
+export function GatewayRings({ live, stage, isStatic }: TourProps) {
   const source = (): RingSource | null => {
     const { script, elapsed } = live.current
     const relay = script && !isStatic ? relayAt(script, elapsed) : null
-    if (relay?.hop !== 'over') return null
-    // In and out with the hop, so they neither pop up nor cut off.
-    const power = Math.min(1, relay.share * 5, (1 - relay.share) * 5)
-    return { at: antenna.at, base: ANTENNA_TIP[1] - 0.3, power, lens: stage.current.lens }
+    if (!relay || relay.up < 1) return null
+    // They fade as the message gets under way again.
+    const power = Math.max(0, 1 - relay.over * 2.5)
+    return { at: gateway.at, base: GATEWAY_TIP[1] - 0.3, power, lens: stage.current.lens }
   }
 
   return <RadioRings source={source} />

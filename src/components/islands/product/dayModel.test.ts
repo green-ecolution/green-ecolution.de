@@ -208,7 +208,7 @@ describe('holdCopy', () => {
     expect(holdCopy('probe', null).text).toEqual({ key: 'day.info.probe.text' })
   })
 
-  it.each(['probe', 'watering', 'refill', 'result'] as const)(
+  it.each(['probe', 'gateway', 'watering', 'refill', 'result'] as const)(
     'gibt der Insel die Texte für %s mit',
     (kind) => {
       const { label, title, text, next } = holdCopy(kind, day)

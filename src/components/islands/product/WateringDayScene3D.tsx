@@ -21,7 +21,7 @@ import type { DayEvents, DayLive, TourProgress } from './shared'
 import { ShowpieceCamera } from './showpieceCamera'
 import { OVERVIEW, PARKED, showpieceWeight, shotFor, truckPose, type Stage } from './stage'
 import {
-  AntennaRings,
+  GatewayRings,
   ProbeRings,
   RefillHose,
   RefillPulse,
@@ -58,6 +58,8 @@ const CAMERA_NAMES: Record<ViewMode, string> = {
   iso: 'iso',
   flyIn: 'fly-in',
   probing: 'probing',
+  toGateway: 'to-gateway',
+  gateway: 'gateway',
   ride: 'ride',
   toWatering: 'to-watering',
   watering: 'watering',
@@ -343,8 +345,8 @@ function WateringDayScene3D({ isStatic, isActive, isReady, live, events, labels,
       <RefillPulse live={live} stage={stage} isStatic={isStatic} />
       <RefillHose live={live} stage={stage} isStatic={isStatic} />
       <ProbeRings live={live} stage={stage} isStatic={isStatic} />
-      <AntennaRings live={live} stage={stage} isStatic={isStatic} />
-      <RelayMessage live={live} isStatic={isStatic} />
+      <GatewayRings live={live} stage={stage} isStatic={isStatic} />
+      <RelayMessage live={live} stage={stage} isStatic={isStatic} />
       <Crowns live={live} isStatic={isStatic} />
       <TreePins live={live} stage={stage} isStatic={isStatic} />
       <HitAreas live={live} events={events} />

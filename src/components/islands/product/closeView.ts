@@ -1,6 +1,7 @@
 import {
   blocks,
   depot,
+  gateway,
   hydrant,
   plate,
   townTrees,
@@ -22,6 +23,7 @@ import { tourFrame, type TourScript } from '../../../lib/wateringDay'
 import { PIN_HULL, PIN_RADIUS, pinHeight } from '../scene3d/pinSize'
 import { treePit } from '../scene3d/trees'
 import { PIT_TOP, PROBE, PROBE_TOP, probeAt } from './probe'
+import { GATEWAY_TIP } from './relay'
 import { truckPose } from './stage'
 
 interface Framing {
@@ -343,6 +345,40 @@ export function resultView(truck: GroundPoint, heading: number): CloseView {
     subjects,
     clear: false,
   }
+}
+
+const gatewayHouse = blocks.find((block) => block.x === gateway.at[0] && block.z === gateway.at[1])
+/** Room over the gateway's tip for the rings that rise from it. */
+const RING_ROOM = 4
+/** How much of the house under the roof belongs to the picture. */
+const WALL_SHOWN = 3
+
+// The roof it stands on, a storey of the house below, and the air over its tip.
+const gatewaySubjects: Vec3[] = [
+  ...[-1, 1].flatMap((sideX) =>
+    [-1, 1].flatMap((sideZ) =>
+      [gateway.base, gateway.base - WALL_SHOWN].map((y): Vec3 => [
+        gateway.at[0] + (sideX * (gatewayHouse?.width ?? 0)) / 2,
+        y,
+        gateway.at[1] + (sideZ * (gatewayHouse?.depth ?? 0)) / 2,
+      ]),
+    ),
+  ),
+  [GATEWAY_TIP[0], GATEWAY_TIP[1] + RING_ROOM, GATEWAY_TIP[2]],
+]
+
+/**
+ * The gateway on its roof, from the side of the slanted camera and above the
+ * roofs around: no house stands in the way up there, so it needs no search.
+ */
+export const gatewayView = (): CloseView => {
+  const target = middleOf(gatewaySubjects)
+  const pose = (aside: number, up: number): CameraPose => ({
+    position: [gateway.at[0] + aside, gateway.base + up, gateway.at[1] + aside],
+    target,
+    fov: 40,
+  })
+  return { from: pose(15, 9), to: pose(13.5, 8), subjects: gatewaySubjects, clear: true }
 }
 
 /** The corner of the picture a card covers from the bottom left, as shares of its width and height. */

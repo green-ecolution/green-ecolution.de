@@ -113,10 +113,6 @@ const stageCard =
 const caption =
   'pointer-events-none absolute bottom-3 left-3 rounded-full bg-white/95 px-2.5 py-1 font-lato text-xs font-semibold text-grey-900 opacity-0 shadow-sm ring-1 ring-green-dark-900/10 transition-opacity duration-500 group-data-[day-camera=ride]:opacity-100'
 
-// Top left, clear of the card that has just explained the probe at the bottom.
-const relayCaption =
-  'pointer-events-none absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 font-lato text-xs font-semibold text-grey-900 opacity-0 shadow-sm ring-1 ring-green-dark-900/10 transition-opacity duration-500 group-data-[day-relay]:opacity-100'
-
 function WateringDay({ poster }: { poster?: Poster }) {
   const t = useT()
   const [days, setDays] = useState(START_DAYS)
@@ -444,9 +440,6 @@ function WateringDay({ poster }: { poster?: Poster }) {
               ))}
               <span data-day-caption aria-hidden="true" className={caption}>
                 {t('day.ride.caption')}
-              </span>
-              <span data-day-relay-caption aria-hidden="true" className={relayCaption}>
-                {t('day.relay.caption')}
               </span>
               <HoldCard
                 kind={lastHold}

@@ -7,7 +7,7 @@ import {
   HYDRANT_SITE,
   START_DAYS,
   TANK_CAPACITY,
-  antenna,
+  gateway,
   blocks,
   depot,
   hydrant,
@@ -129,10 +129,10 @@ describe('productTown', () => {
   })
 })
 
-describe('Antenne', () => {
+describe('Gateway', () => {
   it('steht auf einem Flachdach', () => {
-    const roof = blocks.find((block) => block.x === antenna.at[0] && block.z === antenna.at[1])
+    const roof = blocks.find((block) => block.x === gateway.at[0] && block.z === gateway.at[1])
     expect(roof?.roof).toBe('flat')
-    expect(antenna.base).toBe(roof?.height)
+    expect(gateway.base).toBe(roof?.height)
   })
 })

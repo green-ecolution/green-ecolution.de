@@ -71,6 +71,11 @@
         "text": "It sits in the ground next to the tree and measures how moist the soil at the roots is. It sends the reading on its own.",
         "next": "Next"
       },
+      "gateway": {
+        "label": "Radio",
+        "title": "The gateway passes the message on",
+        "text": "The probe sends its reading by radio to the gateway. From there it goes on to the map at the depot. Nobody has to drive to the tree for it."
+      },
       "watering": {
         "label": "Watering",
         "title": "Water only where it is missing",
@@ -91,9 +96,6 @@
     },
     "ride": {
       "caption": "View from the watering truck"
-    },
-    "relay": {
-      "caption": "The message goes by radio to the map at the depot"
     },
     "status": {
       "none": "Nobody has to go out today. Every tree has enough water.",
@@ -126,9 +128,9 @@
         "name": "Sensor",
         "text": "Measures soil moisture and soil temperature."
       },
-      "antenna": {
-        "term": "Antenna",
-        "name": "Gateway",
+      "gateway": {
+        "term": "Gateway",
+        "name": "Radio",
         "text": "Radio over LoRaWAN and the open The Things Network. Where the network is missing, a gateway of your own or NB-IoT with a SIM card helps."
       },
       "server": {
