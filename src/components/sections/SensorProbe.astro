@@ -56,7 +56,7 @@ const DEEP_ROOTS = [
           <article
             data-chapter="0"
             data-active="true"
-            class="hardware-chapter lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16 lg:items-center"
+            class="hardware-chapter lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16 lg:items-center lg:pin-short:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:pin-short:gap-x-8"
           >
             <div class="mb-10 lg:mb-0">
               <div
@@ -304,21 +304,21 @@ const DEEP_ROOTS = [
               </div>
             </div>
 
-            <div class="lg:short:text-base">
-              <div class="inline-block mb-6 lg:short:mb-4">
+            <div class="lg:pin-short:text-base">
+              <div class="inline-block mb-6 lg:pin-short:mb-4">
                 <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
                   {t('sensorProbe.sectionLabel')}
                 </span>
                 <div class="label-rule"></div>
               </div>
 
-              <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl">
+              <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:text-3xl xl:text-4xl lg:pin-short:text-2xl">
                 {t('sensorProbe.title')}
               </h2>
 
               <p class="text-grey-900/70 leading-relaxed">{t('sensorProbe.description')}</p>
 
-              <ul class="space-y-4 mt-6 lg:short:mt-4">
+              <ul class="space-y-4 mt-6 lg:pin-short:mt-4 lg:pin-short:grid lg:pin-short:grid-cols-2 lg:pin-short:gap-x-6 lg:pin-short:space-y-0">
                 {sensorFeatures.map((feature) => {
                   const Icon = feature.icon
 
@@ -342,7 +342,7 @@ const DEEP_ROOTS = [
 
               {/* Only beside the model: stacked below it the rows are out of
                   sight while the water sinks in. */}
-              <div class="mt-6 hidden border-t border-green-dark-900/10 pt-5 lg:block lg:short:mt-4 lg:short:pt-4">
+              <div class="mt-6 hidden border-t border-green-dark-900/10 pt-5 lg:block lg:pin-short:mt-4 lg:pin-short:pt-4">
                 <p class="mb-2 text-xs font-semibold tracking-widest uppercase text-green-dark-900">
                   {t('sensorProbe.readings.title')}
                 </p>
@@ -351,7 +351,7 @@ const DEEP_ROOTS = [
                     <li
                       data-soak-reading
                       data-reached={index < START_REACHED ? '' : undefined}
-                      class="reading flex items-center justify-between gap-4 border-b border-green-dark-900/10 py-2 last:border-b-0 lg:short:py-1.5"
+                      class="reading flex items-center justify-between gap-4 border-b border-green-dark-900/10 py-2 last:border-b-0 lg:pin-short:py-1.5"
                     >
                       <span class="font-lato font-semibold text-sm text-grey-900">
                         {depth.zone}
@@ -373,7 +373,7 @@ const DEEP_ROOTS = [
             data-active="false"
             class="hardware-chapter lg:grid lg:grid-cols-12 lg:gap-x-12 xl:gap-x-16 lg:items-center"
           >
-            <figure class="mb-6 md:mb-10 lg:mb-0 lg:col-span-7 lg:short:col-span-6">
+            <figure class="mb-6 md:mb-10 lg:mb-0 lg:col-span-7 lg:pin-short:col-span-6">
               <Image
                 src={sensorPhoto}
                 alt={t('sensorProbe.photoAlt')}
@@ -387,8 +387,8 @@ const DEEP_ROOTS = [
               </figcaption>
             </figure>
 
-            <div class="lg:col-span-5 lg:short:col-span-6 lg:short:text-base">
-              <div class="inline-block mb-6 lg:short:mb-4">
+            <div class="lg:col-span-5 lg:pin-short:col-span-6 lg:pin-short:text-base">
+              <div class="inline-block mb-6 lg:pin-short:mb-4">
                 <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
                   {t('sensorProbe.installation.sectionLabel')}
                 </span>
@@ -427,7 +427,7 @@ const DEEP_ROOTS = [
             data-active="false"
             class="hardware-chapter lg:grid lg:grid-cols-12 lg:gap-x-12 xl:gap-x-16 lg:items-center"
           >
-            <figure class="mb-6 md:mb-10 lg:mb-0 lg:col-span-7 lg:short:col-span-6">
+            <figure class="mb-6 md:mb-10 lg:mb-0 lg:col-span-7 lg:pin-short:col-span-6">
               <div class="relative overflow-hidden rounded-2xl">
                 <Image
                   src={setupPhoto}
@@ -450,8 +450,8 @@ const DEEP_ROOTS = [
               </figcaption>
             </figure>
 
-            <div class="lg:col-span-5 lg:short:col-span-6 lg:short:text-base">
-              <div class="inline-block mb-6 lg:short:mb-4">
+            <div class="lg:col-span-5 lg:pin-short:col-span-6 lg:pin-short:text-base">
+              <div class="inline-block mb-6 lg:pin-short:mb-4">
                 <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
                   {t('sensorSetup.sectionLabel')}
                 </span>

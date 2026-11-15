@@ -78,7 +78,10 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
         data-story
         class="w-full md:grid md:grid-cols-12 md:items-center md:gap-8 lg:gap-10 xl:gap-16"
       >
-        <div data-story-frame class="story-frame mb-6 md:mb-0 md:col-span-6 lg:col-span-7">
+        <div
+          data-story-frame
+          class="story-frame mb-6 md:mb-0 md:col-span-6 lg:col-span-7 lg:pin-short:col-span-6"
+        >
           <div
             data-story-root
             data-act="0"
@@ -138,7 +141,10 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
           </div>
         </div>
 
-        <ol data-story-steps class="border-t border-green-dark-900/15 md:col-span-6 lg:col-span-5">
+        <ol
+          data-story-steps
+          class="border-t border-green-dark-900/15 md:col-span-6 lg:col-span-5 lg:pin-short:col-span-6"
+        >
           {workflowSteps.map((step, index) => {
             const Icon = step.icon
             const panelId = `workflow-panel-${step.id}`
@@ -166,16 +172,16 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
                       data-step-trigger={index}
                       aria-expanded="true"
                       aria-controls={panelId}
-                      class="flex w-full items-center gap-x-4 py-4 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+                      class="flex w-full items-center gap-x-4 py-4 pl-5 lg:pin-short:py-3 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
                     >
                       <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
                         <Icon className="w-5 h-5" aria-hidden="true" />
                       </span>
-                      <span class="flex-1">
-                        <span class="block text-xs font-semibold tracking-widest uppercase text-green-dark-900 mb-1">
+                      <span class="flex flex-1 items-baseline gap-x-3">
+                        <span class="text-xs font-semibold tracking-widest uppercase text-green-dark-900">
                           {step.number}
                         </span>
-                        <span class="block font-lato font-bold text-xl text-grey-900 lg:text-2xl">
+                        <span class="font-lato font-bold text-xl text-grey-900 lg:text-2xl">
                           {t(`workflow.steps.${step.id}.title`)}
                         </span>
                       </span>
@@ -187,7 +193,7 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
                   </h3>
                   <div id={panelId} class="story-panel">
                     <div>
-                      <p class="pb-6 pl-5 pr-2 sm:pl-[4.75rem] text-grey-900/70 leading-relaxed">
+                      <p class="pb-6 pl-5 pr-2 sm:pl-[4.75rem] lg:pin-short:pb-4 text-grey-900/70 leading-relaxed">
                         {t(`workflow.steps.${step.id}.description`)}
                       </p>
                     </div>
@@ -219,7 +225,7 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
                   data-step-trigger={finaleIndex}
                   aria-expanded="true"
                   aria-controls={finalePanelId}
-                  class="flex w-full items-center gap-x-4 py-4 pl-5 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
+                  class="flex w-full items-center gap-x-4 py-4 pl-5 lg:pin-short:py-3 pr-2 text-left cursor-pointer rounded-lg transition-colors hover:bg-green-light-100/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-dark-900"
                 >
                   <span class="flex shrink-0 w-11 h-11 rounded-full items-center justify-center bg-green-light-100 text-green-dark-900 ring-1 ring-green-light-900/30 transition-colors duration-300 group-data-[active=true]:bg-green-dark-900 group-data-[active=true]:text-white group-data-[active=true]:ring-green-dark-900">
                     <Sparkles className="w-5 h-5" aria-hidden="true" />
@@ -235,7 +241,7 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
               </h3>
               <div id={finalePanelId} class="story-panel">
                 <div>
-                  <div class="pb-6 pl-5 pr-2 sm:pl-[4.75rem]">
+                  <div class="pb-6 pl-5 pr-2 sm:pl-[4.75rem] lg:pin-short:pb-4">
                     <p class="text-grey-900/70 leading-relaxed">{t('workflow.more.description')}</p>
 
                     <div
@@ -264,7 +270,7 @@ const posters = [storyAct1, storyAct2, storyAct3, storyAct4]
                       </p>
                     ))}
 
-                    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+                    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 lg:pin-short:mt-4">
                       <div class="story-cta w-max origin-left">
                         <Button
                           href={`/${language}/contact`}
