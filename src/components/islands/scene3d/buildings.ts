@@ -75,17 +75,36 @@ function gableEnds(
   return painted(prism, new Matrix4().makeTranslation(...at).multiply(turn), color)
 }
 
+type Face = '+x' | '+z' | '-x' | '-z'
+
+/** The two faces the slanted camera sees. */
+const SEEN_FACES: readonly Face[] = ['+x', '+z']
+const ALL_FACES: readonly Face[] = ['+x', '+z', '-x', '-z']
+
 /**
  * Windows as boxes a little proud of the wall, one row per storey and as many
- * across as the face has room for. Only the two faces the camera sees get any.
+ * across as the face has room for.
  */
-function facadeOpenings(block: CityBlock): BufferGeometry[] {
+function facadeOpenings(block: CityBlock, faces: readonly Face[]): BufferGeometry[] {
   const parts: BufferGeometry[] = []
   const storey = block.height / block.floors
   const { width, height, gap, relief } = windowSpec
 
-  for (const face of ['+x', '+z'] as const) {
-    const faceLength = face === '+x' ? block.depth : block.width
+  for (const face of faces) {
+    // A face on the x side of the block runs along z, and the other way round.
+    const alongZ = face.endsWith('x')
+    const side = face.startsWith('+') ? 1 : -1
+    const faceLength = alongZ ? block.depth : block.width
+    const out = side * ((alongZ ? block.width : block.depth) / 2 + relief / 2)
+    const opening = (along: number, y: number, tall: number, wide: number, color: string) =>
+      painted(
+        unitBox,
+        alongZ
+          ? placed([block.x + out, y, block.z + along], [relief, tall, wide])
+          : placed([block.x + along, y, block.z + out], [wide, tall, relief]),
+        color,
+      )
+
     const bays = baysFor(faceLength)
     const row = bays * width + (bays - 1) * gap
     const hasDoor = block.door === face
@@ -97,50 +116,12 @@ function facadeOpenings(block: CityBlock): BufferGeometry[] {
       for (let bay = 0; bay < bays; bay++) {
         const along = -row / 2 + width / 2 + bay * (width + gap)
         if (hasDoor && floor === 0 && Math.abs(along) < doorClearance) continue
-
-        parts.push(
-          face === '+x'
-            ? painted(
-                unitBox,
-                placed(
-                  [block.x + block.width / 2 + relief / 2, y, block.z + along],
-                  [relief, height, width],
-                ),
-                tourColors.window,
-              )
-            : painted(
-                unitBox,
-                placed(
-                  [block.x + along, y, block.z + block.depth / 2 + relief / 2],
-                  [width, height, relief],
-                ),
-                tourColors.window,
-              ),
-        )
+        parts.push(opening(along, y, height, width, tourColors.window))
       }
     }
 
     if (hasDoor) {
-      const y = doorSpec.height / 2
-      parts.push(
-        face === '+x'
-          ? painted(
-              unitBox,
-              placed(
-                [block.x + block.width / 2 + relief / 2, y, block.z],
-                [relief, doorSpec.height, doorSpec.width],
-              ),
-              tourColors.door,
-            )
-          : painted(
-              unitBox,
-              placed(
-                [block.x, y, block.z + block.depth / 2 + relief / 2],
-                [doorSpec.width, doorSpec.height, relief],
-              ),
-              tourColors.door,
-            ),
-      )
+      parts.push(opening(0, doorSpec.height / 2, doorSpec.height, doorSpec.width, tourColors.door))
     }
   }
 
@@ -179,7 +160,8 @@ function flatRoof(block: CityBlock): BufferGeometry[] {
   ]
 }
 
-export function blockGeometry(block: CityBlock): BufferGeometry[] {
+/** `allFaces` is for a town a camera drives through; the slanted one sees two faces. */
+export function blockGeometry(block: CityBlock, allFaces = false): BufferGeometry[] {
   const tone = blockTones[block.tone]
   const parts = [
     painted(
@@ -187,7 +169,7 @@ export function blockGeometry(block: CityBlock): BufferGeometry[] {
       placed([block.x, block.height / 2, block.z], [block.width, block.height, block.depth]),
       tone,
     ),
-    ...facadeOpenings(block),
+    ...facadeOpenings(block, allFaces ? ALL_FACES : SEEN_FACES),
   ]
 
   if (block.roof === 'flat') {

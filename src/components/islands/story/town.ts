@@ -10,60 +10,14 @@ import {
   plate,
   roads,
   storyTrees,
-  type Road,
 } from '../../../data/storyTown'
-import {
-  centerLine,
-  kerb,
-  lawnHeight,
-  roadHeight,
-  roadWidth,
-  tourColors,
-} from '../../../data/streamletTour'
+import { lawnHeight, roadHeight, tourColors } from '../../../data/streamletTour'
 import { merged, painted, placed } from '../../../lib/paintedGeometry'
 import type { GroundPoint } from '../../../lib/storyPath'
 import { blockGeometry, depotGeometry } from '../scene3d/buildings'
+import { roadGeometry } from '../scene3d/roads'
 import { roundedSlab, unitBox, unitCylinder, unitDisc } from '../scene3d/primitives'
 import { treeGeometry, treePitGeometry } from '../scene3d/trees'
-
-function roadGeometry(road: Road): BufferGeometry[] {
-  const [fromX, fromZ] = road.from
-  const [toX, toZ] = road.to
-  const alongX = fromZ === toZ
-  const length = alongX ? Math.abs(toX - fromX) : Math.abs(toZ - fromZ)
-  const x = (fromX + toX) / 2
-  const z = (fromZ + toZ) / 2
-  const box = (width: number, height: number): [number, number, number] =>
-    alongX ? [length, height, width] : [width, height, length]
-  const kerbTop = roadHeight - kerb.drop
-
-  const pattern = centerLine.dash + centerLine.gap
-  const dashes = Array.from({ length: Math.floor(length / pattern) }, (_, index) => {
-    const along = -length / 2 + centerLine.gap / 2 + index * pattern + centerLine.dash / 2
-    return painted(
-      unitBox,
-      placed(
-        alongX
-          ? [x + along, roadHeight + centerLine.lift, z]
-          : [x, roadHeight + centerLine.lift, z + along],
-        alongX
-          ? [centerLine.dash, 0.02, centerLine.width]
-          : [centerLine.width, 0.02, centerLine.dash],
-      ),
-      tourColors.roadLine,
-    )
-  })
-
-  return [
-    painted(
-      unitBox,
-      placed([x, kerbTop / 2, z], box(roadWidth + kerb.width * 2, kerbTop)),
-      tourColors.kerb,
-    ),
-    painted(unitBox, placed([x, roadHeight / 2, z], box(roadWidth, roadHeight)), tourColors.road),
-    ...dashes,
-  ]
-}
 
 // Larger than life, so it still reads as a bin on a small stage.
 function binGeometry([x, z]: GroundPoint): BufferGeometry[] {
@@ -99,7 +53,7 @@ export const groundGeometry = roundedSlab(side, side, plate.radius, plate.thickn
 // tree is left out: its crown changes colour and is drawn on its own.
 export const townGeometry = merged([
   ...roads.flatMap(roadGeometry),
-  ...blocks.flatMap(blockGeometry),
+  ...blocks.flatMap((block) => blockGeometry(block)),
   ...depotGeometry(depotAt),
   painted(
     roundedSlab(lawn.width, lawn.depth, 1.2, lawnHeight),
