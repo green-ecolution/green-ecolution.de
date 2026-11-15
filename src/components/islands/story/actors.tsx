@@ -6,8 +6,7 @@ import {
   Color,
   DoubleSide,
   MeshLambertMaterial,
-  QuadraticBezierCurve3,
-  TubeGeometry,
+  Quaternion,
   Vector3,
   type Group,
   type Mesh,
@@ -42,8 +41,7 @@ import {
 } from './anchors'
 import { PIT_TOP, damp, type ActorProps, type Story } from './shared'
 import { Gritter, RefuseTruck, SewerTruck } from './vehicles'
-
-const WATER = '#2B7FBF'
+import { WATER, WATER_GLINT, jetGeometry, jetSpan, shapeJet, type JetArc } from './waterJet'
 
 const dryBody = new Color('#C9B86A')
 const dryLit = new Color('#D8C97F')
@@ -329,9 +327,50 @@ interface FleetMember {
   Truck: ComponentType<{ wheels: RefObject<Group[]> }>
 }
 
+const UP = new Vector3(0, 1, 0)
+const parked = vehiclePose(tourPath, 1, WHEELBASE)
+const jetTarget = new Vector3(heroTree.at[0] + 0.9, PIT_TOP, heroTree.at[1] - 0.7)
+// On the tank's crown: its flank towards the tree faces away from the camera.
+const MONITOR_AT = new Vector3(-0.7, 4.45, 0.3)
+const BARREL_LENGTH = 1
+const BARREL_PITCH = 0.6
+const monitorPivot = MONITOR_AT.clone()
+  .applyAxisAngle(UP, parked.heading)
+  .add(new Vector3(parked.at[0], roadHeight, parked.at[1]))
+const aim = jetTarget.clone().sub(monitorPivot).setY(0).normalize()
+const barrelAxis = aim.clone().multiplyScalar(Math.cos(BARREL_PITCH)).setY(Math.sin(BARREL_PITCH))
+const barrelMouth = monitorPivot.clone().addScaledVector(barrelAxis, BARREL_LENGTH)
+const barrelAxisOnTruck = barrelAxis.clone().applyAxisAngle(UP, -parked.heading)
+const barrelTurn = new Quaternion().setFromUnitVectors(UP, barrelAxisOnTruck)
+const barrelCentre = MONITOR_AT.clone().addScaledVector(barrelAxisOnTruck, BARREL_LENGTH / 2)
+
+// The water leaves along the barrel, which fixes how high it climbs.
+const jetArc: JetArc = (() => {
+  const reach = Math.hypot(jetTarget.x - barrelMouth.x, jetTarget.z - barrelMouth.z)
+  const climb = Math.tan(BARREL_PITCH) * reach
+  const drop = barrelMouth.y - jetTarget.y
+  return { from: barrelMouth, to: jetTarget, rise: (climb * climb) / (4 * (climb + drop)) }
+})()
+
+function WateringTruck({ wheels }: { wheels: RefObject<Group[]> }) {
+  return (
+    <>
+      <Vehicle wheels={wheels} />
+      <mesh position={[MONITOR_AT.x, MONITOR_AT.y - 0.25, MONITOR_AT.z]}>
+        <cylinderGeometry args={[0.3, 0.36, 0.6, 12]} />
+        <meshLambertMaterial color={tourColors.vehicleBody} />
+      </mesh>
+      <mesh position={barrelCentre} quaternion={barrelTurn}>
+        <cylinderGeometry args={[0.17, 0.22, BARREL_LENGTH, 10]} />
+        <meshLambertMaterial color={tourColors.vehicleTrim} />
+      </mesh>
+    </>
+  )
+}
+
 // The watering truck drives the tour, each example gets the truck for its job.
 const fleet: FleetMember[] = [
-  { route: 'tour', Truck: Vehicle },
+  { route: 'tour', Truck: WateringTruck },
   { route: 0, Truck: RefuseTruck },
   { route: 1, Truck: Gritter },
   { route: 2, Truck: SewerTruck },
@@ -382,42 +421,62 @@ export function StoryVehicle({ story }: { story: Story }) {
   )
 }
 
-const tourEnd = tourPath[tourPath.length - 1]
-// High on the tank's flank towards the tree, where the body does not hide it.
-const streamFrom = new Vector3(tourEnd[0] - 1.45, roadHeight + 3.35, tourEnd[1] - 1.2)
-const streamTo = new Vector3(heroTree.at[0] + 0.9, PIT_TOP, heroTree.at[1] - 0.7)
-const streamGeometry = new TubeGeometry(
-  new QuadraticBezierCurve3(
-    streamFrom,
-    streamFrom
-      .clone()
-      .lerp(streamTo, 0.4)
-      .setY(streamFrom.y + 0.9),
-    streamTo,
-  ),
-  24,
-  0.15,
-  8,
-)
+const jet = jetGeometry()
 const WET_RADIUS = treePit.radius - treePit.kerbWidth
+
+interface Drop {
+  turn: number
+  reach: number
+  height: number
+  offset: number
+}
+
+// Spread round the impact by the golden angle, so no two fly the same way.
+const drops: Drop[] = Array.from({ length: 7 }, (_, index) => ({
+  turn: index * 2.4,
+  reach: 0.45 + ((index * 0.618) % 1) * 0.5,
+  height: 0.3 + ((index * 0.382) % 1) * 0.4,
+  offset: (index * 0.447) % 1,
+}))
 
 export function Watering({ story, isStatic }: ActorProps) {
   const stream = useRef<Mesh>(null)
+  const splash = useRef<Group>(null)
   const wet = useRef<Mesh>(null)
   const ripple = useRef<Mesh>(null)
 
   useFrame(({ clock }) => {
     const { watering } = story.current
-    const flowing = watering > 0 && watering < 1
+    const { tail, head } = jetSpan(watering)
+    const time = isStatic ? 0 : clock.getElapsedTime()
+    const isLanding = !isStatic && head >= 1 && tail < 1
 
-    if (stream.current) stream.current.visible = flowing
+    if (stream.current) {
+      stream.current.visible = head > tail
+      if (stream.current.visible) shapeJet(jet, jetArc, tail, head, time)
+    }
+    if (splash.current) {
+      splash.current.visible = isLanding
+      if (isLanding) {
+        splash.current.children.forEach((drop, index) => {
+          const { turn, reach, height, offset } = drops[index]
+          const flight = (time * 1.6 + offset) % 1
+          drop.position.set(
+            Math.cos(turn) * reach * flight,
+            0.08 + height * 4 * flight * (1 - flight),
+            Math.sin(turn) * reach * flight,
+          )
+          drop.scale.setScalar(1 - 0.6 * flight)
+        })
+      }
+    }
     if (wet.current) {
       wet.current.visible = watering > 0
       ;(wet.current.material as MeshBasicMaterial).opacity = watering * 0.45
     }
     if (ripple.current) {
-      const wave = (clock.getElapsedTime() * 0.9) % 1
-      ripple.current.visible = flowing && !isStatic
+      const wave = (time * 0.9) % 1
+      ripple.current.visible = isLanding
       ripple.current.scale.setScalar(0.5 + wave * 1.2)
       ;(ripple.current.material as MeshBasicMaterial).opacity = 0.6 * (1 - wave)
     }
@@ -425,9 +484,18 @@ export function Watering({ story, isStatic }: ActorProps) {
 
   return (
     <>
-      <mesh ref={stream} geometry={streamGeometry} visible={false}>
-        <meshBasicMaterial color={WATER} transparent opacity={0.85} depthWrite={false} />
+      {/* Reshaped every frame, so the bounds it was created with say nothing. */}
+      <mesh ref={stream} geometry={jet} visible={false} frustumCulled={false}>
+        <meshBasicMaterial vertexColors transparent depthWrite={false} />
       </mesh>
+      <group ref={splash} position={jetTarget} visible={false}>
+        {drops.map((drop) => (
+          <mesh key={drop.turn}>
+            <icosahedronGeometry args={[0.16, 0]} />
+            <meshBasicMaterial color={WATER_GLINT} transparent opacity={0.9} depthWrite={false} />
+          </mesh>
+        ))}
+      </group>
       <mesh
         ref={wet}
         position={[heroTree.at[0], PIT_TOP + 0.02, heroTree.at[1]]}
