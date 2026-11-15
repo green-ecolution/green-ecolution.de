@@ -297,15 +297,72 @@ try {
 }
 
 const TREE = 'Am Markt'
-const row = `[...document.querySelectorAll('#process li button')].find((node) => node.textContent.includes(${JSON.stringify(TREE)}))`
-const namedLabel = `[...document.querySelectorAll('#process [data-day-label]')].find((node) => node.dataset.shown === 'true' && node.textContent.includes(${JSON.stringify(TREE)}))`
+const rowOf = (name) =>
+  `[...document.querySelectorAll('#process li button')].find((node) => node.textContent.includes(${JSON.stringify(name)}))`
+const labelOf = (name) =>
+  `[...document.querySelectorAll('#process [data-day-label]')].find((node) => node.dataset.shown === 'true' && node.textContent.includes(${JSON.stringify(name)}))`
+const row = rowOf(TREE)
+const namedLabel = labelOf(TREE)
+const middleOf = (node) => `(() => {
+  const rect = ${node}.getBoundingClientRect()
+  return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+})()`
+// The depot's label stands over a fixed point of the town: where its foot is
+// on screen tells where the camera looks.
+const LOOK = `(() => {
+  const label = [...document.querySelectorAll('#process [data-day-label]')].find((node) => node.textContent.trim() === 'Bauhof')
+  const rect = label.getBoundingClientRect()
+  return { x: rect.left + rect.width / 2, y: rect.bottom }
+})()`
+const apart = (a, b) => Math.hypot(a.x - b.x, a.y - b.y)
 const pointer = await openPage(sizes[0])
 try {
   await load(pointer, { name: 'desktop pointer' })
-  const rowBox = await pointer.evaluate(`(() => {
-    const rect = ${row}.getBoundingClientRect()
-    return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
-  })()`)
+  const rest = await settled(pointer, LOOK, 'the camera on the town')
+
+  for (const [index, name] of ['Am Markt', 'Marktgasse', 'Bahnhofstraße'].entries()) {
+    const box = await pointer.evaluate(middleOf(rowOf(name)))
+    await moveMouse(pointer, box.x, box.y)
+    await pointer.waitFor(`${labelOf(name)} !== undefined`, `${name} to be named`)
+    // Long enough for a glide to show; the camera answers within a frame.
+    await sleep(1500)
+    const look = await pointer.evaluate(LOOK)
+    const marked = await pointer.evaluate(
+      `document.querySelectorAll('#process li button[data-selected=true]').length`,
+    )
+    check(
+      `desktop: hovering ${name} names it and leaves the camera where it is`,
+      apart(look, rest) < 0.5 && marked === 0,
+      `moved ${apart(look, rest).toFixed(1)} px, ${marked} marked`,
+    )
+    await pointer.screenshot(join(out, `desktop-4-hover-${index + 1}.png`))
+  }
+
+  const target = 'Bahnhofstraße'
+  const box = await pointer.evaluate(middleOf(rowOf(target)))
+  await clickAt(pointer, box.x, box.y)
+  await pointer.waitFor(
+    `${rowOf(target)}.dataset.selected === 'true'`,
+    'the clicked row to be marked',
+  )
+  const flown = await settled(pointer, LOOK, 'the camera on the clicked tree')
+  check(
+    'desktop: a click on a row marks it and the camera glides there',
+    apart(flown, rest) > 40 && (await pointer.evaluate(`${labelOf(target)} !== undefined`)),
+    `moved ${apart(flown, rest).toFixed(0)} px`,
+  )
+  await pointer.screenshot(join(out, 'desktop-5-row-clicked.png'))
+
+  await clickAt(pointer, box.x, box.y)
+  await pointer.waitFor(`${rowOf(target)}.dataset.selected === 'false'`, 'the row to let go')
+  const back = await settled(pointer, LOOK, 'the camera back on the town')
+  check(
+    'desktop: a second click lets the row go and the camera returns',
+    apart(back, rest) < 2,
+    `${apart(back, rest).toFixed(1)} px off`,
+  )
+
+  const rowBox = await pointer.evaluate(middleOf(row))
   await moveMouse(pointer, rowBox.x, rowBox.y)
   await pointer.waitFor(`${namedLabel} !== undefined`, 'the hovered tree to be named')
   await pointer.evaluate(`${namedLabel}.setAttribute('data-probe-label', '')`)
@@ -315,16 +372,15 @@ try {
     const rect = document.querySelector('[data-probe-label]').getBoundingClientRect()
     return { x: rect.left + rect.width / 2, y: rect.bottom }
   })()`
-  await settled(pointer, foot, 'the camera on the hovered tree')
   // Off the list, so the click below is the only thing that selects the tree.
   await moveMouse(pointer, 700, 200)
-  await pointer.waitFor(`${row}.dataset.selected === 'false'`, 'the hover selection to go')
-  const at = await settled(pointer, foot, 'the camera back on the town')
-  const target = { x: at.x, y: at.y + 25 }
+  await pointer.waitFor(`${namedLabel} === undefined`, 'the hover name to go')
+  const at = await settled(pointer, foot, 'the tree on screen')
+  const spot = { x: at.x, y: at.y + 25 }
   const onCanvas = await pointer.evaluate(
-    `document.elementFromPoint(${target.x}, ${target.y})?.tagName === 'CANVAS'`,
+    `document.elementFromPoint(${spot.x}, ${spot.y})?.tagName === 'CANVAS'`,
   )
-  await clickAt(pointer, target.x, target.y)
+  await clickAt(pointer, spot.x, spot.y)
   await pointer.waitFor(`${namedLabel} !== undefined`, 'the clicked tree to be named', 50)
   const named = await pointer.evaluate(`document.querySelector('[data-probe-label]').textContent`)
   check(
@@ -332,7 +388,7 @@ try {
     onCanvas &&
       named.includes(TREE) &&
       (await pointer.evaluate(`${row}.dataset.selected`)) === 'true',
-    `${named} at ${Math.round(target.x)},${Math.round(target.y)}`,
+    `${named} at ${Math.round(spot.x)},${Math.round(spot.y)}`,
   )
   await pointer.screenshot(join(out, 'desktop-tree-clicked.png'))
 

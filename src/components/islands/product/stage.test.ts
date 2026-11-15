@@ -14,6 +14,7 @@ const idle: DayLive = {
   watered: NOT_WATERED,
   order: NO_ORDER,
   selected: null,
+  highlighted: null,
   script: null,
   elapsed: 0,
   running: false,
@@ -95,6 +96,10 @@ describe('shotFor', () => {
     expect(shot.at[0]).toBe(townTrees[3].at[0])
     expect(shot.at[2]).toBe(townTrees[3].at[1])
     expect(shot.zoom).toBeGreaterThan(1)
+  })
+
+  it('bewegt die Kamera nicht, wenn ein Baum nur hervorgehoben ist', () => {
+    expect(shotFor({ ...idle, highlighted: 3 }, parked)).toBe(OVERVIEW)
   })
 
   it('folgt während der Tour dem Wagen und lässt die Auswahl liegen', () => {

@@ -100,21 +100,43 @@ export function Crowns({ live, isStatic }: LiveProps) {
 
 const pinTones: Record<Thirst, PinTone> = { dry: 'alert', soon: 'warn', ok: 'ok' }
 
+/** How much the pin of a highlighted or selected tree grows. */
+const PICKED_PIN = 1.25
+
 export function TreePins({ live, isStatic }: LiveProps) {
+  const pins = useRef<(Group | null)[]>([])
+
+  useFrame((_, delta) => {
+    const { highlighted, selected } = live.current
+    pins.current.forEach((pin, index) => {
+      if (!pin) return
+      const goal = index === highlighted || index === selected ? PICKED_PIN : 1
+      pin.scale.setScalar(isStatic ? goal : damp(pin.scale.x, goal, 12, delta))
+    })
+  })
+
+  // Each pin hangs in a group at its head, so it grows about the head.
   return (
     <>
       {townTrees.map((tree, index) => (
-        <Pin
+        <group
           key={tree.id}
-          at={tree.at}
-          height={pinHeight(tree)}
-          isStatic={isStatic}
-          look={() => {
-            const { days, watered } = live.current
-            const state = watered[index] ? 'ok' : thirst(moisture(tree.rate, days))
-            return { shown: true, tone: pinTones[state], alarm: state === 'dry' }
+          ref={(node) => {
+            pins.current[index] = node
           }}
-        />
+          position={[tree.at[0], pinHeight(tree), tree.at[1]]}
+        >
+          <Pin
+            at={[0, 0]}
+            height={0}
+            isStatic={isStatic}
+            look={() => {
+              const { days, watered } = live.current
+              const state = watered[index] ? 'ok' : thirst(moisture(tree.rate, days))
+              return { shown: true, tone: pinTones[state], alarm: state === 'dry' }
+            }}
+          />
+        </group>
       ))}
     </>
   )
@@ -176,7 +198,7 @@ const HANGING_LABEL = townTrees.length + 1
 function labelShown(state: DayLive, index: number): boolean {
   if (index >= townTrees.length) return true
   if (state.script) return state.order[index] > 0 && !state.watered[index]
-  return state.selected === index
+  return state.selected === index || state.highlighted === index
 }
 
 const projected = new Vector3()

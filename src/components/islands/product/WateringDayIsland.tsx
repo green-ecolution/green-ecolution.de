@@ -109,6 +109,7 @@ function WateringDay({ poster }: { poster?: Poster }) {
   const [day, setDay] = useState<Tour | null>(null)
   const [progress, setProgress] = useState<TourProgress>(NOT_STARTED)
   const [selected, setSelected] = useState<number | null>(null)
+  const [highlighted, setHighlighted] = useState<number | null>(null)
   const root = useRef<HTMLDivElement>(null)
   const stageNode = useRef<HTMLDivElement>(null)
   const labelNodes = useRef<(HTMLElement | null)[]>([])
@@ -117,6 +118,7 @@ function WateringDay({ poster }: { poster?: Poster }) {
     watered: NOT_WATERED,
     order: NO_ORDER,
     selected: null,
+    highlighted: null,
     script: null,
     elapsed: 0,
     running: false,
@@ -154,9 +156,16 @@ function WateringDay({ poster }: { poster?: Poster }) {
 
   // The scene reads this ref every frame; a render must not sit in between.
   useEffect(() => {
-    Object.assign(live.current, { days, watered, order, selected, script: day?.script ?? null })
+    Object.assign(live.current, {
+      days,
+      watered,
+      order,
+      selected,
+      highlighted,
+      script: day?.script ?? null,
+    })
     live.current.onChange?.()
-  }, [days, watered, order, selected, day])
+  }, [days, watered, order, selected, highlighted, day])
 
   useEffect(() => {
     const node = stageNode.current
@@ -313,7 +322,7 @@ function WateringDay({ poster }: { poster?: Poster }) {
 
               {townTrees.map((tree, index) => {
                 const row = rows.find((candidate) => candidate.index === index)
-                const isNamed = !day && selected === index
+                const isNamed = !day && (selected === index || highlighted === index)
                 return (
                   <span
                     key={tree.id}
@@ -371,7 +380,12 @@ function WateringDay({ poster }: { poster?: Poster }) {
             title={t('day.steps.understand.title')}
             description={t('day.steps.understand.description')}
           />
-          <TreeList rows={rows} selected={selected} onSelect={setSelected} />
+          <TreeList
+            rows={rows}
+            selected={selected}
+            onSelect={setSelected}
+            onHighlight={setHighlighted}
+          />
         </div>
         <div>
           <StepHeading
