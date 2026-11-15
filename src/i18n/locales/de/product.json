@@ -71,6 +71,11 @@
         "text": "Sie steckt neben dem Baum im Boden und misst, wie feucht die Erde an den Wurzeln ist. Den Wert funkt sie von selbst.",
         "next": "Weiter"
       },
+      "gateway": {
+        "label": "Funken",
+        "title": "Das Gateway gibt die Meldung weiter",
+        "text": "Die Sonde funkt ihren Messwert an das Gateway. Von dort geht er weiter auf die Karte im Bauhof. Niemand muss dafür zum Baum fahren."
+      },
       "watering": {
         "label": "Gießen",
         "title": "Wasser nur dort, wo es fehlt",
@@ -91,9 +96,6 @@
     },
     "ride": {
       "caption": "Blick aus dem Gießwagen"
-    },
-    "relay": {
-      "caption": "Die Meldung geht per Funk zur Karte im Bauhof"
     },
     "status": {
       "none": "Heute muss niemand los. Alle Bäume haben genug Wasser.",
@@ -126,9 +128,9 @@
         "name": "Sensor",
         "text": "Misst Bodenfeuchte und Bodentemperatur."
       },
-      "antenna": {
-        "term": "Antenne",
-        "name": "Gateway",
+      "gateway": {
+        "term": "Gateway",
+        "name": "Funk",
         "text": "Funk über LoRaWAN und das offene The Things Network. Wo das Netz fehlt, hilft ein eigenes Gateway oder NB-IoT mit SIM-Karte."
       },
       "server": {

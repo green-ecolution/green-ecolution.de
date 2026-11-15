@@ -1,6 +1,6 @@
 import { CylinderGeometry, Matrix4, type BufferGeometry } from 'three'
 import {
-  antenna,
+  gateway,
   blocks,
   depot,
   hydrant,
@@ -48,30 +48,30 @@ function hydrantGeometry([x, z]: GroundPoint): BufferGeometry[] {
 const MAST = 3.6
 
 // A foot, a mast, the box of the receiver and the rod that listens. Larger
-// than life, so it reads as an antenna from the slanted camera.
-function antennaGeometry(): BufferGeometry[] {
-  const [x, z] = antenna.at
-  const rod = antenna.height - MAST
+// than life, so it reads as a radio mast from the slanted camera.
+function gatewayGeometry(): BufferGeometry[] {
+  const [x, z] = gateway.at
+  const rod = gateway.height - MAST
   return [
     painted(
       unitCylinder,
-      placed([x, antenna.base + 0.15, z], [0.7, 0.3, 0.7]),
+      placed([x, gateway.base + 0.15, z], [0.7, 0.3, 0.7]),
       tourColors.blockRoof,
     ),
     painted(
       unitCylinder,
-      placed([x, antenna.base + MAST / 2, z], [0.2, MAST, 0.2]),
+      placed([x, gateway.base + MAST / 2, z], [0.2, MAST, 0.2]),
       tourColors.vehicleBody,
     ),
-    painted(unitBox, placed([x, antenna.base + 2.8, z], [1.3, 1, 0.7]), tourColors.vehicleTank),
+    painted(unitBox, placed([x, gateway.base + 2.8, z], [1.3, 1, 0.7]), tourColors.vehicleTank),
     painted(
       unitCylinder,
-      placed([x, antenna.base + MAST + rod / 2, z], [0.09, rod, 0.09]),
+      placed([x, gateway.base + MAST + rod / 2, z], [0.09, rod, 0.09]),
       tourColors.vehicleBody,
     ),
     painted(
       unitCylinder,
-      placed([x, antenna.base + antenna.height, z], [0.22, 0.3, 0.22]),
+      placed([x, gateway.base + gateway.height, z], [0.22, 0.3, 0.22]),
       tourColors.refill,
     ),
   ]
@@ -135,7 +135,7 @@ export const townGeometry = merged([
   ...townTrees.flatMap(probeGeometry),
   ...looseTrees.flatMap(treeGeometry),
   ...hydrantGeometry(hydrant.at),
-  ...antennaGeometry(),
+  ...gatewayGeometry(),
 ])
 
 export const shadowGeometry = merged(

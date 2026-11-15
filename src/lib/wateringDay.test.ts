@@ -5,8 +5,9 @@ import type { GroundPoint } from './storyPath'
 import {
   CRUISE,
   MAX_TOUR_SECONDS,
+  FLY_OUT_SECONDS,
+  GATEWAY_HOLD_SECONDS,
   PROBE_HOLD_SECONDS,
-  RELAY_SECONDS,
   RESULT_HOLD_SECONDS,
   RIDE_CRUISE,
   REFILL_HOLD_SECONDS,
@@ -17,6 +18,8 @@ import {
   relayAt,
   REFILL_SECONDS,
   RIDE_MIN_SECONDS,
+  TO_DEPOT_SECONDS,
+  TO_GATEWAY_SECONDS,
   WATER_SECONDS,
   tourFrame,
   tourScript,
@@ -156,6 +159,8 @@ describe('tourScript', () => {
       'iso',
       'flyIn',
       'probing',
+      'toGateway',
+      'gateway',
       'flyOut',
       'iso',
       'flyIn',
@@ -203,7 +208,7 @@ describe('tourScript', () => {
   it('dauert in der Ausgangsstellung 70 bis 85 Sekunden', () => {
     const { duration } = townScript(START_DAYS)
     expect(duration).toBeGreaterThanOrEqual(70)
-    expect(duration).toBeLessThanOrEqual(85)
+    expect(duration).toBeLessThanOrEqual(90)
   })
 
   it('zeigt in der Ausgangsstellung Sonde, Fahrt und Gießen, Auffüllen und Bilanz, jede Einstellung in Folge', () => {
@@ -219,6 +224,8 @@ describe('tourScript', () => {
       'iso',
       'flyIn',
       'probing',
+      'toGateway',
+      'gateway',
       'flyOut',
       'iso',
       'flyIn',
@@ -238,6 +245,8 @@ describe('tourScript', () => {
     ])
     for (const mode of [
       'probing',
+      'toGateway',
+      'gateway',
       'ride',
       'toWatering',
       'watering',
@@ -334,9 +343,9 @@ describe('tourFrame', () => {
   const script = tourScript(twoTrees, straight, AT_DEPOT, 2)
 
   it('zeichnet nach der Sonde die Route und fährt dann los', () => {
-    const { plan, relay } = script
-    if (!relay) throw new Error('the script has no relay')
-    expect(plan.start).toBeCloseTo(relay.over.end)
+    const { plan, gatewayShot } = script
+    if (!gatewayShot) throw new Error('the script has no gateway')
+    expect(plan.start).toBeCloseTo(gatewayShot.toDepot.end)
     expect(plan.end).toBeCloseTo(script.lead)
     const early = tourFrame(script, (plan.start + plan.end) / 2)
     expect(early.shot).toBe('plan')
@@ -494,7 +503,13 @@ describe('Halt mit Karte', () => {
   const town = townScript(START_DAYS)
   const { showpiece, refillShot, probeShot, resultShot } = town
   if (!showpiece || !refillShot || !probeShot) throw new Error('the tour has no close-ups')
-  const HOLDS = { probing: 'probe', watering: 'watering', refilling: 'refill', result: 'result' }
+  const HOLDS = {
+    probing: 'probe',
+    gateway: 'gateway',
+    watering: 'watering',
+    refilling: 'refill',
+    result: 'result',
+  }
 
   it('hält die Karte genau so lange, wie die Sonde meldet, gegossen, aufgefüllt oder Bilanz gezogen wird', () => {
     const kinds = new Set<string>()
@@ -509,7 +524,7 @@ describe('Halt mit Karte', () => {
         expect(hold).toBeNull()
       }
     }
-    expect([...kinds]).toEqual(['probe', 'watering', 'refill', 'result'])
+    expect([...kinds]).toEqual(['probe', 'gateway', 'watering', 'refill', 'result'])
   })
 
   it('lässt die Nahaufnahmen sieben, sieben, acht und acht Sekunden stehen', () => {
@@ -527,12 +542,12 @@ describe('Halt mit Karte', () => {
     expect(afterHold(town, refilling)).toBeCloseTo(refillShot.flyOut.start)
   })
 
-  it('springt mit „Weiter“ an der Sonde in den Rückflug, auf den die Planung folgt', () => {
+  it('springt mit „Weiter“ an der Sonde in den Flug zum Gateway', () => {
     const probing = probeShot.shot.start + 1
-    expect(afterHold(town, probing)).toBeCloseTo(probeShot.flyOut.start)
+    expect(afterHold(town, probing)).toBeCloseTo(probeShot.shot.end)
     expect(tourFrame(town, afterHold(town, probing)).view).toMatchObject({
-      mode: 'flyOut',
-      piece: 'probe',
+      mode: 'toGateway',
+      piece: 'gateway',
     })
     expect(tourFrame(town, town.plan.start + 0.01).reveal).toBeGreaterThan(0)
   })
@@ -610,11 +625,13 @@ describe('Sonde und Bilanz', () => {
         const name = `${mode}:${piece}`
         if (seen.at(-1) !== name) seen.push(name)
       }
-      expect(seen.slice(0, 5), `${days} days`).toEqual([
+      expect(seen.slice(0, 7), `${days} days`).toEqual([
         'iso:null',
         'flyIn:probe',
         'probing:probe',
-        'flyOut:probe',
+        'toGateway:gateway',
+        'gateway:gateway',
+        'flyOut:gateway',
         'iso:null',
       ])
       expect(seen.slice(-4), `${days} days`).toEqual([
@@ -718,31 +735,57 @@ describe('Tempo und Bilanz', () => {
 
 describe('Meldung zum Bauhof', () => {
   const town = townScript(START_DAYS)
-  const { probeShot, relay } = town
-  if (!probeShot || !relay) throw new Error('the tour has no probe or relay')
+  const { probeShot, gatewayShot } = town
+  if (!probeShot || !gatewayShot) throw new Error('the tour has no probe or gateway')
+  const { flyIn, shot, flyOut, toDepot } = gatewayShot
 
-  it('steigt mit dem Rückflug von der Sonde zur Antenne auf', () => {
-    expect(relay.up).toEqual(probeShot.flyOut)
-    expect(relayAt(town, probeShot.shot.end - 0.01)).toBeNull()
-    expect(relayAt(town, relay.up.start)).toEqual({ hop: 'up', share: 0 })
-    expect(relayAt(town, (relay.up.start + relay.up.end) / 2)).toMatchObject({ hop: 'up' })
+  it('fliegt mit der Kamera von der Sonde zum Gateway, sobald die Karte der Sonde geht', () => {
+    expect(flyIn.start).toBeCloseTo(probeShot.shot.end)
+    expect(flyIn.end - flyIn.start).toBeCloseTo(TO_GATEWAY_SECONDS, 1)
+    expect(relayAt(town, flyIn.start - 0.01)).toBeNull()
+    expect(relayAt(town, flyIn.start)).toEqual({ up: 0, over: 0 })
+    const midway = (flyIn.start + flyIn.end) / 2
+    expect(relayAt(town, midway)).toEqual({ up: 0.5, over: 0 })
+    expect(tourFrame(town, midway).view).toMatchObject({ mode: 'toGateway', piece: 'gateway' })
   })
 
-  it('fliegt danach von der Antenne zum Bauhof, bevor die Route sich zeichnet', () => {
-    expect(relay.over.start).toBeCloseTo(relay.up.end)
-    expect(relay.over.end - relay.over.start).toBeCloseTo(RELAY_SECONDS, 1)
-    expect(relay.over.end).toBeCloseTo(town.plan.start)
-    const midway = relayAt(town, (relay.over.start + relay.over.end) / 2)
-    expect(midway?.hop).toBe('over')
-    expect(midway?.share).toBeCloseTo(0.5)
-    expect(relayAt(town, relay.over.end)).toBeNull()
-  })
-
-  it('bleibt in der schrägen Ansicht, während die Meldung zum Bauhof fliegt', () => {
-    for (let time = relay.over.start; time < relay.over.end; time += 0.05) {
-      expect(tourFrame(town, time).view.mode).toBe('iso')
-      expect(tourFrame(town, time).shot).toBe('plan')
+  it('hält am Gateway mit seiner Karte, die Meldung ruht dort', () => {
+    expect(shot.start).toBeCloseTo(flyIn.end)
+    expect(shot.end - shot.start).toBeCloseTo(GATEWAY_HOLD_SECONDS, 1)
+    for (let time = shot.start; time < shot.end; time += 0.05) {
+      expect(tourFrame(town, time).view.mode).toBe('gateway')
+      expect(holdAt(town, time)?.kind).toBe('gateway')
+      expect(relayAt(town, time)).toEqual({ up: 1, over: 0 })
     }
+  })
+
+  it('lässt die Meldung zum Bauhof weiterfliegen, während die Kamera in die Übersicht zurückkehrt', () => {
+    expect(flyOut.start).toBeCloseTo(shot.end)
+    expect(toDepot.start).toBeCloseTo(flyOut.start)
+    expect(flyOut.end - flyOut.start).toBeCloseTo(FLY_OUT_SECONDS, 1)
+    expect(toDepot.end - toDepot.start).toBeCloseTo(TO_DEPOT_SECONDS, 1)
+    expect(toDepot.end).toBeGreaterThan(flyOut.end)
+    expect(tourFrame(town, flyOut.start + 0.5).view).toMatchObject({
+      mode: 'flyOut',
+      piece: 'gateway',
+    })
+    expect(tourFrame(town, flyOut.end + 0.1).view.mode).toBe('iso')
+    expect(relayAt(town, flyOut.end + 0.1)?.over).toBeGreaterThan(0.5)
+  })
+
+  it('zeichnet die Route, sobald die Meldung im Bauhof ist, dann fährt der Wagen los', () => {
+    expect(toDepot.end).toBeCloseTo(town.plan.start)
+    expect(relayAt(town, toDepot.end)).toBeNull()
+    expect(tourFrame(town, toDepot.end - 0.05).reveal).toBe(0)
+    expect(tourFrame(town, town.lead + 0.1).along).toBeGreaterThan(0)
+  })
+
+  it('springt mit „Weiter“ am Gateway in den Rückflug', () => {
+    expect(afterHold(town, shot.start + 1)).toBeCloseTo(flyOut.start)
+  })
+
+  it('wartet, solange jemand die Karte am Gateway liest', () => {
+    expect(nextElapsed(town, shot.start + 1, 0.5, true)).toBe(shot.start + 1)
   })
 
   it('entfällt mit der Sonde bei einer Tour ohne Baum', () => {
@@ -751,7 +794,7 @@ describe('Meldung zum Bauhof', () => {
       length: 0,
     }
     const script = tourScript(refillOnly, straight, AT_DEPOT, 2)
-    expect(script.relay).toBeNull()
+    expect(script.gatewayShot).toBeNull()
     expect(relayAt(script, 0.5)).toBeNull()
   })
 })

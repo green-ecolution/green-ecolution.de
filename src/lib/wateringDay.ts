@@ -8,7 +8,7 @@ export const RIDE_CRUISE = 5.5
 export const PLAN_SECONDS = 1.6
 export const WATER_SECONDS = 2.2
 export const REFILL_SECONDS = 2.6
-export const MAX_TOUR_SECONDS = 90
+export const MAX_TOUR_SECONDS = 98
 export const CORNER_RADIUS = 3.5
 
 /** On a way too short to cruise first: how long after the truck pulls away the camera starts down. */
@@ -31,8 +31,11 @@ export const PROBE_HOLD_SECONDS = 7
 export const WATERING_HOLD_SECONDS = 7
 export const REFILL_HOLD_SECONDS = 8
 export const RESULT_HOLD_SECONDS = 8
-/** The message's way from the antenna to the depot, before the route draws. */
-export const RELAY_SECONDS = 2.2
+export const GATEWAY_HOLD_SECONDS = 7
+/** The camera follows the probe's message from the probe to the gateway for this long. */
+export const TO_GATEWAY_SECONDS = 3
+/** The message's way on from the gateway to the depot; the camera flies back up as it sets out. */
+export const TO_DEPOT_SECONDS = 3
 /** A beat of the slanted view after „Tour planen“ before the camera flies to the probe. */
 const PROBE_DELAY = 0.3
 /** The slanted view between two close-ups lasts at least this long. */
@@ -97,19 +100,25 @@ export interface HeldShot {
   flyOut: TimeWindow
 }
 
+/** The close-up of the probe: down to it and a hold with its card; the way on leads to the gateway. */
+export interface ProbeShot {
+  flyIn: TimeWindow
+  shot: TimeWindow
+}
+
+/**
+ * The close-up of the gateway: the camera comes over from the probe with the
+ * message, holds with its card and flies back up as the message goes on.
+ */
+export interface GatewayShot extends HeldShot {
+  /** The message's way on to the depot: it starts with the fly-out and outlasts it. */
+  toDepot: TimeWindow
+}
+
 /** The close-up at the hydrant: down as the truck stops, back up as it drives on. */
 export interface RefillShot extends HeldShot {
   /** Index of the refill stop in `dwells`. */
   stop: number
-}
-
-/**
- * The probe's message on its way to the depot: up to the antenna while the
- * camera flies back from the probe, then over to the depot.
- */
-export interface Relay {
-  up: TimeWindow
-  over: TimeWindow
 }
 
 export interface TourScript {
@@ -123,9 +132,9 @@ export interface TourScript {
   lead: number
   duration: number
   /** The probe at the first tree reports before the truck leaves; null on a tour without a tree. */
-  probeShot: HeldShot | null
-  /** Null on a tour without a probe. */
-  relay: Relay | null
+  probeShot: ProbeShot | null
+  /** The probe's message on its way to the depot by the gateway; null on a tour without a probe. */
+  gatewayShot: GatewayShot | null
   showpiece: Showpiece | null
   refillShot: RefillShot | null
   /** The day's result at the depot; the tour is over when its fly-out ends. */
@@ -226,7 +235,12 @@ export function tourScript(
   const last = plan.stops.length - 1
   const probing =
     ridden >= 0
-      ? PROBE_DELAY + FLY_IN_SECONDS + PROBE_HOLD_SECONDS + FLY_OUT_SECONDS + RELAY_SECONDS
+      ? PROBE_DELAY +
+        FLY_IN_SECONDS +
+        PROBE_HOLD_SECONDS +
+        TO_GATEWAY_SECONDS +
+        GATEWAY_HOLD_SECONDS +
+        TO_DEPOT_SECONDS
       : 0
 
   // Every time in the tour is a multiple of `pace`, so the tour at pace 1 tells
@@ -242,20 +256,21 @@ export function tourScript(
             : dwellSeconds(stop),
     )
 
-    let probeShot: HeldShot | null = null
+    let probeShot: ProbeShot | null = null
+    let gatewayShot: GatewayShot | null = null
     if (ridden >= 0) {
       const start = PROBE_DELAY * pace
       const landed = start + FLY_IN_SECONDS * pace
       const held = landed + PROBE_HOLD_SECONDS * pace
-      probeShot = {
-        flyIn: { start, end: landed },
-        shot: { start: landed, end: held },
-        flyOut: { start: held, end: held + FLY_OUT_SECONDS * pace },
+      probeShot = { flyIn: { start, end: landed }, shot: { start: landed, end: held } }
+      const arrived = held + TO_GATEWAY_SECONDS * pace
+      const left = arrived + GATEWAY_HOLD_SECONDS * pace
+      gatewayShot = {
+        flyIn: { start: held, end: arrived },
+        shot: { start: arrived, end: left },
+        flyOut: { start: left, end: left + FLY_OUT_SECONDS * pace },
+        toDepot: { start: left, end: probing * pace },
       }
-    }
-    const relay: Relay | null = probeShot && {
-      up: probeShot.flyOut,
-      over: { start: probeShot.flyOut.end, end: probing * pace },
     }
     const planWindow = {
       start: probing * pace,
@@ -352,7 +367,7 @@ export function tourScript(
       lead: planWindow.end,
       duration: home.end,
       probeShot,
-      relay,
+      gatewayShot,
       showpiece,
       refillShot,
       resultShot,
@@ -375,7 +390,7 @@ export function tourScript(
   return timed(closeUp, Math.min(1, MAX_TOUR_SECONDS / unpaced.duration))
 }
 
-export type CloseUpKind = 'probe' | 'watering' | 'refill' | 'result'
+export type CloseUpKind = 'probe' | 'gateway' | 'watering' | 'refill' | 'result'
 
 export interface Hold {
   kind: CloseUpKind
@@ -383,9 +398,15 @@ export interface Hold {
   left: number
 }
 
-const holdWindows = ({ probeShot, showpiece, refillShot, resultShot }: TourScript) =>
+const holdWindows = ({ probeShot, gatewayShot, showpiece, refillShot, resultShot }: TourScript) =>
   [
-    probeShot && { kind: 'probe' as const, during: probeShot.shot, next: probeShot.flyOut },
+    probeShot &&
+      gatewayShot && { kind: 'probe' as const, during: probeShot.shot, next: gatewayShot.flyIn },
+    gatewayShot && {
+      kind: 'gateway' as const,
+      during: gatewayShot.shot,
+      next: gatewayShot.flyOut,
+    },
     showpiece && { kind: 'watering' as const, during: showpiece.watering, next: showpiece.flyOut },
     refillShot && { kind: 'refill' as const, during: refillShot.shot, next: refillShot.flyOut },
     { kind: 'result' as const, during: resultShot.shot, next: resultShot.flyOut },
@@ -401,7 +422,7 @@ export function holdAt(script: TourScript, seconds: number): Hold | null {
   return { kind: hold.kind, left: 1 - (seconds - start) / (end - start) }
 }
 
-/** Where a card's button continues from: the start of the fly-out, or `seconds` outside a hold. */
+/** Where a card's button continues from: the start of the way on, or `seconds` outside a hold. */
 export function afterHold(script: TourScript, seconds: number): number {
   const hold = holdWindows(script).find(
     ({ during }) => seconds >= during.start && seconds < during.end,
@@ -420,16 +441,20 @@ export function nextElapsed(
   return Math.min(script.duration, elapsed + delta)
 }
 
-/** Where the probe's message is on its way to the depot at this time, if it is under way. */
-export function relayAt(
-  { relay }: TourScript,
-  seconds: number,
-): { hop: keyof Relay; share: number } | null {
-  if (!relay) return null
-  const hop = seconds < relay.up.end ? 'up' : 'over'
-  const { start, end } = relay[hop]
-  if (seconds < start || seconds >= end) return null
-  return { hop, share: (seconds - start) / (end - start) }
+export interface RelayProgress {
+  /** How far the message is from the probe to the gateway, 0 to 1. */
+  up: number
+  /** How far it is from the gateway to the depot, 0 to 1. */
+  over: number
+}
+
+/** How far the probe's message has come at this time, or null while none is under way. */
+export function relayAt({ gatewayShot }: TourScript, seconds: number): RelayProgress | null {
+  if (!gatewayShot) return null
+  const { flyIn, toDepot } = gatewayShot
+  if (seconds < flyIn.start || seconds >= toDepot.end) return null
+  const within = ({ start, end }: TimeWindow) => clamp01((seconds - start) / (end - start))
+  return { up: within(flyIn), over: within(toDepot) }
 }
 
 /** What the slanted camera aims at. */
@@ -439,6 +464,8 @@ export type ViewMode =
   | 'iso'
   | 'flyIn'
   | 'probing'
+  | 'toGateway'
+  | 'gateway'
   | 'ride'
   | 'toWatering'
   | 'watering'
@@ -492,9 +519,21 @@ const held = (shot: HeldShot | null, mode: ViewMode, piece: CloseUpKind) =>
       ] as const)
     : []
 
-function viewAt({ probeShot, showpiece, refillShot, resultShot }: TourScript, time: number) {
+function viewAt(
+  { probeShot, gatewayShot, showpiece, refillShot, resultShot }: TourScript,
+  time: number,
+) {
   const windows: (readonly [ViewMode, TimeWindow, CloseUpKind])[] = [
-    ...held(probeShot, 'probing', 'probe'),
+    ...(probeShot
+      ? ([
+          ['flyIn', probeShot.flyIn, 'probe'],
+          ['probing', probeShot.shot, 'probe'],
+        ] as const)
+      : []),
+    // The camera goes over from the probe with the message instead of flying down.
+    ...held(gatewayShot, 'gateway', 'gateway').map(
+      ([mode, window, piece]) => [mode === 'flyIn' ? 'toGateway' : mode, window, piece] as const,
+    ),
     ...SHOWPIECE_MODES.flatMap((mode) => {
       const window = showpiece?.[mode]
       return window ? [[mode, window, 'watering'] as const] : []

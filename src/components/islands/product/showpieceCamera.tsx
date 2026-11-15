@@ -8,6 +8,7 @@ import type { DayLive } from './shared'
 import { glide, showpieceWeight, turned, type Stage, type TruckPose } from './stage'
 import {
   framedView,
+  gatewayView,
   homeStop,
   probeView,
   refillStop,
@@ -84,6 +85,7 @@ interface CloseViews {
   /** Without a ride the fly-in goes straight to the watering view. */
   isRidden: boolean
   probe: CloseView | null
+  gateway: CloseView | null
   watering: CloseView | null
   refill: CloseView | null
   result: CloseView | null
@@ -95,6 +97,8 @@ function poseFor(view: TourView, slanted: CameraPose, seat: CameraPose, close: C
   // Every close-up but the watering is a plain one: down, a slow creep, back up.
   if (view.piece !== 'watering') {
     const held = close[view.piece] ?? { from: slanted, to: slanted }
+    // The gateway is reached from the probe, with the message, not from above.
+    if (view.mode === 'toGateway') return blendPoses(close.probe?.to ?? slanted, held.from, share)
     if (view.mode === 'flyIn') return blendPoses(slanted, held.from, share)
     if (view.mode === 'flyOut') return blendPoses(held.to, slanted, share)
     return blendPoses(held.from, held.to, share)
@@ -116,7 +120,8 @@ function poseFor(view: TourView, slanted: CameraPose, seat: CameraPose, close: C
 
 /**
  * Draws the scene, through the slanted camera or, for the close-ups, through a
- * perspective one: down to the probe before the tour; down to the truck, along
+ * perspective one: down to the probe before the tour and over to the gateway
+ * with its message; down to the truck, along
  * for the ride, onto the watering and back up; down to the hydrant while the
  * tank fills; and down to the depot for the day's result.
  */
@@ -129,6 +134,7 @@ export function ShowpieceCamera({ live, stageRef }: Props) {
     script: null,
     isRidden: true,
     probe: null,
+    gateway: null,
     watering: null,
     refill: null,
     result: null,
@@ -170,6 +176,7 @@ export function ShowpieceCamera({ live, stageRef }: Props) {
         isRidden: script.showpiece?.ride !== null,
         probe:
           ridden && script.probeShot ? probeView(ridden.truck, ridden.heading, ridden.tree) : null,
+        gateway: script.gatewayShot ? gatewayView() : null,
         watering: ridden ? wateringView(ridden.truck, ridden.heading, ridden.tree) : null,
         refill: refilled ? refillView(refilled.truck, refilled.heading) : null,
         result: resultView(home.truck, home.heading),
@@ -190,6 +197,7 @@ export function ShowpieceCamera({ live, stageRef }: Props) {
         views: {
           ...source,
           probe: source.probe && framedView(source.probe, aspect, card),
+          gateway: source.gateway && framedView(source.gateway, aspect, card),
           watering: source.watering && framedView(source.watering, aspect, card),
           refill: source.refill && framedView(source.refill, aspect, card),
           result: source.result && framedView(source.result, aspect, card),

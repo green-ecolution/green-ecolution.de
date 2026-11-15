@@ -75,7 +75,7 @@ const house = (
   door,
 })
 
-const antennaHouse = house(27, -12, 6, 8, 3, 'flat', 1, '+z')
+const gatewayHouse = house(27, -12, 6, 8, 3, 'flat', 1, '+z')
 
 // Placed by hand around the ring, never closer than a unit to a kerb or a tree.
 export const blocks: CityBlock[] = [
@@ -92,15 +92,15 @@ export const blocks: CityBlock[] = [
   house(-47, 17, 7, 5, 2, 'gable', 2, '+x'),
   house(-51, -14, 10, 9, 2, 'gable', 3, '+x'),
   house(-50, 8, 11, 11, 3, 'flat', 0, '+x'),
-  antennaHouse,
+  gatewayHouse,
   house(25, 13, 9, 8, 2, 'gable', 2, '+z'),
 ]
 
-/** The antenna every probe in town reaches, on the flat roof east of the market. */
-export const antenna = {
-  at: [antennaHouse.x, antennaHouse.z] as GroundPoint,
+/** The gateway every probe in town reaches by radio, on the flat roof east of the market. */
+export const gateway = {
+  at: [gatewayHouse.x, gatewayHouse.z] as GroundPoint,
   /** Roof level, where the mast stands. */
-  base: antennaHouse.height,
+  base: gatewayHouse.height,
   /** Mast and rod together. */
   height: 6,
 } as const

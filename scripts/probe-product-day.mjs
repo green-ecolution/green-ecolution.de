@@ -123,12 +123,15 @@ const RECORDER = `(() => {
   requestAnimationFrame(sample)
 })()`
 
-// The probe at the first tree reports first; that tree gets the ride and the
-// watering close-up, the hydrant later on its own close-up, the depot the result.
+// The probe at the first tree reports first and the camera follows its message
+// to the gateway; that tree gets the ride and the watering close-up, the
+// hydrant later on its own close-up, the depot the result.
 const CAMERAS = [
   'iso',
   'fly-in',
   'probing',
+  'to-gateway',
+  'gateway',
   'fly-out',
   'iso',
   'fly-in',
@@ -148,6 +151,7 @@ const CAMERAS = [
 ]
 
 const PROBE_TITLE = 'Die Sonde meldet sich'
+const GATEWAY_TITLE = 'Das Gateway gibt die Meldung weiter'
 const WATERING_TITLE = 'Wasser nur dort, wo es fehlt'
 const REFILL_TITLE = 'Das Auffüllen ist mitgeplant'
 const RESULT_TITLE = 'Fertig für heute'
@@ -162,6 +166,7 @@ const strayCards = (cards) =>
       .filter(([title, samples]) => {
         const due =
           (camera === 'probing' && title === PROBE_TITLE) ||
+          (camera === 'gateway' && title === GATEWAY_TITLE) ||
           (camera === 'watering' && title === WATERING_TITLE) ||
           (camera === 'refilling' && title === REFILL_TITLE) ||
           (camera === 'result' && title === RESULT_TITLE)
@@ -294,7 +299,7 @@ for (const size of sizes) {
       status = now
       if (!stripOnTour && status.startsWith('Gießt '))
         stripOnTour = { strip: await page.evaluate(STRIP) }
-      const isHold = ['probing', 'watering', 'refilling', 'result'].includes(camera)
+      const isHold = ['probing', 'gateway', 'watering', 'refilling', 'result'].includes(camera)
       if ((isHold || camera === 'ride') && !photographed.has(camera)) {
         photographed.add(camera)
         await sleep(400)
@@ -341,8 +346,9 @@ for (const size of sizes) {
       JSON.stringify(caption),
     )
     check(
-      `${size.name}: a card explains the probe, the watering, the refill and the result while they hold, at no other time`,
+      `${size.name}: a card explains the probe, the gateway, the watering, the refill and the result while they hold, at no other time`,
       (cards.probing?.[PROBE_TITLE] ?? 0) > 0 &&
+        (cards.gateway?.[GATEWAY_TITLE] ?? 0) > 0 &&
         (cards.watering?.[WATERING_TITLE] ?? 0) > 0 &&
         (cards.refilling?.[REFILL_TITLE] ?? 0) > 0 &&
         (cards.result?.[RESULT_TITLE] ?? 0) > 0 &&
@@ -360,7 +366,7 @@ for (const size of sizes) {
       JSON.stringify(resultAt ?? null),
     )
     const falls = (values) => values.length > 2 && values[0] > values.at(-1) + 0.3
-    const holdNames = ['probing', 'watering', 'refilling', 'result']
+    const holdNames = ['probing', 'gateway', 'watering', 'refilling', 'result']
     check(
       `${size.name}: the card's bar runs down over each hold`,
       holdNames.every((name) => falls(holds[name])),
@@ -369,6 +375,7 @@ for (const size of sizes) {
     if (size.mobile) {
       const expected = [
         ['probing', PROBE_TITLE, 'Weiter'],
+        ['gateway', GATEWAY_TITLE, 'Weiter'],
         ['watering', WATERING_TITLE, 'Weiterfahren'],
         ['refilling', REFILL_TITLE, 'Weiterfahren'],
         ['result', RESULT_TITLE, 'Noch einmal'],
@@ -632,7 +639,7 @@ try {
   )
   check(
     'desktop, five days: the probe reports first and the result counts the one tree',
-    cameras.slice(0, 5).join() === 'iso,fly-in,probing,fly-out,iso' &&
+    cameras.slice(0, 7).join() === 'iso,fly-in,probing,to-gateway,gateway,fly-out,iso' &&
       cameras.slice(-4).join() === 'fly-in,result,fly-out,iso' &&
       (cards.probing?.[PROBE_TITLE] ?? 0) > 0 &&
       cardTexts.result ===
@@ -701,8 +708,8 @@ try {
   const left = Date.now() - clicked
   const after = await beats.evaluate(CAMERA)
   check(
-    '„Weiter“ at the probe flies out within a second and the focus waits at the picture',
-    after === 'fly-out' &&
+    '„Weiter“ at the probe sets out for the gateway within a second and the focus waits at the picture',
+    after === 'to-gateway' &&
       left < 1000 &&
       (await beats.evaluate(`document.activeElement === ${PICTURE}`)),
     `${after} after ${left} ms`,
@@ -710,14 +717,17 @@ try {
   await moveMouse(beats, 40, 40)
   await beats.waitFor(`${STATUS}.startsWith('Gießt ')`, 'the first tree', 6000)
   const { timeline } = await beats.evaluate(`window.__probe`)
-  // From the probe's hold on: back to the slanted view, the route draws with
-  // its numbers, and only then the camera goes down again and the truck waters.
+  // From the probe's hold on: over to the gateway, back to the slanted view,
+  // the route draws with its numbers, and only then the camera goes down again
+  // and the truck waters.
   const from = timeline.indexOf('camera:probing')
   const at = (entry) => timeline.indexOf(entry, from)
   const firstWatering = timeline.findIndex(
     (entry, index) => index > from && entry.startsWith('status:Gießt '),
   )
   const order = [
+    at('camera:to-gateway'),
+    at('camera:gateway'),
     at('camera:fly-out'),
     at('camera:iso'),
     at('numbers'),
@@ -725,12 +735,12 @@ try {
     firstWatering,
   ]
   check(
-    'after „Weiter“ the camera returns to the slanted view, the route draws, then the camera goes down and the truck waters the first tree',
+    'after „Weiter“ the camera goes to the gateway and back to the slanted view, the route draws, then the camera goes down and the truck waters the first tree',
     from >= 0 && order.every((index, step) => index > (step === 0 ? from : order[step - 1])),
     timeline
       .slice(Math.max(0, from))
       .filter((entry) => !entry.startsWith('status:Tour'))
-      .slice(0, 8)
+      .slice(0, 10)
       .join(' > '),
   )
   await beats.waitFor(`${CAMERA} === 'result'`, 'the result close-up', 6000)
@@ -994,57 +1004,70 @@ const relay = await openPage(sizes[0])
 try {
   await load(relay, { name: 'relay' })
   const STAGE = `document.querySelector('#process [data-day-stage]')`
-  // Runs inside the page: the message is under way for a few seconds only.
+  const CAMERA_NOW = `${STAGE}.dataset.dayCamera`
+  const UNDER_WAY = `${STAGE}.hasAttribute('data-day-relay')`
+  const SHOWN_CARD = `[...document.querySelectorAll('#process [data-day-card]')].find((node) => node.getClientRects().length > 0 && node.dataset.shown !== 'false')`
+  // Runs inside the page: which cameras draw while the message is under way.
   await relay.evaluate(`(() => {
     const stage = ${STAGE}
-    const record = (window.__relay = { cameras: [], from: 0, to: 0 })
+    const cameras = (window.__relay = [])
     new MutationObserver(() => {
-      const isUnderWay = stage.hasAttribute('data-day-relay')
-      if (isUnderWay && !record.from) record.from = performance.now()
-      if (!isUnderWay && record.from && !record.to) record.to = performance.now()
-      if (isUnderWay && record.cameras[record.cameras.length - 1] !== stage.dataset.dayCamera) {
-        record.cameras.push(stage.dataset.dayCamera)
-      }
+      if (!${UNDER_WAY}) return
+      if (cameras[cameras.length - 1] !== stage.dataset.dayCamera) cameras.push(stage.dataset.dayCamera)
     }).observe(stage, { attributes: true })
   })()`)
   await clickButton(relay, 'Tour planen')
-  await relay.waitFor(`${STAGE}.dataset.dayCamera === 'probing'`, 'the probe to report', 600)
+  await moveMouse(relay, 1, 1)
+  await relay.waitFor(`${CAMERA_NOW} === 'probing'`, 'the probe to report', 600)
   check(
     'relay: nothing is under way while the probe still reports',
-    !(await relay.evaluate(`${STAGE}.hasAttribute('data-day-relay')`)),
+    !(await relay.evaluate(UNDER_WAY)),
   )
   await sleep(600)
   await clickButton(relay, 'Weiter')
-  await relay.waitFor(`${STAGE}.hasAttribute('data-day-relay')`, 'the message to set out', 100)
-  await sleep(900)
+  await moveMouse(relay, 1, 1)
+  await relay.waitFor(UNDER_WAY, 'the message to set out', 100)
+  await sleep(1200)
   check(
-    'relay: a caption says where the message goes',
-    (await relay.evaluate(
-      `Number(getComputedStyle(document.querySelector('#process [data-day-relay-caption]')).opacity)`,
-    )) > 0.5,
+    'relay: the camera follows the message from the probe to the gateway',
+    (await relay.evaluate(CAMERA_NOW)) === 'to-gateway',
+    await relay.evaluate(CAMERA_NOW),
   )
-  await relay.screenshot(join(out, 'desktop-relay.png'))
-  await relay.waitFor(`!${STAGE}.hasAttribute('data-day-relay')`, 'the message to arrive', 300)
-  const flown = await relay.evaluate(
-    `({ cameras: window.__relay.cameras, seconds: (window.__relay.to - window.__relay.from) / 1000 })`,
-  )
+  await relay.screenshot(join(out, 'desktop-relay-1-on-the-way.png'))
+  await relay.waitFor(`${CAMERA_NOW} === 'gateway'`, 'the gateway', 300)
+  await sleep(1500)
   check(
-    'relay: the message sets out as the camera flies back and arrives in the slanted view',
-    flown.cameras[0] === 'fly-out' && flown.cameras[flown.cameras.length - 1] === 'iso',
-    flown.cameras.join(' '),
+    'relay: at the gateway a card says where the message goes, with a way on',
+    (await relay.evaluate(`${SHOWN_CARD}?.children[1].textContent.trim()`)) === GATEWAY_TITLE &&
+      (await relay.evaluate(`${SHOWN_CARD}?.querySelector('button')?.textContent.trim()`)) ===
+        'Weiter',
+    await relay.evaluate(`${SHOWN_CARD}?.children[1].textContent.trim() ?? null`),
   )
+  await relay.screenshot(join(out, 'desktop-relay-2-gateway.png'))
+  await clickButton(relay, 'Weiter')
+  await moveMouse(relay, 1, 1)
+  const moved = Date.now()
+  await relay.waitFor(`${CAMERA_NOW} === 'fly-out'`, 'the camera to fly back', 50)
   check(
-    'relay: it is under way for about four seconds',
-    flown.seconds > 3 && flown.seconds < 9,
-    `${flown.seconds.toFixed(1)} s`,
+    'relay: „Weiter“ sends the camera back at once while the message flies on',
+    Date.now() - moved < 1500 && (await relay.evaluate(UNDER_WAY)),
+    `${Date.now() - moved} ms`,
   )
-  await sleep(400)
+  await relay.waitFor(`${CAMERA_NOW} === 'iso'`, 'the picture of the whole town', 300)
   check(
-    'relay: the caption goes once the message has arrived',
-    (await relay.evaluate(
-      `Number(getComputedStyle(document.querySelector('#process [data-day-relay-caption]')).opacity)`,
-    )) < 0.5,
+    'relay: the message is still on its way to the depot when the whole town is back',
+    await relay.evaluate(UNDER_WAY),
   )
+  await sleep(300)
+  await relay.screenshot(join(out, 'desktop-relay-3-to-depot.png'))
+  await relay.waitFor(`!${UNDER_WAY}`, 'the message to arrive', 300)
+  check(
+    'relay: from the probe to the depot the cameras are the flight over, the gateway, the flight back and the whole town',
+    (await relay.evaluate(`window.__relay.join()`)) === 'to-gateway,gateway,fly-out,iso',
+    await relay.evaluate(`window.__relay.join()`),
+  )
+  await relay.waitFor(`${CAMERA_NOW} === 'fly-in'`, 'the tour to go on to the first tree', 600)
+  check('relay: the truck sets out for the first tree afterwards', true)
 
   const DETAILS = `document.querySelector('#architecture details')`
   check('tech: the block for IT starts closed', !(await relay.evaluate(`${DETAILS}.open`)))

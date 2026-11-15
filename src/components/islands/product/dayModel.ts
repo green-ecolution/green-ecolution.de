@@ -202,6 +202,9 @@ export const CARD_KEYS = [
   'day.info.probe.title',
   'day.info.probe.text',
   'day.info.probe.next',
+  'day.info.gateway.label',
+  'day.info.gateway.title',
+  'day.info.gateway.text',
   'day.info.watering.label',
   'day.info.watering.title',
   'day.info.watering.text',
@@ -253,7 +256,7 @@ export function holdCopy(kind: CloseUpKind, day: PlannedDay | null): CardCopy {
     ...keys,
     text: { key: `day.info.${section}.text` as const },
     // The truck has not left yet, so it cannot drive on.
-    next: kind === 'probe' ? 'day.info.probe.next' : 'day.info.next',
+    next: kind === 'probe' || kind === 'gateway' ? 'day.info.probe.next' : 'day.info.next',
     announcesText: true,
   }
 }
