@@ -8,7 +8,7 @@ const RULE_SELECTOR = '.label-rule'
 const RULE_RANGE: ProgressRange = { start: 0.92, end: 0.68 }
 
 interface Tracked {
-  element: HTMLElement
+  element: HTMLElement | SVGElement
   range: ProgressRange
   progress: string
   written: string
@@ -16,7 +16,7 @@ interface Tracked {
 
 let page: AbortController | null = null
 
-function rangeOf(element: HTMLElement): ProgressRange {
+function rangeOf(element: HTMLElement | SVGElement): ProgressRange {
   if (!element.hasAttribute('data-scroll-progress')) return RULE_RANGE
   return {
     start: Number(element.dataset.progressStart ?? DEFAULT_RANGE.start),
@@ -35,7 +35,9 @@ function setup() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
   const tracked: Tracked[] = [
-    ...document.querySelectorAll<HTMLElement>(`[data-scroll-progress], ${RULE_SELECTOR}`),
+    ...document.querySelectorAll<HTMLElement | SVGElement>(
+      `[data-scroll-progress], ${RULE_SELECTOR}`,
+    ),
   ]
     // React owns the markup inside an island and would not expect the style.
     .filter((element) => !element.closest('astro-island'))

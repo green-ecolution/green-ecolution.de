@@ -27,12 +27,7 @@ const CROSSHATCH =
   'linear-gradient(45deg, white 1px, transparent 1px), linear-gradient(-45deg, white 1px, transparent 1px)'
 ---
 
-<section
-  data-scroll-progress
-  data-progress-start="0.8"
-  data-progress-end="1"
-  class="relative overflow-hidden"
->
+<section class="relative overflow-hidden">
   <div class="bg-gradient-to-b from-[#1e3a1a] to-green-dark-900">
     <div
       class="absolute inset-0 opacity-[0.03]"
@@ -42,6 +37,9 @@ const CROSSHATCH =
     <div class="relative z-10 max-w-208 mx-auto px-4 py-20 md:px-6 lg:py-28 lg:max-w-screen-lg xl:py-36 xl:max-w-screen-xl">
       <svg
         data-rings
+        data-scroll-progress
+        data-progress-start="0.95"
+        data-progress-end="0.75"
         viewBox="0 0 400 400"
         aria-hidden="true"
         style={`--rings: ${RINGS.length}`}
@@ -123,11 +121,15 @@ const CROSSHATCH =
 </section>
 
 <style>
-  /* One ring after the other draws itself as the section travels up the
-     window. Without the script the progress is 1 and all of them are drawn. */
+  /* One ring after the other draws itself as the drawing travels up the
+     window. Without the script the progress is 1 and all of them are drawn.
+     Firefox drops a unitless calc() here, hence the 1px, which pathLength
+     scales like a plain number. */
   .ring {
     stroke-dasharray: 1;
-    stroke-dashoffset: clamp(0, 1 - (var(--scroll-progress, 1) * var(--rings) - var(--i)), 1);
+    stroke-dashoffset: calc(
+      clamp(0, 1 - (var(--scroll-progress, 1) * var(--rings) - var(--i)), 1) * 1px
+    );
     transition: stroke-dashoffset 0.2s linear;
   }
 
