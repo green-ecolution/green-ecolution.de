@@ -1,9 +1,12 @@
 ---
+import { getImage } from 'astro:assets'
+import posterImage from '../../../assets/illustrations/product-town-poster.png'
 import WateringDayIsland from '../../islands/product/WateringDayIsland'
 import Button from '../../Button.astro'
 import Arrow from '../../icons/Arrow.astro'
 import { company } from '../../../data/company'
 import { townTrees } from '../../../data/productTown'
+import { STATUS_KEYS } from '../../islands/product/dayModel'
 import type { Language } from '../../../i18n/languages'
 import { pickStrings } from '../../../i18n/pick'
 import { getTranslations, type TranslationKey } from '../../../i18n/t'
@@ -35,33 +38,48 @@ const KEYS: TranslationKey<'product'>[] = [
   'day.tour.again',
   'day.tour.tank',
   'day.tour.stops',
-  'day.status.none',
-  'day.status.thirstyOne',
-  'day.status.thirstyMany',
-  'day.status.plannedOne',
-  'day.status.planned',
-  'day.status.plannedRefill',
-  'day.status.watering',
-  'day.status.next',
-  'day.status.toWater',
-  'day.status.topUp',
-  'day.status.refill',
-  'day.status.refillDepot',
-  'day.status.home',
-  'day.status.doneOne',
-  'day.status.done',
+  ...STATUS_KEYS,
   ...townTrees.map((tree) => `day.trees.${tree.id}` as const),
 ]
 
 const { language } = Astro.props
 const t = getTranslations(language, 'product')
 const strings = pickStrings(language, 'product', KEYS)
+const poster = await getImage({ src: posterImage, width: 1200, format: 'webp' })
+
+// Development only: shows nothing but the stage, for scripts/render-product-still.mjs.
+const CAPTURE_SCRIPT = `if (new URLSearchParams(location.search).has('dayStill')) {
+  document.documentElement.dataset.dayCapture = ''
+  addEventListener('DOMContentLoaded', () => document.getElementById('process').scrollIntoView())
+}`
+
+const CAPTURE_STYLE = `:root[data-day-capture] [data-day-stage] {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: auto;
+  border-radius: 0;
+  background-color: color-mix(in srgb, var(--color-green-light-100) 60%, white);
+}
+
+:root[data-day-capture] [data-day-label],
+:root[data-day-capture] [data-day-poster] {
+  display: none;
+}`
 ---
 
 <section
   id="process"
   class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
 >
+  {import.meta.env.DEV && (
+    <>
+      <script is:inline set:html={CAPTURE_SCRIPT} />
+      <style is:inline set:html={CAPTURE_STYLE} />
+    </>
+  )}
   <div class="mb-10 lg:mb-14">
     <div class="inline-block mb-6">
       <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
@@ -78,7 +96,15 @@ const strings = pickStrings(language, 'product', KEYS)
     </div>
   </div>
 
-  <WateringDayIsland client:visible strings={strings} />
+  <WateringDayIsland
+    client:visible
+    strings={strings}
+    poster={{
+      src: poster.src,
+      width: Number(poster.attributes.width),
+      height: Number(poster.attributes.height),
+    }}
+  />
 
   <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
     <p class="text-grey-900/70">{t('day.after.text')}</p>

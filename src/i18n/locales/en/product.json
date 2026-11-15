@@ -72,7 +72,7 @@
       "planned": "The round is set: {{count}} stops, shortest way.",
       "plannedRefill": "The round is set: {{count}} stops, shortest way, refill included.",
       "watering": "Watering {{name}}.",
-      "next": "On to {{name}}.",
+      "next": "Next stop: {{name}}.",
       "toWater": "On to the water point.",
       "topUp": "Topping up on the way. The water point is on the route.",
       "refill": "Tank empty. Refilling at the water point.",

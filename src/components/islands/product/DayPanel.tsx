@@ -1,5 +1,4 @@
 import { ArrowRight, CloudRain, Sun } from 'lucide-react'
-import type { RefObject } from 'react'
 import { useT } from '../../../i18n/useT'
 import { MAX_DRY_DAYS } from '../../../lib/dryness'
 import { thirstColors, type DayPhase, type TreeRow } from './dayModel'
@@ -74,14 +73,14 @@ export function TreeList({ rows, selected, onSelect }: TreeListProps) {
         <li key={row.id}>
           <button
             type="button"
-            aria-pressed={selected === row.index}
+            data-selected={selected === row.index}
             onClick={() => onSelect(row.index)}
             onFocus={() => onSelect(row.index)}
             onBlur={() => onSelect(null)}
             onPointerEnter={(event) => event.pointerType === 'mouse' && onSelect(row.index)}
             onPointerLeave={(event) => event.pointerType === 'mouse' && onSelect(null)}
             data-state={row.state}
-            className="flex w-full items-center gap-2.5 rounded-xl border border-grey-900/10 bg-white px-3 py-1.5 text-left text-sm transition-colors hover:border-green-dark-900/40 aria-pressed:ring-2 aria-pressed:ring-green-dark-900 data-[state=dry]:border-red-500/40"
+            className="flex w-full items-center gap-2.5 rounded-xl border border-grey-900/10 bg-white px-3 py-1.5 text-left text-sm transition-colors hover:border-green-dark-900/40 data-[selected=true]:ring-2 data-[selected=true]:ring-green-dark-900 data-[state=dry]:border-red-500/40"
           >
             <span
               aria-hidden="true"
@@ -108,70 +107,66 @@ export function TreeList({ rows, selected, onSelect }: TreeListProps) {
   )
 }
 
-interface TourControlsProps {
+interface TourButtonProps {
   phase: DayPhase
   canPlan: boolean
-  canSkip: boolean
-  status: string
-  /** The stops in order, shown when no scene plays the tour. */
-  stops: string[] | null
-  tank: number
-  tankRef: RefObject<HTMLDivElement | null>
   onPlan: () => void
   onSkip: () => void
   onReset: () => void
 }
 
-const primary =
-  'press-spring inline-flex items-center gap-3 rounded-2xl bg-green-dark-900 px-5 py-2 font-semibold text-white transition-all hover:bg-green-light-900 disabled:pointer-events-none disabled:opacity-40'
-const quiet =
-  'rounded-2xl px-3 py-2 text-sm font-semibold text-green-dark-900 underline decoration-2 underline-offset-2 hover:decoration-4'
+// One node for all three roles: a button that went away or got disabled while
+// focused would drop keyboard focus to the page.
+export function TourButton({ phase, canPlan, onPlan, onSkip, onReset }: TourButtonProps) {
+  const t = useT()
+  const isUnavailable = phase === 'idle' && !canPlan
+  const act = { idle: onPlan, touring: onSkip, done: onReset }[phase]
+  const label = { idle: 'day.tour.plan', touring: 'day.tour.skip', done: 'day.tour.again' }[phase]
 
-export function TourControls({
-  phase,
-  canPlan,
-  canSkip,
-  status,
-  stops,
-  tank,
-  tankRef,
-  onPlan,
-  onSkip,
-  onReset,
-}: TourControlsProps) {
+  return (
+    <button
+      type="button"
+      aria-disabled={isUnavailable || undefined}
+      onClick={() => {
+        if (!isUnavailable) act()
+      }}
+      className="press-spring inline-flex shrink-0 items-center gap-3 rounded-2xl bg-green-dark-900 px-5 py-2 font-semibold text-white transition-all hover:bg-green-light-900 aria-disabled:pointer-events-none aria-disabled:opacity-40"
+    >
+      {t(label)}
+      {phase === 'idle' && <ArrowRight aria-hidden="true" className="h-5 w-5" />}
+    </button>
+  )
+}
+
+const tankFill = { transform: 'scaleX(var(--day-tank, 1))' }
+
+/** Reads the tank from `--day-tank`, which the scene sets on the island's root every frame. */
+export function TankGauge({ className = '' }: { className?: string }) {
+  const t = useT()
+
+  return (
+    <div className={`flex items-center gap-3 text-xs text-grey-900/60 ${className}`}>
+      <span>{t('day.tour.tank')}</span>
+      <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-blue-400/20">
+        <div className="h-full origin-left rounded-full bg-blue-400" style={tankFill} />
+      </div>
+    </div>
+  )
+}
+
+interface TourControlsProps extends TourButtonProps {
+  status: string
+  /** The stops in order, shown when no scene plays the tour. */
+  stops: string[] | null
+}
+
+export function TourControls({ status, stops, ...button }: TourControlsProps) {
   const t = useT()
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-2">
-        {phase === 'done' ? (
-          <button type="button" className={primary} onClick={onReset}>
-            {t('day.tour.again')}
-          </button>
-        ) : (
-          <button type="button" className={primary} onClick={onPlan} disabled={!canPlan}>
-            {t('day.tour.plan')}
-            <ArrowRight aria-hidden="true" className="h-5 w-5" />
-          </button>
-        )}
-        {canSkip && (
-          <button type="button" className={quiet} onClick={onSkip}>
-            {t('day.tour.skip')}
-          </button>
-        )}
-      </div>
-
-      <div className="mt-4 flex items-center gap-3 text-xs text-grey-900/60">
-        <span>{t('day.tour.tank')}</span>
-        <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-blue-400/20">
-          {/* The scene writes this transform every frame while the tour runs. */}
-          <div
-            ref={tankRef}
-            className="h-full origin-left rounded-full bg-blue-400"
-            style={{ transform: `scaleX(${tank})` }}
-          />
-        </div>
-      </div>
+      <TourButton {...button} />
+      <TankGauge className="mt-4" />
 
       <p role="status" aria-live="polite" className="mt-3 min-h-12 text-grey-900">
         {status}

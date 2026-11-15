@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type CSSProperties,
   type ReactNode,
 } from 'react'
 import { DEPOT_SITE, START_DAYS, townTrees, treeOfSite } from '../../../data/productTown'
@@ -15,7 +16,14 @@ import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { TranslationProvider } from '../../../i18n/TranslationProvider'
 import { useT } from '../../../i18n/useT'
 import { supportsWebgl } from '../../../lib/webgl'
-import { StepHeading, TourControls, TreeList, WeatherSlider } from './DayPanel'
+import {
+  StepHeading,
+  TankGauge,
+  TourButton,
+  TourControls,
+  TreeList,
+  WeatherSlider,
+} from './DayPanel'
 import {
   NOT_STARTED,
   NOT_WATERED,
@@ -31,11 +39,30 @@ import {
 } from './dayModel'
 import type { DayEvents, DayLive, TourProgress } from './shared'
 
+interface Poster {
+  src: string
+  width: number
+  height: number
+}
+
 interface Props {
   strings: Record<string, string>
+  poster?: Poster
+}
+
+interface Tour extends PlannedDay {
+  /** Latched at plan time: whether a scene drives this tour or it ends at once. */
+  played: boolean
 }
 
 const WateringDayScene3D = lazy(() => import('./WateringDayScene3D'))
+
+// The fixed page header is 84 px high on a phone; the stage sits just below it.
+const HEADER_CLEARANCE = 96
+
+function setTank(node: HTMLElement | null, share: number) {
+  node?.style.setProperty('--day-tank', String(share))
+}
 
 let webgl: boolean | undefined
 
@@ -76,13 +103,13 @@ const labelBase =
 const tagLabel = `${labelBase} rounded-full bg-white/95 px-2.5 py-1 font-lato text-xs font-semibold text-grey-900 shadow-sm ring-1 ring-green-dark-900/10`
 const numberLabel = `${labelBase} flex h-5 w-5 items-center justify-center rounded-full bg-grey-900 text-[11px] font-bold text-white`
 
-function WateringDay() {
+function WateringDay({ poster }: { poster?: Poster }) {
   const t = useT()
   const [days, setDays] = useState(START_DAYS)
-  const [day, setDay] = useState<PlannedDay | null>(null)
+  const [day, setDay] = useState<Tour | null>(null)
   const [progress, setProgress] = useState<TourProgress>(NOT_STARTED)
   const [selected, setSelected] = useState<number | null>(null)
-  const tank = useRef<HTMLDivElement>(null)
+  const root = useRef<HTMLDivElement>(null)
   const stageNode = useRef<HTMLDivElement>(null)
   const labelNodes = useRef<(HTMLElement | null)[]>([])
   const live = useRef<DayLive>({
@@ -110,9 +137,11 @@ function WateringDay() {
   )
   const playsTour = canRenderModel && isReady && !hasFailed && !prefersReducedMotion
 
-  // Without a scene to play it, a tour is over; that also ends one whose scene
-  // failed halfway, since nothing would advance it any more.
-  const tour = day && !playsTour ? finished(day.script) : progress
+  // A tour planned without a scene is over and stays so. One that was played
+  // also ends when its scene can no longer play it, since nothing would
+  // advance it any more.
+  const isUnplayed = day !== null && (!day.played || !playsTour)
+  const tour = day && isUnplayed ? finished(day.script) : progress
   const phase: DayPhase = !day ? 'idle' : tour.done ? 'done' : 'touring'
   const watered = useMemo(
     () => (day ? wateredAfter(day.script, tour.served) : NOT_WATERED),
@@ -120,6 +149,7 @@ function WateringDay() {
   )
   const order = day?.order ?? NO_ORDER
   const rows = useMemo(() => treeRows(days, watered, order), [days, watered, order])
+  const isSceneShown = canRenderModel && isReady && !hasFailed
   const status = dayStatus(phase, rows, day, tour)
 
   // The scene reads this ref every frame; a render must not sit in between.
@@ -144,7 +174,7 @@ function WateringDay() {
     live.current.elapsed = 0
     // The scene wrote the gauge during the tour. React may still hold a full
     // tank from before and would then not write it back.
-    if (tank.current) tank.current.style.transform = 'scaleX(1)'
+    setTank(root.current, 1)
     setDay(null)
     setProgress(NOT_STARTED)
   }
@@ -159,8 +189,7 @@ function WateringDay() {
   const finishScene = useCallback((planned: PlannedDay) => {
     live.current.elapsed = planned.script.duration
     live.current.running = false
-    const share = tankShare(planned, finished(planned.script))
-    if (tank.current) tank.current.style.transform = `scaleX(${share})`
+    setTank(root.current, tankShare(planned, finished(planned.script)))
     live.current.onChange?.()
   }, [])
 
@@ -170,21 +199,26 @@ function WateringDay() {
   }
 
   useEffect(() => {
-    if (day && !playsTour) finishScene(day)
-  }, [day, playsTour, finishScene])
+    if (day && isUnplayed) finishScene(day)
+  }, [day, isUnplayed, finishScene])
 
   const showStage = () => {
     const node = stageNode.current
     if (!node) return
     const { top, bottom, height } = node.getBoundingClientRect()
     const visible = Math.min(bottom, window.innerHeight) - Math.max(top, 0)
-    if (visible < height * 0.6) node.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    // Not centred: the page's scroll padding would push the stage so far down
+    // that on a phone the strip under it falls out of the window.
+    if (visible < height * 0.6) {
+      window.scrollTo({ top: window.scrollY + top - HEADER_CLEARANCE, behavior: 'smooth' })
+    }
   }
 
   const plan = () => {
     const planned = planDay(days)
     if (!planned) return
-    setDay(planned)
+    setSelected(null)
+    setDay({ ...planned, played: playsTour })
     // Set right away: the clock in the scene must not see the new script with
     // the old time for a frame.
     live.current.script = planned.script
@@ -205,7 +239,7 @@ function WateringDay() {
   }
 
   const stops =
-    day && phase === 'done' && !playsTour
+    day && isUnplayed
       ? day.script.dwells.map(({ stop }) =>
           stop.kind === 'tree'
             ? t(`day.trees.${townTrees[treeOfSite(stop.site)].id}`)
@@ -213,8 +247,25 @@ function WateringDay() {
         )
       : null
 
+  const statusText = t(status.key, {
+    ...status.vars,
+    name: status.tree ? t(`day.trees.${status.tree}`) : '',
+  })
+  const tourButton = {
+    phase,
+    canPlan: rows.some((row) => row.state === 'dry'),
+    onPlan: plan,
+    onSkip: skip,
+    onReset: reset,
+  }
+
   return (
-    <div data-day-root className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-10">
+    <div
+      ref={root}
+      data-day-root
+      style={{ '--day-tank': String(tankShare(day, tour)) } as CSSProperties}
+      className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-10"
+    >
       <div>
         <StepHeading
           number={1}
@@ -228,6 +279,19 @@ function WateringDay() {
           aria-label={t('day.stageAriaLabel')}
           className="relative aspect-[3/2] overflow-hidden rounded-3xl bg-green-light-100/60"
         >
+          {poster && (
+            <img
+              data-day-poster
+              data-hidden={String(isSceneShown)}
+              src={poster.src}
+              width={poster.width}
+              height={poster.height}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="pointer-events-none absolute inset-0 h-full w-full object-contain transition-opacity duration-500 data-[hidden=true]:opacity-0"
+            />
+          )}
           {canRenderModel && !hasFailed && (
             <div
               data-ready={String(isReady)}
@@ -241,7 +305,8 @@ function WateringDay() {
                     live={live}
                     events={events}
                     labels={labelNodes}
-                    tank={tank}
+                    tank={root}
+                    isReady={isReady}
                   />
                 </Suspense>
               </SceneBoundary>
@@ -281,6 +346,21 @@ function WateringDay() {
             </div>
           )}
         </div>
+        {phase !== 'idle' && (
+          <div
+            data-day-strip
+            className="mt-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-grey-900/10 lg:hidden"
+          >
+            {/* The panel's live region announces this; here it is only for the eyes. */}
+            <p aria-hidden="true" className="min-h-10 text-sm text-grey-900">
+              {statusText}
+            </p>
+            <div className="mt-2 flex items-center gap-4">
+              <TankGauge className="flex-1" />
+              <TourButton {...tourButton} />
+            </div>
+          </div>
+        )}
         <WeatherSlider days={days} onChange={changeDays} />
       </div>
 
@@ -299,21 +379,7 @@ function WateringDay() {
             title={t('day.steps.act.title')}
             description={t('day.steps.act.description')}
           />
-          <TourControls
-            phase={phase}
-            canPlan={phase === 'idle' && rows.some((row) => row.state === 'dry')}
-            canSkip={phase === 'touring'}
-            status={t(status.key, {
-              ...status.vars,
-              name: status.tree ? t(`day.trees.${status.tree}`) : '',
-            })}
-            stops={stops}
-            tank={tankShare(day, tour)}
-            tankRef={tank}
-            onPlan={plan}
-            onSkip={skip}
-            onReset={reset}
-          />
+          <TourControls status={statusText} stops={stops} {...tourButton} />
         </div>
       </div>
     </div>
@@ -322,10 +388,10 @@ function WateringDay() {
 
 // Stage and panel are one island: slider, list, tour and scene share one state,
 // and astro cannot nest islands.
-export default function WateringDayIsland({ strings }: Props) {
+export default function WateringDayIsland({ strings, poster }: Props) {
   return (
     <TranslationProvider strings={strings}>
-      <WateringDay />
+      <WateringDay poster={poster} />
     </TranslationProvider>
   )
 }

@@ -17,10 +17,12 @@ import { groundGeometry, shadowGeometry, townGeometry } from './town'
 interface Props {
   isStatic: boolean
   isActive: boolean
+  isReady: boolean
   live: RefObject<DayLive>
   events: DayEvents
   labels: RefObject<(HTMLElement | null)[]>
-  tank: RefObject<HTMLDivElement | null>
+  /** The node that carries `--day-tank` for the gauges. */
+  tank: RefObject<HTMLElement | null>
 }
 
 const CAMERA_DISTANCE = 600
@@ -39,7 +41,7 @@ interface ClockProps {
   liveRef: RefObject<DayLive>
   stageRef: RefObject<Stage>
   events: DayEvents
-  tankRef: RefObject<HTMLDivElement | null>
+  tankRef: RefObject<HTMLElement | null>
 }
 
 // Mounted first, so every other part reads the state of the same frame.
@@ -75,7 +77,7 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
 
     if (script && frame) {
       if (tankRef.current && state.running) {
-        tankRef.current.style.transform = `scaleX(${(frame.tank / script.capacity).toFixed(3)})`
+        tankRef.current.style.setProperty('--day-tank', (frame.tank / script.capacity).toFixed(3))
       }
       const last = reported.current
       if (frame.served !== last.served || frame.dwell !== last.dwell || frame.done !== last.done) {
@@ -168,7 +170,7 @@ function Town() {
   )
 }
 
-function WateringDayScene3D({ isStatic, isActive, live, events, labels, tank }: Props) {
+function WateringDayScene3D({ isStatic, isActive, isReady, live, events, labels, tank }: Props) {
   const stage = useRef<Stage>({ frame: null, truck: PARKED, riding: false })
 
   // Same light as the other two towns: ambient and key together come to a
@@ -178,7 +180,9 @@ function WateringDayScene3D({ isStatic, isActive, live, events, labels, tank }: 
       flat
       orthographic
       dpr={MAX_DPR}
-      frameloop={isActive ? 'demand' : 'never'}
+      // It draws off screen until its first frame is done: a tour planned from
+      // below the stage needs a ready scene to be played.
+      frameloop={isActive || !isReady ? 'demand' : 'never'}
       camera={{
         position: [CAMERA_DISTANCE, CAMERA_DISTANCE, CAMERA_DISTANCE],
         near: 1,

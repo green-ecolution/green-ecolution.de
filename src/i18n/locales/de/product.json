@@ -6,12 +6,12 @@
   "hero": {
     "label": "Produkt",
     "headline": "Morgens wissen, welcher Baum Wasser braucht.",
-    "description": "Green Ecolution zeigt deinem Team auf einer Karte, wo es trocken ist, und schlägt die passende Gießtour vor. Probier es gleich hier aus."
+    "description": "Green Ecolution zeigt deinem Team auf einer Karte, wo es trocken ist. Dazu schlägt es die passende Gießtour vor. Probier es gleich hier aus."
   },
   "day": {
     "sectionLabel": "Zum Ausprobieren",
     "title": "Dein Gießtag in drei Schritten",
-    "description": "Dreh am Wetter, schau zu, wie die Stadt reagiert, und schick den Gießwagen los.",
+    "description": "Dreh am Wetter und schau zu, wie die Stadt reagiert. Dann schick den Gießwagen los.",
     "stageAriaLabel": "Kleine Stadt von schräg oben mit zwölf Bäumen. Über jedem Baum zeigt eine Nadel in Ampelfarbe, ob er Wasser braucht. Ein Gießwagen fährt die trockenen Bäume an.",
     "steps": {
       "measure": {
@@ -72,7 +72,7 @@
       "planned": "Tour steht: {{count}} Halte, kürzester Weg.",
       "plannedRefill": "Tour steht: {{count}} Halte, kürzester Weg, Nachfüllen eingeplant.",
       "watering": "Gießt {{name}}.",
-      "next": "Weiter zu {{name}}.",
+      "next": "Nächster Halt: {{name}}.",
       "toWater": "Weiter zur Wasserstelle.",
       "topUp": "Füllt unterwegs auf. Die Wasserstelle liegt am Weg.",
       "refill": "Tank leer. Füllt an der Wasserstelle nach.",

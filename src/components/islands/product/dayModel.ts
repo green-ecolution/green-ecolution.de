@@ -114,9 +114,28 @@ export function tankShare(day: PlannedDay | null, progress: TourProgress): numbe
   return day.script.dwells[progress.served - 1].stop.leftWith / day.script.capacity
 }
 
+export const STATUS_KEYS = [
+  'day.status.none',
+  'day.status.thirstyOne',
+  'day.status.thirstyMany',
+  'day.status.plannedOne',
+  'day.status.planned',
+  'day.status.plannedRefill',
+  'day.status.watering',
+  'day.status.next',
+  'day.status.toWater',
+  'day.status.topUp',
+  'day.status.refill',
+  'day.status.refillDepot',
+  'day.status.home',
+  'day.status.doneOne',
+  'day.status.done',
+] as const
+
+export type StatusKey = (typeof STATUS_KEYS)[number]
+
 export interface StatusText {
-  /** Key in the product catalog. */
-  key: string
+  key: StatusKey
   vars?: Record<string, number>
   /** The tree the text names; the island fills in `{{name}}`. */
   tree?: TreeId
