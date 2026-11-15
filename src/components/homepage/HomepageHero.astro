@@ -17,15 +17,22 @@ const t = getTranslations(language, 'home')
 // same order, so it can jump there.
 const taglineWords = t('hero.tagline').split(' ')
 const taglineJumps = taglineWords.length === workflowSteps.length
+
+const HILL_FRONT =
+  'M1031.42 463.293C706.291 573.793 283.625 419.293 283.625 419.293C283.625 419.293 38.6662 329.293 9.62605 450.293C-26.3741 600.293 45.4088 794.696 237.967 773.108C545.702 738.608 655.626 688.293 1024.62 843.793C1282.62 952.517 1403.81 970.255 1475.12 972.793C1615.62 977.793 1710.11 891.293 1702.62 802.793C1695.13 714.293 1605.12 620.793 1564.62 585.293C1524.12 549.793 1303.24 370.909 1031.42 463.293Z'
+const HILL_BACK_A =
+  'M930.302 149.578C781.802 381.078 254.501 449.984 114.501 416.484L243.768 629.878C598.056 669.547 1324.28 759.146 1394.86 800.183C1483.09 851.479 1692.38 759.146 1762.15 586.789C1817.96 448.904 1646.17 237.863 1553.3 149.578C1416.3 -17.4224 1076.49 -78.3149 930.302 149.578Z'
+const HILL_BACK_B =
+  'M1308.3 225.623C1405.1 173.223 1466.35 267.578 1534.39 324.15C1613.42 389.856 1655.45 488.299 1620.57 633.982C1609.38 680.694 1458.47 796.079 1411.28 759.145C1373.52 729.598 915.896 596.819 691.802 534.123C791.135 447.623 1008.7 280.623 1084.3 304.623C1178.8 334.623 1187.3 291.123 1308.3 225.623Z'
 ---
 
 <section data-pause-offscreen>
-  <div class="overflow-hidden relative mx-auto w-full min-h-svh max-w-screen-3xl pointer-events-none before:bg-background-yellow-dot before:bg-cover before:w-4/5 before:h-[100vh] before:max-h-[45rem] before:absolute before:-right-4 before:bottom-0 before:-z-50 before:bg-no-repeat sm:before:-right-10 md:before:max-h-[70rem] 2xl:before:right-0 2xl:before:bg-contain">
+  <div class="flex flex-col overflow-x-clip relative mx-auto w-full min-h-svh max-w-screen-3xl pointer-events-none before:bg-background-yellow-dot before:bg-cover before:w-4/5 before:h-[100vh] before:max-h-[45rem] before:absolute before:-right-4 before:bottom-0 before:-z-50 before:bg-no-repeat sm:before:-right-10 md:before:max-h-[70rem] 2xl:before:right-0 2xl:before:bg-contain">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="hero-glow absolute top-[calc(25%-10rem)] -left-60 w-[60rem] h-[60rem]"></div>
     </div>
 
-    <article class="pointer-events-auto max-w-208 mx-auto px-4 pt-28 mb-8 md:px-6 lg:mb-14 lg:pt-36 lg:max-w-screen-lg xl:max-w-screen-xl xl:pt-44">
+    <article class="pointer-events-auto w-full max-w-208 mx-auto px-4 pt-28 md:px-6 lg:pt-36 lg:max-w-screen-lg lg:short:pt-28 xl:max-w-screen-xl xl:pt-44 xl:short:pt-32">
       <div class="max-w-[30rem] md:max-w-[34rem] xl:max-w-[38rem] 2xl:max-w-[42rem]">
         <h1
           class="hero-rise hero-rise-opaque font-lato font-bold text-4xl mb-6 text-grey-900 md:text-5xl xl:text-6xl"
@@ -89,8 +96,17 @@ const taglineJumps = taglineWords.length === workflowSteps.length
       </div>
     </article>
 
-    <!-- Decoration: react and lottie-web can wait until the first screen stands. -->
-    <HeroTreesIsland client:idle />
+    <div class="hero-scene" aria-hidden="true">
+      <svg class="hero-hills" viewBox="0 0 1774 973" preserveAspectRatio="none">
+        <path d={HILL_BACK_A} fill="#ACB63B" fill-opacity="0.25"></path>
+        <path d={HILL_BACK_B} fill="#ACB63B" fill-opacity="0.3"></path>
+      </svg>
+      <!-- Decoration: react and lottie-web can wait until the first screen stands. -->
+      <HeroTreesIsland client:idle />
+      <svg class="hero-hills" viewBox="0 0 1774 973" preserveAspectRatio="none">
+        <path d={HILL_FRONT} fill="#4C7741"></path>
+      </svg>
+    </div>
   </div>
 </section>
 

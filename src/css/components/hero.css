@@ -43,3 +43,133 @@
     width: 0;
   }
 }
+
+/* The landscape below the hero text: hills and a grove of trees, all sized
+   from the room left under the text, so they stay on the first screen. The
+   scene is a size container, so the hills read that room as 100cqh. */
+.hero-scene {
+  /* Hill artwork, 1774 x 973: width, centre, how far its foot sinks below
+     the hero, and how steeply it may rise per px of room before flattening. */
+  --hill-w: min(210cqw, 1774px);
+  --hill-cx: 55%;
+  --hill-q: 0.28;
+  --hill-k: 3.6;
+  --hill-h: min(calc(var(--hill-w) * 0.5485), calc((100cqh - 2rem) * var(--hill-k)));
+  /* Where on the hill the grove stands, as a share of the artwork's width,
+     and the height of the hill's surface there, as a share of its height. */
+  --grove-at: 0.63;
+  --grove-surface: 0.543;
+  --tree: min(36svh, 18rem);
+  --spread: 0;
+
+  position: relative;
+  z-index: -1;
+  flex: 1 0 8rem;
+  container-type: size;
+}
+
+@media (min-width: 640px) {
+  .hero-scene {
+    --hill-w: min(168cqw, 1774px);
+    --hill-cx: 64%;
+    --hill-q: 0.34;
+    --tree: min(50svh, 40cqw);
+    --spread: 0.45;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-scene {
+    --hill-w: min(132cqw, 1774px);
+    --hill-cx: 56%;
+    --hill-q: 0.325;
+    --grove-at: 0.731;
+    --grove-surface: 0.568;
+    --tree: min(60svh, 46cqw);
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-scene {
+    --spread: 0.6;
+  }
+}
+
+@media (min-width: 1536px) {
+  .hero-scene {
+    --hill-w: min(100cqw, 1774px);
+    --hill-cx: 50%;
+    --hill-q: 0.329;
+    /* The text column is widest here, so the grove moves down the slope. */
+    --grove-at: 0.8;
+    --grove-surface: 0.507;
+    --spread: 0.55;
+  }
+}
+
+.hero-hills {
+  position: absolute;
+  left: calc(var(--hill-cx) - var(--hill-w) / 2);
+  bottom: calc(var(--hill-h) * var(--hill-q) * -1);
+  width: var(--hill-w);
+  height: var(--hill-h);
+}
+
+/* The box of the dark tree, standing on the crest. The others stand to its
+   left, --spread tree heights from trunk to trunk, the small one halfway
+   between them. Narrower screens show fewer trees. */
+.hero-grove {
+  position: absolute;
+  left: calc(var(--hill-cx) + var(--hill-w) * (var(--grove-at) - 0.5) - var(--tree) * 0.58);
+  bottom: calc(var(--hill-h) * (var(--grove-surface) - var(--hill-q)) - var(--tree) * 0.114);
+  width: calc(var(--tree) * 0.919);
+  height: var(--tree);
+}
+
+.hero-tree,
+.hero-cloud {
+  position: absolute;
+}
+
+.hero-tree-dark {
+  inset: 0;
+}
+
+.hero-tree-light {
+  left: calc(var(--tree) * (0.345 - var(--spread)));
+  bottom: -7.7%;
+  width: calc(var(--tree) * 0.404);
+  height: 100%;
+}
+
+.hero-tree-middle {
+  display: none;
+  left: calc(var(--tree) * (0.437 - var(--spread) / 2));
+  bottom: -1.9%;
+  width: calc(var(--tree) * 0.26);
+  height: 66.7%;
+}
+
+.hero-cloud {
+  left: calc(var(--tree) * (-0.14 - var(--spread)));
+  bottom: 67.9%;
+  width: calc(var(--tree) * 0.875);
+}
+
+.hero-cloud svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 639.98px) {
+  .hero-tree-dark {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-tree-middle {
+    display: block;
+  }
+}

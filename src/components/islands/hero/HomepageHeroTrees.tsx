@@ -4,19 +4,15 @@ import treeMiddleGreenAnimation from '../../../json/treeMiddleGreenAnimation.jso
 import treeDarkGreenAnimation from '../../../json/treeDarkGreenAnimation.json'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 
+// Placed and sized by .hero-grove in hero.css, as one group standing on the hill.
 function HomepageHeroTrees() {
   const reducedMotion = useReducedMotion()
 
   return (
-    <div>
-      <figure
-        aria-hidden="true"
-        className="animate-move absolute bottom-96 md:bottom-1/2 right-2 -z-40 lg:right-1/3"
-      >
+    <div className="hero-grove">
+      <div className="hero-cloud">
         <svg
-          className="w-[85%]"
-          width="855"
-          height="178"
+          className="animate-move"
           viewBox="0 0 855 178"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -32,43 +28,23 @@ function HomepageHeroTrees() {
             fill="url(#cloudGradient)"
           />
         </svg>
-      </figure>
+      </div>
 
-      <figure
-        aria-hidden="true"
-        className="absolute bottom-10 right-[5%] xs:bottom-16 md:right-96 lg:right-[28rem] xl:bottom-32 2xl:right-[40rem] 3xl:right-[40%] md:landscape:bottom-0 lg:landscape:bottom-16"
-      >
-        <LottiePlayer
-          aria-hidden="true"
-          className="relative -z-20 h-[36svh] max-h-[18rem] md:max-h-none md:min-h-80 md:h-[42vh] lg:min-h-96 lg:h-[60vh]"
-          animationData={treeLightGreenAnimation}
-          autoplay={!reducedMotion}
-        />
-      </figure>
-
-      <figure
-        aria-hidden="true"
-        className="hidden absolute right-64 bottom-28 lg:block xl:bottom-48 2xl:right-[30rem] 2xl:bottom-28 3xl:right-[30%] landscape:hidden lg:landscape:block"
-      >
-        <LottiePlayer
-          aria-hidden="true"
-          className="relative -z-10 h-[40vh] md:min-h-96"
-          animationData={treeMiddleGreenAnimation}
-          autoplay={!reducedMotion}
-        />
-      </figure>
-
-      <figure
-        aria-hidden="true"
-        className="hidden absolute -right-20 bottom-16 md:block lg:bottom-32 xl:bottom-48 2xl:right-52 2xl:bottom-32 3xl:right-[12%] landscape:bottom-4 lg:landscape:bottom-32"
-      >
-        <LottiePlayer
-          aria-hidden="true"
-          className="relative -z-30 h-[55vh] md:h-[48vh] md:min-h-80 lg:min-h-96 lg:h-[60vh]"
-          animationData={treeDarkGreenAnimation}
-          autoplay={!reducedMotion}
-        />
-      </figure>
+      <LottiePlayer
+        className="hero-tree hero-tree-dark"
+        animationData={treeDarkGreenAnimation}
+        autoplay={!reducedMotion}
+      />
+      <LottiePlayer
+        className="hero-tree hero-tree-light"
+        animationData={treeLightGreenAnimation}
+        autoplay={!reducedMotion}
+      />
+      <LottiePlayer
+        className="hero-tree hero-tree-middle"
+        animationData={treeMiddleGreenAnimation}
+        autoplay={!reducedMotion}
+      />
     </div>
   )
 }
