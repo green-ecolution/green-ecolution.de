@@ -14,11 +14,14 @@ const VIEW = 400
 // How close the pointer has to come for a ring to catch on it, and how far the
 // ring lets itself be pulled before it slips off and swings.
 const GRAB = 8
-const RELEASE = 20
+const RELEASE = 16
+// Share of the pointer's distance a held ring follows, so it bends softly
+// instead of sticking to the pointer.
+const PULL_SHARE = 0.65
 // A pointer too fast to be caught still strums the ring it jumps over.
-const STRUM = 11
+const STRUM = 7
 const TENSION = 2400
-const DAMPING = 3
+const DAMPING = 4
 // Swings per second, from the innermost ring to the outermost: the longer the
 // string, the lower its note.
 const PITCH_INNER = 4.2
@@ -135,7 +138,7 @@ function setup() {
 
         for (const ring of rings) {
           const apart = now - ring.radius
-          const pull = apart * ring.give
+          const pull = apart * ring.give * PULL_SHARE
           if (ring.held) {
             ring.held = Math.abs(apart) > RELEASE ? null : { angle, pull }
           } else if (Math.abs(apart) <= GRAB) {
