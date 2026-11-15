@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.20.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.8...v1.20.0) (2026-11-15)
+
+
+### Features
+
+* **about:** tell of the 2026 awards and let a large year follow the company story ([db76e45](https://github.com/green-ecolution/green-ecolution.de/commit/db76e4567be307d35b6b300f90803c671171a1e6))
+* **contact:** redraw the watering scene's truck and trees ([b47dfc5](https://github.com/green-ecolution/green-ecolution.de/commit/b47dfc527faa182f360bf6e88d25f5bc6fa7a264))
+* **home:** count up the challenge figures and draw growth rings beside them ([0c3cd25](https://github.com/green-ecolution/green-ecolution.de/commit/0c3cd25df76bc9b83946563537c64d1378dd3600))
+* **home:** explain how Green Ecolution works in a scrolled 3d story ([f1538c3](https://github.com/green-ecolution/green-ecolution.de/commit/f1538c3d16f6e3cc191f5143aecc4b47a322ec03))
+* **home:** light up the testimonial word by word ([127d44d](https://github.com/green-ecolution/green-ecolution.de/commit/127d44d3116381d95bb7e3583363b81e38ef4502))
+* **home:** open feature previews inside a bento grid ([984df94](https://github.com/green-ecolution/green-ecolution.de/commit/984df947847fb6bca37d5111eb6914a2602349fd))
+* **home:** tell the hardware as a pinned chapter with a 3d soil probe ([3b9fa3e](https://github.com/green-ecolution/green-ecolution.de/commit/3b9fa3e289573aca4c17c544d6a9c6f5f1c18197))
+* **home:** tighten landing page structure and vary section layouts ([815dea1](https://github.com/green-ecolution/green-ecolution.de/commit/815dea179039c63815cb2b2f483e02f4b85bf694))
+* **home:** turn the watering stream into a flowing water jet ([e63a037](https://github.com/green-ecolution/green-ecolution.de/commit/e63a0373702adc2a5496076a3b236ab18cbee7ab))
+* **nav:** group the navigation and bring releases and press into it ([7f90c2f](https://github.com/green-ecolution/green-ecolution.de/commit/7f90c2f69a6b53ec534addad326e5b92d860ecf3))
+* **partners:** list PROGEEK GmbH as the first partner ([1996ca0](https://github.com/green-ecolution/green-ecolution.de/commit/1996ca04650c9aa8acc5f44c06338933d24c5fab))
+* **ui:** let the rule under section labels grow in and ease with the brand's curve ([f23fc94](https://github.com/green-ecolution/green-ecolution.de/commit/f23fc94247efcc1ca9cf1e1f4f1fbf24ceeae7c7))
+
+
+### Bug Fixes
+
+* **a11y:** enlarge touch targets and hide back-to-top while scrolling down ([c6ef305](https://github.com/green-ecolution/green-ecolution.de/commit/c6ef305c07c99f8d048791419f5b1b0dbb783ff4))
+* **a11y:** raise text contrast on dark green surfaces ([69ccbbe](https://github.com/green-ecolution/green-ecolution.de/commit/69ccbbedd810560742e0fc3793bc5deec94cf4eb))
+* **home:** draw the growth rings fully while they are in view ([389ff26](https://github.com/green-ecolution/green-ecolution.de/commit/389ff26e2e82f36a16c41cd9fb70a5a1024e6e81))
+* **home:** drop the story sensor in front of the crown ([ff7d05f](https://github.com/green-ecolution/green-ecolution.de/commit/ff7d05f59a2aecc75f8173290fe127134d721893))
+* **home:** keep the hero landscape on the first screen ([4402b2f](https://github.com/green-ecolution/green-ecolution.de/commit/4402b2f53574ef0698aa759ceaaf8e99cbc8538a))
+* **home:** pin the soil probe on short laptop windows ([53b9ca1](https://github.com/green-ecolution/green-ecolution.de/commit/53b9ca1cc10273d38a1927d6858159f8555f5653))
+* **home:** pin the story and the soil probe on windows down to 680px ([bfbe9ae](https://github.com/green-ecolution/green-ecolution.de/commit/bfbe9aeb6f7193cd4e3ff75a8661c1c77d9ec541))
+* **home:** soften how the growth rings react to the pointer ([8ea59e5](https://github.com/green-ecolution/green-ecolution.de/commit/8ea59e51f1850d604e73a0b47fa86b31e3ff3d10))
+* **ui:** use defined colour tokens for section labels and secondary text ([dad39a5](https://github.com/green-ecolution/green-ecolution.de/commit/dad39a505d41297f41b6e14c611e286406420a86))
+
+
+### Performance Improvements
+
+* cut animation, scroll and loading costs across the site ([1480daa](https://github.com/green-ecolution/green-ecolution.de/commit/1480daa7a6b0765acab07e9d172bc235e5f6e990))
+
 ## [1.19.8](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.7...v1.19.8) (2026-11-12)
 
 
