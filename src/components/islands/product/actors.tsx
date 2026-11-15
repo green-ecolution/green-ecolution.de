@@ -213,9 +213,12 @@ const labelAnchors: (readonly [number, number, number])[] = [
 // hangs below instead, pushed right, because the nearest pins lie to its left.
 const HANGING_LABEL = townTrees.length + 1
 
-function labelShown(state: DayLive, index: number): boolean {
+function labelShown(state: DayLive, stage: Stage, index: number): boolean {
   if (index >= townTrees.length) return true
-  if (state.script) return state.order[index] > 0 && !state.watered[index]
+  // The numbers come with the route, once the probe has reported.
+  if (state.script) {
+    return (stage.frame?.reveal ?? 0) > 0 && state.order[index] > 0 && !state.watered[index]
+  }
   return state.selected === index || state.highlighted === index
 }
 
@@ -243,7 +246,7 @@ export function Labels({ live, stage, nodes }: LabelsProps) {
       const top = ((1 - projected.y) / 2) * size.height - (index < townTrees.length ? lift : 0)
       const shift = index === HANGING_LABEL ? 'translate(-30%, 4px)' : 'translate(-50%, -100%)'
       node.style.transform = `translate(${left.toFixed(1)}px, ${top.toFixed(1)}px) ${shift}`
-      node.dataset.shown = String(isSlanted && labelShown(live.current, index))
+      node.dataset.shown = String(isSlanted && labelShown(live.current, stage.current, index))
     })
   })
 

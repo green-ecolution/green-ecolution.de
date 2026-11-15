@@ -1,14 +1,26 @@
 import { describe, expect, it } from 'vitest'
-import { blocks, hydrant, plate, townTrees, treeOfSite } from '../../../data/productTown'
+import {
+  START_DAYS,
+  blocks,
+  depot,
+  hydrant,
+  plate,
+  townTrees,
+  treeOfSite,
+} from '../../../data/productTown'
 import type { Tree } from '../../../data/streamletTour'
-import { blendPoses, projected } from '../../../lib/cameraPose'
+import { depotWidth } from '../../../data/streamletTour'
+import { blendPoses, projected, type Vec3 } from '../../../lib/cameraPose'
 import type { GroundPoint } from '../../../lib/storyPath'
 import { planDay } from './dayModel'
 import {
   framedView,
+  homeStop,
   isClearSpot,
+  probeView,
   refillStop,
   refillView,
+  resultView,
   showpieceStop,
   wateringView,
   type CardCover,
@@ -32,10 +44,43 @@ function wateringAt(days: number) {
   return { stop, view: wateringView(stop.truck, stop.heading, stop.tree) }
 }
 
+function probeAt(days: number) {
+  const day = planDay(days)
+  const stop = day && showpieceStop(day.script)
+  if (!stop) throw new Error(`no probe at the first tree at ${days} days`)
+  return { stop, view: probeView(stop.truck, stop.heading, stop.tree) }
+}
+
+function resultAt(days: number) {
+  const day = planDay(days)
+  if (!day) throw new Error(`nothing planned at ${days} days`)
+  const stop = homeStop(day.script)
+  return { stop, view: resultView(stop.truck, stop.heading) }
+}
+
 function refillAt(days: number) {
   const day = planDay(days)
   const stop = day && refillStop(day.script)
   return stop ? { stop, view: refillView(stop.truck, stop.heading) } : null
+}
+
+// Whether the segment from a to b passes through the box.
+function crossesBox(a: Vec3, b: Vec3, box: { min: number[]; max: number[] }): boolean {
+  let enter = 0
+  let leave = 1
+  for (let axis = 0; axis < 3; axis++) {
+    const step = b[axis] - a[axis]
+    if (Math.abs(step) < 1e-9) {
+      if (a[axis] < box.min[axis] || a[axis] > box.max[axis]) return false
+      continue
+    }
+    const near = (box.min[axis] - a[axis]) / step
+    const far = (box.max[axis] - a[axis]) / step
+    enter = Math.max(enter, Math.min(near, far))
+    leave = Math.min(leave, Math.max(near, far))
+    if (enter > leave) return false
+  }
+  return true
 }
 
 const ground = (pose: { position: readonly number[] }): GroundPoint => [
@@ -138,11 +183,65 @@ describe('refillView', () => {
   })
 })
 
+describe('probeView', () => {
+  it('findet an jedem Reglerstand einen freien Platz an der Straße vor der Sonde', () => {
+    for (let days = 5; days <= 14; days++) {
+      const { stop, view } = probeAt(days)
+      expect(view.clear, `${days} days`).toBe(true)
+      expect(isClearSpot(ground(view.from), stop.tree.at, stop.truck)).toBe(true)
+      expect(isClearSpot(ground(view.to), stop.tree.at, stop.truck)).toBe(true)
+    }
+  })
+
+  it('steht so weit weg, dass die Nadel über der Krone ganz bleibt, und kommt dabei näher', () => {
+    for (let days = 5; days <= 14; days++) {
+      const { stop, view } = probeAt(days)
+      const toTree = (pose: { position: readonly number[] }) =>
+        Math.hypot(pose.position[0] - stop.tree.at[0], pose.position[2] - stop.tree.at[1])
+      expect(toTree(view.to), `${days} days`).toBeLessThan(toTree(view.from))
+      // NEAR_LENS in actors shrinks pins nearer than 15 units.
+      expect(toTree(view.to), `${days} days`).toBeGreaterThan(15)
+    }
+  })
+})
+
+describe('resultView', () => {
+  it('stellt sich neben die Stichstraße, mit freiem Blick auf Wagen und Halle', () => {
+    for (const days of [5, 9, 14]) {
+      const { stop, view } = resultAt(days)
+      expect(stop.truck[0], `${days} days`).toBeCloseTo(depot.stop[0])
+      expect(stop.truck[1], `${days} days`).toBeCloseTo(depot.stop[1])
+      expect(view.clear, `${days} days`).toBe(true)
+    }
+  })
+
+  it('schaut von hinten schräg auf den Wagen und frei auf das Tor der Halle daneben', () => {
+    const { stop, view } = resultAt(START_DAYS)
+    for (const ahead of aheadOf(view, stop)) expect(ahead).toBeLessThan(0)
+    // The gate on the hall's face towards the road, and the tanker as a box.
+    const gateX = depot.at[0] + depotWidth / 2
+    const gate = [-2, 0, 2].flatMap((dz) =>
+      [0.5, 1.8, 3.4].map((y): Vec3 => [gateX + 0.05, y, depot.at[1] + dz]),
+    )
+    const tanker = {
+      min: [stop.truck[0] - 1.7, 0, stop.truck[1] - 4.6],
+      max: [stop.truck[0] + 1.7, 5.2, stop.truck[1] + 5.3],
+    }
+    for (const pose of [view.from, view.to]) {
+      expect(pose.position[0]).toBeGreaterThan(gateX)
+      for (const point of gate) {
+        expect(crossesBox(pose.position, point, tanker), point.join()).toBe(false)
+      }
+    }
+  })
+})
+
 describe('framedView', () => {
   // The stage and its card at 1440 px, and a phone's stage without a card. The
   // refill card has two more lines of text.
   const desktop = { aspect: 695 / 464, card: { right: 332 / 695, top: 208 / 464 } }
   const refillCard = { right: 332 / 695, top: 246 / 464 }
+  const resultCard = { right: 332 / 695, top: 189 / 464 }
   const phone = { aspect: 358 / 239, card: null }
 
   function expectFramed(view: CloseView, aspect: number, card: CardCover | null, what: string) {
@@ -177,6 +276,24 @@ describe('framedView', () => {
       if (!refill) continue
       expectFramed(refill.view, desktop.aspect, refillCard, `desktop, ${days} days`)
       expectFramed(refill.view, phone.aspect, phone.card, `phone, ${days} days`)
+    }
+  })
+
+  it('hält an der Sonde Sonde, Baumscheibe, Krone und Nadel ganz im Bild und neben der Karte', () => {
+    for (let days = 5; days <= 14; days++) {
+      const { view } = probeAt(days)
+      expectFramed(view, desktop.aspect, desktop.card, `desktop, ${days} days`)
+      expectFramed(view, desktop.aspect, refillCard, `desktop, taller card, ${days} days`)
+      expectFramed(view, phone.aspect, phone.card, `phone, ${days} days`)
+    }
+  })
+
+  it('hält in der Bilanz Wagen und Halle ganz im Bild und neben der Karte', () => {
+    for (let days = 5; days <= 14; days++) {
+      const { view } = resultAt(days)
+      expectFramed(view, desktop.aspect, resultCard, `desktop, ${days} days`)
+      expectFramed(view, desktop.aspect, desktop.card, `desktop, taller card, ${days} days`)
+      expectFramed(view, phone.aspect, phone.card, `phone, ${days} days`)
     }
   })
 

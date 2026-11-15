@@ -65,6 +65,12 @@
       "stops": "How the round goes"
     },
     "info": {
+      "probe": {
+        "label": "Measuring",
+        "title": "The probe reports",
+        "text": "It sits in the ground next to the tree and measures how moist the soil at the roots is. It sends the reading on its own.",
+        "next": "Next"
+      },
       "watering": {
         "label": "Watering",
         "title": "Water only where it is missing",
@@ -74,6 +80,12 @@
         "label": "Refilling",
         "title": "The refill is part of the plan",
         "text": "The round takes the water tank into account. It puts the refill where a water point is on the way. So nobody drives across town with an empty tank."
+      },
+      "done": {
+        "label": "Result",
+        "title": "Done for today",
+        "text": "{{watered}} trees watered. {{rest}} still had enough water, so nobody had to drive there.",
+        "textOne": "1 tree watered. {{rest}} still had enough water, so nobody had to drive there."
       },
       "next": "Drive on"
     },

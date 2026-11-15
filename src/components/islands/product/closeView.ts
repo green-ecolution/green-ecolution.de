@@ -1,7 +1,17 @@
-import { blocks, depot, hydrant, plate, townTrees, treeOfSite } from '../../../data/productTown'
+import {
+  blocks,
+  depot,
+  hydrant,
+  plate,
+  townTrees,
+  treeOfSite,
+  type TownTree,
+} from '../../../data/productTown'
 import {
   canopyCenterHeight,
   depotDepth,
+  depotHeight,
+  depotRoofHeight,
   depotWidth,
   roadHeight,
   type Tree,
@@ -11,6 +21,7 @@ import type { GroundPoint } from '../../../lib/storyPath'
 import { tourFrame, type TourScript } from '../../../lib/wateringDay'
 import { PIN_HULL, PIN_RADIUS, pinHeight } from '../scene3d/pinSize'
 import { treePit } from '../scene3d/trees'
+import { PIT_TOP, PROBE, PROBE_TOP, probeAt } from './probe'
 import { truckPose } from './stage'
 
 interface Framing {
@@ -35,6 +46,14 @@ const REFILLING: Framing = {
   end: { ahead: 15, aside: 4.5 },
   up: 3.6,
   fov: 46,
+}
+// Low on the road beside the stop, looking along it at the tree. Far enough
+// that the pin over the crown keeps its full size (NEAR_LENS in actors).
+const PROBING: Framing = {
+  start: { ahead: 16.5, aside: 1 },
+  end: { ahead: 15, aside: 1.8 },
+  up: 2.6,
+  fov: 40,
 }
 /** Shares of the usual distance ahead the camera tries, nearest last. */
 const NEARER = [1, 0.85, 0.7, 0.55] as const
@@ -146,21 +165,39 @@ const ROUND = [-1, 0, 1]
     return [x / length, y / length, z / length]
   })
 
-function wateringSubjects(truck: GroundPoint, heading: number, tree: Tree): Vec3[] {
+// The crown, the pit round the trunk, and the pin over the crown.
+function treeSubjects(tree: Tree): Vec3[] {
   const [x, z] = tree.at
   const radius = tree.canopyRadius * CROWN.radius
   const centre = canopyCenterHeight(tree) + tree.canopyRadius * CROWN.lift
   return [
-    ...truckCorners(truck, heading),
-    [(truck[0] + x) / 2, JET_TOP, (truck[1] + z) / 2],
     ...ROUND.map(([dx, dy, dz]): Vec3 => [x + dx * radius, centre + dy * radius, z + dz * radius]),
-    // The pit round the trunk, and the pin over the crown.
     ...ROUND.filter(([, dy]) => dy === 0).map(([dx, , dz]): Vec3 => [
       x + dx * treePit.radius,
       roadHeight,
       z + dz * treePit.radius,
     ]),
     [x, pinHeight(tree) + PIN_RADIUS * PIN_HULL, z],
+  ]
+}
+
+function wateringSubjects(truck: GroundPoint, heading: number, tree: Tree): Vec3[] {
+  const [x, z] = tree.at
+  return [
+    ...truckCorners(truck, heading),
+    [(truck[0] + x) / 2, JET_TOP, (truck[1] + z) / 2],
+    ...treeSubjects(tree),
+  ]
+}
+
+function probeSubjects(tree: TownTree): Vec3[] {
+  const [x, z] = probeAt(tree)
+  const half = PROBE.width / 2
+  return [
+    ...[-half, half].flatMap((dx) =>
+      [-half, half].flatMap((dz) => [PIT_TOP, PROBE_TOP].map((y): Vec3 => [x + dx, y, z + dz])),
+    ),
+    ...treeSubjects(tree),
   ]
 }
 
@@ -186,6 +223,15 @@ function refillSubjects(truck: GroundPoint, heading: number): Vec3[] {
   ]
 }
 
+// The middle of everything the picture holds; the lens shift does the rest.
+function middleOf(subjects: readonly Vec3[]): Vec3 {
+  const middle = (axis: number) => {
+    const values = subjects.map((point) => point[axis])
+    return (Math.min(...values) + Math.max(...values)) / 2
+  }
+  return [middle(0), middle(1), middle(2)]
+}
+
 function closeView(
   truck: GroundPoint,
   heading: number,
@@ -196,12 +242,7 @@ function closeView(
   const forward: GroundPoint = [Math.sin(heading), Math.cos(heading)]
   const span = Math.hypot(subject[0] - truck[0], subject[1] - truck[1]) || 1
   const toSubject: GroundPoint = [(subject[0] - truck[0]) / span, (subject[1] - truck[1]) / span]
-  // The middle of everything the picture holds; the lens shift does the rest.
-  const middle = (axis: number) => {
-    const values = subjects.map((point) => point[axis])
-    return (Math.min(...values) + Math.max(...values)) / 2
-  }
-  const target: Vec3 = [middle(0), middle(1), middle(2)]
+  const target = middleOf(subjects)
   const spot = (place: Framing['start'], ahead: number, aside: number) =>
     [
       truck[0] + forward[0] * place.ahead * ahead + toSubject[0] * place.aside * aside,
@@ -234,6 +275,71 @@ function closeView(
   return {
     from: pose(spot(framing.start, 1, 1), framing.up),
     to: pose(spot(framing.end, 1, 1), framing.up),
+    subjects,
+    clear: false,
+  }
+}
+
+// The hall's walls and the ridge of its roof, which runs along x.
+function depotSubjects(): Vec3[] {
+  const [x, z] = depot.at
+  const halfX = depotWidth / 2
+  const halfZ = depotDepth / 2
+  return [-halfX, halfX].flatMap((dx) => [
+    ...[-halfZ, halfZ].flatMap((dz) => [0, depotHeight].map((y): Vec3 => [x + dx, y, z + dz])),
+    [x + dx, depotHeight + depotRoofHeight, z] as const,
+  ])
+}
+
+/** In front of the gate, so the line to it does not count the hall as in the way. */
+const GATE: GroundPoint = [depot.at[0] + DEPOT_HALF + SIGHT_CLEARANCE + 0.2, depot.at[1]]
+
+/**
+ * Where the camera may stand for the result, in the truck's frame: ahead of
+ * it, off to the side away from the hall, and how high. From behind and above
+ * the hall's gate shows beside the tanker; from the side in front, where the
+ * stub ends at the edge of the plate, the tanker hides the gate, so those
+ * spots are the fallback.
+ */
+const RESULT_SPOTS = [
+  { ahead: -11, away: 5, up: 14 },
+  { ahead: 6, away: 17, up: 6 },
+  { ahead: 6, away: 14, up: 6.5 },
+  { ahead: 4, away: 20, up: 6 },
+  { ahead: -9, away: 14, up: 6.5 },
+  { ahead: -12, away: 8, up: 7 },
+] as const
+/** How much of its distance to the truck the camera creeps over the hold. */
+const RESULT_CREEP = 0.08
+
+/** The truck back at the depot with the hall beside it. */
+export function resultView(truck: GroundPoint, heading: number): CloseView {
+  const forward: GroundPoint = [Math.sin(heading), Math.cos(heading)]
+  const side: GroundPoint = [forward[1], -forward[0]]
+  const hallSide =
+    (depot.at[0] - truck[0]) * side[0] + (depot.at[1] - truck[1]) * side[1] > 0 ? 1 : -1
+  const subjects = [...truckCorners(truck, heading), ...depotSubjects()]
+  const target = middleOf(subjects)
+  const spotOf = ({ ahead, away }: { ahead: number; away: number }, share: number): GroundPoint => [
+    truck[0] + (forward[0] * ahead - side[0] * hallSide * away) * share,
+    truck[1] + (forward[1] * ahead - side[1] * hallSide * away) * share,
+  ]
+  const pose = ([x, z]: GroundPoint, up: number): CameraPose => ({
+    position: [x, roadHeight + up, z],
+    target,
+    fov: 46,
+  })
+  for (const spot of RESULT_SPOTS) {
+    const from = spotOf(spot, 1)
+    const to = spotOf(spot, 1 - RESULT_CREEP)
+    if (isClearSpot(from, GATE, truck) && isClearSpot(to, GATE, truck)) {
+      return { from: pose(from, spot.up), to: pose(to, spot.up), subjects, clear: true }
+    }
+  }
+  const [first] = RESULT_SPOTS
+  return {
+    from: pose(spotOf(first, 1), first.up),
+    to: pose(spotOf(first, 1 - RESULT_CREEP), first.up),
     subjects,
     clear: false,
   }
@@ -359,6 +465,10 @@ export function framedView(view: CloseView, aspect: number, card: CardCover | nu
 export const wateringView = (truck: GroundPoint, heading: number, tree: Tree) =>
   closeView(truck, heading, tree.at, wateringSubjects(truck, heading, tree), WATERING)
 
+/** The tree before the tour, seen from the road at its stop, where the truck will water it. */
+export const probeView = (stop: GroundPoint, heading: number, tree: TownTree) =>
+  closeView(stop, heading, tree.at, probeSubjects(tree), PROBING)
+
 export const refillView = (truck: GroundPoint, heading: number) =>
   closeView(truck, heading, hydrant.at, refillSubjects(truck, heading), REFILLING)
 
@@ -373,7 +483,7 @@ function arrivedAt(script: TourScript, leg: number): StopPose {
 }
 
 /** Where the truck stands at the stop after the ride, and the tree it waters there. */
-export function showpieceStop(script: TourScript): (StopPose & { tree: Tree }) | null {
+export function showpieceStop(script: TourScript): (StopPose & { tree: TownTree }) | null {
   const { showpiece } = script
   if (!showpiece) return null
   const tree = treeOfSite(script.dwells[showpiece.leg].stop.site)
@@ -385,3 +495,7 @@ export function showpieceStop(script: TourScript): (StopPose & { tree: Tree }) |
 export function refillStop(script: TourScript): StopPose | null {
   return script.refillShot ? arrivedAt(script, script.refillShot.stop) : null
 }
+
+/** Where the truck stands back at the depot. */
+export const homeStop = (script: TourScript): StopPose =>
+  arrivedAt(script, script.dwells.length - 1)

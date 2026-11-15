@@ -7,9 +7,11 @@ import {
   NOT_STARTED,
   NOT_WATERED,
   NO_ORDER,
+  CARD_KEYS,
   STATUS_KEYS,
   dayStatus,
   finished,
+  holdCopy,
   planDay,
   tankShare,
   thirstColors,
@@ -134,18 +136,106 @@ describe('dayStatus', () => {
       vars: { watered: 6, rest: 6 },
     })
   })
+
+  it('zieht schon Bilanz, sobald der Wagen am Bauhof steht', () => {
+    const last = day.script.dwells.length - 1
+    expect(dayStatus('touring', rows, day, { served: last, dwell: last, done: false })).toEqual({
+      key: 'day.status.done',
+      vars: { watered: 6, rest: 6 },
+    })
+    const one = planDay(5)
+    if (!one) throw new Error('nothing planned at five days')
+    const home = one.script.dwells.length - 1
+    expect(dayStatus('touring', rows, one, { served: home, dwell: home, done: false })).toEqual({
+      key: 'day.status.doneOne',
+      vars: { rest: 11 },
+    })
+  })
+
+  it('zeigt am Bauhof jeden Baum gegossen und den Tank, wie er am Ende ist', () => {
+    const last = day.script.dwells.length - 1
+    const arrived = { served: last, dwell: last, done: false }
+    expect(wateredAfter(day.script, arrived.served)).toEqual(wateredAfter(day.script, Infinity))
+    expect(wateredAfter(day.script, arrived.served).filter(Boolean)).toHaveLength(6)
+    expect(tankShare(day, arrived)).toBe(tankShare(day, finished(day.script)))
+  })
 })
 
-describe('STATUS_KEYS', () => {
-  const lookUp = (catalog: unknown, key: string) =>
-    key
-      .split('.')
-      .reduce<unknown>(
-        (node, part) =>
-          node && typeof node === 'object' ? (node as Record<string, unknown>)[part] : undefined,
-        catalog,
-      )
+describe('holdCopy', () => {
+  const day = planDay(START_DAYS)
+  if (!day) throw new Error('nothing planned')
 
+  it('nimmt für Gießen und Auffüllen die bekannten Texte mit „Weiterfahren“', () => {
+    expect(holdCopy('watering', day)).toEqual({
+      label: 'day.info.watering.label',
+      title: 'day.info.watering.title',
+      text: { key: 'day.info.watering.text' },
+      next: 'day.info.next',
+      announcesText: true,
+    })
+    expect(holdCopy('refill', day).next).toBe('day.info.next')
+  })
+
+  it('geht an der Sonde mit „Weiter“ weiter, weil der Wagen noch steht', () => {
+    expect(holdCopy('probe', day)).toEqual({
+      label: 'day.info.probe.label',
+      title: 'day.info.probe.title',
+      text: { key: 'day.info.probe.text' },
+      next: 'day.info.probe.next',
+      announcesText: true,
+    })
+  })
+
+  it('zählt in der Bilanz die gegossenen und die übrigen Bäume und bietet „Noch einmal“', () => {
+    expect(holdCopy('result', day)).toEqual({
+      label: 'day.info.done.label',
+      title: 'day.info.done.title',
+      text: { key: 'day.info.done.text', vars: { watered: 6, rest: 6 } },
+      next: 'day.tour.again',
+      // The status line reads the counts out at the same moment.
+      announcesText: false,
+    })
+    const one = planDay(5)
+    if (!one) throw new Error('nothing planned at five days')
+    expect(holdCopy('result', one).text).toEqual({
+      key: 'day.info.done.textOne',
+      vars: { rest: 11 },
+    })
+  })
+
+  it('zählt die Bilanz nie ohne den Tag, den sie zählt', () => {
+    expect(() => holdCopy('result', null)).toThrow(/needs the day/)
+    expect(holdCopy('probe', null).text).toEqual({ key: 'day.info.probe.text' })
+  })
+
+  it.each(['probe', 'watering', 'refill', 'result'] as const)(
+    'gibt der Insel die Texte für %s mit',
+    (kind) => {
+      const { label, title, text, next } = holdCopy(kind, day)
+      const one = planDay(5)
+      const textOne = one ? holdCopy(kind, one).text.key : text.key
+      for (const key of [label, title, text.key, textOne, next]) {
+        expect(CARD_KEYS, key).toContain(key)
+      }
+    },
+  )
+
+  it.each(CARD_KEYS)('%s steht in beiden Katalogen', (key) => {
+    expect(typeof lookUp(de, key)).toBe('string')
+    expect(typeof lookUp(en, key)).toBe('string')
+  })
+})
+
+const lookUp = (catalog: unknown, key: string) =>
+  key
+    .split('.')
+    .reduce<unknown>(
+      (node, part) =>
+        node && typeof node === 'object' ? (node as Record<string, unknown>)[part] : undefined,
+      catalog,
+    )
+
+describe('STATUS_KEYS', () => {
   it.each(STATUS_KEYS)('%s steht in beiden Katalogen', (key) => {
     expect(typeof lookUp(de, key)).toBe('string')
     expect(typeof lookUp(en, key)).toBe('string')

@@ -11,7 +11,7 @@ import {
   type TreeId,
 } from '../../../data/productTown'
 import { moisture, thirst, type Thirst } from '../../../lib/dryness'
-import { tourScript, type TourScript } from '../../../lib/wateringDay'
+import { tourScript, type CloseUpKind, type TourScript } from '../../../lib/wateringDay'
 import { planWatering } from '../../../lib/wateringPlan'
 import type { TourProgress } from './shared'
 
@@ -144,6 +144,11 @@ export interface StatusText {
   tree?: TreeId
 }
 
+function resultVars(day: PlannedDay): Record<string, number> {
+  const rest = townTrees.length - day.treeStops
+  return day.treeStops === 1 ? { rest } : { watered: day.treeStops, rest }
+}
+
 export function dayStatus(
   phase: DayPhase,
   rows: TreeRow[],
@@ -158,14 +163,15 @@ export function dayStatus(
       : { key: 'day.status.thirstyMany', vars: { count } }
   }
 
-  if (phase === 'done') {
-    const rest = townTrees.length - day.treeStops
-    return day.treeStops === 1
-      ? { key: 'day.status.doneOne', vars: { rest } }
-      : { key: 'day.status.done', vars: { watered: day.treeStops, rest } }
-  }
-
   const { dwells } = day.script
+  // The result is in from the arrival at the depot, while its close-up still holds.
+  const isHome = progress.dwell >= 0 && dwells[progress.dwell].stop.kind === 'depot'
+  if (phase === 'done' || isHome) {
+    return {
+      key: day.treeStops === 1 ? 'day.status.doneOne' : 'day.status.done',
+      vars: resultVars(day),
+    }
+  }
 
   if (progress.dwell >= 0) {
     const { stop } = dwells[progress.dwell]
@@ -189,4 +195,65 @@ export function dayStatus(
     return { key: 'day.status.next', tree: townTrees[treeOfSite(next.site)].id }
   }
   return { key: next.kind === 'refill' ? 'day.status.toWater' : 'day.status.home' }
+}
+
+export const CARD_KEYS = [
+  'day.info.probe.label',
+  'day.info.probe.title',
+  'day.info.probe.text',
+  'day.info.probe.next',
+  'day.info.watering.label',
+  'day.info.watering.title',
+  'day.info.watering.text',
+  'day.info.refill.label',
+  'day.info.refill.title',
+  'day.info.refill.text',
+  'day.info.done.label',
+  'day.info.done.title',
+  'day.info.done.text',
+  'day.info.done.textOne',
+  'day.info.next',
+  'day.tour.again',
+] as const
+
+type CardKey = (typeof CARD_KEYS)[number]
+
+export interface CardCopy {
+  label: CardKey
+  title: CardKey
+  text: { key: CardKey; vars?: Record<string, number> }
+  /** The button's label. */
+  next: CardKey
+  /** Whether the screen reader hears the text too, or the title alone. */
+  announcesText: boolean
+}
+
+/** Catalog keys of the card that explains a close-up while it holds. */
+export function holdCopy(kind: CloseUpKind, day: PlannedDay | null): CardCopy {
+  const section = kind === 'result' ? 'done' : kind
+  const keys = {
+    label: `day.info.${section}.label`,
+    title: `day.info.${section}.title`,
+  } as const
+  if (kind === 'result') {
+    // Without the counts the card would show its placeholders.
+    if (!day) throw new Error('the result card needs the day it counts')
+    return {
+      ...keys,
+      text: {
+        key: day.treeStops === 1 ? 'day.info.done.textOne' : 'day.info.done.text',
+        vars: resultVars(day),
+      },
+      next: 'day.tour.again',
+      // The status line announces the same counts as the truck arrives.
+      announcesText: false,
+    }
+  }
+  return {
+    ...keys,
+    text: { key: `day.info.${section}.text` as const },
+    // The truck has not left yet, so it cannot drive on.
+    next: kind === 'probe' ? 'day.info.probe.next' : 'day.info.next',
+    announcesText: true,
+  }
 }

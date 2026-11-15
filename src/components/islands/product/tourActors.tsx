@@ -10,6 +10,7 @@ import {
   type MeshBasicMaterial,
 } from 'three'
 import { HYDRANT_SITE, hydrant, type TownTree } from '../../../data/productTown'
+import type { GroundPoint } from '../../../lib/storyPath'
 import { roadHeight, tourColors } from '../../../data/streamletTour'
 import { WATER_SECONDS, type TourFrame, type TourScript } from '../../../lib/wateringDay'
 import { damp } from '../scene3d/damp'
@@ -17,9 +18,11 @@ import { appendRibbon, ribbonGeometry, type RibbonArrays } from '../scene3d/ribb
 import { treePit } from '../scene3d/trees'
 import { Vehicle, WHEEL_RADIUS } from '../scene3d/Vehicle'
 import { WATER, jetGeometry, jetSpan, shapeJet, type JetArc } from '../scene3d/waterJet'
+import { showpieceStop } from './closeView'
 import { hoseGeometry, shapeHose } from './hose'
+import { PROBE_TOP, probeAt } from './probe'
 import type { DayLive } from './shared'
-import { turned, wateredTree, type Stage, type TruckPose } from './stage'
+import { showpieceWeight, turned, wateredTree, type Stage, type TruckPose } from './stage'
 import { HYDRANT_ARM } from './town'
 
 interface TourProps {
@@ -327,5 +330,74 @@ export function RefillHose({ live, stage, isStatic }: TourProps) {
     <mesh ref={mesh} geometry={hose} visible={false} frustumCulled={false}>
       <meshLambertMaterial vertexColors />
     </mesh>
+  )
+}
+
+const RING_COUNT = 3
+/** How far the rings tilt from lying flat towards the camera; flat, a low camera sees only their edge. */
+const RING_TILT = 1
+const facing = new Vector3()
+
+/** Radio rings rising from the probe at the first tree while it reports, as on the home page. */
+export function ProbeRings({ live, stage, isStatic }: TourProps) {
+  const rings = useRef<(Mesh | null)[]>([])
+  const probe = useRef<{ script: TourScript | null; at: GroundPoint | null }>({
+    script: null,
+    at: null,
+  })
+
+  useFrame(({ clock }) => {
+    const { script } = live.current
+    if (probe.current.script !== script) {
+      const tree = script && showpieceStop(script)?.tree
+      probe.current = { script, at: tree ? probeAt(tree) : null }
+    }
+    const { at } = probe.current
+    const { view, lens } = stage.current
+    const power = !isStatic && at && view.piece === 'probe' ? showpieceWeight(view) : 0
+    const time = clock.getElapsedTime() * 0.55
+
+    rings.current.forEach((ring, index) => {
+      if (!ring) return
+      ring.visible = power > 0
+      if (!at || power <= 0) return
+      const phase = (time + index / RING_COUNT) % 1
+      ring.position.set(at[0], PROBE_TOP + 0.4 + phase * 3.2, at[1])
+      const away = lens ? Math.hypot(lens[0] - at[0], lens[2] - at[1]) || 1 : 1
+      facing.set(
+        lens ? ((lens[0] - at[0]) / away) * RING_TILT : 0,
+        1,
+        lens ? ((lens[2] - at[1]) / away) * RING_TILT : 0,
+      )
+      ring.lookAt(facing.add(ring.position))
+      ring.scale.setScalar(0.6 + phase * 1.4)
+      ;(ring.material as MeshBasicMaterial).opacity = power * (1 - phase)
+    })
+  })
+
+  return (
+    <>
+      {Array.from({ length: RING_COUNT }, (_, index) => (
+        <mesh
+          key={index}
+          ref={(node) => {
+            rings.current[index] = node
+          }}
+          visible={false}
+          renderOrder={1}
+        >
+          <ringGeometry args={[0.8, 1.1, 32]} />
+          {/* Drawn over the crown, which would otherwise hide most of each ring. */}
+          <meshBasicMaterial
+            color={tourColors.refillCabinet}
+            transparent
+            opacity={0}
+            depthTest={false}
+            depthWrite={false}
+            side={DoubleSide}
+          />
+        </mesh>
+      ))}
+    </>
   )
 }

@@ -8,8 +8,11 @@ import type { DayLive } from './shared'
 import { glide, showpieceWeight, turned, type Stage, type TruckPose } from './stage'
 import {
   framedView,
+  homeStop,
+  probeView,
   refillStop,
   refillView,
+  resultView,
   showpieceStop,
   wateringView,
   type CardCover,
@@ -80,17 +83,21 @@ interface CloseViews {
   script: TourScript | null
   /** Without a ride the fly-in goes straight to the watering view. */
   isRidden: boolean
+  probe: CloseView | null
   watering: CloseView | null
   refill: CloseView | null
+  result: CloseView | null
 }
 
 function poseFor(view: TourView, slanted: CameraPose, seat: CameraPose, close: CloseViews) {
   const share = glide(view.share)
-  if (view.piece === 'refill') {
-    const refill = close.refill ?? { from: slanted, to: slanted }
-    if (view.mode === 'flyIn') return blendPoses(slanted, refill.from, share)
-    if (view.mode === 'refilling') return blendPoses(refill.from, refill.to, share)
-    return blendPoses(refill.to, slanted, share)
+  if (view.piece === null) return slanted
+  // Every close-up but the watering is a plain one: down, a slow creep, back up.
+  if (view.piece !== 'watering') {
+    const held = close[view.piece] ?? { from: slanted, to: slanted }
+    if (view.mode === 'flyIn') return blendPoses(slanted, held.from, share)
+    if (view.mode === 'flyOut') return blendPoses(held.to, slanted, share)
+    return blendPoses(held.from, held.to, share)
   }
   const ground = close.watering ?? { from: seat, to: seat }
   switch (view.mode) {
@@ -109,8 +116,9 @@ function poseFor(view: TourView, slanted: CameraPose, seat: CameraPose, close: C
 
 /**
  * Draws the scene, through the slanted camera or, for the close-ups, through a
- * perspective one: down to the truck, along for the ride, onto the watering
- * and back up; and down to the hydrant while the tank fills.
+ * perspective one: down to the probe before the tour; down to the truck, along
+ * for the ride, onto the watering and back up; down to the hydrant while the
+ * tank fills; and down to the depot for the day's result.
  */
 export function ShowpieceCamera({ live, stageRef }: Props) {
   const lens = useRef<PerspectiveCamera>(null)
@@ -120,8 +128,10 @@ export function ShowpieceCamera({ live, stageRef }: Props) {
   const close = useRef<CloseViews>({
     script: null,
     isRidden: true,
+    probe: null,
     watering: null,
     refill: null,
+    result: null,
   })
   // The close-ups as framed for the stage's shape and its card.
   const framed = useRef<{ key: string; source: CloseViews; views: CloseViews } | null>(null)
@@ -154,11 +164,15 @@ export function ShowpieceCamera({ live, stageRef }: Props) {
     if (close.current.script !== script) {
       const ridden = showpieceStop(script)
       const refilled = refillStop(script)
+      const home = homeStop(script)
       close.current = {
         script,
         isRidden: script.showpiece?.ride !== null,
+        probe:
+          ridden && script.probeShot ? probeView(ridden.truck, ridden.heading, ridden.tree) : null,
         watering: ridden ? wateringView(ridden.truck, ridden.heading, ridden.tree) : null,
         refill: refilled ? refillView(refilled.truck, refilled.heading) : null,
+        result: resultView(home.truck, home.heading),
       }
     }
 
@@ -175,8 +189,10 @@ export function ShowpieceCamera({ live, stageRef }: Props) {
         source,
         views: {
           ...source,
+          probe: source.probe && framedView(source.probe, aspect, card),
           watering: source.watering && framedView(source.watering, aspect, card),
           refill: source.refill && framedView(source.refill, aspect, card),
+          result: source.result && framedView(source.result, aspect, card),
         },
       }
     }

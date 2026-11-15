@@ -31,6 +31,7 @@ import {
   NO_ORDER,
   dayStatus,
   finished,
+  holdCopy,
   planDay,
   tankShare,
   treeRows,
@@ -38,7 +39,7 @@ import {
   type DayPhase,
   type PlannedDay,
 } from './dayModel'
-import { afterHold, type Hold } from '../../../lib/wateringDay'
+import { afterHold, type CloseUpKind } from '../../../lib/wateringDay'
 import type { DayEvents, DayLive, TourProgress } from './shared'
 
 interface Poster {
@@ -119,9 +120,11 @@ function WateringDay({ poster }: { poster?: Poster }) {
   const [progress, setProgress] = useState<TourProgress>(NOT_STARTED)
   const [selected, setSelected] = useState<number | null>(null)
   const [highlighted, setHighlighted] = useState<number | null>(null)
-  const [hold, setHold] = useState<Hold['kind'] | null>(null)
+  const [hold, setHold] = useState<CloseUpKind | null>(null)
   // What the card in the stage shows: the coming close-up's text, kept while it fades out.
-  const [lastHold, setLastHold] = useState<Hold['kind']>('watering')
+  const [lastHold, setLastHold] = useState<CloseUpKind>('watering')
+  // The day the cards count, kept after a reset so a card fading out keeps its numbers.
+  const [lastDay, setLastDay] = useState<PlannedDay | null>(null)
   const reading = useRef({ pointer: false, focus: false })
   const root = useRef<HTMLDivElement>(null)
   const stageNode = useRef<HTMLDivElement>(null)
@@ -213,6 +216,8 @@ function WateringDay({ poster }: { poster?: Poster }) {
     // The scene wrote the gauge during the tour. React may still hold a full
     // tank from before and would then not write it back.
     setTank(root.current, 1)
+    // Cleared here: a scene off screen draws no frame that would report it.
+    setHold(null)
     setDay(null)
     setProgress(NOT_STARTED)
   }
@@ -265,6 +270,7 @@ function WateringDay({ poster }: { poster?: Poster }) {
     stopReading()
     setSelected(null)
     setDay({ ...planned, played: playsTour })
+    setLastDay(planned)
     // Set right away: the clock in the scene must not see the new script with
     // the old time for a frame.
     live.current.script = planned.script
@@ -289,16 +295,31 @@ function WateringDay({ poster }: { poster?: Poster }) {
     live.current.isReading = reading.current.pointer || reading.current.focus
   }
 
+  // The card goes away. The tour's button would now skip the whole tour on a
+  // repeated Enter, so the keyboard waits at the picture instead.
+  const leaveCard = () => {
+    if (document.activeElement?.closest('[data-day-card]')) pictureNode.current?.focus()
+  }
+
   const moveOn = () => {
     const { script } = live.current
     if (!script) return
     stopReading()
     live.current.elapsed = afterHold(script, live.current.elapsed)
     live.current.onChange?.()
-    // The card goes away. The tour's button would now skip the whole tour on a
-    // repeated Enter, so the keyboard waits at the picture instead.
-    if (document.activeElement?.closest('[data-day-card]')) pictureNode.current?.focus()
+    leaveCard()
   }
+
+  // The result's card offers the day once more, as the tour button does at the end.
+  const onCardButton = (kind: CloseUpKind) => () => {
+    if (kind !== 'result') {
+      moveOn()
+      return
+    }
+    leaveCard()
+    reset()
+  }
+  const shownCopy = shownHold && holdCopy(shownHold, lastDay)
 
   const stops =
     day && isUnplayed
@@ -422,7 +443,8 @@ function WateringDay({ poster }: { poster?: Poster }) {
               </span>
               <HoldCard
                 kind={lastHold}
-                onNext={moveOn}
+                copy={holdCopy(lastHold, lastDay)}
+                onNext={onCardButton(lastHold)}
                 onReading={markReading}
                 isShown={shownHold !== null}
                 className={stageCard}
@@ -435,10 +457,11 @@ function WateringDay({ poster }: { poster?: Poster }) {
             data-day-strip
             className="mt-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-grey-900/10 lg:hidden"
           >
-            {shownHold ? (
+            {shownHold && shownCopy ? (
               <HoldCard
                 kind={shownHold}
-                onNext={moveOn}
+                copy={shownCopy}
+                onNext={onCardButton(shownHold)}
                 onReading={markReading}
                 className="opacity-100 transition-opacity duration-200 starting:opacity-0"
               />
@@ -459,7 +482,10 @@ function WateringDay({ poster }: { poster?: Poster }) {
 
       {/* The cards are not live themselves: one region announces either of them once. */}
       <p aria-live="polite" className="sr-only">
-        {shownHold ? `${t(`day.info.${shownHold}.title`)} ${t(`day.info.${shownHold}.text`)}` : ''}
+        {shownCopy &&
+          (shownCopy.announcesText
+            ? `${t(shownCopy.title)} ${t(shownCopy.text.key, shownCopy.text.vars)}`
+            : t(shownCopy.title))}
       </p>
 
       {/* Room under the button, so the sticky stage is not pushed up by the end of the grid while the button is reachable. */}
