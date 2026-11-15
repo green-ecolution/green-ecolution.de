@@ -68,6 +68,7 @@ function setup() {
 
     const steps = [...root.querySelectorAll<HTMLElement>('[data-step]')]
     const bodies = steps.map((step) => step.querySelector<HTMLElement>('[data-step-body]') ?? step)
+    const fills = steps.map((step) => step.querySelector<HTMLElement>('[data-step-fill]'))
     const triggers = [...root.querySelectorAll<HTMLElement>('[data-step-trigger]')]
     const chips = [...root.querySelectorAll<HTMLElement>('[data-example-trigger]')]
     const texts = [...root.querySelectorAll<HTMLElement>('[data-example-text]')]
@@ -119,7 +120,9 @@ function setup() {
       // travelling there.
       if (reduced.matches) scene.dataset.storyStill = String(state.act)
       else delete scene.dataset.storyStill
-      root.style.setProperty('--step-fill', state.actProgress.toFixed(3))
+      // On the one bar that shows it. Custom properties inherit, so on the
+      // root every element of the section would be restyled on each frame.
+      fills[state.act]?.style.setProperty('--step-fill', state.actProgress.toFixed(3))
       root.toggleAttribute('data-invite', state.invite >= 0.5)
       root.toggleAttribute('data-story-example', state.activeExample !== null)
       showAct(state.act)
@@ -227,6 +230,9 @@ function setup() {
     showExample(0)
     root.dataset.enhanced = ''
 
+    // Scrubbing unpinned, the progress comes from where the steps stand.
+    let narrowProgress = 0
+
     const pin = bindPinnedStage(
       track,
       stage,
@@ -237,12 +243,16 @@ function setup() {
           render(storyFromScroll(progress))
         } else if (narrowScrub) {
           setMode('scrub')
-          render(storyFromScroll(progressFromSteps(stuckLine(), stepBoxes(), SCROLL_WEIGHTS)))
+          render(storyFromScroll(narrowProgress))
         } else {
           setMode('autoplay')
         }
       },
       tallestStage,
+      (pinned) => {
+        if (pinned || !narrowScrub) return
+        narrowProgress = progressFromSteps(stuckLine(), stepBoxes(), SCROLL_WEIGHTS)
+      },
     )
 
     const jumpTo = (progress: number) => {

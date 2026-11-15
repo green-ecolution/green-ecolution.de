@@ -66,14 +66,16 @@ const navStrings = pickStrings(language, 'common', [
 </a>
 <header
   id="site-header"
-  class="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] transition-all ease-in-out duration-300 bg-white/0"
+  class="group/header fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] transition-[background-color,box-shadow] ease-in-out duration-300 bg-white/0 data-material:bg-white/80 data-material:shadow-header-edge"
 >
   <!-- Safari 26 tints its status bar from a fixed top bar, but stops sampling
-       one that carries a backdrop-filter itself. -->
+       one that carries a backdrop-filter itself. The layer fades in as a whole:
+       a transition on the filter would compute a new blur for every frame of
+       it, and hidden at the top of the page it costs nothing. -->
   <div
     id="site-header-blur"
     aria-hidden="true"
-    class="absolute inset-0 -z-10 transition-all ease-in-out duration-300"
+    class="absolute inset-0 -z-10 backdrop-blur-xl backdrop-saturate-150 opacity-0 invisible transition-[opacity,visibility] ease-in-out duration-300 group-data-material/header:opacity-100 group-data-material/header:visible"
   ></div>
   <div class="relative px-4 py-5 max-w-screen-lg mx-auto flex justify-between items-center md:px-6 xl:max-w-screen-xl">
     <a

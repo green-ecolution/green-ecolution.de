@@ -19,19 +19,16 @@ const taglineWords = t('hero.tagline').split(' ')
 const taglineJumps = taglineWords.length === workflowSteps.length
 ---
 
-<section>
+<section data-pause-offscreen>
   <div class="overflow-hidden relative mx-auto w-full min-h-svh max-w-screen-3xl pointer-events-none before:bg-background-yellow-dot before:bg-cover before:w-4/5 before:h-[100vh] before:max-h-[45rem] before:absolute before:-right-4 before:bottom-0 before:-z-50 before:bg-no-repeat sm:before:-right-10 md:before:max-h-[70rem] 2xl:before:right-0 2xl:before:bg-contain">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div
-        class="absolute top-1/4 -left-20 w-[40rem] h-[40rem] opacity-30"
-        style="background: radial-gradient(ellipse at center, rgba(172, 182, 59, 0.4) 0%, transparent 70%); filter: blur(60px); transform: rotate(-15deg);"
-      ></div>
+      <div class="hero-glow absolute top-[calc(25%-10rem)] -left-60 w-[60rem] h-[60rem]"></div>
     </div>
 
     <article class="pointer-events-auto max-w-208 mx-auto px-4 pt-28 mb-8 md:px-6 lg:mb-14 lg:pt-36 lg:max-w-screen-lg xl:max-w-screen-xl xl:pt-44">
       <div class="max-w-[30rem] md:max-w-[34rem] xl:max-w-[38rem] 2xl:max-w-[42rem]">
         <h1
-          class="hero-rise font-lato font-bold text-4xl mb-6 text-grey-900 md:text-5xl xl:text-6xl"
+          class="hero-rise hero-rise-opaque font-lato font-bold text-4xl mb-6 text-grey-900 md:text-5xl xl:text-6xl"
           style="--rise-delay: 150ms"
         >
           {t('hero.headlinePrefix')}
@@ -92,11 +89,33 @@ const taglineJumps = taglineWords.length === workflowSteps.length
       </div>
     </article>
 
-    <HeroTreesIsland client:visible />
+    <!-- Decoration: react and lottie-web can wait until the first screen stands. -->
+    <HeroTreesIsland client:idle />
   </div>
 </section>
 
 <style>
+  /* The soft light behind the headline. The stops follow what a 60px blur
+     makes of a 40rem radial gradient, so it looks the same without a filter:
+     the trees move in front of it, and a filter is computed again for every
+     frame that repaints what it covers. */
+  .hero-glow {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, rgb(172 182 59) 9.18%, transparent) 0%,
+      color-mix(in srgb, rgb(172 182 59) 8.74%, transparent) 10%,
+      color-mix(in srgb, rgb(172 182 59) 7.59%, transparent) 20%,
+      color-mix(in srgb, rgb(172 182 59) 6.06%, transparent) 30%,
+      color-mix(in srgb, rgb(172 182 59) 4.39%, transparent) 40%,
+      color-mix(in srgb, rgb(172 182 59) 2.75%, transparent) 50%,
+      color-mix(in srgb, rgb(172 182 59) 1.38%, transparent) 60%,
+      color-mix(in srgb, rgb(172 182 59) 0.5%, transparent) 70%,
+      color-mix(in srgb, rgb(172 182 59) 0.12%, transparent) 80%,
+      color-mix(in srgb, rgb(172 182 59) 0.02%, transparent) 90%,
+      transparent 100%
+    );
+  }
+
   /* A line that draws itself under the word says it leads somewhere, without
      underlining the tagline at rest. */
   .tagline-jump {

@@ -16,6 +16,7 @@ import {
   type OrthographicCamera,
 } from 'three'
 import { merged, painted, placed } from '../../../lib/paintedGeometry'
+import { AMBIENT_MS, MAX_DPR } from '../../../lib/sceneBudget'
 import { SOAK_POINTS, reachedPoints } from '../../../lib/soakLevel'
 
 export interface SoakSource {
@@ -616,6 +617,7 @@ function Scene({ isStatic, source, labels, onReady }: Omit<Props, 'isActive'>) {
     rain: 0,
     framedWidth: 0,
     framedHeight: 0,
+    idleMs: 0,
   })
 
   useEffect(() => {
@@ -733,6 +735,11 @@ function Scene({ isStatic, source, labels, onReady }: Omit<Props, 'isActive'>) {
       crownGroup.current.rotation.z = Math.sin(time * 0.8) * 0.025
       crownGroup.current.rotation.x = Math.sin(time * 0.6 + 1) * 0.015
     }
+
+    // The canvas draws on demand, so every frame has to ask for the next one.
+    const sinking = Math.abs(target - state.level) > 0.0005
+    state.idleMs = sinking ? 0 : state.idleMs + step * 1000
+    if (!isStatic && state.idleMs < AMBIENT_MS) invalidate()
   })
 
   // Same light as the tour: ambient and key add up to a little over pi on the
@@ -825,13 +832,13 @@ function ReleaseContextOnNavigate() {
 }
 
 function SoilProbe3D({ isStatic, isActive, source, labels, onReady }: Props) {
-  const frameloop = !isActive ? 'never' : isStatic ? 'demand' : 'always'
+  const frameloop = isActive ? 'demand' : 'never'
 
   return (
     <Canvas
       flat
       orthographic
-      dpr={[1, 2]}
+      dpr={MAX_DPR}
       frameloop={frameloop}
       camera={{ position: [0, 0, 60], near: 1, far: 200, zoom: 1 }}
       gl={{ antialias: true, alpha: true }}

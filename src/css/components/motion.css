@@ -12,6 +12,16 @@
   }
 }
 
+/* Set by src/scripts/pauseOffscreen.ts on a marked region that has left the
+   window. Important, because the animation shorthand of the rule that starts
+   an animation resets the play state and is usually the more specific one. */
+[data-offscreen],
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation-play-state: paused !important;
+}
+
 /* SVG SMIL animations (<animate>, <animateMotion>) ignore the rule above, so
    anything decorative driven by them is hidden outright. That matches the react
    version, which rendered those elements only when motion was allowed. */

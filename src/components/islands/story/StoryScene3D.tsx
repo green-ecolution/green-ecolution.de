@@ -3,6 +3,7 @@ import { useEffect, useRef, type RefObject } from 'react'
 import { Vector3 } from 'three'
 import { plate, shots } from '../../../data/storyTown'
 import { tourColors } from '../../../data/streamletTour'
+import { AMBIENT_MS, MAX_DPR } from '../../../lib/sceneBudget'
 import { chaseStory, restedFor } from '../../../lib/storyChase'
 import { storyState, storyStill, type StoryState } from '../../../lib/storyTimeline'
 import ReleaseContextOnNavigate from '../scene3d/ReleaseContextOnNavigate'
@@ -67,10 +68,11 @@ function StoryClock({ isStatic, sourceRef, storyRef, onReady }: ClockProps) {
   useEffect(() => {
     const scrolled = () => {
       restingMs.current = 0
+      invalidate()
     }
     window.addEventListener('scroll', scrolled, { passive: true })
     return () => window.removeEventListener('scroll', scrolled)
-  }, [])
+  }, [invalidate])
 
   useFrame((_, delta) => {
     const { target, still } = sourceRef.current
@@ -94,6 +96,10 @@ function StoryClock({ isStatic, sourceRef, storyRef, onReady }: ClockProps) {
       ready.current = true
       onReady()
     }
+
+    // The canvas draws on demand, so every frame has to ask for the next one.
+    const moving = current.current !== target || restingMs.current < AMBIENT_MS
+    if (!isStatic && moving) invalidate()
   })
 
   return null
@@ -149,7 +155,7 @@ const anchors = [heroLabel, ...exampleLabels]
 
 function StoryScene3D({ isStatic, isActive, source, labels, onReady }: Props) {
   const story = useRef<StoryState>(storyState(0))
-  const frameloop = !isActive ? 'never' : isStatic ? 'demand' : 'always'
+  const frameloop = isActive ? 'demand' : 'never'
 
   // Same light as the tour scene: ambient and key together come to a little
   // over pi on the lit faces, so the pale walls stay pale without clipping.
@@ -157,7 +163,7 @@ function StoryScene3D({ isStatic, isActive, source, labels, onReady }: Props) {
     <Canvas
       flat
       orthographic
-      dpr={[1, 2]}
+      dpr={MAX_DPR}
       frameloop={frameloop}
       camera={{
         position: [CAMERA_DISTANCE, CAMERA_DISTANCE, CAMERA_DISTANCE],

@@ -48,7 +48,7 @@ const DEEP_ROOTS = [
 ]
 ---
 
-<section data-pin-section class="my-20 lg:my-28 xl:my-36">
+<section data-pin-section data-pause-offscreen class="my-20 lg:my-28 xl:my-36">
   <div class="px-4 max-w-208 mx-auto md:px-6 lg:max-w-screen-lg xl:max-w-screen-xl">
     <div data-pin-track>
       <div data-pin-stage>
@@ -129,6 +129,7 @@ const DEEP_ROOTS = [
                     </defs>
                     <rect
                       class="soak-water"
+                      style={`--soak-level: ${START_LEVEL}`}
                       x="0"
                       y="64"
                       width="320"
@@ -376,7 +377,7 @@ const DEEP_ROOTS = [
               <Image
                 src={sensorPhoto}
                 alt={t('sensorProbe.photoAlt')}
-                widths={[640, 960, 1280, 1600]}
+                widths={[640, 960, 1280]}
                 sizes="(min-width: 1280px) 692px, (min-width: 1024px) 56vw, 100vw"
                 loading="lazy"
                 class="w-full aspect-video object-cover rounded-2xl md:aspect-[4/3]"
@@ -431,7 +432,7 @@ const DEEP_ROOTS = [
                 <Image
                   src={setupPhoto}
                   alt={t('sensorSetup.photoAlt')}
-                  widths={[640, 960, 1280, 1600]}
+                  widths={[640, 960, 1280]}
                   sizes="(min-width: 1280px) 692px, (min-width: 1024px) 56vw, 100vw"
                   loading="lazy"
                   class="w-full aspect-video object-cover md:aspect-[4/3]"
@@ -509,13 +510,14 @@ const DEEP_ROOTS = [
 <style>
   /* The poster is a still of the 3d model; it covers the wait for the model
      and stays for readers without scripts. The drawing only stands in where
-     webgl is missing. */
+     webgl is missing. Until then it is not rendered at all: merely
+     transparent, its SMIL animations restyle the page on every frame. */
   .probe-sketch {
-    opacity: 0;
+    display: none;
   }
 
   [data-probe-view='sketch'] .probe-sketch {
-    opacity: 1;
+    display: block;
   }
 
   [data-probe-view='sketch'] .probe-poster {
@@ -568,6 +570,14 @@ const DEEP_ROOTS = [
     to {
       rotate: -360deg;
     }
+  }
+
+  /* Written on every scrolled frame. Left to inherit from the scene's root it
+     would restyle the sketch, the poster and the model's labels each time. */
+  @property --soak-level {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
   }
 
   .soak-water {
@@ -766,7 +776,11 @@ const DEEP_ROOTS = [
     opacity: 1;
   }
 
-  [data-pin-track][data-pinned] .hardware-chapter[data-revealed='0'] .scan-frame {
+  /* Only in the chapter that shows: in a hidden one the animation would keep
+     restyling the page on every frame. */
+  [data-pin-track][data-pinned]
+    .hardware-chapter[data-active='true'][data-revealed='0']
+    .scan-frame {
     animation: scan-seek 1.4s ease-in-out infinite;
   }
 

@@ -1,4 +1,5 @@
 import { activeIndex } from '../lib/scrollProgress'
+import { bindScrollFrame } from './scrollFrame'
 
 // Share of the window height a paragraph has to reach to count as being read.
 const READING_LINE = 0.5
@@ -14,24 +15,27 @@ function setup() {
     const parts = [...root.querySelectorAll<HTMLElement>('[data-story-part]')]
     if (parts.length === 0) continue
 
-    let frame = 0
-    const update = () => {
-      frame = 0
+    let index = ''
+    let offset = ''
+    let shown = ''
+
+    const read = () => {
       const tops = parts.map((part) => part.getBoundingClientRect().top)
       const active = activeIndex(tops, window.innerHeight * READING_LINE)
-      root.style.setProperty('--year-index', parts[active].dataset.yearIndex ?? '0')
-      root.style.setProperty('--year-y', `${Math.round(tops[active] - tops[0])}px`)
-    }
-    const schedule = () => {
-      if (frame === 0) frame = window.requestAnimationFrame(update)
+      index = parts[active].dataset.yearIndex ?? '0'
+      offset = `${Math.round(tops[active] - tops[0])}px`
     }
 
-    window.addEventListener('scroll', schedule, { passive: true, signal })
-    window.addEventListener('resize', schedule, { signal })
-    signal.addEventListener('abort', () => {
-      if (frame !== 0) window.cancelAnimationFrame(frame)
-    })
-    update()
+    const write = () => {
+      if (`${index} ${offset}` === shown) return
+      shown = `${index} ${offset}`
+      root.style.setProperty('--year-index', index)
+      root.style.setProperty('--year-y', offset)
+    }
+
+    bindScrollFrame({ read, write }, signal)
+    read()
+    write()
     root.dataset.enhanced = ''
   }
 }

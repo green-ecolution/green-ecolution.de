@@ -34,10 +34,20 @@ function setup() {
       root.dataset.soakStatusSoak,
     ]
 
-    // The 3d island and the sketch both read the level from --soak-level.
+    const waters = [...root.querySelectorAll<SVGElement>('.soak-water')]
+    let shownReached = -1
+
+    // The 3d island reads the level from the root's inline style, the sketch
+    // from its water. The property does not inherit (see SensorProbe.astro),
+    // so the water gets its own copy.
     const render = (level: number) => {
+      const value = level.toFixed(3)
+      root.style.setProperty('--soak-level', value)
+      for (const water of waters) water.style.setProperty('--soak-level', value)
+
       const reached = reachedPoints(level)
-      root.style.setProperty('--soak-level', level.toFixed(3))
+      if (reached === shownReached) return
+      shownReached = reached
       for (const marks of [points, readings]) {
         marks.forEach((mark, index) => mark.toggleAttribute('data-reached', index < reached))
       }
@@ -47,13 +57,19 @@ function setup() {
 
     const chapters = [...stage.querySelectorAll<HTMLElement>('[data-chapter]')]
     const markers = [...stage.querySelectorAll<HTMLElement>('[data-chapter-marker]')]
+    const fills = markers.map((marker) => marker.querySelector<HTMLElement>('.chapter-fill'))
     const parts = chapters.map((chapter) => [
       ...chapter.querySelectorAll<HTMLElement>('[data-reveal-item]'),
     ])
+    // What the page shows right now, so a scrolled frame only writes a change.
+    let shownChapter: number | null | undefined
+    const shownParts = chapters.map(() => -1)
 
     // Hidden chapters stay out of the tab order and the reading order while
     // pinned; unpinned, all of them are on the page one after another.
     const showChapter = (active: number | null) => {
+      if (active === shownChapter) return
+      shownChapter = active
       chapters.forEach((chapter, index) => {
         chapter.dataset.active = String(active === null || index === active)
         chapter.inert = active !== null && index !== active
@@ -75,6 +91,8 @@ function setup() {
           progress === null
             ? items.length
             : revealedCount(chapterProgress(progress, index), items.length)
+        if (shown === shownParts[index]) return
+        shownParts[index] = shown
         items.forEach((item, position) => item.toggleAttribute('data-shown', position < shown))
         chapter.dataset.revealed = String(shown)
       })
@@ -100,7 +118,7 @@ function setup() {
             pinned = false
             showChapter(null)
             revealParts(null)
-            stage.style.removeProperty('--chapter-fill')
+            for (const fill of fills) fill?.style.removeProperty('--chapter-fill')
             render(soakLevel(autoplay === 'done' ? 1 : 0))
           }
           return
@@ -110,7 +128,12 @@ function setup() {
         const { chapter, soakProgress } = hardwareChapter(progress)
         showChapter(chapter)
         revealParts(progress)
-        stage.style.setProperty('--chapter-fill', chapterProgress(progress, chapter).toFixed(3))
+        // On the one bar that shows it: on the stage it would inherit, and
+        // every scrolled frame would restyle the whole section.
+        fills[chapter]?.style.setProperty(
+          '--chapter-fill',
+          chapterProgress(progress, chapter).toFixed(3),
+        )
         render(soakLevel(soakProgress))
       },
       () => Math.max(...chapters.map((chapter) => chapter.offsetHeight)) + PROGRESS_PX,
@@ -171,7 +194,20 @@ function setup() {
       { threshold: 0.6 },
     )
     viewport.observe(root)
-    const view = new MutationObserver(playWhenSeen)
+    // The sketch only shows where webgl is missing. Its SMIL animations
+    // restyle the page on every frame even while it is not rendered, so they
+    // stand still until it is.
+    const sketch = root.querySelector<SVGSVGElement>('svg.probe-sketch')
+    const syncSketch = () => {
+      if (root.dataset.probeView === 'sketch') sketch?.unpauseAnimations()
+      else sketch?.pauseAnimations()
+    }
+    syncSketch()
+
+    const view = new MutationObserver(() => {
+      syncSketch()
+      playWhenSeen()
+    })
     view.observe(root, {
       attributes: true,
       attributeFilter: ['data-model-ready', 'data-probe-view'],

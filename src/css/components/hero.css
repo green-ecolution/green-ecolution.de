@@ -19,6 +19,20 @@
   }
 }
 
+/* The headline is the largest thing the first screen paints, and a browser
+   only counts it as painted once it is visible. Faded in from nothing it held
+   the largest contentful paint back by more than half a second, so it rises
+   with the rest but stands opaque from the first frame. */
+.hero-rise.hero-rise-opaque {
+  transition: translate 700ms ease-out var(--rise-delay, 0ms);
+}
+
+@starting-style {
+  .hero-rise.hero-rise-opaque {
+    opacity: 1;
+  }
+}
+
 .hero-underline {
   width: 100%;
   transition: width 700ms ease-out var(--rise-delay, 0ms);
