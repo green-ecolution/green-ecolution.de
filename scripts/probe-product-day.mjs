@@ -990,6 +990,94 @@ for (const [width, height] of [
   }
 }
 
+const relay = await openPage(sizes[0])
+try {
+  await load(relay, { name: 'relay' })
+  const STAGE = `document.querySelector('#process [data-day-stage]')`
+  // Runs inside the page: the message is under way for a few seconds only.
+  await relay.evaluate(`(() => {
+    const stage = ${STAGE}
+    const record = (window.__relay = { cameras: [], from: 0, to: 0 })
+    new MutationObserver(() => {
+      const isUnderWay = stage.hasAttribute('data-day-relay')
+      if (isUnderWay && !record.from) record.from = performance.now()
+      if (!isUnderWay && record.from && !record.to) record.to = performance.now()
+      if (isUnderWay && record.cameras[record.cameras.length - 1] !== stage.dataset.dayCamera) {
+        record.cameras.push(stage.dataset.dayCamera)
+      }
+    }).observe(stage, { attributes: true })
+  })()`)
+  await clickButton(relay, 'Tour planen')
+  await relay.waitFor(`${STAGE}.dataset.dayCamera === 'probing'`, 'the probe to report', 600)
+  check(
+    'relay: nothing is under way while the probe still reports',
+    !(await relay.evaluate(`${STAGE}.hasAttribute('data-day-relay')`)),
+  )
+  await sleep(600)
+  await clickButton(relay, 'Weiter')
+  await relay.waitFor(`${STAGE}.hasAttribute('data-day-relay')`, 'the message to set out', 100)
+  await sleep(900)
+  check(
+    'relay: a caption says where the message goes',
+    (await relay.evaluate(
+      `Number(getComputedStyle(document.querySelector('#process [data-day-relay-caption]')).opacity)`,
+    )) > 0.5,
+  )
+  await relay.screenshot(join(out, 'desktop-relay.png'))
+  await relay.waitFor(`!${STAGE}.hasAttribute('data-day-relay')`, 'the message to arrive', 300)
+  const flown = await relay.evaluate(
+    `({ cameras: window.__relay.cameras, seconds: (window.__relay.to - window.__relay.from) / 1000 })`,
+  )
+  check(
+    'relay: the message sets out as the camera flies back and arrives in the slanted view',
+    flown.cameras[0] === 'fly-out' && flown.cameras[flown.cameras.length - 1] === 'iso',
+    flown.cameras.join(' '),
+  )
+  check(
+    'relay: it is under way for about four seconds',
+    flown.seconds > 3 && flown.seconds < 9,
+    `${flown.seconds.toFixed(1)} s`,
+  )
+  await sleep(400)
+  check(
+    'relay: the caption goes once the message has arrived',
+    (await relay.evaluate(
+      `Number(getComputedStyle(document.querySelector('#process [data-day-relay-caption]')).opacity)`,
+    )) < 0.5,
+  )
+
+  const DETAILS = `document.querySelector('#architecture details')`
+  check('tech: the block for IT starts closed', !(await relay.evaluate(`${DETAILS}.open`)))
+  await relay.click('#architecture summary')
+  await sleep(300)
+  check('tech: a click opens it', await relay.evaluate(`${DETAILS}.open`))
+  await relay.screenshot(join(out, 'desktop-tech.png'))
+} catch (error) {
+  check(`relay: ${error.message}`, false)
+} finally {
+  relay.close()
+}
+
+const anchor = await openPage(sizes[0])
+try {
+  await anchor.goto(`${base}#architecture`)
+  await anchor.waitFor(`document.getElementById('architecture') !== null`, 'the page')
+  await sleep(1500)
+  const landed = await anchor.evaluate(`(() => {
+    const block = document.getElementById('architecture')
+    return { top: block.getBoundingClientRect().top, open: block.querySelector('details').open }
+  })()`)
+  check(
+    'tech: a link to #architecture lands on the block and opens it',
+    landed.open && landed.top >= 0 && landed.top < 400,
+    JSON.stringify(landed),
+  )
+} catch (error) {
+  check(`tech: ${error.message}`, false)
+} finally {
+  anchor.close()
+}
+
 const still = await openPage({ width: 1440, height: 900, reducedMotion: true })
 try {
   await load(still, { name: 'reduced motion' })

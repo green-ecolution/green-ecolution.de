@@ -10,6 +10,7 @@ import { CARD_KEYS, STATUS_KEYS } from '../../islands/product/dayModel'
 import type { Language } from '../../../i18n/languages'
 import { pickStrings } from '../../../i18n/pick'
 import { getTranslations, type TranslationKey } from '../../../i18n/t'
+import TechDetails from './TechDetails.astro'
 
 interface Props {
   language: Language
@@ -120,4 +121,6 @@ const CAPTURE_STYLE = `:root[data-day-capture] [data-day-stage] {
       <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
     </Button>
   </div>
+
+  <TechDetails language={language} />
 </section>

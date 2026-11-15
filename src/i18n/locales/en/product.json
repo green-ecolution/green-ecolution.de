@@ -118,47 +118,32 @@
       "ctaAriaLabel": "Book an appointment for a live demo"
     }
   },
-  "architecture": {
-    "sectionLabel": "System Architecture",
-    "title": "The path of the data",
-    "description": "This is how the readings travel from the sensor to the finished route. Every component is connected through open interfaces and can be extended.",
-    "streamletRich": "Route optimisation in the backend is handled by <streamlet>Streamlet</streamlet>, a separate service of ours that can also be used outside Green Ecolution.",
-    "steps": {
-      "sensor": {
-        "label": "Sensor",
-        "description": "Measures on site, for example the soil moisture at the tree"
+  "tech": {
+    "summary": "For IT: the technical details",
+    "items": {
+      "probe": {
+        "term": "Probe",
+        "name": "Sensor",
+        "text": "Measures soil moisture and soil temperature."
       },
-      "gateway": {
-        "label": "Gateway",
-        "description": "LoRaWAN transmission"
+      "antenna": {
+        "term": "Antenna",
+        "name": "Gateway",
+        "text": "Radio over LoRaWAN and the open The Things Network. Where the network is missing, a gateway of your own or NB-IoT with a SIM card helps."
       },
-      "backend": {
-        "label": "Backend",
-        "description": "Data processing & analysis"
+      "server": {
+        "term": "Computer",
+        "name": "Backend",
+        "text": "Open interfaces for connecting existing systems, IoT hubs and open data portals. Tree data comes in through import plugins from tree registries, CSV or a database. The source code is open and free of licence fees. We run it, or your own IT does."
       },
-      "dashboard": {
-        "label": "Dashboard",
-        "description": "Visualization & route planning"
+      "map": {
+        "term": "Map",
+        "name": "Dashboard",
+        "text": "Analysis and route planning in the browser."
       }
     },
-    "modules": {
-      "plugin": {
-        "title": "Plugin system",
-        "description": "Modular extensions for municipality-specific adaptations without changing the core software. Import plugins for tree registries, CSV, and databases."
-      },
-      "api": {
-        "title": "API-first",
-        "description": "Open interfaces for integration into municipal IT landscapes. Connection to IoT hubs and open data portals."
-      }
-    }
-  },
-  "beyond": {
-    "sectionLabel": "Outlook",
-    "title": "Beyond irrigation",
-    "p1": "The irrigation of urban trees is the first use case we built Green Ecolution for. The platform itself is conceived more broadly: wherever something can be measured, the readings have to be evaluated and a deployment on site follows in the end, the principle of measuring, understanding and acting applies.",
-    "p2": "The architecture is designed to take on further sensor types and use cases. A new use case still means development work, for example to connect the sensors and evaluate the data. We take care of that work for you.",
-    "cta": "To our services",
-    "ctaAriaLabel": "To the page with our services"
+    "streamletRich": "The rounds are calculated by <streamlet>Streamlet</streamlet>, our own service for route optimisation.",
+    "beyondRich": "The platform can do more than irrigation. What we build and run for you is listed under <services>services</services>."
   },
   "requirements": {
     "sectionLabel": "Requirements",
