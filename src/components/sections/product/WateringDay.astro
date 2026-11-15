@@ -1,0 +1,95 @@
+---
+import WateringDayIsland from '../../islands/product/WateringDayIsland'
+import Button from '../../Button.astro'
+import Arrow from '../../icons/Arrow.astro'
+import { company } from '../../../data/company'
+import { townTrees } from '../../../data/productTown'
+import type { Language } from '../../../i18n/languages'
+import { pickStrings } from '../../../i18n/pick'
+import { getTranslations, type TranslationKey } from '../../../i18n/t'
+
+interface Props {
+  language: Language
+}
+
+const KEYS: TranslationKey<'product'>[] = [
+  'day.stageAriaLabel',
+  'day.steps.measure.title',
+  'day.steps.measure.description',
+  'day.steps.understand.title',
+  'day.steps.understand.description',
+  'day.steps.act.title',
+  'day.steps.act.description',
+  'day.weather.label',
+  'day.weather.value',
+  'day.weather.valueOne',
+  'day.weather.hint',
+  'day.states.dry',
+  'day.states.soon',
+  'day.states.ok',
+  'day.states.watered',
+  'day.places.depot',
+  'day.places.hydrant',
+  'day.tour.plan',
+  'day.tour.skip',
+  'day.tour.again',
+  'day.tour.tank',
+  'day.tour.stops',
+  'day.status.none',
+  'day.status.thirstyOne',
+  'day.status.thirstyMany',
+  'day.status.plannedOne',
+  'day.status.planned',
+  'day.status.plannedRefill',
+  'day.status.watering',
+  'day.status.next',
+  'day.status.toWater',
+  'day.status.topUp',
+  'day.status.refill',
+  'day.status.refillDepot',
+  'day.status.home',
+  'day.status.doneOne',
+  'day.status.done',
+  ...townTrees.map((tree) => `day.trees.${tree.id}` as const),
+]
+
+const { language } = Astro.props
+const t = getTranslations(language, 'product')
+const strings = pickStrings(language, 'product', KEYS)
+---
+
+<section
+  id="process"
+  class="max-w-208 mx-auto my-20 px-4 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
+>
+  <div class="mb-10 lg:mb-14">
+    <div class="inline-block mb-6">
+      <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
+        {t('day.sectionLabel')}
+      </span>
+      <div class="label-rule"></div>
+    </div>
+
+    <div class="lg:flex lg:justify-between lg:gap-12 xl:gap-16">
+      <h2 class="font-lato font-bold text-2xl text-grey-900 mb-4 lg:mb-0 lg:max-w-xs lg:shrink-0 lg:text-3xl xl:max-w-sm xl:text-4xl">
+        {t('day.title')}
+      </h2>
+      <p class="text-grey-900/70 leading-relaxed lg:max-w-2xl lg:text-lg">{t('day.description')}</p>
+    </div>
+  </div>
+
+  <WateringDayIsland client:visible strings={strings} />
+
+  <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+    <p class="text-grey-900/70">{t('day.after.text')}</p>
+    <Button
+      href={company.booking.liveDemoUrl}
+      ariaLabel={t('day.after.ctaAriaLabel')}
+      isExternalLink
+      isDark
+    >
+      <span>{t('day.after.cta')}</span>
+      <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+    </Button>
+  </div>
+</section>

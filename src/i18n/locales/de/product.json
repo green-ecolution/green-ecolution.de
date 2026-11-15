@@ -5,54 +5,86 @@
   },
   "hero": {
     "label": "Produkt",
-    "headline": "Messen. Verstehen. Handeln.",
-    "description": "Green Ecolution ist eine modulare, quelloffene Plattform. Sensoren liefern Messwerte, die Plattform macht daraus ein klares Bild der Lage und die Einsatzplanung schickt dein Team gezielt dorthin, wo es gebraucht wird. Heute steuert sie die Bewässerung von Stadtbäumen. Das ist erst der Anfang."
+    "headline": "Morgens wissen, welcher Baum Wasser braucht.",
+    "description": "Green Ecolution zeigt deinem Team auf einer Karte, wo es trocken ist, und schlägt die passende Gießtour vor. Probier es gleich hier aus."
   },
-  "dashboard": {
-    "sectionLabel": "Beispiel Bewässerung",
-    "titleLine1": "Fundierte Handlungsempfehlungen",
-    "titleLine2": "zur Bewässerung auf einen Blick",
-    "description": "Unser System wertet die Sensordaten wissenschaftlich aus und zeigt, zu welchem Zeitpunkt eine Bewässerung notwendig ist. Die Daten werden so aufbereitet, dass sie einfach zu interpretieren und direkt in die Einsatzplanung einzubinden sind.",
-    "imageAlt": "Green Ecolution Dashboard - Übersicht der Bewässerungsempfehlungen"
-  },
-  "process": {
-    "sectionLabel": "Prozess",
-    "title": "Drei Schritte, ein System",
-    "description": "Messen, Verstehen und Handeln bleiben für jede Aufgabe gleich. Die Bewässerung von Stadtbäumen ist das erste Beispiel.",
+  "day": {
+    "sectionLabel": "Zum Ausprobieren",
+    "title": "Dein Gießtag in drei Schritten",
+    "description": "Dreh am Wetter, schau zu, wie die Stadt reagiert, und schick den Gießwagen los.",
+    "stageAriaLabel": "Kleine Stadt von schräg oben mit zwölf Bäumen. Über jedem Baum zeigt eine Nadel in Ampelfarbe, ob er Wasser braucht. Ein Gießwagen fährt die trockenen Bäume an.",
     "steps": {
       "measure": {
-        "category": "Erfassen",
-        "title": "Messen",
-        "description": "Sensoren erfassen das Geschehen vor Ort und funken ihre Werte energiesparend über LoRaWAN oder NB-IoT. Bei der Bewässerung messen Bodensonden Feuchte und Temperatur in variablen Tiefen.",
-        "details": {
-          "item1": "Auf weitere Sensortypen erweiterbar",
-          "item2": "Bodenfeuchte und Temperatur in variablen Tiefen",
-          "item3": "Energieeffiziente Übertragung über LoRaWAN oder NB-IoT",
-          "item4": "Bodenbündige Installation, kein Einfluss auf Pflegearbeiten"
-        }
+        "title": "Messen: Wo ist es trocken?",
+        "description": "Sonden im Boden melden von selbst, wie feucht die Erde ist."
       },
       "understand": {
-        "category": "Analysieren",
-        "title": "Verstehen",
-        "description": "Die Plattform wertet die Messreihen aus und zeigt auf Karte und Dashboard, wo gehandelt werden muss. Bei der Bewässerung zeigt ein Ampelsystem, welche Bäume und Flächen Wasser brauchen.",
-        "details": {
-          "item1": "Ampelsystem zeigt Bewässerungsbedarf auf einer Karte",
-          "item2": "Priorisierung nach Dringlichkeit bei begrenzten Kapazitäten",
-          "item3": "Zeitverläufe für Bodenfeuchte, Temperatur und Wasserspannung",
-          "item4": "Echtzeit-Dashboard mit allen relevanten KPIs"
-        }
+        "title": "Verstehen: Was ist zuerst dran?",
+        "description": "Die trockensten Bäume stehen oben."
       },
       "act": {
-        "category": "Ausführen",
-        "title": "Handeln",
-        "description": "Aus dem Lagebild wird ein Einsatz. Die Einsatz- und Routenplanung erzeugt Touren unter Berücksichtigung von Fahrzeugen, Kapazitäten und Straßenrestriktionen. Bei der Bewässerung sind das Gießtouren mit Nachfüllstopps.",
-        "details": {
-          "item1": "Automatisierte Einsatz- und Routenplanung",
-          "item2": "Berücksichtigung von Wasserkapazität und Fahrzeuggröße",
-          "item3": "Straßen- und Zufahrtsrestriktionen einbezogen",
-          "item4": "Export der Routen auf Navigationsgeräte"
-        }
+        "title": "Handeln: Wer fährt wohin?",
+        "description": "Die Tour führt nur dorthin, wo Wasser fehlt."
       }
+    },
+    "weather": {
+      "label": "Tage ohne Regen",
+      "value": "{{days}} Tage ohne Regen",
+      "valueOne": "1 Tag ohne Regen",
+      "hint": "schieb den Regler"
+    },
+    "states": {
+      "dry": "braucht Wasser",
+      "soon": "bald gießen",
+      "ok": "hat genug",
+      "watered": "gegossen"
+    },
+    "trees": {
+      "markt": "Am Markt",
+      "marktgasse": "Marktgasse",
+      "bahnhof": "Bahnhofstraße",
+      "schulweg": "Schulweg",
+      "suedring": "Südring",
+      "lindenweg": "Lindenweg",
+      "kirchplatz": "Kirchplatz",
+      "kita": "An der Kita",
+      "rathaus": "Rathausplatz",
+      "teich": "Am Teich",
+      "parkallee": "Parkallee",
+      "friedhof": "Friedhofsweg"
+    },
+    "places": {
+      "depot": "Bauhof",
+      "hydrant": "Wasserstelle"
+    },
+    "tour": {
+      "plan": "Tour planen",
+      "skip": "Überspringen",
+      "again": "Noch einmal",
+      "tank": "Wassertank",
+      "stops": "So fährt die Tour"
+    },
+    "status": {
+      "none": "Heute muss niemand los. Alle Bäume haben genug Wasser.",
+      "thirstyOne": "1 Baum braucht Wasser. Der Rest kann warten.",
+      "thirstyMany": "{{count}} Bäume brauchen Wasser. Der Rest kann warten.",
+      "plannedOne": "Tour steht: 1 Halt, kürzester Weg.",
+      "planned": "Tour steht: {{count}} Halte, kürzester Weg.",
+      "plannedRefill": "Tour steht: {{count}} Halte, kürzester Weg, Nachfüllen eingeplant.",
+      "watering": "Gießt {{name}}.",
+      "next": "Weiter zu {{name}}.",
+      "toWater": "Weiter zur Wasserstelle.",
+      "topUp": "Füllt unterwegs auf. Die Wasserstelle liegt am Weg.",
+      "refill": "Tank leer. Füllt an der Wasserstelle nach.",
+      "refillDepot": "Füllt am Bauhof nach.",
+      "home": "Alles gegossen. Zurück zum Bauhof.",
+      "doneOne": "Fertig. 1 Baum gegossen. {{rest}} hatten noch genug Wasser, dorthin musste niemand fahren.",
+      "done": "Fertig. {{watered}} Bäume gegossen. {{rest}} hatten noch genug Wasser, dorthin musste niemand fahren."
+    },
+    "after": {
+      "text": "So sieht es im Kleinen aus. Die echte Anwendung zeigen wir dir gern.",
+      "cta": "Live-Demo buchen",
+      "ctaAriaLabel": "Termin für eine Live-Demo buchen"
     }
   },
   "architecture": {
@@ -123,25 +155,6 @@
     "tourLinkRich": "Wie die Tourenoptimierung rechnet und was sie als Eingabe erwartet, beschreibt die Seite zur <streamlet>Tourenoptimierung</streamlet>.",
     "cta": "Einstieg besprechen",
     "ctaAriaLabel": "Zur Kontaktseite"
-  },
-  "advantages": {
-    "sectionLabel": "Vorteile",
-    "title": "Alle weiteren Funktionen und Vorteile",
-    "description": "Green Ecolution ist öffentlich einsehbar und verfolgt ein Ziel: Ressourcen dort einsetzen, wo sie gebraucht werden. Bei der Bewässerung heißt das weniger Wasser und eine variable Einsatzplanung.",
-    "items": {
-      "openSource": {
-        "title": "Offene Lösung für alle",
-        "description": "Prüfbarer Quellcode, keine Lizenzkosten und keine Bindung an einen Anbieter"
-      },
-      "optimizedRoutes": {
-        "title": "Optimierte Routen",
-        "description": "Individuelle Einsatzplanung zur effizienteren Bewässerung"
-      },
-      "water": {
-        "title": "Weniger ist mehr",
-        "description": "Gezielte Bewässerung, weniger Wasserverbrauch"
-      }
-    }
   },
   "vision": {
     "sectionLabel": "Vision",
