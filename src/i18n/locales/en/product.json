@@ -92,6 +92,9 @@
     "ride": {
       "caption": "View from the watering truck"
     },
+    "relay": {
+      "caption": "The message goes by radio to the map at the depot"
+    },
     "status": {
       "none": "Nobody has to go out today. Every tree has enough water.",
       "thirstyOne": "1 tree needs water. The rest can wait.",

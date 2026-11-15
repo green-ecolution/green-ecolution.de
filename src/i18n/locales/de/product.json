@@ -92,6 +92,9 @@
     "ride": {
       "caption": "Blick aus dem Gießwagen"
     },
+    "relay": {
+      "caption": "Die Meldung geht per Funk zur Karte im Bauhof"
+    },
     "status": {
       "none": "Heute muss niemand los. Alle Bäume haben genug Wasser.",
       "thirstyOne": "1 Baum braucht Wasser. Der Rest kann warten.",

@@ -6,6 +6,7 @@ import {
   CRUISE,
   MAX_TOUR_SECONDS,
   PROBE_HOLD_SECONDS,
+  RELAY_SECONDS,
   RESULT_HOLD_SECONDS,
   RIDE_CRUISE,
   REFILL_HOLD_SECONDS,
@@ -13,6 +14,7 @@ import {
   afterHold,
   holdAt,
   nextElapsed,
+  relayAt,
   REFILL_SECONDS,
   RIDE_MIN_SECONDS,
   WATER_SECONDS,
@@ -332,9 +334,9 @@ describe('tourFrame', () => {
   const script = tourScript(twoTrees, straight, AT_DEPOT, 2)
 
   it('zeichnet nach der Sonde die Route und fährt dann los', () => {
-    const { plan, probeShot } = script
-    if (!probeShot) throw new Error('the script has no probe')
-    expect(plan.start).toBeCloseTo(probeShot.flyOut.end)
+    const { plan, relay } = script
+    if (!relay) throw new Error('the script has no relay')
+    expect(plan.start).toBeCloseTo(relay.over.end)
     expect(plan.end).toBeCloseTo(script.lead)
     const early = tourFrame(script, (plan.start + plan.end) / 2)
     expect(early.shot).toBe('plan')
@@ -532,7 +534,7 @@ describe('Halt mit Karte', () => {
       mode: 'flyOut',
       piece: 'probe',
     })
-    expect(tourFrame(town, probeShot.flyOut.end + 0.01).reveal).toBeGreaterThan(0)
+    expect(tourFrame(town, town.plan.start + 0.01).reveal).toBeGreaterThan(0)
   })
 
   it('springt aus der Bilanz in ihren Rückflug, nach dem die Tour endet', () => {
@@ -567,11 +569,11 @@ describe('Sonde und Bilanz', () => {
   const { probeShot, resultShot, showpiece, dwells } = town
   if (!probeShot || !showpiece) throw new Error('the tour has no probe or showpiece')
 
-  it('zeichnet die Route erst nach dem Rückflug von der Sonde', () => {
-    for (let time = 0; time < probeShot.flyOut.end; time += 0.01) {
+  it('zeichnet die Route erst, wenn die Meldung im Bauhof angekommen ist', () => {
+    for (let time = 0; time < town.plan.start; time += 0.01) {
       expect(tourFrame(town, time).reveal).toBe(0)
     }
-    expect(tourFrame(town, probeShot.flyOut.end + 0.05).reveal).toBeGreaterThan(0)
+    expect(tourFrame(town, town.plan.start + 0.05).reveal).toBeGreaterThan(0)
     expect(tourFrame(town, town.lead).reveal).toBe(1)
   })
 
@@ -711,5 +713,45 @@ describe('Tempo und Bilanz', () => {
     expect(resultShot.flyIn.start).toBeGreaterThan(showpiece.flyOut.end)
     expect(tour.duration).toBeLessThanOrEqual(MAX_TOUR_SECONDS + 1e-9)
     expect(tour.duration).toBeCloseTo(MAX_TOUR_SECONDS)
+  })
+})
+
+describe('Meldung zum Bauhof', () => {
+  const town = townScript(START_DAYS)
+  const { probeShot, relay } = town
+  if (!probeShot || !relay) throw new Error('the tour has no probe or relay')
+
+  it('steigt mit dem Rückflug von der Sonde zur Antenne auf', () => {
+    expect(relay.up).toEqual(probeShot.flyOut)
+    expect(relayAt(town, probeShot.shot.end - 0.01)).toBeNull()
+    expect(relayAt(town, relay.up.start)).toEqual({ hop: 'up', share: 0 })
+    expect(relayAt(town, (relay.up.start + relay.up.end) / 2)).toMatchObject({ hop: 'up' })
+  })
+
+  it('fliegt danach von der Antenne zum Bauhof, bevor die Route sich zeichnet', () => {
+    expect(relay.over.start).toBeCloseTo(relay.up.end)
+    expect(relay.over.end - relay.over.start).toBeCloseTo(RELAY_SECONDS, 1)
+    expect(relay.over.end).toBeCloseTo(town.plan.start)
+    const midway = relayAt(town, (relay.over.start + relay.over.end) / 2)
+    expect(midway?.hop).toBe('over')
+    expect(midway?.share).toBeCloseTo(0.5)
+    expect(relayAt(town, relay.over.end)).toBeNull()
+  })
+
+  it('bleibt in der schrägen Ansicht, während die Meldung zum Bauhof fliegt', () => {
+    for (let time = relay.over.start; time < relay.over.end; time += 0.05) {
+      expect(tourFrame(town, time).view.mode).toBe('iso')
+      expect(tourFrame(town, time).shot).toBe('plan')
+    }
+  })
+
+  it('entfällt mit der Sonde bei einer Tour ohne Baum', () => {
+    const refillOnly: Plan = {
+      stops: [{ site: 0, arc: 0, kind: 'depot', arrivedWith: 0, leftWith: 0 }],
+      length: 0,
+    }
+    const script = tourScript(refillOnly, straight, AT_DEPOT, 2)
+    expect(script.relay).toBeNull()
+    expect(relayAt(script, 0.5)).toBeNull()
   })
 })

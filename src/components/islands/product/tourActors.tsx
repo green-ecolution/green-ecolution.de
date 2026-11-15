@@ -9,10 +9,10 @@ import {
   type Mesh,
   type MeshBasicMaterial,
 } from 'three'
-import { HYDRANT_SITE, hydrant, type TownTree } from '../../../data/productTown'
+import { HYDRANT_SITE, antenna, hydrant, type TownTree } from '../../../data/productTown'
 import type { GroundPoint } from '../../../lib/storyPath'
 import { roadHeight, tourColors } from '../../../data/streamletTour'
-import { WATER_SECONDS, type TourFrame, type TourScript } from '../../../lib/wateringDay'
+import { WATER_SECONDS, relayAt, type TourFrame, type TourScript } from '../../../lib/wateringDay'
 import { damp } from '../scene3d/damp'
 import { appendRibbon, ribbonGeometry, type RibbonArrays } from '../scene3d/ribbon'
 import { treePit } from '../scene3d/trees'
@@ -21,6 +21,8 @@ import { WATER, jetGeometry, jetSpan, shapeJet, type JetArc } from '../scene3d/w
 import { showpieceStop } from './closeView'
 import { hoseGeometry, shapeHose } from './hose'
 import { PROBE_TOP, probeAt } from './probe'
+import { RadioRings, type RingSource } from './RadioRings'
+import { ANTENNA_TIP, relayDot } from './relay'
 import type { DayLive } from './shared'
 import { showpieceWeight, turned, wateredTree, type Stage, type TruckPose } from './stage'
 import { HYDRANT_ARM } from './town'
@@ -333,20 +335,14 @@ export function RefillHose({ live, stage, isStatic }: TourProps) {
   )
 }
 
-const RING_COUNT = 3
-/** How far the rings tilt from lying flat towards the camera; flat, a low camera sees only their edge. */
-const RING_TILT = 1
-const facing = new Vector3()
-
-/** Radio rings rising from the probe at the first tree while it reports, as on the home page. */
+/** Radio rings rising from the probe at the first tree while it reports. */
 export function ProbeRings({ live, stage, isStatic }: TourProps) {
-  const rings = useRef<(Mesh | null)[]>([])
   const probe = useRef<{ script: TourScript | null; at: GroundPoint | null }>({
     script: null,
     at: null,
   })
 
-  useFrame(({ clock }) => {
+  const source = (): RingSource | null => {
     const { script } = live.current
     if (probe.current.script !== script) {
       const tree = script && showpieceStop(script)?.tree
@@ -354,50 +350,89 @@ export function ProbeRings({ live, stage, isStatic }: TourProps) {
     }
     const { at } = probe.current
     const { view, lens } = stage.current
-    const power = !isStatic && at && view.piece === 'probe' ? showpieceWeight(view) : 0
-    const time = clock.getElapsedTime() * 0.55
+    if (isStatic || !at || view.piece !== 'probe') return null
+    return { at, base: PROBE_TOP + 0.4, power: showpieceWeight(view), lens }
+  }
 
-    rings.current.forEach((ring, index) => {
-      if (!ring) return
-      ring.visible = power > 0
-      if (!at || power <= 0) return
-      const phase = (time + index / RING_COUNT) % 1
-      ring.position.set(at[0], PROBE_TOP + 0.4 + phase * 3.2, at[1])
-      const away = lens ? Math.hypot(lens[0] - at[0], lens[2] - at[1]) || 1 : 1
-      facing.set(
-        lens ? ((lens[0] - at[0]) / away) * RING_TILT : 0,
-        1,
-        lens ? ((lens[2] - at[1]) / away) * RING_TILT : 0,
-      )
-      ring.lookAt(facing.add(ring.position))
-      ring.scale.setScalar(0.6 + phase * 1.4)
-      ;(ring.material as MeshBasicMaterial).opacity = power * (1 - phase)
+  return <RadioRings source={source} />
+}
+
+const DOT_RADIUS = 0.42
+// Smallest radius in css pixels: in the picture of the whole town the dot
+// would otherwise be two pixels wide.
+const MIN_DOT_PX = 5
+/** The dot and the tail it draws behind it. */
+const TAIL = 5
+const TAIL_SECONDS = 0.07
+
+/** The probe's message: a dot of light from the probe up to the antenna and over to the depot. */
+export function RelayMessage({ live, isStatic }: Omit<TourProps, 'stage'>) {
+  const dots = useRef<(Mesh | null)[]>([])
+  const sender = useRef<{ script: TourScript | null; tree: TownTree | null }>({
+    script: null,
+    tree: null,
+  })
+
+  useFrame(({ camera }) => {
+    const { script, elapsed } = live.current
+    if (sender.current.script !== script) {
+      sender.current = { script, tree: (script && showpieceStop(script)?.tree) ?? null }
+    }
+    const { tree } = sender.current
+    // An orthographic zoom is css pixels per world unit.
+    const radius = Math.max(DOT_RADIUS, MIN_DOT_PX / camera.zoom)
+
+    dots.current.forEach((dot, index) => {
+      if (!dot) return
+      const relay =
+        script && tree && !isStatic ? relayAt(script, elapsed - index * TAIL_SECONDS) : null
+      if (!relay || !tree) {
+        dot.visible = false
+        return
+      }
+      const { at, size } = relayDot(tree, relay.hop, relay.share)
+      dot.visible = size > 0.01
+      dot.position.set(at[0], at[1], at[2])
+      dot.scale.setScalar(size * radius * (1 - index / (TAIL + 2)))
     })
   })
 
   return (
     <>
-      {Array.from({ length: RING_COUNT }, (_, index) => (
+      {Array.from({ length: TAIL + 1 }, (_, index) => (
         <mesh
           key={index}
           ref={(node) => {
-            rings.current[index] = node
+            dots.current[index] = node
           }}
           visible={false}
-          renderOrder={1}
+          renderOrder={2}
         >
-          <ringGeometry args={[0.8, 1.1, 32]} />
-          {/* Drawn over the crown, which would otherwise hide most of each ring. */}
+          <sphereGeometry args={[1, 16, 12]} />
+          {/* Drawn over crowns and roofs: the message is never out of sight. */}
           <meshBasicMaterial
-            color={tourColors.refillCabinet}
+            color={tourColors.refill}
             transparent
-            opacity={0}
+            opacity={1 - index * 0.15}
             depthTest={false}
             depthWrite={false}
-            side={DoubleSide}
           />
         </mesh>
       ))}
     </>
   )
+}
+
+/** Radio rings at the antenna while it passes the message on to the depot. */
+export function AntennaRings({ live, stage, isStatic }: TourProps) {
+  const source = (): RingSource | null => {
+    const { script, elapsed } = live.current
+    const relay = script && !isStatic ? relayAt(script, elapsed) : null
+    if (relay?.hop !== 'over') return null
+    // In and out with the hop, so they neither pop up nor cut off.
+    const power = Math.min(1, relay.share * 5, (1 - relay.share) * 5)
+    return { at: antenna.at, base: ANTENNA_TIP[1] - 0.3, power, lens: stage.current.lens }
+  }
+
+  return <RadioRings source={source} />
 }
