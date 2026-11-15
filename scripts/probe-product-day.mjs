@@ -45,7 +45,20 @@ const STRIP = `(() => {
   return {
     inView: top >= 0 && bottom <= innerHeight,
     rect: Math.round(top) + '–' + Math.round(bottom),
-    text: strip.querySelector('p').textContent.trim(),
+    text: strip.querySelector('p')?.textContent.trim() ?? null,
+    status: ${STATUS},
+  }
+})()`
+// What the bar over the stage says while the scene plays.
+const HUD = `(() => {
+  const hud = document.querySelector('#process [data-day-hud]')
+  if (!hud) return null
+  const stage = document.querySelector('#process [data-day-stage]').getBoundingClientRect()
+  const { top, bottom, left, right } = hud.getBoundingClientRect()
+  return {
+    shown: hud.dataset.shown === 'true',
+    text: hud.querySelector('p').textContent.trim(),
+    inStage: top >= stage.top && bottom <= stage.bottom && left >= stage.left && right <= stage.right,
     status: ${STATUS},
   }
 })()`
@@ -63,7 +76,7 @@ const RECORDER = `(() => {
     turns: [],
     caption: {},
     cards: {},
-    holds: { probing: [], watering: [], refilling: [], result: [] },
+    holds: { probing: [], gateway: [], watering: [], refilling: [], result: [] },
     cardTexts: {},
     // Cameras, statuses and the route's numbers in the order they came.
     timeline: ['camera:' + stage.dataset.dayCamera, 'status:' + status.textContent.trim()],
@@ -277,12 +290,13 @@ for (const size of sizes) {
     check(`${size.name}: no tree needs water after rain`, (await page.evaluate(DRY)) === 0)
     check(
       `${size.name}: the plan button is unavailable after rain`,
-      (await page.evaluate(`${button('Tour planen')}.getAttribute('aria-disabled')`)) === 'true',
+      (await page.evaluate(`${button('Gießtag starten')}.getAttribute('aria-disabled')`)) ===
+        'true',
     )
     await setDays(page, 9)
 
     await page.evaluate(RECORDER)
-    await clickButton(page, 'Tour planen')
+    await clickButton(page, 'Gießtag starten')
     // A resting mouse holds a close-up wherever its card appears under it.
     await moveMouse(page, 1, 1)
     const photographed = new Set()
@@ -298,7 +312,7 @@ for (const size of sizes) {
       ])
       status = now
       if (!stripOnTour && status.startsWith('Gießt '))
-        stripOnTour = { strip: await page.evaluate(STRIP) }
+        stripOnTour = { strip: await page.evaluate(STRIP), hud: await page.evaluate(HUD) }
       const isHold = ['probing', 'gateway', 'watering', 'refilling', 'result'].includes(camera)
       if ((isHold || camera === 'ride') && !photographed.has(camera)) {
         photographed.add(camera)
@@ -399,13 +413,25 @@ for (const size of sizes) {
     check(`${size.name}: no tree needs water afterwards`, (await page.evaluate(DRY)) === 0)
     await sleep(1500)
     const stripAtEnd = await page.evaluate(STRIP)
+    const hudOnTour = stripOnTour?.hud
+    const hudAtEnd = await page.evaluate(HUD)
+    check(
+      `${size.name}: on the tour a bar over the stage says what happens, and it goes with the tour`,
+      Boolean(
+        hudOnTour?.shown &&
+        hudOnTour.inStage &&
+        hudOnTour.text === hudOnTour.status &&
+        hudOnTour.text.startsWith('Gießt ') &&
+        hudAtEnd &&
+        !hudAtEnd.shown,
+      ),
+      JSON.stringify({ hudOnTour, hudAtEnd }),
+    )
     if (size.mobile) {
       const during = stripOnTour?.strip
       check(
-        `${size.name}: on the tour the strip under the stage is in view with the status`,
-        Boolean(
-          during?.inView && during.text === during.status && during.text.startsWith('Gießt '),
-        ),
+        `${size.name}: on the tour the strip under the stage is in view with the way to skip`,
+        Boolean(during?.inView && during.text === null),
         JSON.stringify(during ?? null),
       )
       check(
@@ -425,7 +451,7 @@ for (const size of sizes) {
     await sleep(300)
     check(`${size.name}: once more brings the six dry trees back`, (await page.evaluate(DRY)) === 6)
 
-    await clickButton(page, 'Tour planen')
+    await clickButton(page, 'Gießtag starten')
     await sleep(2500)
     await clickButton(page, 'Überspringen')
     await page.waitFor(TOUR_DONE, 'the skipped tour to end', 30)
@@ -448,7 +474,7 @@ try {
     new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) window.__stageSeen = true
     }).observe(document.querySelector('[data-day-stage]'))
-    const target = ${button('Tour planen')}
+    const target = ${button('Gießtag starten')}
     target.scrollIntoView({ block: 'center', behavior: 'instant' })
   })()`)
   await unseen.waitFor(
@@ -460,7 +486,7 @@ try {
     (await unseen.evaluate(`window.__stageSeen`)) === false,
   )
   await unseen.evaluate(RECORDER)
-  await clickButton(unseen, 'Tour planen')
+  await clickButton(unseen, 'Gießtag starten')
   await moveMouse(unseen, 1, 1)
   await unseen.waitFor(TOUR_DONE, 'the tour to end', 6000)
   const { statuses } = await unseen.evaluate(`window.__probe`)
@@ -489,7 +515,7 @@ try {
       `document.querySelector('[data-day-poster]').dataset.hidden === 'false' && document.querySelector('#process canvas') === null`,
     ),
   )
-  await clickButton(plain, 'Tour planen')
+  await clickButton(plain, 'Gießtag starten')
   await plain.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour to end', 30)
   check(
     'without webgl: the tour is over at once',
@@ -602,7 +628,7 @@ try {
   )
   await pointer.screenshot(join(out, 'desktop-tree-clicked.png'))
 
-  await pointer.evaluate(`(window.__primary = ${button('Tour planen')}).focus()`)
+  await pointer.evaluate(`(window.__primary = ${button('Gießtag starten')}).focus()`)
   const focusKept = `document.activeElement === window.__primary`
   await moveMouse(pointer, 1, 1)
   await pressEnter(pointer)
@@ -628,7 +654,7 @@ try {
   await load(five, { name: 'desktop, five days' })
   await setDays(five, 5)
   await five.evaluate(RECORDER)
-  await clickButton(five, 'Tour planen')
+  await clickButton(five, 'Gießtag starten')
   await moveMouse(five, 1, 1)
   await five.waitFor(TOUR_DONE, 'the tour at five days to end', 6000)
   const { cards, wateringAt, cameras, cardTexts } = await five.evaluate(`window.__probe`)
@@ -658,7 +684,7 @@ try {
   await load(eight, { name: 'desktop, eight days' })
   await setDays(eight, 8)
   await eight.evaluate(RECORDER)
-  await clickButton(eight, 'Tour planen')
+  await clickButton(eight, 'Gießtag starten')
   await moveMouse(eight, 1, 1)
   await eight.waitFor(TOUR_DONE, 'the tour at eight days to end', 6000)
   const { turns } = await eight.evaluate(`window.__probe`)
@@ -696,7 +722,7 @@ const beats = await openPage(sizes[0])
 try {
   await load(beats, { name: 'desktop beats' })
   await beats.evaluate(RECORDER)
-  await clickButton(beats, 'Tour planen')
+  await clickButton(beats, 'Gießtag starten')
   await moveMouse(beats, 1, 1)
   await beats.waitFor(`${CAMERA} === 'probing'`, 'the probe close-up', 600)
   await sleep(500)
@@ -764,7 +790,7 @@ try {
     placeholder: document.getElementById('process').textContent.includes('{{'),
     dry: ${DRY},
     focus: document.activeElement === ${PICTURE},
-    plan: ${button('Tour planen')} !== undefined,
+    plan: ${button('Gießtag starten')} !== undefined,
   }))()`)
   check(
     '„Noch einmal“ in the result card shows the slanted view, no card and no placeholder, the six dry trees are back and the focus waits at the picture',
@@ -790,7 +816,7 @@ try {
 const offStage = await openPage(sizes[2])
 try {
   await load(offStage, { name: 'phone, result card off stage' })
-  await clickButton(offStage, 'Tour planen')
+  await clickButton(offStage, 'Gießtag starten')
   await offStage.waitFor(`${CAMERA} === 'result'`, 'the result close-up', 6000)
   await sleep(500)
   await offStage.evaluate(`(() => {
@@ -818,7 +844,7 @@ try {
   })()`
   // Read in the same task as the click, before any frame of the scene.
   const atStart = await offStage.evaluate(`(() => {
-    ${button('Tour planen')}.click()
+    ${button('Gießtag starten')}.click()
     return ${LEFT_OVER}
   })()`)
   await sleep(300)
@@ -848,7 +874,7 @@ try {
     })()`),
   )
   await reader.evaluate(RECORDER)
-  await clickButton(reader, 'Tour planen')
+  await clickButton(reader, 'Gießtag starten')
   // Where the card will appear, before it does; the mouse then stays put.
   const parked = await reader.evaluate(middleOf(STAGE_CARD))
   await moveMouse(reader, parked.x, parked.y)
@@ -940,7 +966,7 @@ try {
 const narrow = await openPage({ width: 900, height: 900 })
 try {
   await load(narrow, { name: 'narrow, mouse' })
-  await clickButton(narrow, 'Tour planen')
+  await clickButton(narrow, 'Gießtag starten')
   await moveMouse(narrow, 1, 1)
   const stripCard = `document.querySelector('#process [data-day-strip] [data-day-card]')`
   await narrow.waitFor(
@@ -977,7 +1003,7 @@ for (const [width, height] of [
   const sticky = await openPage({ width, height })
   try {
     await load(sticky, { name })
-    await clickButton(sticky, 'Tour planen')
+    await clickButton(sticky, 'Gießtag starten')
     await sleep(2500)
     const seen = await sticky.evaluate(`(() => {
       const stage = document.querySelector('#process [data-day-stage]')
@@ -1016,7 +1042,7 @@ try {
       if (cameras[cameras.length - 1] !== stage.dataset.dayCamera) cameras.push(stage.dataset.dayCamera)
     }).observe(stage, { attributes: true })
   })()`)
-  await clickButton(relay, 'Tour planen')
+  await clickButton(relay, 'Gießtag starten')
   await moveMouse(relay, 1, 1)
   await relay.waitFor(`${CAMERA_NOW} === 'probing'`, 'the probe to report', 600)
   check(
@@ -1104,7 +1130,7 @@ try {
 const still = await openPage({ width: 1440, height: 900, reducedMotion: true })
 try {
   await load(still, { name: 'reduced motion' })
-  await clickButton(still, 'Tour planen')
+  await clickButton(still, 'Gießtag starten')
   await sleep(400)
   check(
     'reduced motion: the tour is over at once',

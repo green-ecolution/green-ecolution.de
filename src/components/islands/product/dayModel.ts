@@ -27,7 +27,7 @@ export const thirstColors: Record<Thirst, string> = {
 
 export const NOT_WATERED: boolean[] = townTrees.map(() => false)
 export const NO_ORDER: number[] = townTrees.map(() => 0)
-export const NOT_STARTED: TourProgress = { served: 0, dwell: -1, done: false }
+export const NOT_STARTED: TourProgress = { served: 0, dwell: -1, done: false, routed: false }
 
 export interface TreeRow {
   /** Index in townTrees. */
@@ -109,6 +109,7 @@ export const finished = (script: TourScript): TourProgress => ({
   served: script.dwells.length,
   dwell: script.dwells.length - 1,
   done: true,
+  routed: true,
 })
 
 /** The tank as the gauge shows it between stops, 0 to 1. */
@@ -121,6 +122,7 @@ export const STATUS_KEYS = [
   'day.status.none',
   'day.status.thirstyOne',
   'day.status.thirstyMany',
+  'day.status.reporting',
   'day.status.plannedOne',
   'day.status.planned',
   'day.status.plannedRefill',
@@ -180,6 +182,12 @@ export function dayStatus(
     }
     if (stop.site === DEPOT_SITE) return { key: 'day.status.refillDepot' }
     return { key: stop.arrivedWith > 0 ? 'day.status.topUp' : 'day.status.refill' }
+  }
+
+  // Before the route draws, the probe at the first tree reports and its message travels.
+  const first = dwells.find(({ stop }) => stop.kind === 'tree')
+  if (progress.served === 0 && !progress.routed && first) {
+    return { key: 'day.status.reporting', tree: townTrees[treeOfSite(first.stop.site)].id }
   }
 
   if (progress.served === 0) {

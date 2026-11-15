@@ -19,9 +19,9 @@ import { supportsWebgl } from '../../../lib/webgl'
 import {
   HoldCard,
   StepHeading,
-  TankGauge,
   TourButton,
   TourControls,
+  TourHud,
   TreeList,
   WeatherSlider,
 } from './DayPanel'
@@ -334,6 +334,8 @@ function WateringDay({ poster }: { poster?: Poster }) {
     ...status.vars,
     name: status.tree ? t(`day.trees.${status.tree}`) : '',
   })
+  // The scene plays the tour: status and tank stand over the stage.
+  const isOnStage = phase === 'touring' && !isUnplayed
   const tourButton = {
     phase,
     canPlan: rows.some((row) => row.state === 'dry'),
@@ -438,6 +440,7 @@ function WateringDay({ poster }: { poster?: Poster }) {
                   {t(`day.places.${place}`)}
                 </span>
               ))}
+              <TourHud status={statusText} isShown={isOnStage} />
               <span data-day-caption aria-hidden="true" className={caption}>
                 {t('day.ride.caption')}
               </span>
@@ -466,13 +469,15 @@ function WateringDay({ poster }: { poster?: Poster }) {
                 className="opacity-100 transition-opacity duration-200 starting:opacity-0"
               />
             ) : (
-              // The panel's live region announces this; here it is only for the eyes.
-              <p aria-hidden="true" className="min-h-10 text-sm text-grey-900">
-                {statusText}
-              </p>
+              // While the scene plays, the stage says what happens. The panel's
+              // live region announces this; here it is only for the eyes.
+              !isOnStage && (
+                <p aria-hidden="true" className="min-h-10 text-sm text-grey-900">
+                  {statusText}
+                </p>
+              )
             )}
-            <div className="mt-2 flex items-center gap-4">
-              <TankGauge className="flex-1" />
+            <div className="mt-2 flex justify-end">
               <TourButton {...tourButton} />
             </div>
           </div>
@@ -509,7 +514,12 @@ function WateringDay({ poster }: { poster?: Poster }) {
             title={t('day.steps.act.title')}
             description={t('day.steps.act.description')}
           />
-          <TourControls status={statusText} stops={stops} {...tourButton} />
+          <TourControls
+            status={statusText}
+            isStatusOnStage={isOnStage}
+            stops={stops}
+            {...tourButton}
+          />
         </div>
       </div>
     </div>

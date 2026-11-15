@@ -58,7 +58,7 @@
       "hydrant": "Water point"
     },
     "tour": {
-      "plan": "Plan the round",
+      "plan": "Start the watering day",
       "skip": "Skip",
       "again": "Once more",
       "tank": "Water tank",
@@ -101,6 +101,7 @@
       "none": "Nobody has to go out today. Every tree has enough water.",
       "thirstyOne": "1 tree needs water. The rest can wait.",
       "thirstyMany": "{{count}} trees need water. The rest can wait.",
+      "reporting": "The probe at {{name}} reports dry soil.",
       "plannedOne": "The round is set: 1 stop, shortest way.",
       "planned": "The round is set: {{count}} stops, shortest way.",
       "plannedRefill": "The round is set: {{count}} stops, shortest way, refill included.",
