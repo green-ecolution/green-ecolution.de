@@ -1,7 +1,6 @@
 import { useFrame } from '@react-three/fiber'
 import { useRef, type ComponentType, type RefObject } from 'react'
 import {
-  BackSide,
   CatmullRomCurve3,
   Color,
   DoubleSide,
@@ -12,23 +11,24 @@ import {
   type Mesh,
   type MeshBasicMaterial,
 } from 'three'
-import {
-  exampleSpots,
-  heroTree,
-  pinColors,
-  storyTrees,
-  tourPath,
-  type PinTone,
-} from '../../../data/storyTown'
+import { exampleSpots, heroTree, storyTrees, tourPath } from '../../../data/storyTown'
 import { canopyCenterHeight, roadHeight, tourColors } from '../../../data/streamletTour'
-import { pathLength, vehiclePose, type GroundPoint } from '../../../lib/storyPath'
+import { pathLength, vehiclePose } from '../../../lib/storyPath'
 import { pinsShown, type StoryState, type VehicleState } from '../../../lib/storyTimeline'
+import { Pin } from '../scene3d/Pin'
+import {
+  WATER,
+  WATER_GLINT,
+  jetGeometry,
+  jetSpan,
+  shapeJet,
+  type JetArc,
+} from '../scene3d/waterJet'
 import { appendRibbon, ribbonGeometry, type RibbonArrays } from '../scene3d/ribbon'
 import { lobes, treePit } from '../scene3d/trees'
 import { Vehicle, WHEEL_RADIUS, WHEELBASE } from '../scene3d/Vehicle'
 import {
   PIN_HULL,
-  PIN_POST,
   PIN_RADIUS,
   PIN_TOTAL,
   SENSOR_X,
@@ -39,9 +39,8 @@ import {
   pinHeight,
   type Anchor,
 } from './anchors'
-import { PIT_TOP, damp, type ActorProps, type Story } from './shared'
+import { PIT_TOP, type ActorProps, type Story } from './shared'
 import { Gritter, RefuseTruck, SewerTruck } from './vehicles'
-import { WATER, WATER_GLINT, jetGeometry, jetSpan, shapeJet, type JetArc } from './waterJet'
 
 const dryBody = new Color('#C9B86A')
 const dryLit = new Color('#D8C97F')
@@ -178,65 +177,6 @@ export function SignalRings({ at, story, strength, isStatic }: RingsProps) {
   )
 }
 
-const pinTints: Record<PinTone, Color> = {
-  ok: new Color(pinColors.ok),
-  warn: new Color(pinColors.warn),
-  alert: new Color(pinColors.alert),
-  info: new Color(pinColors.info),
-}
-
-interface PinProps extends ActorProps {
-  at: GroundPoint
-  /** Height of the middle of the pin's head. */
-  height: number
-  /** Only a pin in alarm pulses. */
-  look: (state: StoryState) => { tone: PinTone; shown: boolean; alarm: boolean }
-}
-
-export function Pin({ at, height, story, look, isStatic }: PinProps) {
-  const group = useRef<Group>(null)
-  const headGroup = useRef<Group>(null)
-  const head = useRef<MeshBasicMaterial>(null)
-  const size = useRef(0)
-
-  useFrame(({ camera, clock }, delta) => {
-    const { tone, shown, alarm } = look(story.current)
-    const goal = shown ? 1 : 0
-    const fresh = size.current < 0.05
-    size.current = isStatic ? goal : damp(size.current, goal, 12, delta)
-
-    if (head.current) {
-      // A pin coming up starts in its colour; a standing one changes over.
-      if (fresh || isStatic) head.current.color.copy(pinTints[tone])
-      else head.current.color.lerp(pinTints[tone], 1 - Math.exp(-delta * 8))
-    }
-    headGroup.current?.scale.setScalar(pinHeadScale(camera.zoom))
-    if (!group.current) return
-    const pulse = !alarm || isStatic ? 1 : 1 + Math.sin(clock.getElapsedTime() * 4) * 0.08
-    group.current.visible = size.current > 0.01
-    group.current.scale.setScalar(size.current * pulse)
-  })
-
-  return (
-    <group ref={group} position={[at[0], height, at[1]]} visible={false}>
-      <mesh position={[0, -PIN_POST / 2, 0]}>
-        <cylinderGeometry args={[0.07, 0.07, PIN_POST, 6]} />
-        <meshBasicMaterial color={tourColors.vehicleBody} />
-      </mesh>
-      <group ref={headGroup}>
-        <mesh scale={PIN_HULL}>
-          <sphereGeometry args={[PIN_RADIUS, 20, 14]} />
-          <meshBasicMaterial color="#FFFFFF" side={BackSide} />
-        </mesh>
-        <mesh>
-          <sphereGeometry args={[PIN_RADIUS, 20, 14]} />
-          <meshBasicMaterial ref={head} color={pinColors.ok} />
-        </mesh>
-      </group>
-    </group>
-  )
-}
-
 export function TreePins({ story, isStatic }: ActorProps) {
   return (
     <>
@@ -245,25 +185,29 @@ export function TreePins({ story, isStatic }: ActorProps) {
           key={tree.at.join()}
           at={tree.at}
           height={pinHeight(tree)}
-          story={story}
           isStatic={isStatic}
-          look={(state) => ({
-            shown: pinsShown(state.pins, PIN_TOTAL) > index,
-            tone: tree.tone === 'warn' && state.drive < tree.servedAt ? 'warn' : 'ok',
-            alarm: false,
-          })}
+          look={() => {
+            const state = story.current
+            return {
+              shown: pinsShown(state.pins, PIN_TOTAL) > index,
+              tone: tree.tone === 'warn' && state.drive < tree.servedAt ? 'warn' : 'ok',
+              alarm: false,
+            }
+          }}
         />
       ))}
       <Pin
         at={heroTree.at}
         height={pinHeight(heroTree)}
-        story={story}
         isStatic={isStatic}
-        look={(state) => ({
-          shown: heroPinUp(state),
-          tone: state.health > 0.5 ? 'ok' : 'alert',
-          alarm: heroPinRed(state),
-        })}
+        look={() => {
+          const state = story.current
+          return {
+            shown: heroPinUp(state),
+            tone: state.health > 0.5 ? 'ok' : 'alert',
+            alarm: heroPinRed(state),
+          }
+        }}
       />
     </>
   )

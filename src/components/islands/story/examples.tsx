@@ -1,6 +1,7 @@
 import { exampleSpots } from '../../../data/storyTown'
 import { roadHeight } from '../../../data/streamletTour'
-import { Pin, SignalRings } from './actors'
+import { Pin } from '../scene3d/Pin'
+import { SignalRings } from './actors'
 import type { ActorProps } from './shared'
 
 export function ExampleSpots({ story, isStatic }: ActorProps) {
@@ -17,10 +18,9 @@ export function ExampleSpots({ story, isStatic }: ActorProps) {
           <Pin
             at={spot.at}
             height={spot.pinHeight}
-            story={story}
             isStatic={isStatic}
-            look={(state) => {
-              const example = state.examples[index]
+            look={() => {
+              const example = story.current.examples[index]
               return {
                 shown: example.alert || example.resolved,
                 tone: example.resolved ? 'ok' : spot.tone,

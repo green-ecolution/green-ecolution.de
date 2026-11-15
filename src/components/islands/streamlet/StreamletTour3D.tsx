@@ -208,7 +208,7 @@ function refillStationGeometry(stop: StopPlacement): BufferGeometry[] {
 // colours: a single draw call however much detail it carries, which is what
 // keeps the loop cheap enough to run all day.
 const townGeometry = merged([
-  ...cityBlocks.flatMap(blockGeometry),
+  ...cityBlocks.flatMap((block) => blockGeometry(block)),
   ...roofUnitGeometry(),
   ...depotGeometry(depotPosition),
   ...lawnGeometry(),
