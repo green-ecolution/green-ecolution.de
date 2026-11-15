@@ -2,8 +2,8 @@ import { ArrowRight, CloudRain, Sun } from 'lucide-react'
 import type { FocusEvent } from 'react'
 import { useT } from '../../../i18n/useT'
 import { MAX_DRY_DAYS } from '../../../lib/dryness'
-import type { Hold } from '../../../lib/wateringDay'
-import { thirstColors, type DayPhase, type TreeRow } from './dayModel'
+import type { CloseUpKind } from '../../../lib/wateringDay'
+import { thirstColors, type CardCopy, type DayPhase, type TreeRow } from './dayModel'
 
 interface StepHeadingProps {
   number: number
@@ -199,7 +199,8 @@ export function TourControls({ status, stops, ...button }: TourControlsProps) {
 const holdLeft = { transform: 'scaleX(var(--day-hold, 1))' }
 
 interface HoldCardProps {
-  kind: Hold['kind']
+  kind: CloseUpKind
+  copy: CardCopy
   onNext: () => void
   /** The pointer is over the card or the focus inside it, or no longer. */
   onReading: (via: 'pointer' | 'focus', isReading: boolean) => void
@@ -209,7 +210,14 @@ interface HoldCardProps {
 }
 
 /** Explains a close-up while it holds, with the time left and a way on. */
-export function HoldCard({ kind, onNext, onReading, isShown, className = '' }: HoldCardProps) {
+export function HoldCard({
+  kind,
+  copy,
+  onNext,
+  onReading,
+  isShown,
+  className = '',
+}: HoldCardProps) {
   const t = useT()
   const leave = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) onReading('focus', false)
@@ -231,12 +239,12 @@ export function HoldCard({ kind, onNext, onReading, isShown, className = '' }: H
       className={className}
     >
       <p className="text-xs font-semibold uppercase tracking-widest text-green-dark-900">
-        {t(`day.info.${kind}.label`)}
+        {t(copy.label)}
       </p>
-      <p className="mt-1 font-lato font-bold leading-snug text-grey-900">
-        {t(`day.info.${kind}.title`)}
+      <p className="mt-1 font-lato font-bold leading-snug text-grey-900">{t(copy.title)}</p>
+      <p className="mt-1 text-sm leading-snug text-grey-900/70">
+        {t(copy.text.key, copy.text.vars)}
       </p>
-      <p className="mt-1 text-sm leading-snug text-grey-900/70">{t(`day.info.${kind}.text`)}</p>
       <div
         aria-hidden="true"
         className="mt-3 h-1 overflow-hidden rounded-full bg-green-dark-900/10"
@@ -252,8 +260,8 @@ export function HoldCard({ kind, onNext, onReading, isShown, className = '' }: H
         onClick={onNext}
         className="mt-3 inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-semibold text-green-dark-900 ring-1 ring-green-dark-900/30 transition-colors hover:bg-green-dark-900 hover:text-white"
       >
-        {t('day.info.next')}
-        <ArrowRight aria-hidden="true" className="h-4 w-4" />
+        {t(copy.next)}
+        {kind !== 'result' && <ArrowRight aria-hidden="true" className="h-4 w-4" />}
       </button>
     </div>
   )

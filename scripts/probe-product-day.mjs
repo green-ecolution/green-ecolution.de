@@ -1,7 +1,7 @@
 // Drives the watering day of the product page in a headless browser and checks
-// what stills cannot show: the tour runs, refills on the way, flies into the
-// close-ups and out again without a cut, never turns round at a stop and ends
-// where it should.
+// what stills cannot show: the probe reports, the tour runs, refills on the
+// way, flies into the close-ups and out again without a cut, never turns round
+// at a stop and ends with the day's result where it should.
 //   node scripts/probe-product-day.mjs [outDir]
 import { mkdirSync } from 'node:fs'
 import { join } from 'node:path'
@@ -18,19 +18,24 @@ const sizes = [
 ]
 
 const STATUS = `document.querySelector('#process [role=status]').textContent.trim()`
+// The status reads the result from the arrival at the depot; the tour is over
+// once its close-up has flown out and the tour button offers it once more.
+const TOUR_DONE = `[...document.querySelectorAll('#process [data-day-tour-button]')].some((node) => node.getClientRects().length > 0 && node.textContent.includes('Noch einmal'))`
 const DRY = `document.querySelectorAll('#process [data-state=dry]').length`
 // Below lg the tour button exists twice, in the panel and in the strip under
-// the stage; only one of them is laid out.
+// the stage; only one of them is laid out. The stage card stays laid out while
+// hidden, and after the tour its button reads „Noch einmal“ too.
 const button = (text) =>
-  `[...document.querySelectorAll('#process button')].find((node) => node.getClientRects().length > 0 && node.textContent.includes(${JSON.stringify(text)}))`
+  `[...document.querySelectorAll('#process button')].find((node) => node.getClientRects().length > 0 && getComputedStyle(node).visibility !== 'hidden' && node.textContent.includes(${JSON.stringify(text)}))`
 const STRIP_CARD = `(() => {
   const card = document.querySelector('#process [data-day-strip] [data-day-card]')
   if (!card) return null
   const { top, bottom } = card.getBoundingClientRect()
   return {
     title: card.children[1].textContent.trim(),
+    text: card.children[2].textContent.trim(),
     inView: top >= 0 && bottom <= innerHeight,
-    next: [...card.querySelectorAll('button')].some((node) => node.textContent.includes('Weiterfahren')),
+    next: card.querySelector('button')?.textContent.trim() ?? null,
   }
 })()`
 const STRIP = `(() => {
@@ -58,17 +63,26 @@ const RECORDER = `(() => {
     turns: [],
     caption: {},
     cards: {},
-    holds: { watering: [], refilling: [] },
+    holds: { probing: [], watering: [], refilling: [], result: [] },
+    cardTexts: {},
+    // Cameras, statuses and the route's numbers in the order they came.
+    timeline: ['camera:' + stage.dataset.dayCamera, 'status:' + status.textContent.trim()],
     lowestOpacity: 1,
     lowestTank: 1,
   })
-  new MutationObserver(() => record.statuses.push(status.textContent.trim())).observe(status, {
+  new MutationObserver(() => {
+    record.statuses.push(status.textContent.trim())
+    record.timeline.push('status:' + status.textContent.trim())
+  }).observe(status, {
     childList: true,
     characterData: true,
     subtree: true,
   })
   new MutationObserver(() => {
-    if (record.cameras.at(-1) !== stage.dataset.dayCamera) record.cameras.push(stage.dataset.dayCamera)
+    if (record.cameras.at(-1) !== stage.dataset.dayCamera) {
+      record.cameras.push(stage.dataset.dayCamera)
+      record.timeline.push('camera:' + stage.dataset.dayCamera)
+    }
     if (stage.dataset.dayTurn && record.turns.at(-1) !== stage.dataset.dayTurn) record.turns.push(stage.dataset.dayTurn)
   }).observe(stage, { attributes: true, attributeFilter: ['data-day-camera', 'data-day-turn'] })
   const sample = () => {
@@ -85,12 +99,22 @@ const RECORDER = `(() => {
     )
     for (const card of shownCards) {
       if (card.dataset.dayCard === 'watering') record.wateringAt ??= status.textContent.trim()
+      if (card.dataset.dayCard === 'result') record.resultAt ??= status.textContent.trim()
+      record.cardTexts[card.dataset.dayCard] ??= card.children[2].textContent.trim()
       const seen = (record.cards[camera] ??= {})
       const title = card.children[1].textContent.trim()
       seen[title] = (seen[title] ?? 0) + 1
     }
     if (camera in record.holds) {
       record.holds[camera].push(Number(root.style.getPropertyValue('--day-hold') || 1))
+    }
+    // The tour's numbers stand over the trees once the route draws.
+    const numbers = [...document.querySelectorAll('#process [data-day-label]')].some(
+      (label) => label.dataset.shown === 'true' && /^[0-9]+$/.test(label.textContent.trim()),
+    )
+    if (numbers !== (record.numbers ?? false)) {
+      record.numbers = numbers
+      record.timeline.push(numbers ? 'numbers' : 'no-numbers')
     }
     const share = Number(root.style.getPropertyValue('--day-tank') || 1)
     record.lowestTank = Math.min(record.lowestTank, share)
@@ -99,9 +123,13 @@ const RECORDER = `(() => {
   requestAnimationFrame(sample)
 })()`
 
-// The first tree gets the ride and the watering close-up, the hydrant later on
-// its own close-up.
+// The probe at the first tree reports first; that tree gets the ride and the
+// watering close-up, the hydrant later on its own close-up, the depot the result.
 const CAMERAS = [
+  'iso',
+  'fly-in',
+  'probing',
+  'fly-out',
   'iso',
   'fly-in',
   'ride',
@@ -113,10 +141,17 @@ const CAMERAS = [
   'refilling',
   'fly-out',
   'iso',
+  'fly-in',
+  'result',
+  'fly-out',
+  'iso',
 ]
 
+const PROBE_TITLE = 'Die Sonde meldet sich'
 const WATERING_TITLE = 'Wasser nur dort, wo es fehlt'
 const REFILL_TITLE = 'Das Auffüllen ist mitgeplant'
+const RESULT_TITLE = 'Fertig für heute'
+const RESULT_TEXT = '6 Bäume gegossen. 6 hatten noch genug Wasser, dorthin musste niemand fahren.'
 // The scene ends a hold within a frame; React may take one more to hide the card.
 const CARD_LAG_SAMPLES = 2
 
@@ -126,8 +161,10 @@ const strayCards = (cards) =>
     Object.entries(titles)
       .filter(([title, samples]) => {
         const due =
+          (camera === 'probing' && title === PROBE_TITLE) ||
           (camera === 'watering' && title === WATERING_TITLE) ||
-          (camera === 'refilling' && title === REFILL_TITLE)
+          (camera === 'refilling' && title === REFILL_TITLE) ||
+          (camera === 'result' && title === RESULT_TITLE)
         return !due && samples > CARD_LAG_SAMPLES
       })
       .map(([title, samples]) => `${title} in ${camera} (${samples})`),
@@ -247,7 +284,7 @@ for (const size of sizes) {
     const stripCards = {}
     let stripOnTour = null
     // Software rendering runs the tour slower than a real machine does.
-    const deadline = Date.now() + 420_000
+    const deadline = Date.now() + 600_000
     let status = ''
     while (Date.now() < deadline) {
       const [now, camera] = await Promise.all([
@@ -257,17 +294,28 @@ for (const size of sizes) {
       status = now
       if (!stripOnTour && status.startsWith('Gießt '))
         stripOnTour = { strip: await page.evaluate(STRIP) }
-      if (['refilling', 'ride', 'watering'].includes(camera) && !photographed.has(camera)) {
+      const isHold = ['probing', 'watering', 'refilling', 'result'].includes(camera)
+      if ((isHold || camera === 'ride') && !photographed.has(camera)) {
         photographed.add(camera)
         await sleep(400)
         await page.screenshot(join(out, `${size.name}-2-${camera}.png`))
-        if (size.mobile && camera !== 'ride') stripCards[camera] = await page.evaluate(STRIP_CARD)
+        if (size.mobile && isHold) stripCards[camera] = await page.evaluate(STRIP_CARD)
       }
-      if (status.startsWith('Fertig.')) break
+      if (await page.evaluate(TOUR_DONE)) break
       await sleep(50)
     }
-    const { statuses, cameras, turns, caption, cards, holds, lowestOpacity, lowestTank } =
-      await page.evaluate(`window.__probe`)
+    const {
+      statuses,
+      cameras,
+      turns,
+      caption,
+      cards,
+      holds,
+      lowestOpacity,
+      lowestTank,
+      resultAt,
+      cardTexts,
+    } = await page.evaluate(`window.__probe`)
     const watering = new Set(statuses.filter((s) => s.startsWith('Gießt ')))
     check(
       `${size.name}: the tour announces six stops with a refill`,
@@ -280,7 +328,7 @@ for (const size of sizes) {
     )
     check(`${size.name}: the picture never dims`, lowestOpacity === 1, `lowest ${lowestOpacity}`)
     check(
-      `${size.name}: the camera rides to the first tree, watches the watering, flies to the hydrant and comes back`,
+      `${size.name}: the camera visits the probe, rides to the first tree, watches the watering, flies to the hydrant and to the depot and comes back each time`,
       cameras.join() === CAMERAS.join(),
       cameras.join(' > '),
     )
@@ -293,25 +341,44 @@ for (const size of sizes) {
       JSON.stringify(caption),
     )
     check(
-      `${size.name}: a card explains the watering and the refill while they hold, at no other time`,
-      (cards.watering?.[WATERING_TITLE] ?? 0) > 0 &&
+      `${size.name}: a card explains the probe, the watering, the refill and the result while they hold, at no other time`,
+      (cards.probing?.[PROBE_TITLE] ?? 0) > 0 &&
+        (cards.watering?.[WATERING_TITLE] ?? 0) > 0 &&
         (cards.refilling?.[REFILL_TITLE] ?? 0) > 0 &&
+        (cards.result?.[RESULT_TITLE] ?? 0) > 0 &&
         strayCards(cards).length === 0,
       JSON.stringify(cards),
     )
+    check(
+      `${size.name}: the result card counts six trees watered and six left alone`,
+      cardTexts.result === RESULT_TEXT,
+      JSON.stringify(cardTexts.result ?? null),
+    )
+    check(
+      `${size.name}: the status reads the result as soon as the truck is back at the depot`,
+      resultAt?.startsWith('Fertig. 6 Bäume'),
+      JSON.stringify(resultAt ?? null),
+    )
     const falls = (values) => values.length > 2 && values[0] > values.at(-1) + 0.3
+    const holdNames = ['probing', 'watering', 'refilling', 'result']
     check(
       `${size.name}: the card's bar runs down over each hold`,
-      falls(holds.watering) && falls(holds.refilling),
-      `watering ${holds.watering[0]} to ${holds.watering.at(-1)}, refilling ${holds.refilling[0]} to ${holds.refilling.at(-1)}`,
+      holdNames.every((name) => falls(holds[name])),
+      holdNames.map((name) => `${name} ${holds[name][0]} to ${holds[name].at(-1)}`).join(', '),
     )
     if (size.mobile) {
-      const both = [stripCards.refilling, stripCards.watering]
+      const expected = [
+        ['probing', PROBE_TITLE, 'Weiter'],
+        ['watering', WATERING_TITLE, 'Weiterfahren'],
+        ['refilling', REFILL_TITLE, 'Weiterfahren'],
+        ['result', RESULT_TITLE, 'Noch einmal'],
+      ]
       check(
         `${size.name}: during each hold the card stands in the strip, in view, with its way on`,
-        both.every((card) => card?.inView && card.next) &&
-          both[0]?.title === REFILL_TITLE &&
-          both[1]?.title === WATERING_TITLE,
+        expected.every(([camera, title, next]) => {
+          const card = stripCards[camera]
+          return card?.inView && card.title === title && card.next === next
+        }),
         JSON.stringify(stripCards),
       )
     }
@@ -354,7 +421,7 @@ for (const size of sizes) {
     await clickButton(page, 'Tour planen')
     await sleep(2500)
     await clickButton(page, 'Überspringen')
-    await page.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the skipped tour to end', 30)
+    await page.waitFor(TOUR_DONE, 'the skipped tour to end', 30)
     check(`${size.name}: skip jumps to the end`, true)
   } catch (error) {
     check(`${size.name}: ${error.message}`, false)
@@ -388,7 +455,7 @@ try {
   await unseen.evaluate(RECORDER)
   await clickButton(unseen, 'Tour planen')
   await moveMouse(unseen, 1, 1)
-  await unseen.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour to end', 4200)
+  await unseen.waitFor(TOUR_DONE, 'the tour to end', 6000)
   const { statuses } = await unseen.evaluate(`window.__probe`)
   check(
     'phone, stage never in view: the tour is played',
@@ -537,7 +604,7 @@ try {
     'desktop, keyboard: the button keeps focus while the tour runs',
     await pointer.evaluate(`${focusKept} && window.__primary.textContent.includes('Überspringen')`),
   )
-  await pointer.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour to end', 4200)
+  await pointer.waitFor(TOUR_DONE, 'the tour to end', 6000)
   check(
     'desktop, keyboard: the button keeps focus when the tour is done',
     await pointer.evaluate(`${focusKept} && window.__primary.textContent.includes('Noch einmal')`),
@@ -556,12 +623,21 @@ try {
   await five.evaluate(RECORDER)
   await clickButton(five, 'Tour planen')
   await moveMouse(five, 1, 1)
-  await five.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour at five days to end', 4200)
-  const { cards, wateringAt } = await five.evaluate(`window.__probe`)
+  await five.waitFor(TOUR_DONE, 'the tour at five days to end', 6000)
+  const { cards, wateringAt, cameras, cardTexts } = await five.evaluate(`window.__probe`)
   check(
     'desktop, five days: the one tree gets the watering close-up with its card',
     (cards.watering?.[WATERING_TITLE] ?? 0) > 0 && wateringAt === 'Gießt Am Markt.',
     `${wateringAt}, ${JSON.stringify(cards)}`,
+  )
+  check(
+    'desktop, five days: the probe reports first and the result counts the one tree',
+    cameras.slice(0, 5).join() === 'iso,fly-in,probing,fly-out,iso' &&
+      cameras.slice(-4).join() === 'fly-in,result,fly-out,iso' &&
+      (cards.probing?.[PROBE_TITLE] ?? 0) > 0 &&
+      cardTexts.result ===
+        '1 Baum gegossen. 11 hatten noch genug Wasser, dorthin musste niemand fahren.',
+    `${cameras.join(' > ')}, ${JSON.stringify(cardTexts.result ?? null)}`,
   )
 } catch (error) {
   check(`desktop, five days: ${error.message}`, false)
@@ -577,7 +653,7 @@ try {
   await eight.evaluate(RECORDER)
   await clickButton(eight, 'Tour planen')
   await moveMouse(eight, 1, 1)
-  await eight.waitFor(`${STATUS}.startsWith('Fertig.')`, 'the tour at eight days to end', 4200)
+  await eight.waitFor(TOUR_DONE, 'the tour at eight days to end', 6000)
   const { turns } = await eight.evaluate(`window.__probe`)
   check(
     'desktop, eight days: the truck never turns round at a tree or the hydrant',
@@ -602,6 +678,152 @@ async function barOverASecond(page) {
   const first = await page.evaluate(HOLD)
   await sleep(1000)
   return [first, await page.evaluate(HOLD)]
+}
+
+const buttonIn = (card, text) =>
+  `[...${card}.querySelectorAll('button')].find((node) => node.textContent.trim() === ${JSON.stringify(text)})`
+
+// „Weiter“ at the probe goes on to the plan, the truck leaves after it; „Noch
+// einmal“ in the result's card starts the day over.
+const beats = await openPage(sizes[0])
+try {
+  await load(beats, { name: 'desktop beats' })
+  await beats.evaluate(RECORDER)
+  await clickButton(beats, 'Tour planen')
+  await moveMouse(beats, 1, 1)
+  await beats.waitFor(`${CAMERA} === 'probing'`, 'the probe close-up', 600)
+  await sleep(500)
+  const weiter = await beats.evaluate(middleOf(buttonIn(STAGE_CARD, 'Weiter')))
+  await moveMouse(beats, weiter.x, weiter.y)
+  await clickAt(beats, weiter.x, weiter.y)
+  const clicked = Date.now()
+  await beats.waitFor(`${CAMERA} !== 'probing'`, 'the probe hold to end', 50)
+  const left = Date.now() - clicked
+  const after = await beats.evaluate(CAMERA)
+  check(
+    '„Weiter“ at the probe flies out within a second and the focus waits at the picture',
+    after === 'fly-out' &&
+      left < 1000 &&
+      (await beats.evaluate(`document.activeElement === ${PICTURE}`)),
+    `${after} after ${left} ms`,
+  )
+  await moveMouse(beats, 40, 40)
+  await beats.waitFor(`${STATUS}.startsWith('Gießt ')`, 'the first tree', 6000)
+  const { timeline } = await beats.evaluate(`window.__probe`)
+  // From the probe's hold on: back to the slanted view, the route draws with
+  // its numbers, and only then the camera goes down again and the truck waters.
+  const from = timeline.indexOf('camera:probing')
+  const at = (entry) => timeline.indexOf(entry, from)
+  const firstWatering = timeline.findIndex(
+    (entry, index) => index > from && entry.startsWith('status:Gießt '),
+  )
+  const order = [
+    at('camera:fly-out'),
+    at('camera:iso'),
+    at('numbers'),
+    at('camera:fly-in'),
+    firstWatering,
+  ]
+  check(
+    'after „Weiter“ the camera returns to the slanted view, the route draws, then the camera goes down and the truck waters the first tree',
+    from >= 0 && order.every((index, step) => index > (step === 0 ? from : order[step - 1])),
+    timeline
+      .slice(Math.max(0, from))
+      .filter((entry) => !entry.startsWith('status:Tour'))
+      .slice(0, 8)
+      .join(' > '),
+  )
+  await beats.waitFor(`${CAMERA} === 'result'`, 'the result close-up', 6000)
+  await sleep(500)
+  const again = await beats.evaluate(middleOf(buttonIn(STAGE_CARD, 'Noch einmal')))
+  await beats.screenshot(join(out, 'desktop-9-result.png'))
+  await moveMouse(beats, again.x, again.y)
+  await clickAt(beats, again.x, again.y)
+  await sleep(100)
+  await beats.screenshot(join(out, 'desktop-10-after-noch-einmal.png'))
+  const placeholderWhileFading = await beats.evaluate(
+    `document.getElementById('process').textContent.includes('{{')`,
+  )
+  await beats.waitFor(`${CAMERA} === 'iso'`, 'the slanted view after „Noch einmal“', 50)
+  await sleep(400)
+  await moveMouse(beats, 40, 40)
+  const afterAgain = await beats.evaluate(`(() => ({
+    camera: ${CAMERA},
+    stageCard: ${STAGE_CARD}.dataset.shown,
+    strip: document.querySelector('#process [data-day-strip] [data-day-card]') !== null,
+    placeholder: document.getElementById('process').textContent.includes('{{'),
+    dry: ${DRY},
+    focus: document.activeElement === ${PICTURE},
+    plan: ${button('Tour planen')} !== undefined,
+  }))()`)
+  check(
+    '„Noch einmal“ in the result card shows the slanted view, no card and no placeholder, the six dry trees are back and the focus waits at the picture',
+    !placeholderWhileFading &&
+      afterAgain.camera === 'iso' &&
+      afterAgain.stageCard === 'false' &&
+      !afterAgain.strip &&
+      !afterAgain.placeholder &&
+      afterAgain.dry === 6 &&
+      afterAgain.focus &&
+      afterAgain.plan,
+    JSON.stringify({ placeholderWhileFading, ...afterAgain }),
+  )
+} catch (error) {
+  check(`desktop beats: ${error.message}`, false)
+} finally {
+  beats.close()
+}
+
+// On a phone the strip can be in view while the stage is not, and a stage
+// out of view draws no frame. „Noch einmal“ in the result card must still
+// leave nothing of the result behind for the next tour.
+const offStage = await openPage(sizes[2])
+try {
+  await load(offStage, { name: 'phone, result card off stage' })
+  await clickButton(offStage, 'Tour planen')
+  await offStage.waitFor(`${CAMERA} === 'result'`, 'the result close-up', 6000)
+  await sleep(500)
+  await offStage.evaluate(`(() => {
+    const stage = document.querySelector('#process [data-day-stage]').getBoundingClientRect()
+    scrollBy({ top: stage.bottom + 2, behavior: 'instant' })
+  })()`)
+  await sleep(800)
+  const placed = await offStage.evaluate(`(() => {
+    const stage = document.querySelector('#process [data-day-stage]').getBoundingClientRect()
+    const button = ${buttonIn(`document.querySelector('#process [data-day-strip] [data-day-card]')`, 'Noch einmal')}
+    const rect = button?.getBoundingClientRect()
+    return { stageOut: stage.bottom <= 0, buttonIn: Boolean(rect && rect.top >= 0 && rect.bottom <= innerHeight) }
+  })()`)
+  if (!placed.stageOut || !placed.buttonIn) {
+    throw new Error(`could not put the strip in view without the stage: ${JSON.stringify(placed)}`)
+  }
+  await offStage.evaluate(
+    `${buttonIn(`document.querySelector('#process [data-day-strip] [data-day-card]')`, 'Noch einmal')}.click()`,
+  )
+  await sleep(300)
+  const LEFT_OVER = `(() => {
+    const strip = document.querySelector('#process [data-day-strip] [data-day-card]')
+    const spoken = document.querySelector('#process p[aria-live=polite]').textContent
+    return { strip: strip?.children[1].textContent.trim() ?? null, spoken }
+  })()`
+  // Read in the same task as the click, before any frame of the scene.
+  const atStart = await offStage.evaluate(`(() => {
+    ${button('Tour planen')}.click()
+    return ${LEFT_OVER}
+  })()`)
+  await sleep(300)
+  const soon = await offStage.evaluate(LEFT_OVER)
+  const isClean = ({ strip, spoken }) =>
+    strip !== 'Fertig für heute' && !spoken.includes('Fertig für heute')
+  check(
+    'phone, stage out of view: after „Noch einmal“ in the result card the next tour starts without the result card or its announcement',
+    isClean(atStart) && isClean(soon),
+    JSON.stringify({ atStart, soon }),
+  )
+} catch (error) {
+  check(`phone, result card off stage: ${error.message}`, false)
+} finally {
+  offStage.close()
 }
 
 // Reading the card holds the tour; „Weiterfahren“ ends the hold at once.

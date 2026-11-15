@@ -19,7 +19,7 @@ import { Crowns, HitAreas, Labels, TreePins } from './actors'
 import type { DayEvents, DayLive, TourProgress } from './shared'
 import { ShowpieceCamera } from './showpieceCamera'
 import { OVERVIEW, PARKED, showpieceWeight, shotFor, truckPose, type Stage } from './stage'
-import { RefillHose, RefillPulse, RouteRibbon, Truck, WaterJet } from './tourActors'
+import { ProbeRings, RefillHose, RefillPulse, RouteRibbon, Truck, WaterJet } from './tourActors'
 import { groundGeometry, shadowGeometry, townGeometry } from './town'
 
 interface Props {
@@ -47,10 +47,12 @@ const UNREPORTED: TourProgress = { served: -1, dwell: -2, done: false }
 const CAMERA_NAMES: Record<ViewMode, string> = {
   iso: 'iso',
   flyIn: 'fly-in',
+  probing: 'probing',
   ride: 'ride',
   toWatering: 'to-watering',
   watering: 'watering',
   refilling: 'refilling',
+  result: 'result',
   flyOut: 'fly-out',
 }
 
@@ -321,6 +323,7 @@ function WateringDayScene3D({ isStatic, isActive, isReady, live, events, labels,
       <WaterJet live={live} stage={stage} isStatic={isStatic} />
       <RefillPulse live={live} stage={stage} isStatic={isStatic} />
       <RefillHose live={live} stage={stage} isStatic={isStatic} />
+      <ProbeRings live={live} stage={stage} isStatic={isStatic} />
       <Crowns live={live} isStatic={isStatic} />
       <TreePins live={live} stage={stage} isStatic={isStatic} />
       <HitAreas live={live} events={events} />

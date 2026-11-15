@@ -6,7 +6,7 @@ import Button from '../../Button.astro'
 import Arrow from '../../icons/Arrow.astro'
 import { company } from '../../../data/company'
 import { townTrees } from '../../../data/productTown'
-import { STATUS_KEYS } from '../../islands/product/dayModel'
+import { CARD_KEYS, STATUS_KEYS } from '../../islands/product/dayModel'
 import type { Language } from '../../../i18n/languages'
 import { pickStrings } from '../../../i18n/pick'
 import { getTranslations, type TranslationKey } from '../../../i18n/t'
@@ -35,17 +35,10 @@ const KEYS: TranslationKey<'product'>[] = [
   'day.places.hydrant',
   'day.tour.plan',
   'day.tour.skip',
-  'day.tour.again',
   'day.tour.tank',
   'day.tour.stops',
   'day.ride.caption',
-  'day.info.watering.label',
-  'day.info.watering.title',
-  'day.info.watering.text',
-  'day.info.refill.label',
-  'day.info.refill.title',
-  'day.info.refill.text',
-  'day.info.next',
+  ...CARD_KEYS,
   ...STATUS_KEYS,
   ...townTrees.map((tree) => `day.trees.${tree.id}` as const),
 ]

@@ -5,6 +5,8 @@ import type { GroundPoint } from './storyPath'
 import {
   CRUISE,
   MAX_TOUR_SECONDS,
+  PROBE_HOLD_SECONDS,
+  RESULT_HOLD_SECONDS,
   RIDE_CRUISE,
   REFILL_HOLD_SECONDS,
   WATERING_HOLD_SECONDS,
@@ -27,6 +29,12 @@ function townScript(days: number): TourScript {
   if (!day) throw new Error(`nothing to water at ${days} days`)
   return day.script
 }
+
+// Every hundredth of a second of the tour, its end included.
+const samples = ({ duration }: TourScript) =>
+  Array.from({ length: Math.ceil(duration / 0.01) + 1 }, (_, step) =>
+    Math.min(duration, step * 0.01),
+  )
 
 // depot at x = 0, a tree at 60 and one at 80, all on one road
 const sites: GroundPoint[] = [
@@ -61,8 +69,13 @@ describe('tourScript', () => {
     expect(script.duration).toBeCloseTo(script.dwells[2].end)
   })
 
-  it('hält am Depot nicht mehr an', () => {
-    expect(script.dwells[2].end).toBeCloseTo(script.dwells[2].start)
+  it('bleibt am Bauhof für die Bilanz stehen und endet mit ihrem Rückflug', () => {
+    const { resultShot, dwells } = script
+    expect(resultShot.flyIn.end).toBeCloseTo(dwells[2].start)
+    expect(resultShot.shot.start).toBeCloseTo(dwells[2].start)
+    expect(resultShot.flyOut.start).toBeCloseTo(resultShot.shot.end)
+    expect(resultShot.flyOut.end).toBeCloseTo(dwells[2].end)
+    expect(script.duration).toBeCloseTo(resultShot.flyOut.end)
   })
 
   it('legt das Schaustück an den ersten Baum der Tour', () => {
@@ -137,7 +150,21 @@ describe('tourScript', () => {
       const { mode } = tourFrame(short, (short.duration * step) / 1000).view
       if (seen.at(-1) !== mode) seen.push(mode)
     }
-    expect(seen).toEqual(['iso', 'flyIn', 'watering', 'flyOut', 'iso'])
+    expect(seen).toEqual([
+      'iso',
+      'flyIn',
+      'probing',
+      'flyOut',
+      'iso',
+      'flyIn',
+      'watering',
+      'flyOut',
+      'iso',
+      'flyIn',
+      'result',
+      'flyOut',
+      'iso',
+    ])
   })
 
   it('lehnt einen Plan ohne Halte ab', () => {
@@ -171,22 +198,26 @@ describe('tourScript', () => {
     }
   })
 
-  it('dauert in der Ausgangsstellung 55 bis 70 Sekunden', () => {
+  it('dauert in der Ausgangsstellung 70 bis 85 Sekunden', () => {
     const { duration } = townScript(START_DAYS)
-    expect(duration).toBeGreaterThanOrEqual(55)
-    expect(duration).toBeLessThanOrEqual(70)
+    expect(duration).toBeGreaterThanOrEqual(70)
+    expect(duration).toBeLessThanOrEqual(85)
   })
 
-  it('zeigt in der Ausgangsstellung erst Fahrt und Gießen, dann das Auffüllen, jede Einstellung in Folge', () => {
+  it('zeigt in der Ausgangsstellung Sonde, Fahrt und Gießen, Auffüllen und Bilanz, jede Einstellung in Folge', () => {
     const town = townScript(START_DAYS)
     const seen: ViewMode[] = []
     const shares: Partial<Record<ViewMode, number[]>> = {}
-    for (let time = 0; time <= town.duration; time += 0.01) {
+    for (const time of samples(town)) {
       const { mode, share } = tourFrame(town, time).view
       if (seen.at(-1) !== mode) seen.push(mode)
       ;(shares[mode] ??= []).push(share)
     }
     expect(seen).toEqual([
+      'iso',
+      'flyIn',
+      'probing',
+      'flyOut',
       'iso',
       'flyIn',
       'ride',
@@ -198,8 +229,19 @@ describe('tourScript', () => {
       'refilling',
       'flyOut',
       'iso',
+      'flyIn',
+      'result',
+      'flyOut',
+      'iso',
     ])
-    for (const mode of ['ride', 'toWatering', 'watering', 'refilling'] as const) {
+    for (const mode of [
+      'probing',
+      'ride',
+      'toWatering',
+      'watering',
+      'refilling',
+      'result',
+    ] as const) {
       const values = shares[mode] ?? []
       expect(values[0]).toBeLessThan(0.02)
       expect(values.at(-1)).toBeGreaterThan(0.98)
@@ -207,11 +249,11 @@ describe('tourScript', () => {
         if (index > 0) expect(value).toBeGreaterThan(values[index - 1])
       })
     }
-    // Both flights run twice, each time from 0 to 1.
+    // Both flights run four times, each time from 0 to 1.
     for (const mode of ['flyIn', 'flyOut'] as const) {
       const values = shares[mode] ?? []
       const restarts = values.filter((value, index) => index > 0 && value < values[index - 1])
-      expect(restarts).toHaveLength(1)
+      expect(restarts).toHaveLength(3)
       expect(values[0]).toBeLessThan(0.02)
       expect(values.at(-1)).toBeGreaterThan(0.98)
     }
@@ -289,9 +331,14 @@ describe('tourScript', () => {
 describe('tourFrame', () => {
   const script = tourScript(twoTrees, straight, AT_DEPOT, 2)
 
-  it('zeichnet zuerst die Route und fährt dann los', () => {
-    const early = tourFrame(script, script.lead / 2)
+  it('zeichnet nach der Sonde die Route und fährt dann los', () => {
+    const { plan, probeShot } = script
+    if (!probeShot) throw new Error('the script has no probe')
+    expect(plan.start).toBeCloseTo(probeShot.flyOut.end)
+    expect(plan.end).toBeCloseTo(script.lead)
+    const early = tourFrame(script, (plan.start + plan.end) / 2)
     expect(early.shot).toBe('plan')
+    expect(early.view.mode).toBe('iso')
     expect(early.reveal).toBeCloseTo(0.5)
     expect(early.along).toBe(0)
     expect(early.tank).toBe(2)
@@ -335,10 +382,19 @@ describe('tourFrame', () => {
     expect(tourFrame(script, showpiece.flyOut.end + 0.01).view.mode).toBe('iso')
   })
 
-  it('zieht die Kamera auf dem Heimweg zurück in die Übersicht', () => {
+  it('folgt dem Wagen bis zum Bauhof und zieht die Kamera erst dort in die Übersicht', () => {
     const home = script.legs[2]
     expect(tourFrame(script, home.start + 0.01).shot).toBe('follow')
-    expect(tourFrame(script, home.end - 0.01).shot).toBe('home')
+    expect(tourFrame(script, home.end - 0.01).shot).toBe('follow')
+    expect(tourFrame(script, home.end + 0.01).shot).toBe('home')
+    expect(tourFrame(script, script.duration - 0.01).shot).toBe('home')
+  })
+
+  it('zählt die Tour erst nach dem Rückflug der Bilanz als erledigt', () => {
+    const { resultShot } = script
+    expect(tourFrame(script, resultShot.shot.start + 0.01).done).toBe(false)
+    expect(tourFrame(script, resultShot.flyOut.end - 0.01).done).toBe(false)
+    expect(tourFrame(script, resultShot.flyOut.end).done).toBe(true)
   })
 
   it('endet mit allen Halten erledigt', () => {
@@ -434,25 +490,31 @@ describe('Weg zum ersten Baum', () => {
 
 describe('Halt mit Karte', () => {
   const town = townScript(START_DAYS)
-  const { showpiece, refillShot } = town
-  if (!showpiece || !refillShot) throw new Error('the tour has no close-ups')
+  const { showpiece, refillShot, probeShot, resultShot } = town
+  if (!showpiece || !refillShot || !probeShot) throw new Error('the tour has no close-ups')
+  const HOLDS = { probing: 'probe', watering: 'watering', refilling: 'refill', result: 'result' }
 
-  it('hält die Karte genau so lange, wie gegossen oder aufgefüllt wird', () => {
+  it('hält die Karte genau so lange, wie die Sonde meldet, gegossen, aufgefüllt oder Bilanz gezogen wird', () => {
+    const kinds = new Set<string>()
     for (let time = 0; time <= town.duration; time += 0.01) {
       const { mode, share } = tourFrame(town, time).view
       const hold = holdAt(town, time)
-      if (mode === 'watering' || mode === 'refilling') {
-        expect(hold?.kind).toBe(mode === 'watering' ? 'watering' : 'refill')
+      if (mode in HOLDS) {
+        expect(hold?.kind).toBe(HOLDS[mode as keyof typeof HOLDS])
         expect(hold?.left).toBeCloseTo(1 - share)
+        kinds.add(hold?.kind ?? '')
       } else {
         expect(hold).toBeNull()
       }
     }
+    expect([...kinds]).toEqual(['probe', 'watering', 'refill', 'result'])
   })
 
-  it('lässt die Nahaufnahmen ungefähr acht und neun Sekunden stehen', () => {
-    expect(showpiece.watering.end - showpiece.watering.start).toBeCloseTo(WATERING_HOLD_SECONDS, 0)
-    expect(refillShot.shot.end - refillShot.shot.start).toBeCloseTo(REFILL_HOLD_SECONDS, 0)
+  it('lässt die Nahaufnahmen sieben, sieben, acht und acht Sekunden stehen', () => {
+    expect(probeShot.shot.end - probeShot.shot.start).toBeCloseTo(PROBE_HOLD_SECONDS, 1)
+    expect(showpiece.watering.end - showpiece.watering.start).toBeCloseTo(WATERING_HOLD_SECONDS, 1)
+    expect(refillShot.shot.end - refillShot.shot.start).toBeCloseTo(REFILL_HOLD_SECONDS, 1)
+    expect(resultShot.shot.end - resultShot.shot.start).toBeCloseTo(RESULT_HOLD_SECONDS, 1)
   })
 
   it('springt mit „Weiterfahren“ an den Anfang des Rückflugs', () => {
@@ -461,6 +523,26 @@ describe('Halt mit Karte', () => {
     expect(tourFrame(town, afterHold(town, watering)).view.mode).toBe('flyOut')
     const refilling = refillShot.shot.start + 0.1
     expect(afterHold(town, refilling)).toBeCloseTo(refillShot.flyOut.start)
+  })
+
+  it('springt mit „Weiter“ an der Sonde in den Rückflug, auf den die Planung folgt', () => {
+    const probing = probeShot.shot.start + 1
+    expect(afterHold(town, probing)).toBeCloseTo(probeShot.flyOut.start)
+    expect(tourFrame(town, afterHold(town, probing)).view).toMatchObject({
+      mode: 'flyOut',
+      piece: 'probe',
+    })
+    expect(tourFrame(town, probeShot.flyOut.end + 0.01).reveal).toBeGreaterThan(0)
+  })
+
+  it('springt aus der Bilanz in ihren Rückflug, nach dem die Tour endet', () => {
+    const result = resultShot.shot.start + 1
+    expect(afterHold(town, result)).toBeCloseTo(resultShot.flyOut.start)
+    expect(tourFrame(town, afterHold(town, result)).view).toMatchObject({
+      mode: 'flyOut',
+      piece: 'result',
+    })
+    expect(resultShot.flyOut.end).toBeCloseTo(town.duration)
   })
 
   it('lässt die Zeit außerhalb eines Halts, wie sie ist', () => {
@@ -477,5 +559,157 @@ describe('Halt mit Karte', () => {
     const riding = showpiece.flyIn.end + 1
     expect(nextElapsed(town, riding, 0.05, true)).toBeCloseTo(riding + 0.05)
     expect(nextElapsed(town, town.duration - 0.01, 0.05, false)).toBe(town.duration)
+  })
+})
+
+describe('Sonde und Bilanz', () => {
+  const town = townScript(START_DAYS)
+  const { probeShot, resultShot, showpiece, dwells } = town
+  if (!probeShot || !showpiece) throw new Error('the tour has no probe or showpiece')
+
+  it('zeichnet die Route erst nach dem Rückflug von der Sonde', () => {
+    for (let time = 0; time < probeShot.flyOut.end; time += 0.01) {
+      expect(tourFrame(town, time).reveal).toBe(0)
+    }
+    expect(tourFrame(town, probeShot.flyOut.end + 0.05).reveal).toBeGreaterThan(0)
+    expect(tourFrame(town, town.lead).reveal).toBe(1)
+  })
+
+  it('lässt den Wagen stehen, bis die Planung vorbei ist', () => {
+    for (let time = 0; time < town.lead; time += 0.01) {
+      const frame = tourFrame(town, time)
+      expect(frame.leg).toBe(0)
+      expect(frame.along).toBe(0)
+      expect(frame.shot).toBe('plan')
+    }
+    expect(tourFrame(town, town.lead + 0.1).along).toBeGreaterThan(0)
+  })
+
+  it('beginnt die Bilanz, wenn der Wagen am Bauhof ankommt, und endet die Tour mit ihrem Rückflug', () => {
+    const home = dwells[dwells.length - 1]
+    expect(home.stop.kind).toBe('depot')
+    expect(resultShot.flyIn.end).toBeCloseTo(home.start)
+    expect(resultShot.shot.start).toBeCloseTo(home.start)
+    expect(tourFrame(town, home.start - 0.01).dwell).toBe(-1)
+    expect(tourFrame(town, home.start + 0.01).dwell).toBe(dwells.length - 1)
+    expect(tourFrame(town, resultShot.flyOut.end - 0.01).done).toBe(false)
+    expect(town.duration).toBeCloseTo(resultShot.flyOut.end)
+    expect(holdAt(town, home.start + 0.01)?.kind).toBe('result')
+  })
+
+  it('gibt jeder Tour der Stadt Sonde und Bilanz, jede Einstellung in Folge', () => {
+    for (let days = 5; days <= 14; days++) {
+      const tour = townScript(days)
+      const { probeShot: probe, resultShot: result } = tour
+      expect(probe, `${days} days`).not.toBeNull()
+      const seen: string[] = []
+      for (const time of samples(tour)) {
+        const { mode, piece } = tourFrame(tour, time).view
+        const name = `${mode}:${piece}`
+        if (seen.at(-1) !== name) seen.push(name)
+      }
+      expect(seen.slice(0, 5), `${days} days`).toEqual([
+        'iso:null',
+        'flyIn:probe',
+        'probing:probe',
+        'flyOut:probe',
+        'iso:null',
+      ])
+      expect(seen.slice(-4), `${days} days`).toEqual([
+        'flyIn:result',
+        'result:result',
+        'flyOut:result',
+        'iso:null',
+      ])
+      expect(result.shot.start, `${days} days`).toBeCloseTo(
+        tour.dwells[tour.dwells.length - 1].start,
+      )
+      // Every close-up comes out of the slanted view and goes back into it.
+      const pieces = seen.filter((name) => name.startsWith('flyIn')).length
+      expect(
+        seen.filter((name) => name === 'iso:null'),
+        `${days} days`,
+      ).toHaveLength(pieces + 1)
+    }
+  })
+
+  it('lässt die Bilanz erst nach dem Rückflug davor anfliegen, wenn der Heimweg kurz ist', () => {
+    const near: GroundPoint[] = [
+      [0, 0],
+      [6, 0],
+    ]
+    const short = tourScript(
+      {
+        stops: [
+          { site: 1, arc: 1, kind: 'tree', arrivedWith: 1, leftWith: 0 },
+          { site: 0, arc: 0, kind: 'depot', arrivedWith: 0, leftWith: 0 },
+        ],
+        length: 12,
+      },
+      (from, to) => [near[from], near[to]],
+      AT_DEPOT,
+      1,
+    )
+    const { showpiece: shown, resultShot: result } = short
+    if (!shown) throw new Error('the short tour has no showpiece')
+    expect(result.flyIn.start).toBeGreaterThan(shown.flyOut.end)
+    expect(result.shot.end - result.shot.start).toBeCloseTo(RESULT_HOLD_SECONDS)
+    expect(short.duration).toBeCloseTo(result.flyOut.end)
+  })
+})
+
+describe('Tempo und Bilanz', () => {
+  it('lässt die Nahaufnahme beim Nachfüllen weichen, wenn sie in den Anflug der Bilanz fiele, auch bei gedrosseltem Tempo', () => {
+    // A long tour, so it is paced; the hydrant lies just before the depot.
+    const far: GroundPoint[] = [
+      [0, 0],
+      [1400, 0],
+      [20, 0],
+    ]
+    const tour = tourScript(
+      {
+        stops: [
+          { site: 1, arc: 1, kind: 'tree', arrivedWith: 1, leftWith: 0 },
+          { site: 2, arc: 2, kind: 'refill', arrivedWith: 0, leftWith: 1 },
+          { site: 0, arc: 0, kind: 'depot', arrivedWith: 1, leftWith: 1 },
+        ],
+        length: 2800,
+      },
+      (from, to) => [far[from], far[to]],
+      AT_DEPOT,
+      1,
+    )
+    expect(tour.duration).toBeCloseTo(MAX_TOUR_SECONDS)
+    expect(tour.refillShot).toBeNull()
+    const home = tour.dwells[tour.dwells.length - 1]
+    expect(tour.resultShot.flyIn.end).toBeCloseTo(home.start)
+  })
+
+  it('bleibt unter der Höchstdauer, auch wenn die Bilanz auf einen kurzen Heimweg warten muss', () => {
+    // A long detour to a tree right beside the depot, and a short way home.
+    const sitesNear: GroundPoint[] = [
+      [0, 0],
+      [6, 0],
+    ]
+    const tour = tourScript(
+      {
+        stops: [
+          { site: 1, arc: 1, kind: 'tree', arrivedWith: 1, leftWith: 0 },
+          { site: 0, arc: 0, kind: 'depot', arrivedWith: 0, leftWith: 0 },
+        ],
+        length: 1418,
+      },
+      (from, to) =>
+        from === 0
+          ? [sitesNear[0], [0, 700], [6, 700], sitesNear[1]]
+          : [sitesNear[from], sitesNear[to]],
+      AT_DEPOT,
+      1,
+    )
+    const { showpiece, resultShot } = tour
+    if (!showpiece) throw new Error('the detour has no showpiece')
+    expect(resultShot.flyIn.start).toBeGreaterThan(showpiece.flyOut.end)
+    expect(tour.duration).toBeLessThanOrEqual(MAX_TOUR_SECONDS + 1e-9)
+    expect(tour.duration).toBeCloseTo(MAX_TOUR_SECONDS)
   })
 })

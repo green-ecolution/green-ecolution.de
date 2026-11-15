@@ -8,7 +8,7 @@ export const RIDE_CRUISE = 5.5
 export const PLAN_SECONDS = 1.6
 export const WATER_SECONDS = 2.2
 export const REFILL_SECONDS = 2.6
-export const MAX_TOUR_SECONDS = 70
+export const MAX_TOUR_SECONDS = 90
 export const CORNER_RADIUS = 3.5
 
 /** On a way too short to cruise first: how long after the truck pulls away the camera starts down. */
@@ -26,13 +26,15 @@ export const TO_WATERING_SECONDS = 1.6
 export const FLY_OUT_SECONDS = 2
 /** The fly-out starts this long before the truck drives on. */
 const FLY_OUT_EARLY = 0.5
-/** How long the watering shot and the refill close-up hold still while their card explains them. */
-export const WATERING_HOLD_SECONDS = 8
-export const REFILL_HOLD_SECONDS = 9
-/** The slanted view between the two close-ups lasts at least this long. */
+/** How long each close-up holds still while its card explains it. */
+export const PROBE_HOLD_SECONDS = 7
+export const WATERING_HOLD_SECONDS = 7
+export const REFILL_HOLD_SECONDS = 8
+export const RESULT_HOLD_SECONDS = 8
+/** A beat of the slanted view after „Tour planen“ before the camera flies to the probe. */
+const PROBE_DELAY = 0.3
+/** The slanted view between two close-ups lasts at least this long. */
 const CLOSE_UP_GAP = 1.5
-/** Share of the way home after which the camera pulls back to the whole town. */
-const HOME_FROM = 0.55
 
 /**
  * How the truck drives the way to the first tree, in seconds before any
@@ -86,13 +88,17 @@ export interface Showpiece {
   flyOut: TimeWindow
 }
 
-/** The close-up at the hydrant: down as the truck stops, back up as it drives on. */
-export interface RefillShot {
-  /** Index of the refill stop in `dwells`. */
-  stop: number
+/** A close-up that flies down, holds still with its card and flies back up. */
+export interface HeldShot {
   flyIn: TimeWindow
   shot: TimeWindow
   flyOut: TimeWindow
+}
+
+/** The close-up at the hydrant: down as the truck stops, back up as it drives on. */
+export interface RefillShot extends HeldShot {
+  /** Index of the refill stop in `dwells`. */
+  stop: number
 }
 
 export interface TourScript {
@@ -100,11 +106,17 @@ export interface TourScript {
   legs: TourLeg[]
   dwells: TourDwell[]
   capacity: number
-  /** When the first leg starts; until then the route draws itself. */
+  /** While the route draws itself, after the probe has reported. */
+  plan: TimeWindow
+  /** When the first leg starts, the end of `plan`. */
   lead: number
   duration: number
+  /** The probe at the first tree reports before the truck leaves; null on a tour without a tree. */
+  probeShot: HeldShot | null
   showpiece: Showpiece | null
   refillShot: RefillShot | null
+  /** The day's result at the depot; the tour is over when its fly-out ends. */
+  resultShot: HeldShot
 }
 
 const dwellSeconds = (stop: PlanStop) =>
@@ -198,23 +210,42 @@ export function tourScript(
     (stop) => stop.kind === 'refill' && stop.site !== depot.site,
   )
 
-  const timed = (closeUp: number) => {
+  const last = plan.stops.length - 1
+  const probing =
+    ridden >= 0 ? PROBE_DELAY + FLY_IN_SECONDS + PROBE_HOLD_SECONDS + FLY_OUT_SECONDS : 0
+
+  // Every time in the tour is a multiple of `pace`, so the tour at pace 1 tells
+  // how far it has to be slowed down to fit and which close-ups crowd each other.
+  const timed = (closeUp: number, pace: number) => {
     const standing = plan.stops.map((stop, index): number =>
       index === ridden
         ? (isRidden ? TO_WATERING_SECONDS : 0) + WATERING_HOLD_SECONDS + FLY_OUT_EARLY
         : index === closeUp
           ? REFILL_HOLD_SECONDS + FLY_OUT_EARLY
-          : dwellSeconds(stop),
+          : index === last
+            ? RESULT_HOLD_SECONDS + FLY_OUT_SECONDS
+            : dwellSeconds(stop),
     )
-    const natural =
-      PLAN_SECONDS +
-      driving.reduce((sum, seconds) => sum + seconds, 0) +
-      standing.reduce((sum, seconds) => sum + seconds, 0)
-    const pace = Math.min(1, MAX_TOUR_SECONDS / natural)
+
+    let probeShot: HeldShot | null = null
+    if (ridden >= 0) {
+      const start = PROBE_DELAY * pace
+      const landed = start + FLY_IN_SECONDS * pace
+      const held = landed + PROBE_HOLD_SECONDS * pace
+      probeShot = {
+        flyIn: { start, end: landed },
+        shot: { start: landed, end: held },
+        flyOut: { start: held, end: held + FLY_OUT_SECONDS * pace },
+      }
+    }
+    const planWindow = {
+      start: probing * pace,
+      end: (probing + PLAN_SECONDS) * pace,
+    }
 
     const legs: TourLeg[] = []
     const dwells: TourDwell[] = []
-    let clock = PLAN_SECONDS * pace
+    let clock = planWindow.end
     plan.stops.forEach((stop, index) => {
       const start = clock
       clock += driving[index] * pace
@@ -253,7 +284,7 @@ export function tourScript(
         }
       } else {
         // Lands as the truck stops, but not before the route has drawn itself.
-        const flyInStart = Math.max(PLAN_SECONDS * pace, stop.start - FLY_IN_SECONDS * pace)
+        const flyInStart = Math.max(planWindow.end, stop.start - FLY_IN_SECONDS * pace)
         showpiece = {
           leg: ridden,
           flyIn: { start: flyInStart, end: stop.start },
@@ -277,39 +308,67 @@ export function tourScript(
       }
     }
 
+    // Lands as the truck stops at the depot, unless the close-up before it
+    // is still flying out: then it waits for that and the stop lasts longer.
+    const home = dwells[last]
+    const before = Math.max(
+      showpiece ? showpiece.flyOut.end : -Infinity,
+      refillShot ? refillShot.flyOut.end : -Infinity,
+    )
+    const resultStart = Math.max(home.start - FLY_IN_SECONDS * pace, before + CLOSE_UP_GAP * pace)
+    const resultLanded = resultStart + FLY_IN_SECONDS * pace
+    const resultHeld = resultLanded + RESULT_HOLD_SECONDS * pace
+    const resultShot: HeldShot = {
+      flyIn: { start: resultStart, end: resultLanded },
+      shot: { start: resultLanded, end: resultHeld },
+      flyOut: { start: resultHeld, end: resultHeld + FLY_OUT_SECONDS * pace },
+    }
+    home.end = Math.max(home.end, resultShot.flyOut.end)
+
     return {
       legs,
       dwells,
       capacity,
-      lead: PLAN_SECONDS * pace,
-      duration: clock,
+      plan: planWindow,
+      lead: planWindow.end,
+      duration: home.end,
+      probeShot,
       showpiece,
       refillShot,
+      resultShot,
     }
   }
 
-  const script = timed(refilled)
-  const { refillShot, showpiece, lead } = script
-  // The two close-ups must not run into each other, nor into the plan.
+  const natural = timed(refilled, 1)
+  const { refillShot, showpiece, dwells, lead } = natural
+  // The refill close-up gives way: it must not run into the plan, the watering
+  // close-up or the result's landing as the truck stops at the depot.
   const isCrowded =
     refillShot !== null &&
     (refillShot.flyIn.start < lead ||
+      refillShot.flyOut.end + CLOSE_UP_GAP > dwells[last].start - FLY_IN_SECONDS ||
       (showpiece !== null &&
         refillShot.flyIn.start < showpiece.flyOut.end + CLOSE_UP_GAP &&
         showpiece.flyIn.start < refillShot.flyOut.end + CLOSE_UP_GAP))
-  return isCrowded ? timed(-1) : script
+  const closeUp = isCrowded ? -1 : refilled
+  const unpaced = isCrowded ? timed(closeUp, 1) : natural
+  return timed(closeUp, Math.min(1, MAX_TOUR_SECONDS / unpaced.duration))
 }
 
+export type CloseUpKind = 'probe' | 'watering' | 'refill' | 'result'
+
 export interface Hold {
-  kind: 'watering' | 'refill'
+  kind: CloseUpKind
   /** Share of the hold still to come, 1 to 0. */
   left: number
 }
 
-const holdWindows = ({ showpiece, refillShot }: TourScript) =>
+const holdWindows = ({ probeShot, showpiece, refillShot, resultShot }: TourScript) =>
   [
+    probeShot && { kind: 'probe' as const, during: probeShot.shot, next: probeShot.flyOut },
     showpiece && { kind: 'watering' as const, during: showpiece.watering, next: showpiece.flyOut },
     refillShot && { kind: 'refill' as const, during: refillShot.shot, next: refillShot.flyOut },
+    { kind: 'result' as const, during: resultShot.shot, next: resultShot.flyOut },
   ].filter((hold) => hold !== null)
 
 /** The close-up that holds still with its card at this time, if any. */
@@ -322,7 +381,7 @@ export function holdAt(script: TourScript, seconds: number): Hold | null {
   return { kind: hold.kind, left: 1 - (seconds - start) / (end - start) }
 }
 
-/** Where „Weiterfahren“ continues from: the start of the fly-out, or `seconds` outside a hold. */
+/** Where a card's button continues from: the start of the fly-out, or `seconds` outside a hold. */
 export function afterHold(script: TourScript, seconds: number): number {
   const hold = holdWindows(script).find(
     ({ during }) => seconds >= during.start && seconds < during.end,
@@ -344,14 +403,23 @@ export function nextElapsed(
 /** What the slanted camera aims at. */
 export type TourShot = 'plan' | 'follow' | 'home'
 
-export type ViewMode = 'iso' | 'flyIn' | 'ride' | 'toWatering' | 'watering' | 'refilling' | 'flyOut'
+export type ViewMode =
+  | 'iso'
+  | 'flyIn'
+  | 'probing'
+  | 'ride'
+  | 'toWatering'
+  | 'watering'
+  | 'refilling'
+  | 'result'
+  | 'flyOut'
 
 export interface TourView {
   mode: ViewMode
   /** How far into the mode, 0 to 1; 0 for the slanted view. */
   share: number
   /** Which close-up the flights lead to or come from; null in the slanted view. */
-  piece: 'watering' | 'refill' | null
+  piece: CloseUpKind | null
 }
 
 export const ISO_VIEW: TourView = { mode: 'iso', share: 0, piece: null }
@@ -383,24 +451,29 @@ const smooth = (t: number) => t * t * (3 - 2 * t)
 // Pulls away and brakes, but keeps most of the leg at an even pace.
 const eased = (t: number) => t + (smooth(t) - t) * 0.6
 
-function viewAt({ showpiece, refillShot }: TourScript, time: number): TourView {
-  const windows: (readonly [ViewMode, TimeWindow, TourView['piece']])[] = [
+const held = (shot: HeldShot | null, mode: ViewMode, piece: CloseUpKind) =>
+  shot
+    ? ([
+        ['flyIn', shot.flyIn, piece],
+        [mode, shot.shot, piece],
+        ['flyOut', shot.flyOut, piece],
+      ] as const)
+    : []
+
+function viewAt({ probeShot, showpiece, refillShot, resultShot }: TourScript, time: number) {
+  const windows: (readonly [ViewMode, TimeWindow, CloseUpKind])[] = [
+    ...held(probeShot, 'probing', 'probe'),
     ...SHOWPIECE_MODES.flatMap((mode) => {
       const window = showpiece?.[mode]
       return window ? [[mode, window, 'watering'] as const] : []
     }),
-    ...(refillShot
-      ? ([
-          ['flyIn', refillShot.flyIn, 'refill'],
-          ['refilling', refillShot.shot, 'refill'],
-          ['flyOut', refillShot.flyOut, 'refill'],
-        ] as const)
-      : []),
+    ...held(refillShot, 'refilling', 'refill'),
+    ...held(resultShot, 'result', 'result'),
   ]
   const now = windows.find(([, { start, end }]) => time >= start && time < end)
   if (!now) return ISO_VIEW
   const [mode, { start, end }, piece] = now
-  return { mode, share: (time - start) / (end - start), piece }
+  return { mode, share: (time - start) / (end - start), piece } satisfies TourView
 }
 
 export function tourFrame(script: TourScript, seconds: number): TourFrame {
@@ -408,7 +481,7 @@ export function tourFrame(script: TourScript, seconds: number): TourFrame {
   const last = script.legs.length - 1
   const base = {
     done: false,
-    reveal: clamp01(time / script.lead),
+    reveal: clamp01((time - script.plan.start) / (script.plan.end - script.plan.start)),
     view: viewAt(script, time),
   }
 
@@ -458,7 +531,7 @@ export function tourFrame(script: TourScript, seconds: number): TourFrame {
       dwellShare: 0,
       served: index,
       tank: dwell.stop.arrivedWith,
-      shot: index === last && share >= HOME_FROM ? 'home' : 'follow',
+      shot: 'follow',
     }
   }
 
@@ -471,6 +544,8 @@ export function tourFrame(script: TourScript, seconds: number): TourFrame {
     dwellShare: share,
     served: index,
     tank: dwell.stop.arrivedWith + (dwell.stop.leftWith - dwell.stop.arrivedWith) * smooth(share),
-    shot: 'follow',
+    // Back at the depot the slanted camera goes to the whole town while the
+    // close-up of the result draws, so the fly-out lands on the overview.
+    shot: index === last ? 'home' : 'follow',
   }
 }

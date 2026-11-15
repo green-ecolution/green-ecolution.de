@@ -65,6 +65,12 @@
       "stops": "So fährt die Tour"
     },
     "info": {
+      "probe": {
+        "label": "Messen",
+        "title": "Die Sonde meldet sich",
+        "text": "Sie steckt neben dem Baum im Boden und misst, wie feucht die Erde an den Wurzeln ist. Den Wert funkt sie von selbst.",
+        "next": "Weiter"
+      },
       "watering": {
         "label": "Gießen",
         "title": "Wasser nur dort, wo es fehlt",
@@ -74,6 +80,12 @@
         "label": "Auffüllen",
         "title": "Das Auffüllen ist mitgeplant",
         "text": "Die Tour rechnet den Wassertank mit. Sie legt das Auffüllen dorthin, wo eine Wasserstelle am Weg liegt. So fährt niemand mit leerem Tank quer durch die Stadt."
+      },
+      "done": {
+        "label": "Bilanz",
+        "title": "Fertig für heute",
+        "text": "{{watered}} Bäume gegossen. {{rest}} hatten noch genug Wasser, dorthin musste niemand fahren.",
+        "textOne": "1 Baum gegossen. {{rest}} hatten noch genug Wasser, dorthin musste niemand fahren."
       },
       "next": "Weiterfahren"
     },

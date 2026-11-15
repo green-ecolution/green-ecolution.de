@@ -10,6 +10,7 @@ import {
   roads,
   square,
   townTrees,
+  type TownTree,
 } from '../../../data/productTown'
 import { lawnHeight, roadHeight, tourColors, type Tree } from '../../../data/streamletTour'
 import { merged, painted, placed } from '../../../lib/paintedGeometry'
@@ -19,6 +20,7 @@ import { roundedSlab, unitBox, unitCylinder, unitDisc } from '../scene3d/primiti
 import { roadGeometry } from '../scene3d/roads'
 import { treeGeometry, treePitGeometry } from '../scene3d/trees'
 import { WATER } from '../scene3d/waterJet'
+import { PIT_TOP, PROBE, probeAt } from './probe'
 
 // The crowns of the sensor trees change colour and are drawn on their own.
 function trunkGeometry(tree: Tree): BufferGeometry {
@@ -39,6 +41,26 @@ function hydrantGeometry([x, z]: GroundPoint): BufferGeometry[] {
     painted(unitCylinder, placed([x, 1.4, z], [0.45, 2.2, 0.45]), WATER),
     painted(unitCylinder, placed([x, 2.65, z], [0.62, 0.3, 0.62]), WATER),
     painted(unitBox, placed([x, HYDRANT_ARM.height, z], [HYDRANT_ARM.half * 2, 0.36, 0.36]), WATER),
+  ]
+}
+
+function probeGeometry(tree: TownTree): BufferGeometry[] {
+  const [x, z] = probeAt(tree)
+  const bottom = PIT_TOP - PROBE.sunk
+  return [
+    painted(
+      unitBox,
+      placed([x, bottom + PROBE.height / 2, z], [PROBE.width, PROBE.height, PROBE.width]),
+      PROBE.color,
+    ),
+    painted(
+      unitBox,
+      placed(
+        [x, bottom + PROBE.height + PROBE.capHeight / 2, z],
+        [PROBE.cap, PROBE.capHeight, PROBE.cap],
+      ),
+      tourColors.refill,
+    ),
   ]
 }
 
@@ -77,6 +99,7 @@ export const townGeometry = merged([
   ),
   ...townTrees.flatMap(treePitGeometry),
   ...townTrees.map(trunkGeometry),
+  ...townTrees.flatMap(probeGeometry),
   ...looseTrees.flatMap(treeGeometry),
   ...hydrantGeometry(hydrant.at),
 ])

@@ -87,7 +87,7 @@ export const blocks: CityBlock[] = [
   house(-4, 34, 12, 9, 2, 'gable', 3, '+x'),
   house(12, 33, 9, 9, 2, 'flat', 0, '+z'),
   house(42, 35, 10, 9, 2, 'gable', 1, '+x'),
-  house(-26, 35, 9, 8, 2, 'gable', 2, '+z'),
+  house(-47, 17, 7, 5, 2, 'gable', 2, '+x'),
   house(-51, -14, 10, 9, 2, 'gable', 3, '+x'),
   house(-50, 8, 11, 11, 3, 'flat', 0, '+x'),
   house(27, -12, 6, 8, 3, 'flat', 1, '+z'),
