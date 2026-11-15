@@ -5,54 +5,86 @@
   },
   "hero": {
     "label": "Product",
-    "headline": "Measure. Understand. Act.",
-    "description": "Green Ecolution is a modular, open-source platform. Sensors deliver readings, the platform turns them into a clear picture of the situation, and deployment planning sends your team exactly where it is needed. Today it controls the irrigation of urban trees, and that is only the beginning."
+    "headline": "Know every morning which tree needs water.",
+    "description": "Green Ecolution shows your team on a map where the soil is dry and suggests the watering round to match. Try it right here."
   },
-  "dashboard": {
-    "sectionLabel": "Irrigation example",
-    "titleLine1": "Well-founded recommendations",
-    "titleLine2": "for irrigation at a glance",
-    "description": "Our system scientifically evaluates the sensor data and shows when irrigation is needed. The data is prepared so that it is easy to interpret and can be directly incorporated into deployment planning.",
-    "imageAlt": "Green Ecolution dashboard - overview of irrigation recommendations"
-  },
-  "process": {
-    "sectionLabel": "Process",
-    "title": "Three steps, one system",
-    "description": "Measure, understand and act stay the same for every task. The irrigation of urban trees is the first example.",
+  "day": {
+    "sectionLabel": "Try it yourself",
+    "title": "Your watering day in three steps",
+    "description": "Change the weather, watch the town react and send the watering truck on its way.",
+    "stageAriaLabel": "A small town seen from above at an angle, with twelve trees. A pin in traffic-light colours above each tree shows whether it needs water. A watering truck drives to the dry trees.",
     "steps": {
       "measure": {
-        "category": "Capture",
-        "title": "Measure",
-        "description": "Sensors capture what is happening on site and transmit their readings energy-efficiently via LoRaWAN or NB-IoT. For irrigation, soil probes measure moisture and temperature at variable depths.",
-        "details": {
-          "item1": "Extensible to further sensor types",
-          "item2": "Soil moisture and temperature at variable depths",
-          "item3": "Energy-efficient transmission via LoRaWAN or NB-IoT",
-          "item4": "Flush-mounted installation, no impact on maintenance work"
-        }
+        "title": "Measure: where is it dry?",
+        "description": "Probes in the ground report on their own how moist the soil is."
       },
       "understand": {
-        "category": "Analyze",
-        "title": "Understand",
-        "description": "The platform evaluates the measurement series and shows on a map and dashboard where action is needed. For irrigation, a traffic-light system shows which trees and areas need water.",
-        "details": {
-          "item1": "Traffic-light system shows irrigation needs on a map",
-          "item2": "Prioritization by urgency when capacity is limited",
-          "item3": "Time series for soil moisture, temperature, and water tension",
-          "item4": "Real-time dashboard with all relevant KPIs"
-        }
+        "title": "Understand: what comes first?",
+        "description": "The driest trees are at the top."
       },
       "act": {
-        "category": "Execute",
-        "title": "Act",
-        "description": "The picture of the situation becomes a deployment. Deployment and route planning generates routes that take vehicles, capacities and road restrictions into account. For irrigation, these are watering routes with refill stops.",
-        "details": {
-          "item1": "Automated dispatch and route planning",
-          "item2": "Takes water capacity and vehicle size into account",
-          "item3": "Road and access restrictions included",
-          "item4": "Export of routes to navigation devices"
-        }
+        "title": "Act: who drives where?",
+        "description": "The round only goes where water is missing."
       }
+    },
+    "weather": {
+      "label": "Days without rain",
+      "value": "{{days}} days without rain",
+      "valueOne": "1 day without rain",
+      "hint": "move the slider"
+    },
+    "states": {
+      "dry": "needs water",
+      "soon": "water soon",
+      "ok": "has enough",
+      "watered": "watered"
+    },
+    "trees": {
+      "markt": "Market Place",
+      "marktgasse": "Market Lane",
+      "bahnhof": "Station Road",
+      "schulweg": "School Lane",
+      "suedring": "South Ring",
+      "lindenweg": "Linden Way",
+      "kirchplatz": "Church Square",
+      "kita": "By the Nursery",
+      "rathaus": "Town Hall Square",
+      "teich": "By the Pond",
+      "parkallee": "Park Avenue",
+      "friedhof": "Cemetery Lane"
+    },
+    "places": {
+      "depot": "Depot",
+      "hydrant": "Water point"
+    },
+    "tour": {
+      "plan": "Plan the round",
+      "skip": "Skip",
+      "again": "Once more",
+      "tank": "Water tank",
+      "stops": "How the round goes"
+    },
+    "status": {
+      "none": "Nobody has to go out today. Every tree has enough water.",
+      "thirstyOne": "1 tree needs water. The rest can wait.",
+      "thirstyMany": "{{count}} trees need water. The rest can wait.",
+      "plannedOne": "The round is set: 1 stop, shortest way.",
+      "planned": "The round is set: {{count}} stops, shortest way.",
+      "plannedRefill": "The round is set: {{count}} stops, shortest way, refill included.",
+      "watering": "Watering {{name}}.",
+      "next": "On to {{name}}.",
+      "toWater": "On to the water point.",
+      "topUp": "Topping up on the way. The water point is on the route.",
+      "refill": "Tank empty. Refilling at the water point.",
+      "refillDepot": "Refilling at the depot.",
+      "home": "Everything watered. Back to the depot.",
+      "doneOne": "Done. 1 tree watered. {{rest}} still had enough water, so nobody had to drive there.",
+      "done": "Done. {{watered}} trees watered. {{rest}} still had enough water, so nobody had to drive there."
+    },
+    "after": {
+      "text": "This is the small version. We would be glad to show you the real application.",
+      "cta": "Book a live demo",
+      "ctaAriaLabel": "Book an appointment for a live demo"
     }
   },
   "architecture": {
@@ -123,25 +155,6 @@
     "tourLinkRich": "How the route optimisation works and what input it expects is described on the <streamlet>route optimisation</streamlet> page.",
     "cta": "Discuss getting started",
     "ctaAriaLabel": "Go to the contact page"
-  },
-  "advantages": {
-    "sectionLabel": "Advantages",
-    "title": "All other features and advantages",
-    "description": "Green Ecolution is publicly viewable and pursues one goal: using resources where they are needed. For irrigation, that means less water and variable deployment planning.",
-    "items": {
-      "openSource": {
-        "title": "An open solution for everyone",
-        "description": "Auditable source code, no licence fees and no vendor lock-in"
-      },
-      "optimizedRoutes": {
-        "title": "Optimized routes",
-        "description": "Individual deployment planning for more efficient irrigation"
-      },
-      "water": {
-        "title": "Less is more",
-        "description": "Targeted irrigation, less water consumption"
-      }
-    }
   },
   "vision": {
     "sectionLabel": "Vision",
