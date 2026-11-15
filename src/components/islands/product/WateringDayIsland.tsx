@@ -2,6 +2,7 @@ import {
   Component,
   Suspense,
   lazy,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -107,15 +108,19 @@ function WateringDay() {
     }),
     [],
   )
+  const playsTour = canRenderModel && isReady && !hasFailed && !prefersReducedMotion
 
-  const phase: DayPhase = !day ? 'idle' : progress.done ? 'done' : 'touring'
+  // Without a scene to play it, a tour is over; that also ends one whose scene
+  // failed halfway, since nothing would advance it any more.
+  const tour = day && !playsTour ? finished(day.script) : progress
+  const phase: DayPhase = !day ? 'idle' : tour.done ? 'done' : 'touring'
   const watered = useMemo(
-    () => (day ? wateredAfter(day.script, progress.served) : NOT_WATERED),
-    [day, progress.served],
+    () => (day ? wateredAfter(day.script, tour.served) : NOT_WATERED),
+    [day, tour.served],
   )
   const order = day?.order ?? NO_ORDER
   const rows = useMemo(() => treeRows(days, watered, order), [days, watered, order])
-  const status = dayStatus(phase, rows, day, progress)
+  const status = dayStatus(phase, rows, day, tour)
 
   // The scene reads this ref every frame; a render must not sit in between.
   useEffect(() => {
@@ -137,6 +142,9 @@ function WateringDay() {
   const reset = () => {
     live.current.running = false
     live.current.elapsed = 0
+    // The scene wrote the gauge during the tour. React may still hold a full
+    // tank from before and would then not write it back.
+    if (tank.current) tank.current.style.transform = 'scaleX(1)'
     setDay(null)
     setProgress(NOT_STARTED)
   }
@@ -146,18 +154,58 @@ function WateringDay() {
     setDays(value)
   }
 
+  // Works with the scene off screen too: its clock stands still there, so the
+  // end state and the gauge are written here instead of waiting for a frame.
+  const finishScene = useCallback((planned: PlannedDay) => {
+    live.current.elapsed = planned.script.duration
+    live.current.running = false
+    const share = tankShare(planned, finished(planned.script))
+    if (tank.current) tank.current.style.transform = `scaleX(${share})`
+    live.current.onChange?.()
+  }, [])
+
+  const finish = (planned: PlannedDay) => {
+    finishScene(planned)
+    setProgress(finished(planned.script))
+  }
+
+  useEffect(() => {
+    if (day && !playsTour) finishScene(day)
+  }, [day, playsTour, finishScene])
+
+  const showStage = () => {
+    const node = stageNode.current
+    if (!node) return
+    const { top, bottom, height } = node.getBoundingClientRect()
+    const visible = Math.min(bottom, window.innerHeight) - Math.max(top, 0)
+    if (visible < height * 0.6) node.scrollIntoView({ block: 'center', behavior: 'smooth' })
+  }
+
   const plan = () => {
     const planned = planDay(days)
     if (!planned) return
     setDay(planned)
-    // Without a tour to play, it is over the moment it is planned.
-    live.current.elapsed = planned.script.duration
-    live.current.running = false
-    setProgress(finished(planned.script))
+    // Set right away: the clock in the scene must not see the new script with
+    // the old time for a frame.
+    live.current.script = planned.script
+    if (!playsTour) {
+      finish(planned)
+      return
+    }
+    live.current.elapsed = 0
+    live.current.running = true
+    setProgress(NOT_STARTED)
+    live.current.onChange?.()
+    // On a phone the button sits below the list, out of sight of the stage.
+    showStage()
+  }
+
+  const skip = () => {
+    if (day) finish(day)
   }
 
   const stops =
-    day && phase === 'done'
+    day && phase === 'done' && !playsTour
       ? day.script.dwells.map(({ stop }) =>
           stop.kind === 'tree'
             ? t(`day.trees.${townTrees[treeOfSite(stop.site)].id}`)
@@ -254,16 +302,16 @@ function WateringDay() {
           <TourControls
             phase={phase}
             canPlan={phase === 'idle' && rows.some((row) => row.state === 'dry')}
-            canSkip={false}
+            canSkip={phase === 'touring'}
             status={t(status.key, {
               ...status.vars,
               name: status.tree ? t(`day.trees.${status.tree}`) : '',
             })}
             stops={stops}
-            tank={tankShare(day, progress)}
+            tank={tankShare(day, tour)}
             tankRef={tank}
             onPlan={plan}
-            onSkip={() => undefined}
+            onSkip={skip}
             onReset={reset}
           />
         </div>

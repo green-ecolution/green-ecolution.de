@@ -9,6 +9,7 @@ import ReleaseContextOnNavigate from '../scene3d/ReleaseContextOnNavigate'
 import { Crowns, HitAreas, Labels, TreePins } from './actors'
 import type { DayEvents, DayLive, TourProgress } from './shared'
 import { OVERVIEW, PARKED, shotFor, truckPose, type Stage } from './stage'
+import { RefillPulse, RouteRibbon, Truck, WaterJet } from './tourActors'
 import { groundGeometry, shadowGeometry, townGeometry } from './town'
 
 interface Props {
@@ -194,6 +195,10 @@ function WateringDayScene3D({ isStatic, isActive, live, events, labels, tank }: 
       <ambientLight intensity={2.2} />
       <directionalLight position={[-30, 60, 80]} intensity={1.35} />
       <Town />
+      <RouteRibbon live={live} stage={stage} isStatic={isStatic} />
+      <Truck live={live} stage={stage} isStatic={isStatic} />
+      <WaterJet live={live} stage={stage} isStatic={isStatic} />
+      <RefillPulse live={live} stage={stage} isStatic={isStatic} />
       <Crowns live={live} isStatic={isStatic} />
       <TreePins live={live} isStatic={isStatic} />
       <HitAreas live={live} events={events} />

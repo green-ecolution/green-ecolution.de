@@ -66,8 +66,10 @@ interface TreeListProps {
 export function TreeList({ rows, selected, onSelect }: TreeListProps) {
   const t = useT()
 
+  // The rows re-sort as trees get watered; a row as scroll anchor would drag the
+  // page along and push the tour button out of view.
   return (
-    <ul className="grid gap-1">
+    <ul className="grid gap-1 [overflow-anchor:none]">
       {rows.map((row) => (
         <li key={row.id}>
           <button
