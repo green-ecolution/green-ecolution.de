@@ -5,9 +5,11 @@ import { plate } from '../../../data/productTown'
 import { tourColors } from '../../../data/streamletTour'
 import { AMBIENT_MS, MAX_DPR } from '../../../lib/sceneBudget'
 import { tourFrame } from '../../../lib/wateringDay'
+import { UNSCALED_PIN_ZOOM } from '../scene3d/pinSize'
 import ReleaseContextOnNavigate from '../scene3d/ReleaseContextOnNavigate'
 import { Crowns, HitAreas, Labels, TreePins } from './actors'
 import type { DayEvents, DayLive, TourProgress } from './shared'
+import { RideCamera } from './rideCamera'
 import { OVERVIEW, PARKED, shotFor, truckPose, type Stage } from './stage'
 import { RefillPulse, RouteRibbon, Truck, WaterJet } from './tourActors'
 import { groundGeometry, shadowGeometry, townGeometry } from './town'
@@ -137,7 +139,11 @@ function Rig({ isStatic, live, stage }: RigProps) {
       lookAt.z + CAMERA_DISTANCE,
     )
     camera.lookAt(lookAt)
-    camera.zoom = fit * zoom.current
+    // Pin heads grow with this camera's zoom. The ride is drawn through another
+    // camera, so there they keep their own size.
+    camera.zoom = stage.current.riding
+      ? Math.max(UNSCALED_PIN_ZOOM, fit * zoom.current)
+      : fit * zoom.current
     camera.updateProjectionMatrix()
     // The labels project through this camera later in the same frame.
     camera.updateMatrixWorld()
@@ -203,6 +209,7 @@ function WateringDayScene3D({ isStatic, isActive, live, events, labels, tank }: 
       <TreePins live={live} isStatic={isStatic} />
       <HitAreas live={live} events={events} />
       <Labels live={live} stage={stage} nodes={labels} />
+      <RideCamera stage={stage} isStatic={isStatic} />
     </Canvas>
   )
 }

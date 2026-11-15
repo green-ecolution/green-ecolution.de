@@ -11,5 +11,8 @@ const MIN_HEAD_PX = 7
 /** How much a pin's head is enlarged; an orthographic zoom is css pixels per world unit. */
 export const pinHeadScale = (zoom: number) => Math.max(1, MIN_HEAD_PX / (PIN_RADIUS * zoom))
 
+/** From this zoom on the heads keep their own size. */
+export const UNSCALED_PIN_ZOOM = MIN_HEAD_PX / PIN_RADIUS
+
 export const pinHeight = (tree: Tree) =>
   canopyCenterHeight(tree) + tree.canopyRadius + PIN_POST + 0.2
