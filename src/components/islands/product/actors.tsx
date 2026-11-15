@@ -102,16 +102,34 @@ const pinTones: Record<Thirst, PinTone> = { dry: 'alert', soon: 'warn', ok: 'ok'
 
 /** How much the pin of a highlighted or selected tree grows. */
 const PICKED_PIN = 1.25
+// A close-up camera passing a pin would fill the picture with its head.
+const NEAR_LENS = { hidden: 7, shown: 15 } as const
 
-export function TreePins({ live, isStatic }: LiveProps) {
+interface PinsProps extends LiveProps {
+  stage: RefObject<Stage>
+}
+
+export function TreePins({ live, stage, isStatic }: PinsProps) {
   const pins = useRef<(Group | null)[]>([])
+  const picked = useRef(townTrees.map(() => 1))
 
   useFrame((_, delta) => {
     const { highlighted, selected } = live.current
+    const { lens } = stage.current
     pins.current.forEach((pin, index) => {
       if (!pin) return
       const goal = index === highlighted || index === selected ? PICKED_PIN : 1
-      pin.scale.setScalar(isStatic ? goal : damp(pin.scale.x, goal, 12, delta))
+      const size = isStatic ? goal : damp(picked.current[index], goal, 12, delta)
+      picked.current[index] = size
+      const away = lens
+        ? Math.hypot(pin.position.x - lens[0], pin.position.y - lens[1], pin.position.z - lens[2])
+        : Infinity
+      const near = Math.min(
+        1,
+        Math.max(0, (away - NEAR_LENS.hidden) / (NEAR_LENS.shown - NEAR_LENS.hidden)),
+      )
+      pin.scale.setScalar(size * near * near * (3 - 2 * near))
+      pin.visible = near > 0
     })
   })
 
@@ -214,8 +232,8 @@ export function Labels({ live, stage, nodes }: LabelsProps) {
   useFrame(({ camera, size }) => {
     // A label over a pin clears the enlarged head by as much as the head grew.
     const lift = (pinHeadScale(camera.zoom) - 1) * PIN_RADIUS * PIN_HULL * camera.zoom
-    // A fade would carry the labels over into the ride, so at the cut they go at once.
-    const transitionDuration = (stage.current.frame?.cut ?? 0) > 0 ? '0s' : ''
+    // They stand over the slanted view only; another camera draws the showpiece.
+    const isSlanted = stage.current.view.mode === 'iso'
 
     labelAnchors.forEach((anchor, index) => {
       const node = nodes.current[index]
@@ -225,8 +243,7 @@ export function Labels({ live, stage, nodes }: LabelsProps) {
       const top = ((1 - projected.y) / 2) * size.height - (index < townTrees.length ? lift : 0)
       const shift = index === HANGING_LABEL ? 'translate(-30%, 4px)' : 'translate(-50%, -100%)'
       node.style.transform = `translate(${left.toFixed(1)}px, ${top.toFixed(1)}px) ${shift}`
-      node.style.transitionDuration = transitionDuration
-      node.dataset.shown = String(!stage.current.riding && labelShown(live.current, index))
+      node.dataset.shown = String(isSlanted && labelShown(live.current, index))
     })
   })
 

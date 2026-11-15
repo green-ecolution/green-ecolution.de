@@ -1,17 +1,25 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, type RefObject } from 'react'
-import { Vector3 } from 'three'
-import { plate } from '../../../data/productTown'
+import { DEPOT_SITE, plate } from '../../../data/productTown'
 import { tourColors } from '../../../data/streamletTour'
+import { geometric } from '../../../lib/cameraPose'
 import { AMBIENT_MS, MAX_DPR } from '../../../lib/sceneBudget'
-import { tourFrame } from '../../../lib/wateringDay'
+import { smoothDamp } from '../../../lib/smoothDamp'
+import {
+  ISO_VIEW,
+  holdAt,
+  nextElapsed,
+  tourFrame,
+  type Hold,
+  type ViewMode,
+} from '../../../lib/wateringDay'
 import { UNSCALED_PIN_ZOOM } from '../scene3d/pinSize'
 import ReleaseContextOnNavigate from '../scene3d/ReleaseContextOnNavigate'
 import { Crowns, HitAreas, Labels, TreePins } from './actors'
 import type { DayEvents, DayLive, TourProgress } from './shared'
-import { RideCamera } from './rideCamera'
-import { OVERVIEW, PARKED, shotFor, truckPose, type Stage } from './stage'
-import { RefillPulse, RouteRibbon, Truck, WaterJet } from './tourActors'
+import { ShowpieceCamera } from './showpieceCamera'
+import { OVERVIEW, PARKED, showpieceWeight, shotFor, truckPose, type Stage } from './stage'
+import { RefillHose, RefillPulse, RouteRibbon, Truck, WaterJet } from './tourActors'
 import { groundGeometry, shadowGeometry, townGeometry } from './town'
 
 interface Props {
@@ -31,10 +39,20 @@ const SPAN = plate.width + plate.depth
 // the roofs at the back and a little air at the sides.
 const TOWN_WIDTH = SPAN / Math.SQRT2 + 4
 const TOWN_HEIGHT = SPAN / Math.sqrt(6) + 12
-const CAMERA_RATE = 3.2
+/** Seconds the slanted camera's spring takes to close most of a gap. */
+const SMOOTH_TIME = 0.9
 // A frame after a pause must not jump the tour or the camera ahead.
 const MAX_FRAME_SECONDS = 0.05
 const UNREPORTED: TourProgress = { served: -1, dwell: -2, done: false }
+const CAMERA_NAMES: Record<ViewMode, string> = {
+  iso: 'iso',
+  flyIn: 'fly-in',
+  ride: 'ride',
+  toWatering: 'to-watering',
+  watering: 'watering',
+  refilling: 'refilling',
+  flyOut: 'fly-out',
+}
 
 interface ClockProps {
   isStatic: boolean
@@ -47,9 +65,22 @@ interface ClockProps {
 // Mounted first, so every other part reads the state of the same frame.
 function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) {
   const invalidate = useThree((state) => state.invalidate)
+  const canvas = useThree((state) => state.gl.domElement)
   const awakeUntil = useRef(0)
   const reported = useRef(UNREPORTED)
   const ready = useRef(false)
+  const camera = useRef<ViewMode | null>(null)
+  const holding = useRef<Hold['kind'] | null>(null)
+  const standing = useRef<{ dwell: number; heading: number }>({ dwell: -1, heading: 0 })
+
+  // The stage tells the page which camera draws: the caption and the probe read it.
+  useEffect(() => {
+    const node = canvas.closest('[data-day-stage]')
+    return () => {
+      node?.removeAttribute('data-day-camera')
+      node?.removeAttribute('data-day-turn')
+    }
+  }, [canvas])
 
   useEffect(() => {
     const state = liveRef.current
@@ -67,17 +98,58 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
     const state = liveRef.current
     const { script } = state
     if (script && state.running) {
-      state.elapsed = Math.min(script.duration, state.elapsed + Math.min(delta, MAX_FRAME_SECONDS))
+      state.elapsed = nextElapsed(
+        script,
+        state.elapsed,
+        Math.min(delta, MAX_FRAME_SECONDS),
+        state.isReading,
+      )
     }
 
     const frame = script ? tourFrame(script, state.elapsed) : null
     stageRef.current.frame = frame
     stageRef.current.truck = truckPose(script, frame)
-    stageRef.current.riding = !isStatic && frame?.shot === 'pov'
+    const view = isStatic || !frame ? ISO_VIEW : frame.view
+    stageRef.current.view = view
+    if (view.mode !== camera.current) {
+      if (view.mode === 'flyIn' && view.piece) events.onCloseUp(view.piece)
+      camera.current = view.mode
+      canvas.closest('[data-day-stage]')?.setAttribute('data-day-camera', CAMERA_NAMES[view.mode])
+    }
+
+    // For the probe: how far the truck turned at the stop it just left.
+    const dwell = frame && !frame.done ? frame.dwell : -1
+    if (script && dwell !== standing.current.dwell) {
+      const left = standing.current
+      if (left.dwell >= 0 && dwell === -1) {
+        const { stop } = script.dwells[left.dwell]
+        const place =
+          stop.kind !== 'refill' ? stop.kind : stop.site === DEPOT_SITE ? 'depot' : 'hydrant'
+        const turn = Math.abs(
+          Math.atan2(
+            Math.sin(stageRef.current.truck.heading - left.heading),
+            Math.cos(stageRef.current.truck.heading - left.heading),
+          ),
+        )
+        canvas
+          .closest('[data-day-stage]')
+          ?.setAttribute(
+            'data-day-turn',
+            `${left.dwell}:${place}:${Math.round((turn * 180) / Math.PI)}`,
+          )
+      }
+      standing.current = { dwell, heading: stageRef.current.truck.heading }
+    }
 
     if (script && frame) {
+      const hold = isStatic || frame.done ? null : holdAt(script, state.elapsed)
       if (tankRef.current && state.running) {
         tankRef.current.style.setProperty('--day-tank', (frame.tank / script.capacity).toFixed(3))
+        tankRef.current.style.setProperty('--day-hold', (hold?.left ?? 1).toFixed(3))
+      }
+      if ((hold?.kind ?? null) !== holding.current) {
+        holding.current = hold?.kind ?? null
+        events.onHold(holding.current)
       }
       const last = reported.current
       if (frame.served !== last.served || frame.dwell !== last.dwell || frame.done !== last.done) {
@@ -90,6 +162,10 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
       }
     } else {
       reported.current = UNREPORTED
+      if (holding.current !== null) {
+        holding.current = null
+        events.onHold(null)
+      }
     }
 
     if (!ready.current) {
@@ -107,45 +183,74 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
 interface RigProps {
   isStatic: boolean
   live: RefObject<DayLive>
-  stage: RefObject<Stage>
+  stageRef: RefObject<Stage>
 }
 
-// There is one such scene on a page, so the rig's vectors can live out here.
-const lookAt = new Vector3()
-const goal = new Vector3()
+interface RigState {
+  settled: boolean
+  at: [number, number, number]
+  velocity: [number, number, number]
+  /** Zoom is a ratio, so the spring works on its logarithm. */
+  zoom: number
+  zoomVelocity: number
+}
 
-function Rig({ isStatic, live, stage }: RigProps) {
-  const zoom = useRef(1)
-  const settled = useRef(false)
+function Rig({ isStatic, live, stageRef }: RigProps) {
+  const rig = useRef<RigState>({
+    settled: false,
+    at: [0, 0, 0],
+    velocity: [0, 0, 0],
+    zoom: 0,
+    zoomVelocity: 0,
+  })
 
   useFrame(({ camera, size }, delta) => {
+    const state = rig.current
+    const stage = stageRef.current
     // Reduced motion keeps the whole town in the picture: no camera travel.
-    const shot = isStatic ? OVERVIEW : shotFor(live.current, stage.current)
-    goal.set(shot.at[0], shot.at[1], shot.at[2])
+    const shot = isStatic ? OVERVIEW : shotFor(live.current, stage)
 
-    if (isStatic || !settled.current) {
-      lookAt.copy(goal)
-      zoom.current = shot.zoom
-      settled.current = true
+    if (isStatic || !state.settled) {
+      state.at = [shot.at[0], shot.at[1], shot.at[2]]
+      state.velocity = [0, 0, 0]
+      state.zoom = Math.log(shot.zoom)
+      state.zoomVelocity = 0
+      state.settled = true
     } else {
-      const share = 1 - Math.exp(-CAMERA_RATE * Math.min(delta, MAX_FRAME_SECONDS))
-      lookAt.lerp(goal, share)
-      // Zoom is a ratio, so it closes in by a ratio as well.
-      zoom.current *= (shot.zoom / zoom.current) ** share
+      const step = Math.min(delta, MAX_FRAME_SECONDS)
+      for (let axis = 0; axis < 3; axis++) {
+        ;[state.at[axis], state.velocity[axis]] = smoothDamp(
+          state.at[axis],
+          state.velocity[axis],
+          shot.at[axis],
+          SMOOTH_TIME,
+          step,
+        )
+      }
+      ;[state.zoom, state.zoomVelocity] = smoothDamp(
+        state.zoom,
+        state.zoomVelocity,
+        Math.log(shot.zoom),
+        SMOOTH_TIME,
+        step,
+      )
     }
 
+    const [x, y, z] = state.at
     const fit = Math.min(size.width / TOWN_WIDTH, size.height / TOWN_HEIGHT)
-    camera.position.set(
-      lookAt.x + CAMERA_DISTANCE,
-      lookAt.y + CAMERA_DISTANCE,
-      lookAt.z + CAMERA_DISTANCE,
+    const zoom = fit * Math.exp(state.zoom)
+    camera.position.set(x + CAMERA_DISTANCE, y + CAMERA_DISTANCE, z + CAMERA_DISTANCE)
+    camera.lookAt(x, y, z)
+    stage.iso.at = [x, y, z]
+    stage.iso.height = size.height / zoom
+    // Pin heads grow with this camera's zoom. Away from the slanted view the
+    // picture comes from another camera, so there they keep their own size; the
+    // flights blend over, so the heads do not jump at the switch.
+    camera.zoom = geometric(
+      zoom,
+      Math.max(UNSCALED_PIN_ZOOM, zoom),
+      isStatic ? 0 : showpieceWeight(stage.view),
     )
-    camera.lookAt(lookAt)
-    // Pin heads grow with this camera's zoom. The ride is drawn through another
-    // camera, so there they keep their own size.
-    camera.zoom = stage.current.riding
-      ? Math.max(UNSCALED_PIN_ZOOM, fit * zoom.current)
-      : fit * zoom.current
     camera.updateProjectionMatrix()
     // The labels project through this camera later in the same frame.
     camera.updateMatrixWorld()
@@ -171,7 +276,13 @@ function Town() {
 }
 
 function WateringDayScene3D({ isStatic, isActive, isReady, live, events, labels, tank }: Props) {
-  const stage = useRef<Stage>({ frame: null, truck: PARKED, riding: false })
+  const stage = useRef<Stage>({
+    frame: null,
+    truck: PARKED,
+    view: ISO_VIEW,
+    iso: { at: [0, 0, 0], height: 1 },
+    lens: null,
+  })
 
   // Same light as the other two towns: ambient and key together come to a
   // little over pi on the lit faces, so the pale walls stay pale.
@@ -201,7 +312,7 @@ function WateringDayScene3D({ isStatic, isActive, isReady, live, events, labels,
         events={events}
         tankRef={tank}
       />
-      <Rig isStatic={isStatic} live={live} stage={stage} />
+      <Rig isStatic={isStatic} live={live} stageRef={stage} />
       <ambientLight intensity={2.2} />
       <directionalLight position={[-30, 60, 80]} intensity={1.35} />
       <Town />
@@ -209,11 +320,12 @@ function WateringDayScene3D({ isStatic, isActive, isReady, live, events, labels,
       <Truck live={live} stage={stage} isStatic={isStatic} />
       <WaterJet live={live} stage={stage} isStatic={isStatic} />
       <RefillPulse live={live} stage={stage} isStatic={isStatic} />
+      <RefillHose live={live} stage={stage} isStatic={isStatic} />
       <Crowns live={live} isStatic={isStatic} />
-      <TreePins live={live} isStatic={isStatic} />
+      <TreePins live={live} stage={stage} isStatic={isStatic} />
       <HitAreas live={live} events={events} />
       <Labels live={live} stage={stage} nodes={labels} />
-      <RideCamera stage={stage} isStatic={isStatic} />
+      <ShowpieceCamera live={live} stageRef={stage} />
     </Canvas>
   )
 }

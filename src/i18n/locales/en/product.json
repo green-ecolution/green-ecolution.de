@@ -64,6 +64,22 @@
       "tank": "Water tank",
       "stops": "How the round goes"
     },
+    "info": {
+      "watering": {
+        "label": "Watering",
+        "title": "Water only where it is missing",
+        "text": "The probe in the ground has reported that the soil at this tree is dry. That is why it is on today's round."
+      },
+      "refill": {
+        "label": "Refilling",
+        "title": "The refill is part of the plan",
+        "text": "The round takes the water tank into account. It puts the refill where a water point is on the way. So nobody drives across town with an empty tank."
+      },
+      "next": "Drive on"
+    },
+    "ride": {
+      "caption": "View from the watering truck"
+    },
     "status": {
       "none": "Nobody has to go out today. Every tree has enough water.",
       "thirstyOne": "1 tree needs water. The rest can wait.",

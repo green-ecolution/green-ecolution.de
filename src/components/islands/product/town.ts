@@ -29,13 +29,16 @@ function trunkGeometry(tree: Tree): BufferGeometry {
   )
 }
 
+/** The standpipe's crossbar, along x; the hose hangs from the end nearer the truck. */
+export const HYDRANT_ARM = { height: 1.7, half: 0.95 } as const
+
 // A standpipe, larger than life so it reads as the place to refill.
 function hydrantGeometry([x, z]: GroundPoint): BufferGeometry[] {
   return [
     painted(unitCylinder, placed([x, 0.15, z], [1.5, 0.3, 1.5]), tourColors.kerb),
     painted(unitCylinder, placed([x, 1.4, z], [0.45, 2.2, 0.45]), WATER),
     painted(unitCylinder, placed([x, 2.65, z], [0.62, 0.3, 0.62]), WATER),
-    painted(unitBox, placed([x, 1.7, z], [1.9, 0.36, 0.36]), WATER),
+    painted(unitBox, placed([x, HYDRANT_ARM.height, z], [HYDRANT_ARM.half * 2, 0.36, 0.36]), WATER),
   ]
 }
 

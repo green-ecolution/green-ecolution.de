@@ -64,6 +64,22 @@
       "tank": "Wassertank",
       "stops": "So fährt die Tour"
     },
+    "info": {
+      "watering": {
+        "label": "Gießen",
+        "title": "Wasser nur dort, wo es fehlt",
+        "text": "Die Sonde im Boden hat gemeldet, dass die Erde an diesem Baum trocken ist. Deshalb steht er heute auf der Tour."
+      },
+      "refill": {
+        "label": "Auffüllen",
+        "title": "Das Auffüllen ist mitgeplant",
+        "text": "Die Tour rechnet den Wassertank mit. Sie legt das Auffüllen dorthin, wo eine Wasserstelle am Weg liegt. So fährt niemand mit leerem Tank quer durch die Stadt."
+      },
+      "next": "Weiterfahren"
+    },
+    "ride": {
+      "caption": "Blick aus dem Gießwagen"
+    },
     "status": {
       "none": "Heute muss niemand los. Alle Bäume haben genug Wasser.",
       "thirstyOne": "1 Baum braucht Wasser. Der Rest kann warten.",

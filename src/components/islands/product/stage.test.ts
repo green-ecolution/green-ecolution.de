@@ -1,9 +1,18 @@
 import { describe, expect, it } from 'vitest'
 import { DEPOT_SITE, START_DAYS, depot, townTrees } from '../../../data/productTown'
-import { tourFrame } from '../../../lib/wateringDay'
+import { ISO_VIEW, tourFrame } from '../../../lib/wateringDay'
 import { NOT_WATERED, NO_ORDER, planDay } from './dayModel'
 import type { DayLive } from './shared'
-import { OVERVIEW, PARKED, shotFor, truckPose, turned, wateredTree, type Stage } from './stage'
+import {
+  OVERVIEW,
+  PARKED,
+  showpieceWeight,
+  shotFor,
+  truckPose,
+  turned,
+  wateredTree,
+  type Stage,
+} from './stage'
 
 const day = planDay(START_DAYS)
 if (!day) throw new Error('nothing planned')
@@ -18,12 +27,19 @@ const idle: DayLive = {
   script: null,
   elapsed: 0,
   running: false,
+  isReading: false,
   onChange: null,
 }
 
 function stageAt(seconds: number): Stage {
   const frame = tourFrame(script, seconds)
-  return { frame, truck: truckPose(script, frame), riding: false }
+  return {
+    frame,
+    truck: truckPose(script, frame),
+    view: frame.view,
+    iso: { at: [0, 0, 0], height: 1 },
+    lens: null,
+  }
 }
 
 describe('turned', () => {
@@ -85,7 +101,13 @@ describe('wateredTree', () => {
 })
 
 describe('shotFor', () => {
-  const parked: Stage = { frame: null, truck: PARKED, riding: false }
+  const parked: Stage = {
+    frame: null,
+    truck: PARKED,
+    view: ISO_VIEW,
+    iso: { at: [0, 0, 0], height: 1 },
+    lens: null,
+  }
 
   it('zeigt in Ruhe die ganze Stadt', () => {
     expect(shotFor(idle, parked)).toBe(OVERVIEW)
@@ -102,22 +124,44 @@ describe('shotFor', () => {
     expect(shotFor({ ...idle, highlighted: 3 }, parked)).toBe(OVERVIEW)
   })
 
-  it('folgt während der Tour dem Wagen und lässt die Auswahl liegen', () => {
+  it('folgt während der Tour dem Wagen ohne Vorhalt und lässt die Auswahl liegen', () => {
     const touring = { ...idle, script, selected: 3 }
     expect(shotFor(touring, stageAt(script.lead / 2))).toBe(OVERVIEW)
 
     const driving = stageAt(script.legs[1].start + 0.2)
     const follow = shotFor(touring, driving)
-    expect(
-      Math.hypot(follow.at[0] - driving.truck.at[0], follow.at[2] - driving.truck.at[1]),
-    ).toBeLessThan(10)
+    expect(follow.at[0]).toBeCloseTo(driving.truck.at[0])
+    expect(follow.at[2]).toBeCloseTo(driving.truck.at[1])
+    expect(follow.zoom).toBeGreaterThan(1)
+  })
 
-    const dwell = script.dwells[0]
-    const watering = shotFor(touring, stageAt((dwell.start + dwell.end) / 2))
-    expect(watering.zoom).toBeGreaterThan(follow.zoom)
+  it('hält an jedem Halt denselben Abstand wie auf der Fahrt', () => {
+    const touring = { ...idle, script }
+    const follow = shotFor(touring, stageAt(script.legs[1].start + 0.2)).zoom
+    script.dwells.slice(0, -1).forEach((dwell) => {
+      expect(shotFor(touring, stageAt((dwell.start + dwell.end) / 2)).zoom).toBe(follow)
+    })
   })
 
   it('kehrt nach der Tour zur Übersicht zurück', () => {
     expect(shotFor({ ...idle, script }, stageAt(script.duration))).toBe(OVERVIEW)
+  })
+})
+
+describe('showpieceWeight', () => {
+  it('wächst über den Hinflug von 0 auf 1 und fällt über den Rückflug zurück', () => {
+    expect(showpieceWeight(ISO_VIEW)).toBe(0)
+    expect(showpieceWeight({ mode: 'flyIn', share: 0, piece: 'watering' })).toBe(0)
+    expect(showpieceWeight({ mode: 'flyIn', share: 0.5, piece: 'watering' })).toBeCloseTo(0.5)
+    expect(showpieceWeight({ mode: 'ride', share: 0.3, piece: 'watering' })).toBe(1)
+    expect(showpieceWeight({ mode: 'watering', share: 0.9, piece: 'watering' })).toBe(1)
+    expect(showpieceWeight({ mode: 'refilling', share: 0.1, piece: 'refill' })).toBe(1)
+    expect(showpieceWeight({ mode: 'flyOut', share: 1, piece: 'watering' })).toBe(0)
+    let before = 1
+    for (let step = 0; step <= 10; step++) {
+      const weight = showpieceWeight({ mode: 'flyOut', share: step / 10, piece: 'watering' })
+      expect(weight).toBeLessThanOrEqual(before)
+      before = weight
+    }
   })
 })
