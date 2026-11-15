@@ -2,7 +2,6 @@
 import { getImage } from 'astro:assets'
 import posterImage from '../../../assets/illustrations/product-town-poster.png'
 import WateringDayIsland from '../../islands/product/WateringDayIsland'
-import Button from '../../Button.astro'
 import Arrow from '../../icons/Arrow.astro'
 import { company } from '../../../data/company'
 import { townTrees } from '../../../data/productTown'
@@ -108,18 +107,20 @@ const CAPTURE_STYLE = `:root[data-day-capture] [data-day-stage] {
     }}
   />
 
-  <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
-    <p class="text-grey-900/70">{t('day.after.text')}</p>
-    <Button
+  {/* A link, not a button: starting the watering day is the one thing to press here. */}
+  <p class="mt-10 text-grey-900/70">
+    {t('day.after.text')}
+    <a
       href={company.booking.liveDemoUrl}
-      ariaLabel={t('day.after.ctaAriaLabel')}
-      isExternalLink
-      isDark
+      aria-label={t('day.after.ctaAriaLabel')}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="group ml-1 inline-flex items-center gap-2 font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
     >
-      <span>{t('day.after.cta')}</span>
-      <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
-    </Button>
-  </div>
+      {t('day.after.cta')}
+      <Arrow class="w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
+    </a>
+  </p>
 
   <TechDetails language={language} />
 </section>

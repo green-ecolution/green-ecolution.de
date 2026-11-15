@@ -53,7 +53,7 @@ const TOWN_HEIGHT = SPAN / Math.sqrt(6) + 12
 const SMOOTH_TIME = 0.9
 // A frame after a pause must not jump the tour or the camera ahead.
 const MAX_FRAME_SECONDS = 0.05
-const UNREPORTED: TourProgress = { served: -1, dwell: -2, done: false }
+const UNREPORTED: TourProgress = { served: -1, dwell: -2, done: false, routed: false }
 const CAMERA_NAMES: Record<ViewMode, string> = {
   iso: 'iso',
   flyIn: 'fly-in',
@@ -175,8 +175,14 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
         events.onHold(holding.current)
       }
       const last = reported.current
-      if (frame.served !== last.served || frame.dwell !== last.dwell || frame.done !== last.done) {
-        reported.current = { served: frame.served, dwell: frame.dwell, done: frame.done }
+      const routed = frame.reveal > 0
+      if (
+        frame.served !== last.served ||
+        frame.dwell !== last.dwell ||
+        frame.done !== last.done ||
+        routed !== last.routed
+      ) {
+        reported.current = { served: frame.served, dwell: frame.dwell, done: frame.done, routed }
         events.onProgress(reported.current)
       }
       if (frame.done && state.running) {

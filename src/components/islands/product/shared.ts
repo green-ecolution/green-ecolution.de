@@ -28,6 +28,8 @@ export interface TourProgress {
   /** Index of the stop the vehicle stands at, or -1 on the road. */
   dwell: number
   done: boolean
+  /** The route has begun to draw: the probe's message has reached the depot. */
+  routed: boolean
 }
 
 export interface DayEvents {

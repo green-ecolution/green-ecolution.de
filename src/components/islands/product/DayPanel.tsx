@@ -1,4 +1,4 @@
-import { ArrowRight, CloudRain, Sun } from 'lucide-react'
+import { ArrowRight, CloudRain, Droplets, Sun } from 'lucide-react'
 import type { FocusEvent } from 'react'
 import { useT } from '../../../i18n/useT'
 import { MAX_DRY_DAYS } from '../../../lib/dryness'
@@ -151,8 +151,9 @@ export function TankGauge({ className = '' }: { className?: string }) {
   const t = useT()
 
   return (
-    <div className={`flex items-center gap-3 text-xs text-grey-900/60 ${className}`}>
-      <span>{t('day.tour.tank')}</span>
+    <div className={`flex items-center gap-2 text-xs text-grey-900/60 ${className}`}>
+      <Droplets aria-hidden="true" className="h-4 w-4 shrink-0 text-blue-400" />
+      <span className="max-sm:hidden">{t('day.tour.tank')}</span>
       <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-blue-400/20">
         <div className="h-full origin-left rounded-full bg-blue-400" style={tankFill} />
       </div>
@@ -160,21 +161,51 @@ export function TankGauge({ className = '' }: { className?: string }) {
   )
 }
 
+interface TourHudProps {
+  status: string
+  isShown: boolean
+}
+
+/**
+ * What is happening and how full the tank is, over the top of the stage while
+ * the scene plays. The panel's live region announces the status; this is for the eyes.
+ */
+export function TourHud({ status, isShown }: TourHudProps) {
+  return (
+    <div
+      data-day-hud
+      data-shown={String(isShown)}
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-x-2 top-2 flex items-center gap-3 rounded-2xl bg-white/90 px-3 py-2 opacity-0 shadow-sm ring-1 ring-green-dark-900/10 backdrop-blur-sm transition-opacity duration-300 data-[shown=true]:opacity-100 sm:inset-x-3 sm:top-3 sm:gap-4 sm:px-4"
+    >
+      <p className="min-w-0 flex-1 text-xs font-semibold leading-snug text-grey-900 sm:text-sm">
+        {status}
+      </p>
+      <TankGauge className="w-20 shrink-0 sm:w-48" />
+    </div>
+  )
+}
+
 interface TourControlsProps extends TourButtonProps {
   status: string
+  /** The stage shows the status itself while the scene plays; it stays here for screen readers. */
+  isStatusOnStage: boolean
   /** The stops in order, shown when no scene plays the tour. */
   stops: string[] | null
 }
 
-export function TourControls({ status, stops, ...button }: TourControlsProps) {
+export function TourControls({ status, isStatusOnStage, stops, ...button }: TourControlsProps) {
   const t = useT()
 
   return (
     <div>
       <TourButton {...button} />
-      <TankGauge className="mt-4" />
 
-      <p role="status" aria-live="polite" className="mt-3 min-h-12 text-grey-900">
+      <p
+        role="status"
+        aria-live="polite"
+        className={isStatusOnStage ? 'sr-only' : 'mt-3 min-h-12 text-grey-900'}
+      >
         {status}
       </p>
 

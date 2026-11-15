@@ -99,8 +99,15 @@ describe('dayStatus', () => {
     })
   })
 
-  it('kündigt die geplante Tour samt Nachfüllen an', () => {
+  it('nennt zuerst die Sonde, die meldet, solange die Route noch nicht steht', () => {
     expect(dayStatus('touring', rows, day, NOT_STARTED)).toEqual({
+      key: 'day.status.reporting',
+      tree: 'marktgasse',
+    })
+  })
+
+  it('kündigt die geplante Tour samt Nachfüllen an, sobald die Route sich zeichnet', () => {
+    expect(dayStatus('touring', rows, day, { ...NOT_STARTED, routed: true })).toEqual({
       key: 'day.status.plannedRefill',
       vars: { count: 6 },
     })
@@ -108,24 +115,28 @@ describe('dayStatus', () => {
 
   it('sagt an jedem Halt, was dort geschieht', () => {
     const refill = day.script.dwells.findIndex((dwell) => dwell.stop.kind === 'refill')
-    expect(dayStatus('touring', rows, day, { served: 0, dwell: 0, done: false }).key).toBe(
-      'day.status.watering',
-    )
-    expect(dayStatus('touring', rows, day, { served: refill, dwell: refill, done: false })).toEqual(
-      { key: 'day.status.topUp' },
-    )
+    expect(
+      dayStatus('touring', rows, day, { served: 0, dwell: 0, done: false, routed: true }).key,
+    ).toBe('day.status.watering')
+    expect(
+      dayStatus('touring', rows, day, { served: refill, dwell: refill, done: false, routed: true }),
+    ).toEqual({ key: 'day.status.topUp' })
   })
 
   it('nennt unterwegs das nächste Ziel', () => {
     const refill = day.script.dwells.findIndex((dwell) => dwell.stop.kind === 'refill')
-    expect(dayStatus('touring', rows, day, { served: 1, dwell: -1, done: false }).key).toBe(
-      'day.status.next',
-    )
-    expect(dayStatus('touring', rows, day, { served: refill, dwell: -1, done: false })).toEqual({
+    expect(
+      dayStatus('touring', rows, day, { served: 1, dwell: -1, done: false, routed: true }).key,
+    ).toBe('day.status.next')
+    expect(
+      dayStatus('touring', rows, day, { served: refill, dwell: -1, done: false, routed: true }),
+    ).toEqual({
       key: 'day.status.toWater',
     })
     const last = day.script.dwells.length - 1
-    expect(dayStatus('touring', rows, day, { served: last, dwell: -1, done: false })).toEqual({
+    expect(
+      dayStatus('touring', rows, day, { served: last, dwell: -1, done: false, routed: true }),
+    ).toEqual({
       key: 'day.status.home',
     })
   })
@@ -139,14 +150,18 @@ describe('dayStatus', () => {
 
   it('zieht schon Bilanz, sobald der Wagen am Bauhof steht', () => {
     const last = day.script.dwells.length - 1
-    expect(dayStatus('touring', rows, day, { served: last, dwell: last, done: false })).toEqual({
+    expect(
+      dayStatus('touring', rows, day, { served: last, dwell: last, done: false, routed: true }),
+    ).toEqual({
       key: 'day.status.done',
       vars: { watered: 6, rest: 6 },
     })
     const one = planDay(5)
     if (!one) throw new Error('nothing planned at five days')
     const home = one.script.dwells.length - 1
-    expect(dayStatus('touring', rows, one, { served: home, dwell: home, done: false })).toEqual({
+    expect(
+      dayStatus('touring', rows, one, { served: home, dwell: home, done: false, routed: true }),
+    ).toEqual({
       key: 'day.status.doneOne',
       vars: { rest: 11 },
     })
@@ -154,7 +169,7 @@ describe('dayStatus', () => {
 
   it('zeigt am Bauhof jeden Baum gegossen und den Tank, wie er am Ende ist', () => {
     const last = day.script.dwells.length - 1
-    const arrived = { served: last, dwell: last, done: false }
+    const arrived = { served: last, dwell: last, done: false, routed: true }
     expect(wateredAfter(day.script, arrived.served)).toEqual(wateredAfter(day.script, Infinity))
     expect(wateredAfter(day.script, arrived.served).filter(Boolean)).toHaveLength(6)
     expect(tankShare(day, arrived)).toBe(tankShare(day, finished(day.script)))
@@ -248,7 +263,7 @@ describe('tankShare', () => {
     if (!day) throw new Error('nothing planned')
     expect(tankShare(null, NOT_STARTED)).toBe(1)
     expect(tankShare(day, NOT_STARTED)).toBe(1)
-    expect(tankShare(day, { served: 1, dwell: -1, done: false })).toBeCloseTo(0.75)
+    expect(tankShare(day, { served: 1, dwell: -1, done: false, routed: true })).toBeCloseTo(0.75)
     expect(tankShare(day, finished(day.script))).toBe(0)
   })
 })

@@ -58,7 +58,7 @@
       "hydrant": "Wasserstelle"
     },
     "tour": {
-      "plan": "Tour planen",
+      "plan": "Gießtag starten",
       "skip": "Überspringen",
       "again": "Noch einmal",
       "tank": "Wassertank",
@@ -101,6 +101,7 @@
       "none": "Heute muss niemand los. Alle Bäume haben genug Wasser.",
       "thirstyOne": "1 Baum braucht Wasser. Der Rest kann warten.",
       "thirstyMany": "{{count}} Bäume brauchen Wasser. Der Rest kann warten.",
+      "reporting": "Die Sonde {{name}} meldet trockene Erde.",
       "plannedOne": "Tour steht: 1 Halt, kürzester Weg.",
       "planned": "Tour steht: {{count}} Halte, kürzester Weg.",
       "plannedRefill": "Tour steht: {{count}} Halte, kürzester Weg, Nachfüllen eingeplant.",
