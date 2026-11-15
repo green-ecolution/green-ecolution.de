@@ -59,10 +59,13 @@ export function WeatherSlider({ days, onChange }: WeatherSliderProps) {
 interface TreeListProps {
   rows: TreeRow[]
   selected: number | null
+  /** A click flies the camera to the tree; a second click lets it go. */
   onSelect: (tree: number | null) => void
+  /** Hover and focus only name the tree in the scene. */
+  onHighlight: (tree: number | null) => void
 }
 
-export function TreeList({ rows, selected, onSelect }: TreeListProps) {
+export function TreeList({ rows, selected, onSelect, onHighlight }: TreeListProps) {
   const t = useT()
 
   // The rows re-sort as trees get watered; a row as scroll anchor would drag the
@@ -74,11 +77,11 @@ export function TreeList({ rows, selected, onSelect }: TreeListProps) {
           <button
             type="button"
             data-selected={selected === row.index}
-            onClick={() => onSelect(row.index)}
-            onFocus={() => onSelect(row.index)}
-            onBlur={() => onSelect(null)}
-            onPointerEnter={(event) => event.pointerType === 'mouse' && onSelect(row.index)}
-            onPointerLeave={(event) => event.pointerType === 'mouse' && onSelect(null)}
+            onClick={() => onSelect(selected === row.index ? null : row.index)}
+            onFocus={() => onHighlight(row.index)}
+            onBlur={() => onHighlight(null)}
+            onPointerEnter={(event) => event.pointerType === 'mouse' && onHighlight(row.index)}
+            onPointerLeave={(event) => event.pointerType === 'mouse' && onHighlight(null)}
             data-state={row.state}
             className="flex w-full items-center gap-2.5 rounded-xl border border-grey-900/10 bg-white px-3 py-1.5 text-left text-sm transition-colors hover:border-green-dark-900/40 data-[selected=true]:ring-2 data-[selected=true]:ring-green-dark-900 data-[state=dry]:border-red-500/40"
           >

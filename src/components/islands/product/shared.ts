@@ -8,8 +8,10 @@ export interface DayLive {
   watered: boolean[]
   /** Per tree: its number on the planned tour, 0 if it is not on it. */
   order: number[]
-  /** Tree picked in the list or in the scene. */
+  /** Tree clicked in the list or in the scene; the camera goes there. */
   selected: number | null
+  /** Tree under the mouse or keyboard focus in the list; only named, the camera stays. */
+  highlighted: number | null
   script: TourScript | null
   /** Seconds into the tour; the scene's clock advances it while `running`. */
   elapsed: number
