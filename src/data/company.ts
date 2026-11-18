@@ -17,4 +17,5 @@ export const company = {
   githubUrl: 'https://github.com/green-ecolution',
   linkedinUrl: 'https://www.linkedin.com/company/green-ecolution',
   instagramUrl: 'https://www.instagram.com/green.ecolution',
+  instagramHandle: '@green.ecolution',
 } as const

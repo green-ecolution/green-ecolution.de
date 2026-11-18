@@ -202,6 +202,12 @@
       "posterAlt": "Blick von unten in eine Eichenkrone, die Sonne blitzt zwischen den Blättern durch, unten links das Logo des Schleswig-Holstein Magazins"
     }
   },
+  "instagram": {
+    "eyebrow": "Instagram",
+    "title": "Bleib auf dem Laufenden",
+    "description": "Auf Instagram melden wir uns aus dem laufenden Pilotbetrieb.",
+    "follow": "{{handle}} folgen"
+  },
   "workflow": {
     "sectionLabel": "So funktioniert es",
     "title": "Wie funktioniert Green Ecolution?",

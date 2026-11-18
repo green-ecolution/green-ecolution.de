@@ -11,7 +11,7 @@
   "channels": {
     "badge": "Wir freuen uns auf dich",
     "title": "Direkter Draht zu uns",
-    "description": "Such dir den Weg aus, der dir am besten passt. Für Fragen und Angebote erreichst du uns per E-Mail, Telefon oder WhatsApp. Wenn du lieber direkt mit uns sprechen möchtest, buch dir einfach einen Termin. Unser Quellcode ist offen und auf GitHub für alle einsehbar.",
+    "description": "Such dir den Weg aus, der dir am besten passt. Für Fragen und Angebote erreichst du uns per E-Mail, Telefon oder WhatsApp. Wenn du lieber direkt mit uns sprechen möchtest, buch dir einfach einen Termin. Unser Quellcode ist offen und auf GitHub für alle einsehbar. Aus dem laufenden Pilotbetrieb melden wir uns auf Instagram.",
     "mail": {
       "label": "Schreib uns"
     },
@@ -28,6 +28,9 @@
     },
     "github": {
       "label": "Open Source"
+    },
+    "instagram": {
+      "label": "Instagram"
     }
   },
   "cta": {

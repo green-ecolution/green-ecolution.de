@@ -1,0 +1,220 @@
+---
+import Arrow from '../icons/Arrow.astro'
+import Instagram from '../icons/Instagram.astro'
+import profileIcon from '../../assets/press/green-ecolution-icon-color.svg'
+import { company } from '../../data/company'
+import type { Language } from '../../i18n/languages'
+import { getTranslations } from '../../i18n/t'
+import { ringPath, ringPointCount } from '../../lib/growthRings'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'home')
+
+// The drawing is eight times as wide as the profile picture and centred on it,
+// so in its 400 unit viewBox the picture has a radius of 25.
+const STORY_RING_RADIUS = 28.5
+const GROWTH_RINGS = [
+  { r: 46, opacity: 0.65 },
+  { r: 66, opacity: 0.58 },
+  { r: 88, opacity: 0.5 },
+  { r: 112, opacity: 0.43 },
+  { r: 138, opacity: 0.36 },
+  { r: 166, opacity: 0.3 },
+  { r: 196, opacity: 0.24 },
+]
+
+// Two slow waves around each ring, shifted from ring to ring, so the rings
+// read as grown rather than drawn with a compass.
+function grown(radius: number, index: number): Float32Array {
+  const count = ringPointCount(radius)
+  return Float32Array.from({ length: count }, (_, point) => {
+    const angle = (point / count) * 2 * Math.PI
+    return (
+      radius *
+      (0.022 * Math.sin(2 * angle + index * 1.3) + 0.012 * Math.sin(5 * angle + index * 2.1))
+    )
+  })
+}
+---
+
+<section class="px-4 max-w-screen-lg mx-auto md:px-6 xl:max-w-screen-xl">
+  <div
+    data-scroll-progress
+    data-progress-start="1"
+    data-progress-end="0.9"
+    style={`--rings: ${GROWTH_RINGS.length + 1}`}
+    class="teaser group @container relative isolate overflow-hidden rounded-2xl border border-green-light-900/25 bg-green-light-100 p-6 md:grid md:grid-cols-12 md:items-center md:gap-10 md:p-10 lg:rounded-3xl lg:p-12"
+  >
+    <div class="mb-6 flex md:col-span-5 md:mb-0 md:justify-center">
+      <div class="relative w-20 h-20 lg:w-32 lg:h-32">
+        <svg viewBox="0 0 400 400" aria-hidden="true" class="drawing growth-rings">
+          {GROWTH_RINGS.map((ring, index) => (
+            <path
+              class="ring stroke-green-light-900"
+              d={ringPath(ring.r, grown(ring.r, index), index * 47 - 90)}
+              fill="none"
+              stroke-width="0.8"
+              stroke-linecap="round"
+              opacity={ring.opacity}
+              pathLength="1"
+              style={`--i: ${index + 1}`}
+            />
+          ))}
+        </svg>
+        <svg viewBox="0 0 400 400" aria-hidden="true" class="drawing">
+          <defs>
+            <linearGradient id="instagram-story-ring" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stop-color="var(--color-green-dark-900)"></stop>
+              <stop offset="0.5" stop-color="var(--color-green-middle-900)"></stop>
+              <stop offset="1" stop-color="var(--color-green-light-900)"></stop>
+            </linearGradient>
+          </defs>
+          <circle
+            class="ring story-ring"
+            cx="200"
+            cy="200"
+            r={STORY_RING_RADIUS}
+            fill="none"
+            stroke="url(#instagram-story-ring)"
+            stroke-width="2"
+            stroke-linecap="round"
+            pathLength="1"
+            style="--i: 0"
+          ></circle>
+        </svg>
+        <span class="absolute inset-0 flex items-center justify-center rounded-full bg-white shadow-sm">
+          <img src={profileIcon.src} class="w-[66%] h-[66%]" alt="" loading="lazy" />
+        </span>
+      </div>
+    </div>
+
+    <div class="md:col-span-7">
+      <div class="mb-4 inline-block">
+        <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
+          {t('instagram.eyebrow')}
+        </span>
+        <div class="label-rule"></div>
+      </div>
+      <h2 class="font-lato font-bold text-2xl mb-3 text-grey-900 lg:text-3xl">
+        {t('instagram.title')}
+      </h2>
+      <p class="max-w-md mb-6 text-grey-900/80 leading-relaxed">{t('instagram.description')}</p>
+      <a
+        href={company.instagramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="follow flex items-center justify-center gap-x-3 rounded-2xl px-5 py-3 font-semibold text-white bg-green-dark-900 outline-none after:absolute after:inset-0 after:rounded-2xl after:-outline-offset-4 after:outline-green-dark-900 focus-visible:after:outline-2 group-hover:bg-green-light-900 group-hover:shadow-lg group-hover:shadow-green-light-900/40 sm:w-max lg:after:rounded-3xl"
+      >
+        <Instagram class="w-6 h-6" />
+        <span>{t('instagram.follow', { handle: company.instagramHandle })}</span>
+        <Arrow class="arrow w-6" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Both drawings are eight times as wide as the profile picture and centred
+     on it, whatever size the picture has. */
+  .drawing {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: -1;
+    width: 800%;
+    max-width: none;
+    translate: -50% -50%;
+    pointer-events: none;
+  }
+
+  /* The growth rings stay clear of the text: stacked, they end below the
+     picture, side by side they fade out around it. */
+  .growth-rings {
+    mask-image: linear-gradient(to bottom, #000 calc(50% + 3.1rem), transparent calc(50% + 4.1rem));
+  }
+
+  /* --reach is the distance from the picture's centre to the text column:
+     half of the five columns the picture is centred in, plus the 2.5rem gap. */
+  @media (min-width: 48rem) {
+    .growth-rings {
+      --reach: calc((5 * (100cqw + 2.5rem) / 12 + 2.5rem) / 2);
+      mask-image: radial-gradient(
+        circle at center,
+        #000 calc(var(--reach) - 2rem),
+        transparent calc(var(--reach) - 0.5rem)
+      );
+    }
+  }
+
+  /* The story ring draws itself first, then the growth rings follow outwards
+     while the card travels up the window. Without the script the progress is 1
+     and all of them are drawn. Firefox drops a unitless calc() here, hence the
+     1px, which pathLength scales like a plain number. */
+  .ring {
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(
+      clamp(0, 1 - (var(--scroll-progress, 1) * var(--rings) - var(--i)), 1) * 1px
+    );
+    transition: stroke-dashoffset 0.2s linear;
+  }
+
+  .story-ring {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      stroke-dashoffset 0.2s linear,
+      rotate 900ms var(--ease-spring-settle);
+  }
+
+  /* The link covers the whole card through its ::after. The press answer sits
+     on the card, because a scale on the link itself would make it the
+     containing block of that ::after and shrink the click target mid-press. */
+  .teaser {
+    transition:
+      scale 515ms var(--ease-spring-settle),
+      box-shadow 300ms ease-out;
+  }
+
+  .teaser:has(.follow:active) {
+    scale: 0.985;
+    transition-duration: 60ms;
+  }
+
+  .follow {
+    transition:
+      background-color 300ms ease-out,
+      box-shadow 300ms ease-out;
+  }
+
+  .arrow {
+    transition: translate 300ms var(--ease-brand);
+  }
+
+  /* Touch never leaves hover again after a tap, so the card would come back
+     from Instagram with its ring turned and its shadow raised. */
+  @media (hover: hover) {
+    .teaser:hover {
+      box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--color-green-dark-900) 55%, transparent);
+    }
+
+    .teaser:hover .arrow {
+      translate: 0.5rem 0;
+    }
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .teaser:hover .story-ring {
+      rotate: 180deg;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .teaser:has(.follow:active) {
+      scale: 1;
+    }
+  }
+</style>

@@ -202,6 +202,12 @@
       "posterAlt": "View up into an oak canopy with the sun flaring through the leaves, the Schleswig-Holstein Magazin logo in the bottom left corner"
     }
   },
+  "instagram": {
+    "eyebrow": "Instagram",
+    "title": "Stay up to date",
+    "description": "On Instagram we report from the running pilot.",
+    "follow": "Follow {{handle}}"
+  },
   "workflow": {
     "sectionLabel": "How it works",
     "title": "How does Green Ecolution work?",
