@@ -993,19 +993,19 @@ try {
   narrow.close()
 }
 
-// Tall enough windows keep the stage in view beside the panel, so the tour
-// starts in a whole picture, not one cut off by the header.
+// The stage is as tall as the panel beside it. It has to fit between the header
+// and the window's bottom, so the tour starts in a whole picture.
 for (const [width, height] of [
   [1194, 702],
   [1366, 768],
 ]) {
   const name = `${width} × ${height}`
-  const sticky = await openPage({ width, height })
+  const fitted = await openPage({ width, height })
   try {
-    await load(sticky, { name })
-    await clickButton(sticky, 'Gießtag starten')
+    await load(fitted, { name })
+    await clickButton(fitted, 'Gießtag starten')
     await sleep(2500)
-    const seen = await sticky.evaluate(`(() => {
+    const seen = await fitted.evaluate(`(() => {
       const stage = document.querySelector('#process [data-day-stage]')
       const header = document.getElementById('site-header')
       if (!stage || !header) return null
@@ -1018,11 +1018,11 @@ for (const [width, height] of [
       seen.top >= seen.header && seen.bottom <= seen.window,
       JSON.stringify(seen),
     )
-    await sticky.screenshot(join(out, `sticky-${width}x${height}.png`))
+    await fitted.screenshot(join(out, `fitted-${width}x${height}.png`))
   } catch (error) {
     check(`${name}, stage in view: ${error.message}`, false)
   } finally {
-    sticky.close()
+    fitted.close()
   }
 }
 

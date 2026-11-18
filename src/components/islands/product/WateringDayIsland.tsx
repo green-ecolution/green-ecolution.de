@@ -252,14 +252,15 @@ function WateringDay({ poster }: { poster?: Poster }) {
   const showStage = () => {
     const node = stageNode.current
     if (!node) return
-    const { top, bottom, height } = node.getBoundingClientRect()
+    const { top, bottom } = node.getBoundingClientRect()
     const headerBottom =
       document.getElementById('site-header')?.getBoundingClientRect().bottom ??
       FALLBACK_HEADER_HEIGHT
-    const visible = Math.min(bottom, window.innerHeight) - Math.max(top, headerBottom)
+    // The button stands at the foot of the panel, level with the stage's foot:
+    // in a low window the header cuts the stage's top while the button is in reach.
     // Not centred: the page's scroll padding would push the stage so far down
     // that on a phone the strip under it falls out of the window.
-    if (visible < height * 0.6) {
+    if (top < headerBottom || bottom > window.innerHeight) {
       window.scrollTo({ top: window.scrollY + top - headerBottom - HEADER_AIR, behavior: 'smooth' })
     }
   }
@@ -349,18 +350,14 @@ function WateringDay({ poster }: { poster?: Poster }) {
       ref={root}
       data-day-root
       style={{ '--day-tank': String(tankShare(day, tour)) } as CSSProperties}
-      className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-10"
+      className="grid gap-6 lg:grid-cols-[1.45fr_1fr] lg:gap-8"
     >
-      <div className="lg:stick:sticky lg:stick:top-24 lg:self-start">
-        <StepHeading
-          number={1}
-          title={t('day.steps.measure.title')}
-          description={t('day.steps.measure.description')}
-        />
+      <div className="flex flex-col">
+        {/* From lg the panel sets the height and the stage fills it. */}
         <div
           ref={stageNode}
           data-day-stage
-          className="group relative aspect-[3/2] overflow-hidden rounded-3xl bg-green-light-100/60"
+          className="group relative aspect-[3/2] overflow-hidden rounded-3xl bg-green-light-100/60 lg:aspect-auto lg:flex-1"
         >
           {/* An image's children are flattened for assistive technology, so the
               card with its button stands beside the picture, not in it. */}
@@ -482,7 +479,6 @@ function WateringDay({ poster }: { poster?: Poster }) {
             </div>
           </div>
         )}
-        <WeatherSlider days={days} onChange={changeDays} />
       </div>
 
       {/* The cards are not live themselves: one region announces either of them once. */}
@@ -493,14 +489,16 @@ function WateringDay({ poster }: { poster?: Poster }) {
             : t(shownCopy.title))}
       </p>
 
-      {/* Room under the button, so the sticky stage is not pushed up by the end of the grid while the button is reachable. */}
-      <div className="flex flex-col gap-8 lg:stick:pb-48">
+      <div
+        data-day-panel
+        className="@container divide-y divide-green-dark-900/10 rounded-3xl bg-white ring-1 ring-green-dark-900/10 *:p-5"
+      >
         <div>
-          <StepHeading
-            number={2}
-            title={t('day.steps.understand.title')}
-            description={t('day.steps.understand.description')}
-          />
+          <StepHeading number={1} title={t('day.steps.measure.title')} />
+          <WeatherSlider days={days} onChange={changeDays} />
+        </div>
+        <div>
+          <StepHeading number={2} title={t('day.steps.understand.title')} />
           <TreeList
             rows={rows}
             selected={selected}
@@ -509,11 +507,7 @@ function WateringDay({ poster }: { poster?: Poster }) {
           />
         </div>
         <div>
-          <StepHeading
-            number={3}
-            title={t('day.steps.act.title')}
-            description={t('day.steps.act.description')}
-          />
+          <StepHeading number={3} title={t('day.steps.act.title')} />
           <TourControls
             status={statusText}
             isStatusOnStage={isOnStage}

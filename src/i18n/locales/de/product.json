@@ -15,16 +15,13 @@
     "stageAriaLabel": "Kleine Stadt von schräg oben mit zwölf Bäumen. Über jedem Baum zeigt eine Nadel in Ampelfarbe, ob er Wasser braucht. Ein Gießwagen fährt die trockenen Bäume an.",
     "steps": {
       "measure": {
-        "title": "Messen: Wo ist es trocken?",
-        "description": "Sonden im Boden melden von selbst, wie feucht die Erde ist."
+        "title": "Messen: Wo ist es trocken?"
       },
       "understand": {
-        "title": "Verstehen: Was ist zuerst dran?",
-        "description": "Die trockensten Bäume stehen oben."
+        "title": "Verstehen: Was ist zuerst dran?"
       },
       "act": {
-        "title": "Handeln: Wer fährt wohin?",
-        "description": "Die Tour führt nur dorthin, wo Wasser fehlt."
+        "title": "Handeln: Wer fährt wohin?"
       }
     },
     "weather": {
