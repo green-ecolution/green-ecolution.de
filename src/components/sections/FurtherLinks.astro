@@ -11,7 +11,6 @@ const { language } = Astro.props
 const t = getTranslations(language, 'product')
 
 const LINKS = [
-  { id: 'flensburgSoftware', url: 'https://app.green-ecolution.de/' },
   { id: 'github', url: 'https://github.com/green-ecolution' },
   {
     id: 'hsflBlog',
@@ -23,8 +22,12 @@ const LINKS = [
     url: 'https://www.schleswig-holstein.de/DE/landesregierung/ministerien-behoerden/I/Presse/PI/2025/cds/251014_cds_open-source-projekte?nn=a3865cbf-b1fb-4b2f-bc47-f7ac05f3f7b5',
   },
   {
-    id: 'ndrReport',
-    url: 'https://www.ndr.de/nachrichten/schleswig-holstein/schleswig-holsteins-stadtbaeume-sterben,stadtbaum-100.html',
+    id: 'landShGreenIt',
+    url: 'https://www.schleswig-holstein.de/DE/landesregierung/themen/digitalisierung/green-it/sh-macht-mit/_documents/greenit_sonderpreis',
+  },
+  {
+    id: 'diwishArticle',
+    url: 'https://www.diwish.de/blog-artikel/wenn-der-baum-durst-meldet-green-ecolution-macht-stadtbewaesserung-smart.html',
   },
   { id: 'pressRelease', url: 'https://www.presse-service.de/data.aspx/static/1200128.html' },
   { id: 'liveDemo', url: 'https://demo.green-ecolution.de/' },
@@ -32,8 +35,8 @@ const LINKS = [
 ---
 
 <section class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
-  <article class="mb-8 lg:mb-12 lg:text-center">
-    <div class="inline-block mb-4 lg:mx-auto">
+  <article class="mb-6 lg:mb-8">
+    <div class="inline-block mb-4">
       <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
         {t('resources.sectionLabel')}
       </span>
@@ -42,28 +45,17 @@ const LINKS = [
     <h2 class="font-lato font-bold text-2xl lg:text-3xl text-grey-900">{t('resources.title')}</h2>
   </article>
 
-  <ul class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+  <ul class="grid grid-cols-1 md:grid-cols-2 md:gap-x-10">
     {LINKS.map((link) => (
-      <li>
+      <li class="border-b border-green-dark-900/10">
         <a
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          class="group block h-full bg-green-light-100 border border-green-dark-900/20 rounded-2xl p-5 lg:p-6 shadow-xs hover:shadow-sm transition-all duration-300 hover:-translate-y-1"
+          class="group flex items-center justify-between gap-4 py-3.5 font-semibold text-grey-900 transition-colors hover:text-green-dark-900"
         >
-          <div class="flex items-start justify-between gap-4">
-            <div class="flex-1 min-w-0">
-              <h3 class="font-lato font-semibold text-lg text-grey-900 mb-2 group-hover:text-green-dark-900 transition-colors">
-                {t(`resources.items.${link.id}.label`)}
-              </h3>
-              <p class="text-grey-900/70 text-sm leading-relaxed">
-                {t(`resources.items.${link.id}.description`)}
-              </p>
-            </div>
-            <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-green-dark-900/10 flex items-center justify-center group-hover:bg-green-dark-900 transition-colors">
-              <ArrowUpRight className="w-5 h-5 text-green-dark-900 group-hover:text-white transition-colors" />
-            </div>
-          </div>
+          {t(`resources.items.${link.id}`)}
+          <ArrowUpRight className="h-5 w-5 shrink-0 text-green-dark-900 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </a>
       </li>
     ))}

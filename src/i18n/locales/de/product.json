@@ -226,38 +226,14 @@
     "sectionLabel": "Ressourcen",
     "title": "Weiterführende Links & Erwähnungen",
     "items": {
-      "flensburgSoftware": {
-        "label": "Software für die Stadt Flensburg",
-        "description": "Dies ist die Software, die für die Stadt Flensburg entwickelt und aufgesetzt wurde. Diese Software wird primär vom Technischen Betriebszentrum Flensburg genutzt."
-      },
-      "github": {
-        "label": "Organisation auf GitHub",
-        "description": "Dort findest du alle Code-Repositories, die mit dem Projekt in Verbindung stehen, etwa Backend und Frontend der Software"
-      },
-      "hsflBlog": {
-        "label": "Blog-Beitrag der HS Flensburg",
-        "description": "Auch auf der Website der HS Flensburg wurde ein Beitrag zum Forschungsprojekt veröffentlicht."
-      },
-      "hsflInstagram": {
-        "label": "Instagram-Beitrag der HS Flensburg",
-        "description": "Nicht nur auf der Website, sondern auch auf Instagram wurde Green Ecolution erwähnt."
-      },
-      "digitalHub": {
-        "label": "Teil des DigitalHub.SH 2025",
-        "description": "Green Ecolution wurde als eines der Open-Source-Projekte im Rahmen des DigitalHub.SH 2025 vorgestellt und finanziert."
-      },
-      "ndrReport": {
-        "label": "NDR-Beitrag im Schleswig-Holstein Magazin",
-        "description": "Der NDR berichtete über Stadtbäume, die den trockenen Sommern nicht mehr standhalten. Als Lösungsansatz zeigte er Green Ecolution in Flensburg."
-      },
-      "pressRelease": {
-        "label": "Pressemitteilung der Stadt Flensburg",
-        "description": "Auch die Stadt Flensburg berichtete über Green Ecolution und die Bedeutung des Projekts für ein nachhaltiges Stadtmanagement."
-      },
-      "liveDemo": {
-        "label": "Live Demo",
-        "description": "Die öffentliche Demo-Instanz, direkt im Browser und ohne Installation."
-      }
+      "github": "Organisation auf GitHub",
+      "hsflBlog": "Blog-Beitrag der HS Flensburg",
+      "hsflInstagram": "Instagram-Beitrag der HS Flensburg",
+      "digitalHub": "Teil des DigitalHub.SH 2025",
+      "landShGreenIt": "Green-IT-Beitrag des Landes Schleswig-Holstein",
+      "diwishArticle": "Blog-Artikel des DiWiSH",
+      "pressRelease": "Pressemitteilung der Stadt Flensburg",
+      "liveDemo": "Live Demo"
     }
   }
 }
