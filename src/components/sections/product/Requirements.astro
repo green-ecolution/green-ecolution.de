@@ -1,0 +1,98 @@
+---
+import { Droplets, TreeDeciduous, Truck } from 'lucide-react'
+import { neededItems, sparedItems } from '../../../data/requirements'
+import type { Language } from '../../../i18n/languages'
+import { getTranslations } from '../../../i18n/t'
+import Arrow from '../../icons/Arrow.astro'
+import Button from '../../Button.astro'
+
+interface Props {
+  language: Language
+}
+
+const { language } = Astro.props
+const t = getTranslations(language, 'product')
+
+const neededIcons = { trees: TreeDeciduous, vehicles: Truck, water: Droplets }
+---
+
+<section
+  id="requirements"
+  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl"
+>
+  <div class="mb-10 lg:mb-14">
+    <div class="inline-block mb-4">
+      <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
+        {t('requirements.sectionLabel')}
+      </span>
+      <div class="label-rule"></div>
+    </div>
+
+    <div class="lg:flex lg:justify-between lg:gap-12 xl:gap-16">
+      <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:mb-0 lg:max-w-xs lg:shrink-0 lg:text-3xl xl:max-w-sm xl:text-4xl">
+        {t('requirements.title')}
+      </h2>
+      <p class="text-grey-900/70 leading-relaxed lg:max-w-2xl lg:text-lg">
+        {t('requirements.lead')}
+      </p>
+    </div>
+  </div>
+
+  {/* The day's columns again, so both sections stand flush. */}
+  <div class="grid gap-4 lg:grid-cols-[1.45fr_1fr] lg:gap-8">
+    <div class="rounded-3xl bg-green-dark-900 px-6 py-7 text-white sm:px-8 lg:px-10 lg:py-9">
+      <h3 class="font-lato font-bold text-lg">{t('requirements.spared.title')}</h3>
+      <ul class="mt-3 divide-y divide-white/15">
+        {sparedItems.map((id) => (
+          <li class="py-5 last:pb-0">
+            <p class="font-lato text-2xl leading-tight xl:text-[1.75rem]">
+              <span class="text-white/70">{t('requirements.spared.without')}</span>{' '}
+              <span class="font-bold">{t(`requirements.spared.items.${id}.name`)}</span>
+            </p>
+            <p class="mt-1.5 leading-relaxed text-white/85">
+              {t(`requirements.spared.items.${id}.text`)}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-green-dark-900/10 sm:p-8">
+      <h3 class="font-lato font-bold text-lg text-grey-900">{t('requirements.needed.title')}</h3>
+      <ul class="mt-6 space-y-6">
+        {neededItems.map((id) => {
+          const Icon = neededIcons[id]
+          return (
+            <li class="flex gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-light-100 text-green-dark-900">
+                <Icon className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <div>
+                <p class="font-lato font-semibold text-lg leading-snug text-grey-900">
+                  {t(`requirements.needed.items.${id}.name`)}
+                </p>
+                <p class="mt-1 leading-relaxed text-grey-900/70">
+                  {t(`requirements.needed.items.${id}.text`)}
+                </p>
+              </div>
+            </li>
+          )
+        })}
+      </ul>
+
+      <div class="mt-auto pt-8">
+        <p class="text-grey-900/70 leading-relaxed">{t('requirements.needed.after')}</p>
+        <div class="mt-4">
+          <Button
+            href={`/${language}/contact`}
+            ariaLabel={t('requirements.needed.ctaAriaLabel')}
+            isDark
+          >
+            <span>{t('requirements.needed.cta')}</span>
+            <Arrow class="w-6 transition-all ease-in-out duration-300 group-hover:translate-x-2" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

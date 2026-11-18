@@ -152,31 +152,55 @@
     "beyondRich": "The platform can do more than irrigation. What we build and run for you is listed under <services>services</services>."
   },
   "requirements": {
-    "sectionLabel": "Requirements",
-    "title": "What you need for it",
-    "lead": "Getting started is smaller than it first looks. The four points describe what has to come from the municipality.",
-    "sensorsOptionalNote": "Scheduling and route planning already work without sensors. Trees, fleet and refill points are enough. The soil probes improve the prioritisation because they show which areas actually need water.",
-    "items": {
-      "treeData": {
-        "label": "Tree and area data",
-        "description": "Locations come in via CSV import or by connecting an existing tree register. There is no need to build a register from scratch."
-      },
-      "fleet": {
-        "label": "The fleet you already have",
-        "description": "Water carts, vans and trailers with their water capacities, plus the refill points across the city. A new fleet or fixed irrigation hardware is not required."
-      },
-      "network": {
-        "label": "A radio link for the sensors",
-        "description": "The probes transmit over LoRaWAN and the open The Things Network today. Since 2024 Schleswig-Holstein has built a state-wide network with more than 420 gateways. Where there is no coverage, you can either add a gateway of your own or run the same probes on NB-IoT with a SIM card. LoRaWAN is the technology in use today, not a condition."
-      },
-      "hosting": {
-        "label": "Someone to run the platform",
-        "description": "We run the platform for you, including updates, backups and support. Because the source code is open and free of licence fees, running it yourself stays possible at any time. So you are not tied to us, and you still do not have to look after any of it."
+    "sectionLabel": "Getting started",
+    "title": "Does it fit you?",
+    "lead": "Probably yes. Getting started is smaller than it first looks.",
+    "spared": {
+      "title": "It also works",
+      "without": "without",
+      "items": {
+        "register": {
+          "name": "a tree register",
+          "text": "We connect a register you already have. If there is none, a simple list of your trees is enough."
+        },
+        "vehicles": {
+          "name": "new vehicles",
+          "text": "Your watering trucks and trailers stay."
+        },
+        "installer": {
+          "name": "a specialist firm",
+          "text": "Your team installs the probes itself, flush with the ground, using a standard earth auger. If you like, we provide instruction on site."
+        },
+        "network": {
+          "name": "a radio network of your own",
+          "text": "You do not have to build a network and you do not depend on one of ours. The probes transmit over open, common technology such as LoRaWAN or NB-IoT over the mobile network, which runs independently of us."
+        },
+        "it": {
+          "name": "your own IT",
+          "text": "We run everything for you, with updates and help when questions come up. Your IT can also take over operation itself."
+        }
       }
     },
-    "tourLinkRich": "How the route optimisation works and what input it expects is described on the <streamlet>route optimisation</streamlet> page.",
-    "cta": "Discuss getting started",
-    "ctaAriaLabel": "Go to the contact page"
+    "needed": {
+      "title": "What you bring along",
+      "items": {
+        "trees": {
+          "name": "Your trees",
+          "text": "Their locations, as a list or from the register."
+        },
+        "vehicles": {
+          "name": "Your watering trucks",
+          "text": "The vehicles you have, with their water tank. If a contractor waters, they get the finished round."
+        },
+        "water": {
+          "name": "Your water points",
+          "text": "The places in town where you refill."
+        }
+      },
+      "after": "Probes, platform and setup come from us. We sort out the rest in a short conversation.",
+      "cta": "Discuss getting started",
+      "ctaAriaLabel": "To the contact page"
+    }
   },
   "vision": {
     "sectionLabel": "Vision",
