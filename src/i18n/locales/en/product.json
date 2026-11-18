@@ -15,16 +15,13 @@
     "stageAriaLabel": "A small town seen from above at an angle, with twelve trees. A pin in traffic-light colours above each tree shows whether it needs water. A watering truck drives to the dry trees.",
     "steps": {
       "measure": {
-        "title": "Measure: where is it dry?",
-        "description": "Probes in the ground report on their own how moist the soil is."
+        "title": "Measure: where is it dry?"
       },
       "understand": {
-        "title": "Understand: what comes first?",
-        "description": "The driest trees are at the top."
+        "title": "Understand: what comes first?"
       },
       "act": {
-        "title": "Act: who drives where?",
-        "description": "The round only goes where water is missing."
+        "title": "Act: who drives where?"
       }
     },
     "weather": {

@@ -1,26 +1,25 @@
-import { ArrowRight, CloudRain, Droplets, Sun } from 'lucide-react'
+import { ArrowRight, Check, CloudRain, Droplets, Sun } from 'lucide-react'
 import type { FocusEvent } from 'react'
 import { useT } from '../../../i18n/useT'
 import { MAX_DRY_DAYS } from '../../../lib/dryness'
 import type { CloseUpKind } from '../../../lib/wateringDay'
 import { thirstColors, type CardCopy, type DayPhase, type TreeRow } from './dayModel'
 
+// The one small line every step has between its heading and its control.
+const stepNote = 'mt-1 text-sm leading-snug text-grey-900/70'
+
 interface StepHeadingProps {
   number: number
   title: string
-  description: string
 }
 
-export function StepHeading({ number, title, description }: StepHeadingProps) {
+export function StepHeading({ number, title }: StepHeadingProps) {
   return (
-    <div className="mb-3 flex items-start gap-3">
+    <div className="flex items-start gap-2.5">
       <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-dark-900 font-lato text-xs font-bold text-white">
         {number}
       </span>
-      <div>
-        <h3 className="font-lato text-lg font-bold leading-snug text-grey-900">{title}</h3>
-        <p className="text-sm text-grey-900/70">{description}</p>
-      </div>
+      <h3 className="font-lato text-lg font-bold leading-snug text-grey-900">{title}</h3>
     </div>
   )
 }
@@ -35,8 +34,11 @@ export function WeatherSlider({ days, onChange }: WeatherSliderProps) {
   const text = days === 1 ? t('day.weather.valueOne') : t('day.weather.value', { days })
 
   return (
-    <div className="mt-4">
-      <div className="flex items-center gap-3">
+    <>
+      <p className={stepNote}>
+        <span className="font-semibold text-grey-900">{text}</span> · {t('day.weather.hint')}
+      </p>
+      <div className="mt-2 flex items-center gap-3">
         <CloudRain aria-hidden="true" className="h-5 w-5 shrink-0 text-grey-900/50" />
         <input
           type="range"
@@ -51,12 +53,11 @@ export function WeatherSlider({ days, onChange }: WeatherSliderProps) {
         />
         <Sun aria-hidden="true" className="h-5 w-5 shrink-0 text-grey-900/50" />
       </div>
-      <p className="mt-1 text-center font-semibold text-grey-900">
-        {text} <span className="font-normal text-grey-900/60">· {t('day.weather.hint')}</span>
-      </p>
-    </div>
+    </>
   )
 }
+
+const LEGEND = ['dry', 'soon', 'ok'] as const
 
 interface TreeListProps {
   rows: TreeRow[]
@@ -70,45 +71,63 @@ interface TreeListProps {
 export function TreeList({ rows, selected, onSelect, onHighlight }: TreeListProps) {
   const t = useT()
 
-  // The rows re-sort as trees get watered; a row as scroll anchor would drag the
-  // page along and push the tour button out of view.
   return (
-    <ul className="grid gap-1 [overflow-anchor:none]">
-      {rows.map((row) => (
-        <li key={row.id}>
-          <button
-            type="button"
-            data-selected={selected === row.index}
-            onClick={() => onSelect(selected === row.index ? null : row.index)}
-            onFocus={() => onHighlight(row.index)}
-            onBlur={() => onHighlight(null)}
-            onPointerEnter={(event) => event.pointerType === 'mouse' && onHighlight(row.index)}
-            onPointerLeave={(event) => event.pointerType === 'mouse' && onHighlight(null)}
-            data-state={row.state}
-            className="flex w-full items-center gap-2.5 rounded-xl border border-grey-900/10 bg-white px-3 py-1.5 text-left text-sm transition-colors hover:border-green-dark-900/40 data-[selected=true]:ring-2 data-[selected=true]:ring-green-dark-900 data-[state=dry]:border-red-500/40"
-          >
+    <>
+      <ul aria-hidden="true" className={`${stepNote} flex flex-wrap gap-x-4 gap-y-1`}>
+        {LEGEND.map((state) => (
+          <li key={state} className="flex items-center gap-1.5">
             <span
-              aria-hidden="true"
-              className="h-3 w-3 shrink-0 rounded-full"
-              style={{ backgroundColor: thirstColors[row.state] }}
+              className="h-2.5 w-2.5 shrink-0 rounded-full"
+              style={{ backgroundColor: thirstColors[state] }}
             />
-            {row.order > 0 && (
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-grey-900 text-[11px] font-bold text-white">
-                {row.order}
-              </span>
-            )}
-            <span className="text-grey-900">{t(`day.trees.${row.id}`)}</span>
-            <span
-              className={`ml-auto text-xs ${
-                row.state === 'dry' ? 'font-semibold text-red-500' : 'text-grey-900/60'
-              }`}
+            {t(`day.states.${state}`)}
+          </li>
+        ))}
+      </ul>
+      {/* Two columns where the panel is wide enough for the longest name, filled
+          column by column so the driest stand top left. The rows re-sort as trees
+          get watered; a row as scroll anchor would drag the page along. */}
+      <ul className="-mx-2 mt-2 grid auto-cols-fr gap-x-3 gap-y-0.5 [overflow-anchor:none] @[22rem]:grid-flow-col @[22rem]:grid-rows-6">
+        {rows.map((row) => (
+          <li key={row.id} className="min-w-0">
+            <button
+              type="button"
+              data-selected={selected === row.index}
+              onClick={() => onSelect(selected === row.index ? null : row.index)}
+              onFocus={() => onHighlight(row.index)}
+              onBlur={() => onHighlight(null)}
+              onPointerEnter={(event) => event.pointerType === 'mouse' && onHighlight(row.index)}
+              onPointerLeave={(event) => event.pointerType === 'mouse' && onHighlight(null)}
+              data-state={row.state}
+              className="flex w-full items-center gap-2 rounded-lg px-2 py-1 text-left text-sm text-grey-900 transition-colors hover:bg-green-light-100/70 data-[selected=true]:bg-green-light-100/70 data-[selected=true]:ring-2 data-[selected=true]:ring-green-dark-900"
             >
-              {t(row.watered ? 'day.states.watered' : `day.states.${row.state}`)}
-            </span>
-          </button>
-        </li>
-      ))}
-    </ul>
+              {row.watered ? (
+                <Check
+                  aria-hidden="true"
+                  strokeWidth={3}
+                  className="h-3 w-3 shrink-0 text-green-dark-900"
+                />
+              ) : (
+                <span
+                  aria-hidden="true"
+                  className="h-3 w-3 shrink-0 rounded-full"
+                  style={{ backgroundColor: thirstColors[row.state] }}
+                />
+              )}
+              {row.order > 0 && (
+                <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full bg-grey-900 text-[10px] font-bold text-white">
+                  {row.order}
+                </span>
+              )}
+              <span className="truncate">{t(`day.trees.${row.id}`)}</span>
+              <span className="sr-only">
+                {t(row.watered ? 'day.states.watered' : `day.states.${row.state}`)}
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
   )
 }
 
@@ -118,11 +137,19 @@ interface TourButtonProps {
   onPlan: () => void
   onSkip: () => void
   onReset: () => void
+  className?: string
 }
 
 // One node for all three roles: a button that went away or got disabled while
 // focused would drop keyboard focus to the page.
-export function TourButton({ phase, canPlan, onPlan, onSkip, onReset }: TourButtonProps) {
+export function TourButton({
+  phase,
+  canPlan,
+  onPlan,
+  onSkip,
+  onReset,
+  className = '',
+}: TourButtonProps) {
   const t = useT()
   const isUnavailable = phase === 'idle' && !canPlan
   const act = { idle: onPlan, touring: onSkip, done: onReset }[phase]
@@ -136,7 +163,7 @@ export function TourButton({ phase, canPlan, onPlan, onSkip, onReset }: TourButt
       onClick={() => {
         if (!isUnavailable) act()
       }}
-      className="press-spring inline-flex shrink-0 items-center gap-3 rounded-2xl bg-green-dark-900 px-5 py-2 font-semibold text-white transition-all hover:bg-green-light-900 aria-disabled:pointer-events-none aria-disabled:opacity-40"
+      className={`press-spring inline-flex shrink-0 items-center justify-center gap-3 rounded-2xl bg-green-dark-900 px-5 py-2 font-semibold text-white transition-all hover:bg-green-light-900 aria-disabled:pointer-events-none aria-disabled:opacity-40 ${className}`}
     >
       {t(label)}
       {phase === 'idle' && <ArrowRight aria-hidden="true" className="h-5 w-5" />}
@@ -199,18 +226,16 @@ export function TourControls({ status, isStatusOnStage, stops, ...button }: Tour
 
   return (
     <div>
-      <TourButton {...button} />
-
-      <p
-        role="status"
-        aria-live="polite"
-        className={isStatusOnStage ? 'sr-only' : 'mt-3 min-h-12 text-grey-900'}
-      >
-        {status}
-      </p>
+      {/* Keeps its height while the status is on the stage: the stage is as tall as the panel. */}
+      <div className={`${stepNote} min-h-10`}>
+        <p role="status" aria-live="polite" className={isStatusOnStage ? 'sr-only' : undefined}>
+          {status}
+        </p>
+      </div>
+      <TourButton {...button} className="mt-3 w-full @xl:w-auto" />
 
       {stops && (
-        <div className="mt-2">
+        <div className="mt-4">
           <p className="text-xs font-semibold uppercase tracking-widest text-green-dark-900">
             {t('day.tour.stops')}
           </p>

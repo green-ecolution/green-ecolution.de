@@ -9,6 +9,7 @@ import { CARD_KEYS, STATUS_KEYS } from '../../islands/product/dayModel'
 import type { Language } from '../../../i18n/languages'
 import { pickStrings } from '../../../i18n/pick'
 import { getTranslations, type TranslationKey } from '../../../i18n/t'
+import { splitSlot } from '../../../lib/slotText'
 import TechDetails from './TechDetails.astro'
 
 interface Props {
@@ -18,11 +19,8 @@ interface Props {
 const KEYS: TranslationKey<'product'>[] = [
   'day.stageAriaLabel',
   'day.steps.measure.title',
-  'day.steps.measure.description',
   'day.steps.understand.title',
-  'day.steps.understand.description',
   'day.steps.act.title',
-  'day.steps.act.description',
   'day.weather.label',
   'day.weather.value',
   'day.weather.valueOne',
@@ -45,8 +43,12 @@ const KEYS: TranslationKey<'product'>[] = [
 
 const { language } = Astro.props
 const t = getTranslations(language, 'product')
+const services = splitSlot(t('tech.beyondRich'), 'services')
 const strings = pickStrings(language, 'product', KEYS)
 const poster = await getImage({ src: posterImage, width: 1200, format: 'webp' })
+
+const LINK =
+  'font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4'
 
 // Development only: shows nothing but the stage, for scripts/render-product-still.mjs.
 const CAPTURE_SCRIPT = `if (new URLSearchParams(location.search).has('dayStill')) {
@@ -107,20 +109,30 @@ const CAPTURE_STYLE = `:root[data-day-capture] [data-day-stage] {
     }}
   />
 
-  {/* A link, not a button: starting the watering day is the one thing to press here. */}
-  <p class="mt-10 text-grey-900/70">
-    {t('day.after.text')}
-    <a
-      href={company.booking.liveDemoUrl}
-      aria-label={t('day.after.ctaAriaLabel')}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="group ml-1 inline-flex items-center gap-2 font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4"
-    >
-      {t('day.after.cta')}
-      <Arrow class="w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
-    </a>
-  </p>
+  {/* The island's columns again, so each note stands under its half. */}
+  <div class="mt-6 grid gap-4 text-grey-900/70 leading-relaxed lg:grid-cols-[1.45fr_1fr] lg:gap-8">
+    {/* A link, not a button: starting the watering day is the one thing to press here. */}
+    <p>
+      {t('day.after.text')}{' '}
+      <a
+        href={company.booking.liveDemoUrl}
+        aria-label={t('day.after.ctaAriaLabel')}
+        target="_blank"
+        rel="noopener noreferrer"
+        class:list={['group inline-flex items-center gap-2', LINK]}
+      >
+        {t('day.after.cta')}
+        <Arrow class="w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
+      </a>
+    </p>
+    <p>
+      {services.before}
+      <a href={`/${language}/services`} class={LINK}>
+        {services.inner}
+      </a>
+      {services.after}
+    </p>
+  </div>
 
   <TechDetails language={language} />
 </section>

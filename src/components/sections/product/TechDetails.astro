@@ -16,10 +16,9 @@ const LINK =
 const { language } = Astro.props
 const t = getTranslations(language, 'product')
 const streamlet = splitSlot(t('tech.streamletRich'), 'streamlet')
-const services = splitSlot(t('tech.beyondRich'), 'services')
 ---
 
-<div id="architecture" class="mt-12 lg:mt-16">
+<div id="architecture" class="mt-10 lg:mt-12">
   <details
     data-open-on-anchor
     class="group rounded-2xl border border-green-dark-900/10 bg-white open:pb-2"
@@ -52,14 +51,6 @@ const services = splitSlot(t('tech.beyondRich'), 'services')
       {streamlet.after}
     </p>
   </details>
-
-  <p class="mt-6 text-grey-900/70 leading-relaxed">
-    {services.before}
-    <a href={`/${language}/services`} class={LINK}>
-      {services.inner}
-    </a>
-    {services.after}
-  </p>
 </div>
 
 <script>

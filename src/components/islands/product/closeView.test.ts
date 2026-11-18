@@ -237,11 +237,17 @@ describe('resultView', () => {
 })
 
 describe('framedView', () => {
-  // The stage and its card at 1440 px, and a phone's stage without a card. The
-  // refill card has two more lines of text.
-  const desktop = { aspect: 695 / 464, card: { right: 332 / 695, top: 208 / 464 } }
-  const refillCard = { right: 332 / 695, top: 246 / 464 }
-  const resultCard = { right: 332 / 695, top: 189 / 464 }
+  // The stage as tall as the panel beside it, at 1440 px and on a tablet lying
+  // flat, each with the card in its corner, and a phone's stage without a card.
+  // The refill card has two more lines of text.
+  const CARD_WIDTH = 332
+  const wideStages = [
+    { name: 'desktop', width: 710, height: 570 },
+    { name: 'tablet', width: 559, height: 570 },
+  ].map(({ name, width, height }) => {
+    const card = (top: number): CardCover => ({ right: CARD_WIDTH / width, top: top / height })
+    return { name, aspect: width / height, card: card(208), refill: card(246), result: card(189) }
+  })
   const phone = { aspect: 358 / 239, card: null }
 
   function expectFramed(view: CloseView, aspect: number, card: CardCover | null, what: string) {
@@ -265,7 +271,9 @@ describe('framedView', () => {
   it('hält beim Gießen Wagen, Strahl und Baum ganz im Bild und neben der Karte', () => {
     for (let days = 5; days <= 14; days++) {
       const { view } = wateringAt(days)
-      expectFramed(view, desktop.aspect, desktop.card, `desktop, ${days} days`)
+      for (const stage of wideStages) {
+        expectFramed(view, stage.aspect, stage.card, `${stage.name}, ${days} days`)
+      }
       expectFramed(view, phone.aspect, phone.card, `phone, ${days} days`)
     }
   })
@@ -274,7 +282,9 @@ describe('framedView', () => {
     for (let days = 5; days <= 14; days++) {
       const refill = refillAt(days)
       if (!refill) continue
-      expectFramed(refill.view, desktop.aspect, refillCard, `desktop, ${days} days`)
+      for (const stage of wideStages) {
+        expectFramed(refill.view, stage.aspect, stage.refill, `${stage.name}, ${days} days`)
+      }
       expectFramed(refill.view, phone.aspect, phone.card, `phone, ${days} days`)
     }
   })
@@ -282,8 +292,10 @@ describe('framedView', () => {
   it('hält an der Sonde Sonde, Baumscheibe, Krone und Nadel ganz im Bild und neben der Karte', () => {
     for (let days = 5; days <= 14; days++) {
       const { view } = probeAt(days)
-      expectFramed(view, desktop.aspect, desktop.card, `desktop, ${days} days`)
-      expectFramed(view, desktop.aspect, refillCard, `desktop, taller card, ${days} days`)
+      for (const stage of wideStages) {
+        expectFramed(view, stage.aspect, stage.card, `${stage.name}, ${days} days`)
+        expectFramed(view, stage.aspect, stage.refill, `${stage.name}, taller card, ${days} days`)
+      }
       expectFramed(view, phone.aspect, phone.card, `phone, ${days} days`)
     }
   })
@@ -291,8 +303,10 @@ describe('framedView', () => {
   it('hält in der Bilanz Wagen und Halle ganz im Bild und neben der Karte', () => {
     for (let days = 5; days <= 14; days++) {
       const { view } = resultAt(days)
-      expectFramed(view, desktop.aspect, resultCard, `desktop, ${days} days`)
-      expectFramed(view, desktop.aspect, desktop.card, `desktop, taller card, ${days} days`)
+      for (const stage of wideStages) {
+        expectFramed(view, stage.aspect, stage.result, `${stage.name}, ${days} days`)
+        expectFramed(view, stage.aspect, stage.card, `${stage.name}, taller card, ${days} days`)
+      }
       expectFramed(view, phone.aspect, phone.card, `phone, ${days} days`)
     }
   })
