@@ -152,31 +152,55 @@
     "beyondRich": "Die Plattform kann mehr als Bewässerung. Was wir für euch bauen und betreiben, steht bei den <services>Leistungen</services>."
   },
   "requirements": {
-    "sectionLabel": "Voraussetzungen",
-    "title": "Was du dafür brauchst",
-    "lead": "Der Einstieg ist kleiner, als es zunächst aussieht. Die vier Punkte beschreiben, was aus der Kommune kommen muss.",
-    "sensorsOptionalNote": "Die Einsatz- und Routenplanung rechnet bereits ohne Sensorik. Bäume, Flotte und Nachfüllpunkte genügen. Die Bodensonden verbessern die Priorisierung, weil sie zeigen, welche Flächen wirklich Wasser brauchen.",
-    "items": {
-      "treeData": {
-        "label": "Baum- und Flächendaten",
-        "description": "Die Standorte kommen per CSV-Import oder über die Anbindung eines vorhandenen Baumkatasters. Ein Kataster muss also nicht neu aufgebaut werden."
-      },
-      "fleet": {
-        "label": "Die vorhandene Flotte",
-        "description": "Gießwagen, Transporter und Anhänger mit ihren Wasserkapazitäten sowie die Nachfüllpunkte im Stadtgebiet. Eine neue Flotte oder stationäre Bewässerungstechnik ist nicht nötig."
-      },
-      "network": {
-        "label": "Eine Funkanbindung für die Sensoren",
-        "description": "Die Sonden funken heute über LoRaWAN und das offene The Things Network. Schleswig-Holstein hat seit 2024 ein landesweites Netz mit über 420 Gateways aufgebaut. Wo keine Abdeckung besteht, lässt sich entweder ein eigenes Gateway setzen, oder dieselben Sonden kommen mit NB-IoT und SIM-Karte zum Einsatz. LoRaWAN ist die heute genutzte Technik, keine Bedingung."
-      },
-      "hosting": {
-        "label": "Einen Betreiber für die Plattform",
-        "description": "Wir betreiben die Plattform für dich, mit Updates, Sicherungen und Support. Weil der Quellcode offen und lizenzkostenfrei ist, bleibt der eigene Betrieb jederzeit möglich. Du bist also nicht an uns gebunden und musst dich trotzdem um nichts kümmern."
+    "sectionLabel": "Einstieg",
+    "title": "Passt das zu euch?",
+    "lead": "Wahrscheinlich ja. Der Einstieg ist kleiner, als es zunächst aussieht.",
+    "spared": {
+      "title": "Es geht auch",
+      "without": "ohne",
+      "items": {
+        "register": {
+          "name": "Baumkataster",
+          "text": "Ein vorhandenes Kataster binden wir an. Gibt es keins, reicht eine einfache Liste eurer Bäume."
+        },
+        "vehicles": {
+          "name": "neue Fahrzeuge",
+          "text": "Eure Gießwagen und Anhänger bleiben."
+        },
+        "installer": {
+          "name": "Fachfirma",
+          "text": "Die Sonden setzt euer Team selbst, bodenbündig mit einem üblichen Erdbohrer. Auf Wunsch weisen wir vor Ort ein."
+        },
+        "network": {
+          "name": "eigenes Funknetz",
+          "text": "Ihr müsst kein Netz aufbauen und hängt an keinem Netz von uns. Die Sonden funken über offene, gängige Technik wie LoRaWAN oder NB-IoT über Mobilfunk, die unabhängig von uns läuft."
+        },
+        "it": {
+          "name": "eigene IT",
+          "text": "Wir betreiben alles für euch, mit Updates und Hilfe bei Fragen. Eure IT kann den Betrieb auch selbst übernehmen."
+        }
       }
     },
-    "tourLinkRich": "Wie die Tourenoptimierung rechnet und was sie als Eingabe erwartet, beschreibt die Seite zur <streamlet>Tourenoptimierung</streamlet>.",
-    "cta": "Einstieg besprechen",
-    "ctaAriaLabel": "Zur Kontaktseite"
+    "needed": {
+      "title": "Das bringt ihr mit",
+      "items": {
+        "trees": {
+          "name": "Eure Bäume",
+          "text": "Ihre Standorte, als Liste oder aus dem Kataster."
+        },
+        "vehicles": {
+          "name": "Eure Gießwagen",
+          "text": "Die vorhandenen Fahrzeuge mit ihrem Wassertank. Gießt ein Dienstleister, bekommt er die fertige Tour."
+        },
+        "water": {
+          "name": "Eure Wasserstellen",
+          "text": "Die Punkte in der Stadt, an denen ihr auffüllt."
+        }
+      },
+      "after": "Sonden, Plattform und Einrichtung kommen von uns. Den Rest klären wir in einem kurzen Gespräch.",
+      "cta": "Einstieg besprechen",
+      "ctaAriaLabel": "Zur Kontaktseite"
+    }
   },
   "vision": {
     "sectionLabel": "Vision",

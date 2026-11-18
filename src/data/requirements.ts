@@ -1,18 +1,4 @@
-import { Database, Radio, Server, Truck } from 'lucide-react'
-import type { ComponentType } from 'react'
+/** What a town can do without, and the little it brings along to start. */
+export const sparedItems = ['register', 'vehicles', 'installer', 'network', 'it'] as const
 
-type Icon = ComponentType<{ className?: string }>
-
-export type RequirementId = 'treeData' | 'fleet' | 'network' | 'hosting'
-
-interface RequirementItem {
-  id: RequirementId
-  icon: Icon
-}
-
-export const requirementItems: RequirementItem[] = [
-  { id: 'treeData', icon: Database },
-  { id: 'fleet', icon: Truck },
-  { id: 'network', icon: Radio },
-  { id: 'hosting', icon: Server },
-]
+export const neededItems = ['trees', 'vehicles', 'water'] as const
