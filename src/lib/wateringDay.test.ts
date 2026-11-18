@@ -7,6 +7,7 @@ import {
   MAX_TOUR_SECONDS,
   FLY_OUT_SECONDS,
   GATEWAY_HOLD_SECONDS,
+  MAP_HOLD_SECONDS,
   PROBE_HOLD_SECONDS,
   RESULT_HOLD_SECONDS,
   RIDE_CRUISE,
@@ -205,10 +206,20 @@ describe('tourScript', () => {
     }
   })
 
-  it('dauert in der Ausgangsstellung 70 bis 85 Sekunden', () => {
+  it('dauert in der Ausgangsstellung 90 bis 100 Sekunden', () => {
     const { duration } = townScript(START_DAYS)
-    expect(duration).toBeGreaterThanOrEqual(70)
-    expect(duration).toBeLessThanOrEqual(90)
+    expect(duration).toBeGreaterThanOrEqual(90)
+    expect(duration).toBeLessThanOrEqual(100)
+  })
+
+  it('drosselt das Tempo an keinem Reglerstand bis zwölf Tage', () => {
+    for (let days = 5; days <= 12; days++) {
+      const { probeShot } = townScript(days)
+      if (!probeShot) throw new Error(`no probe at ${days} days`)
+      expect(probeShot.shot.end - probeShot.shot.start, `${days} days`).toBeCloseTo(
+        PROBE_HOLD_SECONDS,
+      )
+    }
   })
 
   it('zeigt in der Ausgangsstellung Sonde, Fahrt und Gießen, Auffüllen und Bilanz, jede Einstellung in Folge', () => {
@@ -342,13 +353,14 @@ describe('tourScript', () => {
 describe('tourFrame', () => {
   const script = tourScript(twoTrees, straight, AT_DEPOT, 2)
 
-  it('zeichnet nach der Sonde die Route und fährt dann los', () => {
-    const { plan, gatewayShot } = script
-    if (!gatewayShot) throw new Error('the script has no gateway')
-    expect(plan.start).toBeCloseTo(gatewayShot.toDepot.end)
+  it('zeichnet nach der Karte die Route und fährt dann los', () => {
+    const { plan, gatewayShot, mapHold } = script
+    if (!gatewayShot || !mapHold) throw new Error('the script has no gateway or map')
+    expect(mapHold.start).toBeCloseTo(gatewayShot.toDepot.end)
+    expect(plan.start).toBeCloseTo(mapHold.end)
     expect(plan.end).toBeCloseTo(script.lead)
     const early = tourFrame(script, (plan.start + plan.end) / 2)
-    expect(early.shot).toBe('plan')
+    expect(early.shot).toBe('map')
     expect(early.view.mode).toBe('iso')
     expect(early.reveal).toBeCloseTo(0.5)
     expect(early.along).toBe(0)
@@ -501,8 +513,10 @@ describe('Weg zum ersten Baum', () => {
 
 describe('Halt mit Karte', () => {
   const town = townScript(START_DAYS)
-  const { showpiece, refillShot, probeShot, resultShot } = town
-  if (!showpiece || !refillShot || !probeShot) throw new Error('the tour has no close-ups')
+  const { showpiece, refillShot, probeShot, resultShot, mapHold } = town
+  if (!showpiece || !refillShot || !probeShot || !mapHold) {
+    throw new Error('the tour has no close-ups')
+  }
   const HOLDS = {
     probing: 'probe',
     gateway: 'gateway',
@@ -511,7 +525,7 @@ describe('Halt mit Karte', () => {
     result: 'result',
   }
 
-  it('hält die Karte genau so lange, wie die Sonde meldet, gegossen, aufgefüllt oder Bilanz gezogen wird', () => {
+  it('hält die Karte genau so lange, wie die Sonde meldet, die Karte es zeigt, gegossen, aufgefüllt oder Bilanz gezogen wird', () => {
     const kinds = new Set<string>()
     for (let time = 0; time <= town.duration; time += 0.01) {
       const { mode, share } = tourFrame(town, time).view
@@ -520,11 +534,16 @@ describe('Halt mit Karte', () => {
         expect(hold?.kind).toBe(HOLDS[mode as keyof typeof HOLDS])
         expect(hold?.left).toBeCloseTo(1 - share)
         kinds.add(hold?.kind ?? '')
+      } else if (time >= mapHold.start && time < mapHold.end) {
+        // The one hold without a close-up: the slanted view is the map.
+        expect(mode).toBe('iso')
+        expect(hold?.kind).toBe('map')
+        kinds.add('map')
       } else {
         expect(hold).toBeNull()
       }
     }
-    expect([...kinds]).toEqual(['probe', 'gateway', 'watering', 'refill', 'result'])
+    expect([...kinds]).toEqual(['probe', 'gateway', 'map', 'watering', 'refill', 'result'])
   })
 
   it('lässt die Nahaufnahmen sieben, sieben, acht und acht Sekunden stehen', () => {
@@ -597,9 +616,19 @@ describe('Sonde und Bilanz', () => {
       const frame = tourFrame(town, time)
       expect(frame.leg).toBe(0)
       expect(frame.along).toBe(0)
-      expect(frame.shot).toBe('plan')
+      expect(frame.shot).not.toBe('follow')
     }
     expect(tourFrame(town, town.lead + 0.1).along).toBeGreaterThan(0)
+  })
+
+  it('rückt die Übersicht ungesehen hinter der Nahaufnahme der Sonde für die Karte zurecht und hält sie bis zur Abfahrt', () => {
+    for (let time = 0; time < town.lead; time += 0.01) {
+      const frame = tourFrame(town, time)
+      // The flight down still starts from the picture the visitor saw.
+      expect(frame.shot).toBe(time < probeShot.shot.start ? 'plan' : 'map')
+      if (frame.shot === 'plan') expect(['iso', 'flyIn']).toContain(frame.view.mode)
+    }
+    expect(tourFrame(town, town.lead + 0.01).shot).toBe('follow')
   })
 
   it('beginnt die Bilanz, wenn der Wagen am Bauhof ankommt, und endet die Tour mit ihrem Rückflug', () => {
@@ -773,11 +802,11 @@ describe('Meldung zum Bauhof', () => {
     expect(relayAt(town, flyOut.end + 0.1)?.over).toBeGreaterThan(0.5)
   })
 
-  it('zeichnet die Route, sobald die Meldung im Bauhof ist, dann fährt der Wagen los', () => {
-    expect(toDepot.end).toBeCloseTo(town.plan.start)
+  it('zeigt die Karte, sobald die Meldung im Bauhof ist', () => {
+    expect(toDepot.end).toBeCloseTo(town.mapHold?.start ?? NaN)
     expect(relayAt(town, toDepot.end)).toBeNull()
-    expect(tourFrame(town, toDepot.end - 0.05).reveal).toBe(0)
-    expect(tourFrame(town, town.lead + 0.1).along).toBeGreaterThan(0)
+    expect(holdAt(town, toDepot.end - 0.05)).toBeNull()
+    expect(holdAt(town, toDepot.end + 0.05)?.kind).toBe('map')
   })
 
   it('springt mit „Weiter“ am Gateway in den Rückflug', () => {
@@ -796,5 +825,53 @@ describe('Meldung zum Bauhof', () => {
     const script = tourScript(refillOnly, straight, AT_DEPOT, 2)
     expect(script.gatewayShot).toBeNull()
     expect(relayAt(script, 0.5)).toBeNull()
+  })
+})
+
+describe('Karte vor der Planung', () => {
+  const town = townScript(START_DAYS)
+  const { mapHold, plan } = town
+  if (!mapHold) throw new Error('the tour has no map')
+
+  it('steht sieben Sekunden in der Übersicht, ohne Route und mit stehendem Wagen', () => {
+    expect(mapHold.end - mapHold.start).toBeCloseTo(MAP_HOLD_SECONDS, 1)
+    for (let time = mapHold.start; time < mapHold.end; time += 0.05) {
+      const frame = tourFrame(town, time)
+      expect(frame.view.mode).toBe('iso')
+      expect(frame.shot).toBe('map')
+      expect(frame.reveal).toBe(0)
+      expect(frame.along).toBe(0)
+    }
+  })
+
+  it('zählt den Balken von voll bis leer herunter', () => {
+    expect(holdAt(town, mapHold.start)?.left).toBeCloseTo(1)
+    expect(holdAt(town, (mapHold.start + mapHold.end) / 2)?.left).toBeCloseTo(0.5)
+    expect(holdAt(town, mapHold.end - 0.01)?.left).toBeLessThan(0.01)
+  })
+
+  it('zeichnet danach die Route, dann fährt der Wagen los', () => {
+    expect(plan.start).toBeCloseTo(mapHold.end)
+    expect(holdAt(town, plan.start)).toBeNull()
+    expect(tourFrame(town, plan.start + 0.05).reveal).toBeGreaterThan(0)
+    expect(tourFrame(town, town.lead + 0.1).along).toBeGreaterThan(0)
+  })
+
+  it('springt mit „Tour planen“ an den Anfang der Planung', () => {
+    expect(afterHold(town, mapHold.start + 1)).toBeCloseTo(plan.start)
+  })
+
+  it('wartet, solange jemand die Karte liest', () => {
+    expect(nextElapsed(town, mapHold.start + 1, 0.5, true)).toBe(mapHold.start + 1)
+  })
+
+  it('entfällt mit der Sonde bei einer Tour ohne Baum', () => {
+    const refillOnly: Plan = {
+      stops: [{ site: 0, arc: 0, kind: 'depot', arrivedWith: 0, leftWith: 0 }],
+      length: 0,
+    }
+    const script = tourScript(refillOnly, straight, AT_DEPOT, 2)
+    expect(script.mapHold).toBeNull()
+    expect(script.plan.start).toBe(0)
   })
 })

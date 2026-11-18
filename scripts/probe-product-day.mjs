@@ -1,5 +1,5 @@
 // Drives the watering day of the product page in a headless browser and checks
-// what stills cannot show: the probe reports, the tour runs, refills on the
+// what stills cannot show: the probe reports, the map shows it, the tour runs, refills on the
 // way, flies into the close-ups and out again without a cut, never turns round
 // at a stop and ends with the day's result where it should.
 //   node scripts/probe-product-day.mjs [outDir]
@@ -63,6 +63,33 @@ const HUD = `(() => {
   }
 })()`
 
+// What holds or draws right now: the map's hold has no camera of its own.
+const SCENE = `(() => {
+  const stage = document.querySelector('#process [data-day-stage]')
+  return stage.dataset.dayHold === 'map' ? 'map' : stage.dataset.dayCamera
+})()`
+const HOLD_NAMES = ['probing', 'gateway', 'map', 'watering', 'refilling', 'result']
+// The picture under the map's card: which camera draws, what the bar says and
+// which trees' pins the card on the stage covers.
+const MAP_SEEN = `(() => {
+  const stage = document.querySelector('#process [data-day-stage]')
+  const card = stage.querySelector('[data-day-card]').getBoundingClientRect()
+  const labels = [...stage.querySelectorAll('[data-day-label]')]
+  return {
+    camera: stage.dataset.dayCamera,
+    status: ${STATUS},
+    hud: stage.querySelector('[data-day-hud] p').textContent.trim(),
+    numbers: labels.some((label) => label.dataset.shown === 'true' && /^[0-9]+$/.test(label.textContent.trim())),
+    // The first twelve labels are the trees'; each stands over its pin's head.
+    covered: labels.slice(0, 12).flatMap((label, index) => {
+      const { left, right, bottom } = label.getBoundingClientRect()
+      const x = (left + right) / 2
+      const isUnder = x > card.left - 12 && x < card.right + 12 && bottom + 24 > card.top && bottom < card.bottom
+      return isUnder ? [index] : []
+    }),
+  }
+})()`
+
 // Runs inside the page: polling from outside misses the short close-ups and
 // status changes when software rendering is slow.
 const RECORDER = `(() => {
@@ -76,7 +103,7 @@ const RECORDER = `(() => {
     turns: [],
     caption: {},
     cards: {},
-    holds: { probing: [], gateway: [], watering: [], refilling: [], result: [] },
+    holds: { probing: [], gateway: [], map: [], watering: [], refilling: [], result: [] },
     cardTexts: {},
     // Cameras, statuses and the route's numbers in the order they came.
     timeline: ['camera:' + stage.dataset.dayCamera, 'status:' + status.textContent.trim()],
@@ -97,13 +124,22 @@ const RECORDER = `(() => {
       record.timeline.push('camera:' + stage.dataset.dayCamera)
     }
     if (stage.dataset.dayTurn && record.turns.at(-1) !== stage.dataset.dayTurn) record.turns.push(stage.dataset.dayTurn)
-  }).observe(stage, { attributes: true, attributeFilter: ['data-day-camera', 'data-day-turn'] })
+    const hold = stage.dataset.dayHold ?? ''
+    if (hold !== (record.hold ?? '')) {
+      record.hold = hold
+      if (hold) record.timeline.push('hold:' + hold)
+    }
+  }).observe(stage, {
+    attributes: true,
+    attributeFilter: ['data-day-camera', 'data-day-turn', 'data-day-hold'],
+  })
   const sample = () => {
     const canvas = document.querySelector('#process canvas')
     record.lowestOpacity = Math.min(record.lowestOpacity, Number(getComputedStyle(canvas).opacity))
     const shown = Number(getComputedStyle(caption).opacity)
-    const camera = stage.dataset.dayCamera
-    record.caption[camera] = Math.max(record.caption[camera] ?? 0, shown)
+    record.caption[stage.dataset.dayCamera] = Math.max(record.caption[stage.dataset.dayCamera] ?? 0, shown)
+    // The map's hold stands in the slanted view; every other hold has a camera of its own.
+    const camera = ${SCENE}
     const shownCards = [...document.querySelectorAll('#process [data-day-card]')].filter(
       (card) =>
         card.getClientRects().length > 0 &&
@@ -136,6 +172,8 @@ const RECORDER = `(() => {
   requestAnimationFrame(sample)
 })()`
 
+const MAP_STATUS = '6 Bäume brauchen Wasser. Der Rest kann warten.'
+
 // The probe at the first tree reports first and the camera follows its message
 // to the gateway; that tree gets the ride and the watering close-up, the
 // hydrant later on its own close-up, the depot the result.
@@ -165,6 +203,7 @@ const CAMERAS = [
 
 const PROBE_TITLE = 'Die Sonde meldet sich'
 const GATEWAY_TITLE = 'Das Gateway gibt die Meldung weiter'
+const MAP_TITLE = 'Die Karte zeigt, wo es trocken ist'
 const WATERING_TITLE = 'Wasser nur dort, wo es fehlt'
 const REFILL_TITLE = 'Das Auffüllen ist mitgeplant'
 const RESULT_TITLE = 'Fertig für heute'
@@ -180,6 +219,7 @@ const strayCards = (cards) =>
         const due =
           (camera === 'probing' && title === PROBE_TITLE) ||
           (camera === 'gateway' && title === GATEWAY_TITLE) ||
+          (camera === 'map' && title === MAP_TITLE) ||
           (camera === 'watering' && title === WATERING_TITLE) ||
           (camera === 'refilling' && title === REFILL_TITLE) ||
           (camera === 'result' && title === RESULT_TITLE)
@@ -302,23 +342,22 @@ for (const size of sizes) {
     const photographed = new Set()
     const stripCards = {}
     let stripOnTour = null
+    let mapSeen = null
     // Software rendering runs the tour slower than a real machine does.
     const deadline = Date.now() + 600_000
     let status = ''
     while (Date.now() < deadline) {
-      const [now, camera] = await Promise.all([
-        page.evaluate(STATUS),
-        page.evaluate(`document.querySelector('#process [data-day-stage]').dataset.dayCamera`),
-      ])
+      const [now, camera] = await Promise.all([page.evaluate(STATUS), page.evaluate(SCENE)])
       status = now
       if (!stripOnTour && status.startsWith('Gießt '))
         stripOnTour = { strip: await page.evaluate(STRIP), hud: await page.evaluate(HUD) }
-      const isHold = ['probing', 'gateway', 'watering', 'refilling', 'result'].includes(camera)
+      const isHold = HOLD_NAMES.includes(camera)
       if ((isHold || camera === 'ride') && !photographed.has(camera)) {
         photographed.add(camera)
         await sleep(400)
         await page.screenshot(join(out, `${size.name}-2-${camera}.png`))
         if (size.mobile && isHold) stripCards[camera] = await page.evaluate(STRIP_CARD)
+        if (camera === 'map') mapSeen = await page.evaluate(MAP_SEEN)
       }
       if (await page.evaluate(TOUR_DONE)) break
       await sleep(50)
@@ -360,9 +399,10 @@ for (const size of sizes) {
       JSON.stringify(caption),
     )
     check(
-      `${size.name}: a card explains the probe, the gateway, the watering, the refill and the result while they hold, at no other time`,
+      `${size.name}: a card explains the probe, the gateway, the map, the watering, the refill and the result while they hold, at no other time`,
       (cards.probing?.[PROBE_TITLE] ?? 0) > 0 &&
         (cards.gateway?.[GATEWAY_TITLE] ?? 0) > 0 &&
+        (cards.map?.[MAP_TITLE] ?? 0) > 0 &&
         (cards.watering?.[WATERING_TITLE] ?? 0) > 0 &&
         (cards.refilling?.[REFILL_TITLE] ?? 0) > 0 &&
         (cards.result?.[RESULT_TITLE] ?? 0) > 0 &&
@@ -380,16 +420,34 @@ for (const size of sizes) {
       JSON.stringify(resultAt ?? null),
     )
     const falls = (values) => values.length > 2 && values[0] > values.at(-1) + 0.3
-    const holdNames = ['probing', 'gateway', 'watering', 'refilling', 'result']
     check(
       `${size.name}: the card's bar runs down over each hold`,
-      holdNames.every((name) => falls(holds[name])),
-      holdNames.map((name) => `${name} ${holds[name][0]} to ${holds[name].at(-1)}`).join(', '),
+      HOLD_NAMES.every((name) => falls(holds[name])),
+      HOLD_NAMES.map((name) => `${name} ${holds[name][0]} to ${holds[name].at(-1)}`).join(', '),
     )
+    check(
+      `${size.name}: while the map's card stands the whole town is in the picture, the bar counts the dry trees and no route is drawn yet`,
+      Boolean(
+        mapSeen &&
+        mapSeen.camera === 'iso' &&
+        mapSeen.status === MAP_STATUS &&
+        mapSeen.hud === MAP_STATUS &&
+        !mapSeen.numbers,
+      ),
+      JSON.stringify(mapSeen),
+    )
+    if (!size.mobile) {
+      check(
+        `${size.name}: the map's card covers no tree's pin`,
+        mapSeen?.covered.length === 0,
+        JSON.stringify(mapSeen?.covered ?? null),
+      )
+    }
     if (size.mobile) {
       const expected = [
         ['probing', PROBE_TITLE, 'Weiter'],
         ['gateway', GATEWAY_TITLE, 'Weiter'],
+        ['map', MAP_TITLE, 'Tour planen'],
         ['watering', WATERING_TITLE, 'Weiterfahren'],
         ['refilling', REFILL_TITLE, 'Weiterfahren'],
         ['result', RESULT_TITLE, 'Noch einmal'],
@@ -744,8 +802,8 @@ try {
   await beats.waitFor(`${STATUS}.startsWith('Gießt ')`, 'the first tree', 6000)
   const { timeline } = await beats.evaluate(`window.__probe`)
   // From the probe's hold on: over to the gateway, back to the slanted view,
-  // the route draws with its numbers, and only then the camera goes down again
-  // and the truck waters.
+  // the map's card stands there, the route draws with its numbers, and only
+  // then the camera goes down again and the truck waters.
   const from = timeline.indexOf('camera:probing')
   const at = (entry) => timeline.indexOf(entry, from)
   const firstWatering = timeline.findIndex(
@@ -756,17 +814,18 @@ try {
     at('camera:gateway'),
     at('camera:fly-out'),
     at('camera:iso'),
+    at('hold:map'),
     at('numbers'),
     at('camera:fly-in'),
     firstWatering,
   ]
   check(
-    'after „Weiter“ the camera goes to the gateway and back to the slanted view, the route draws, then the camera goes down and the truck waters the first tree',
+    'after „Weiter“ the camera goes to the gateway and back to the slanted view, the map shows who needs water, the route draws, then the camera goes down and the truck waters the first tree',
     from >= 0 && order.every((index, step) => index > (step === 0 ? from : order[step - 1])),
     timeline
       .slice(Math.max(0, from))
       .filter((entry) => !entry.startsWith('status:Tour'))
-      .slice(0, 10)
+      .slice(0, 12)
       .join(' > '),
   )
   await beats.waitFor(`${CAMERA} === 'result'`, 'the result close-up', 6000)
@@ -1091,6 +1150,47 @@ try {
     'relay: from the probe to the depot the cameras are the flight over, the gateway, the flight back and the whole town',
     (await relay.evaluate(`window.__relay.join()`)) === 'to-gateway,gateway,fly-out,iso',
     await relay.evaluate(`window.__relay.join()`),
+  )
+  await relay.waitFor(`${STAGE}.dataset.dayHold === 'map'`, 'the map to show it', 100)
+  await sleep(600)
+  const NUMBERS = `[...document.querySelectorAll('#process [data-day-label]')].some((label) => label.dataset.shown === 'true' && /^[0-9]+$/.test(label.textContent.trim()))`
+  check(
+    'relay: once the message is in, a card in the whole town says the map shows who needs water, with the way on to the plan',
+    (await relay.evaluate(CAMERA_NOW)) === 'iso' &&
+      (await relay.evaluate(`${SHOWN_CARD}?.children[1].textContent.trim()`)) === MAP_TITLE &&
+      (await relay.evaluate(`${SHOWN_CARD}?.querySelector('button')?.textContent.trim()`)) ===
+        'Tour planen' &&
+      (await relay.evaluate(STATUS)) === MAP_STATUS &&
+      !(await relay.evaluate(NUMBERS)),
+    `${await relay.evaluate(`${SHOWN_CARD}?.children[1].textContent.trim() ?? null`)}, ${await relay.evaluate(STATUS)}`,
+  )
+  await relay.screenshot(join(out, 'desktop-relay-4-map.png'))
+  // A mouse on the card reads it: the hold waits.
+  const onCard = await relay.evaluate(`(() => {
+    const rect = ${SHOWN_CARD}.children[2].getBoundingClientRect()
+    return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+  })()`)
+  await moveMouse(relay, onCard.x, onCard.y)
+  await sleep(300)
+  const HOLD_LEFT = `Number(document.querySelector('#process [data-day-root]').style.getPropertyValue('--day-hold') || 1)`
+  const before = await relay.evaluate(HOLD_LEFT)
+  await sleep(1200)
+  const later = await relay.evaluate(HOLD_LEFT)
+  check(
+    'relay: the map waits while the mouse is on its card',
+    before === later && (await relay.evaluate(`${STAGE}.dataset.dayHold`)) === 'map',
+    `${before} then ${later}`,
+  )
+  await clickButton(relay, 'Tour planen')
+  await moveMouse(relay, 1, 1)
+  const planned = Date.now()
+  await relay.waitFor(NUMBERS, 'the route to draw', 50)
+  check(
+    'relay: „Tour planen“ draws the route at once, the card goes and the bar announces the tour',
+    Date.now() - planned < 1500 &&
+      (await relay.evaluate(`${STAGE}.dataset.dayHold`)) === '' &&
+      (await relay.evaluate(STATUS)).startsWith('Tour steht: 6 Halte'),
+    `${Date.now() - planned} ms, ${await relay.evaluate(STATUS)}`,
   )
   await relay.waitFor(`${CAMERA_NOW} === 'fly-in'`, 'the tour to go on to the first tree', 600)
   check('relay: the truck sets out for the first tree afterwards', true)

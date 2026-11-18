@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, type RefObject } from 'react'
-import { DEPOT_SITE, plate } from '../../../data/productTown'
+import { DEPOT_SITE } from '../../../data/productTown'
 import { tourColors } from '../../../data/streamletTour'
 import { geometric } from '../../../lib/cameraPose'
 import { AMBIENT_MS, MAX_DPR } from '../../../lib/sceneBudget'
@@ -17,9 +17,20 @@ import {
 import { UNSCALED_PIN_ZOOM } from '../scene3d/pinSize'
 import ReleaseContextOnNavigate from '../scene3d/ReleaseContextOnNavigate'
 import { Crowns, HitAreas, Labels, TreePins } from './actors'
+import { barCover, cardCover } from './covers'
 import type { DayEvents, DayLive, TourProgress } from './shared'
 import { ShowpieceCamera } from './showpieceCamera'
-import { OVERVIEW, PARKED, showpieceWeight, shotFor, truckPose, type Stage } from './stage'
+import {
+  OVERVIEW,
+  PARKED,
+  mapShot,
+  showpieceWeight,
+  shotFor,
+  townFit,
+  truckPose,
+  type Shot,
+  type Stage,
+} from './stage'
 import {
   GatewayRings,
   ProbeRings,
@@ -44,11 +55,6 @@ interface Props {
 }
 
 const CAMERA_DISTANCE = 600
-const SPAN = plate.width + plate.depth
-// What the plate measures on screen under a camera at [d, d, d], with room for
-// the roofs at the back and a little air at the sides.
-const TOWN_WIDTH = SPAN / Math.SQRT2 + 4
-const TOWN_HEIGHT = SPAN / Math.sqrt(6) + 12
 /** Seconds the slanted camera's spring takes to close most of a gap. */
 const SMOOTH_TIME = 0.9
 // A frame after a pause must not jump the tour or the camera ahead.
@@ -93,6 +99,7 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
     const node = canvas.closest('[data-day-stage]')
     return () => {
       node?.removeAttribute('data-day-camera')
+      node?.removeAttribute('data-day-hold')
       node?.removeAttribute('data-day-turn')
       node?.removeAttribute('data-day-relay')
     }
@@ -173,6 +180,8 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
       if ((hold?.kind ?? null) !== holding.current) {
         holding.current = hold?.kind ?? null
         events.onHold(holding.current)
+        // For the probe: the map's hold has no camera of its own to tell it by.
+        canvas.closest('[data-day-stage]')?.setAttribute('data-day-hold', holding.current ?? '')
       }
       const last = reported.current
       const routed = frame.reveal > 0
@@ -194,6 +203,7 @@ function DayClock({ isStatic, liveRef, stageRef, events, tankRef }: ClockProps) 
       if (holding.current !== null) {
         holding.current = null
         events.onHold(null)
+        canvas.closest('[data-day-stage]')?.setAttribute('data-day-hold', '')
       }
     }
 
@@ -232,12 +242,25 @@ function Rig({ isStatic, live, stageRef }: RigProps) {
     zoom: 0,
     zoomVelocity: 0,
   })
+  // The picture for the map's card, as framed for the stage's shape, its card and its bar.
+  const framedMap = useRef<{ key: string; shot: Shot } | null>(null)
 
-  useFrame(({ camera, size }, delta) => {
+  useFrame(({ camera, size, gl }, delta) => {
     const state = rig.current
     const stage = stageRef.current
+    let map = OVERVIEW
+    if (!isStatic && stage.frame?.shot === 'map') {
+      // Measured every frame: the card's height follows the text it holds.
+      const card = cardCover(gl.domElement)
+      const bar = barCover(gl.domElement)
+      const key = `${size.width}x${size.height}:${card?.right}:${card?.top}:${bar}`
+      if (framedMap.current?.key !== key) {
+        framedMap.current = { key, shot: mapShot(size, card, bar) }
+      }
+      map = framedMap.current.shot
+    }
     // Reduced motion keeps the whole town in the picture: no camera travel.
-    const shot = isStatic ? OVERVIEW : shotFor(live.current, stage)
+    const shot = isStatic ? OVERVIEW : shotFor(live.current, stage, map)
 
     if (isStatic || !state.settled) {
       state.at = [shot.at[0], shot.at[1], shot.at[2]]
@@ -266,8 +289,7 @@ function Rig({ isStatic, live, stageRef }: RigProps) {
     }
 
     const [x, y, z] = state.at
-    const fit = Math.min(size.width / TOWN_WIDTH, size.height / TOWN_HEIGHT)
-    const zoom = fit * Math.exp(state.zoom)
+    const zoom = townFit(size) * Math.exp(state.zoom)
     camera.position.set(x + CAMERA_DISTANCE, y + CAMERA_DISTANCE, z + CAMERA_DISTANCE)
     camera.lookAt(x, y, z)
     stage.iso.at = [x, y, z]

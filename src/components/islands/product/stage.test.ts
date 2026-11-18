@@ -3,10 +3,15 @@ import { DEPOT_SITE, START_DAYS, depot, townTrees } from '../../../data/productT
 import { ISO_VIEW, tourFrame } from '../../../lib/wateringDay'
 import { NOT_WATERED, NO_ORDER, planDay } from './dayModel'
 import type { DayLive } from './shared'
+import { pinHeight } from '../scene3d/pinSize'
 import {
   OVERVIEW,
   PARKED,
+  TOWN_HEIGHT,
+  TOWN_WIDTH,
+  mapShot,
   showpieceWeight,
+  slantedSpot,
   shotFor,
   truckPose,
   turned,
@@ -124,9 +129,20 @@ describe('shotFor', () => {
     expect(shotFor({ ...idle, highlighted: 3 }, parked)).toBe(OVERVIEW)
   })
 
+  it('nimmt vor der Abfahrt das Bild für die Karte, sobald die Sonde die Kamera hat', () => {
+    const touring = { ...idle, script }
+    const map = { at: [3, 1, -2], zoom: 0.9 } as const
+    expect(shotFor(touring, stageAt(0.1), map)).toBe(OVERVIEW)
+    const { mapHold, plan } = script
+    if (!mapHold) throw new Error('the tour has no map')
+    expect(shotFor(touring, stageAt((mapHold.start + mapHold.end) / 2), map)).toBe(map)
+    expect(shotFor(touring, stageAt((plan.start + plan.end) / 2), map)).toBe(map)
+    expect(shotFor(touring, stageAt(script.duration), map)).toBe(OVERVIEW)
+  })
+
   it('folgt während der Tour dem Wagen ohne Vorhalt und lässt die Auswahl liegen', () => {
     const touring = { ...idle, script, selected: 3 }
-    expect(shotFor(touring, stageAt(script.lead / 2))).toBe(OVERVIEW)
+    expect(shotFor(touring, stageAt(0.1))).toBe(OVERVIEW)
 
     const driving = stageAt(script.legs[1].start + 0.2)
     const follow = shotFor(touring, driving)
@@ -145,6 +161,92 @@ describe('shotFor', () => {
 
   it('kehrt nach der Tour zur Übersicht zurück', () => {
     expect(shotFor({ ...idle, script }, stageAt(script.duration))).toBe(OVERVIEW)
+  })
+})
+
+describe('slantedSpot', () => {
+  const size = { width: 710, height: 570 }
+
+  it('legt die Mitte der Stadt in die Mitte des Bildes', () => {
+    expect(slantedSpot([0, 0, 0], OVERVIEW, size)).toEqual([355, 285])
+  })
+
+  it('zeigt Osten rechts unten, Süden links unten und oben oben', () => {
+    const [eastX, eastY] = slantedSpot([10, 0, 0], OVERVIEW, size)
+    expect(eastX).toBeGreaterThan(355)
+    expect(eastY).toBeLessThan(285)
+    const [southX, southY] = slantedSpot([0, 0, 10], OVERVIEW, size)
+    expect(southX).toBeLessThan(355)
+    expect(southY).toBeLessThan(285)
+    const [upX, upY] = slantedSpot([0, 10, 0], OVERVIEW, size)
+    expect(upX).toBeCloseTo(355)
+    expect(upY).toBeGreaterThan(285)
+  })
+
+  it('füllt mit der Übersicht das Bild in der Breite oder in der Höhe', () => {
+    const scale = (slantedSpot([1, 0, -1], OVERVIEW, size)[0] - 355) / Math.SQRT2
+    expect(Math.min(size.width / TOWN_WIDTH, size.height / TOWN_HEIGHT)).toBeCloseTo(scale)
+  })
+})
+
+describe('mapShot', () => {
+  // The stage as tall as the panel, at 1440 px and on a tablet lying flat, with
+  // the card in its bottom left corner at its shortest and its tallest, under
+  // the bar with one line of text and with two.
+  const stages = [
+    { name: 'desktop', width: 710, height: 570 },
+    { name: 'tablet', width: 559, height: 570 },
+  ].flatMap((size) =>
+    [208, 246].flatMap((cardHeight) =>
+      [50, 68].map((barHeight) => ({
+        ...size,
+        name: `${size.name}, card ${cardHeight}, bar ${barHeight}`,
+        card: { right: 332 / size.width, top: (cardHeight + 12) / size.height },
+        bar: barHeight / size.height,
+      })),
+    ),
+  )
+  const GAP = 10
+
+  it.each(stages)('hält bei $name jeden Baum samt Nadel neben oder über der Karte', (stage) => {
+    const shot = mapShot(stage, stage.card, stage.bar)
+    for (const tree of townTrees) {
+      const [x, foot] = slantedSpot([tree.at[0], 0, tree.at[1]], shot, stage)
+      const [, head] = slantedSpot([tree.at[0], pinHeight(tree), tree.at[1]], shot, stage)
+      const isBeside = x >= stage.card.right * stage.width + GAP
+      const isAbove = foot >= stage.card.top * stage.height + GAP
+      expect(isBeside || isAbove, tree.id).toBe(true)
+      expect(x, tree.id).toBeLessThan(stage.width - GAP)
+      expect(head, tree.id).toBeLessThan(stage.height * (1 - stage.bar) - GAP)
+    }
+  })
+
+  it.each(stages)('lässt bei $name die Stadt im Bild und unter der Leiste', (stage) => {
+    const shot = mapShot(stage, stage.card, stage.bar)
+    expect(shot.zoom).toBeLessThanOrEqual(1)
+    expect(shot.zoom).toBeGreaterThanOrEqual(0.7)
+    const scale = Math.min(stage.width / TOWN_WIDTH, stage.height / TOWN_HEIGHT) * shot.zoom
+    // The middle of the town's box on screen: where the plate's centre stands.
+    const [x, y] = slantedSpot([0, 0, 0], shot, stage)
+    expect(x + (TOWN_WIDTH / 2) * scale).toBeLessThanOrEqual(stage.width + 1e-6)
+    expect(x - (TOWN_WIDTH / 2) * scale).toBeGreaterThanOrEqual(-1e-6)
+    // It only ever moves away from the card, and never up under the bar.
+    expect(x).toBeGreaterThanOrEqual(stage.width / 2 - 1e-6)
+    expect(y).toBeGreaterThanOrEqual(stage.height / 2 - 1e-6)
+    if (y > stage.height / 2 + 1e-6) {
+      expect(y + (TOWN_HEIGHT / 2) * scale).toBeLessThanOrEqual(
+        stage.height * (1 - stage.bar) + 1e-6,
+      )
+    }
+  })
+
+  it('bleibt ohne Karte auf der Bühne bei der Übersicht', () => {
+    expect(mapShot({ width: 358, height: 239 }, null, 0.2)).toBe(OVERVIEW)
+  })
+
+  it('bleibt bei der Übersicht, wenn die Karte ohnehin keinen Baum verdeckt', () => {
+    const size = { width: 1400, height: 570 }
+    expect(mapShot(size, { right: 0.05, top: 0.05 }, 0)).toBe(OVERVIEW)
   })
 })
 

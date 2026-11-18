@@ -2,7 +2,7 @@ import { ArrowRight, Check, CloudRain, Droplets, Sun } from 'lucide-react'
 import type { FocusEvent } from 'react'
 import { useT } from '../../../i18n/useT'
 import { MAX_DRY_DAYS } from '../../../lib/dryness'
-import type { CloseUpKind } from '../../../lib/wateringDay'
+import type { HoldKind } from '../../../lib/wateringDay'
 import { thirstColors, type CardCopy, type DayPhase, type TreeRow } from './dayModel'
 
 // The one small line every step has between its heading and its control.
@@ -255,7 +255,7 @@ export function TourControls({ status, isStatusOnStage, stops, ...button }: Tour
 const holdLeft = { transform: 'scaleX(var(--day-hold, 1))' }
 
 interface HoldCardProps {
-  kind: CloseUpKind
+  kind: HoldKind
   copy: CardCopy
   onNext: () => void
   /** The pointer is over the card or the focus inside it, or no longer. */

@@ -11,7 +11,7 @@ import {
   type TreeId,
 } from '../../../data/productTown'
 import { moisture, thirst, type Thirst } from '../../../lib/dryness'
-import { tourScript, type CloseUpKind, type TourScript } from '../../../lib/wateringDay'
+import { tourScript, type HoldKind, type TourScript } from '../../../lib/wateringDay'
 import { planWatering } from '../../../lib/wateringPlan'
 import type { TourProgress } from './shared'
 
@@ -151,19 +151,23 @@ function resultVars(day: PlannedDay): Record<string, number> {
   return day.treeStops === 1 ? { rest } : { watered: day.treeStops, rest }
 }
 
+function thirstyStatus(rows: TreeRow[]): StatusText {
+  const count = rows.filter((row) => row.state === 'dry').length
+  if (count === 0) return { key: 'day.status.none' }
+  return count === 1
+    ? { key: 'day.status.thirstyOne' }
+    : { key: 'day.status.thirstyMany', vars: { count } }
+}
+
 export function dayStatus(
   phase: DayPhase,
   rows: TreeRow[],
   day: PlannedDay | null,
   progress: TourProgress,
+  /** The card that stands on the stage right now, if any. */
+  hold: HoldKind | null = null,
 ): StatusText {
-  if (phase === 'idle' || !day) {
-    const count = rows.filter((row) => row.state === 'dry').length
-    if (count === 0) return { key: 'day.status.none' }
-    return count === 1
-      ? { key: 'day.status.thirstyOne' }
-      : { key: 'day.status.thirstyMany', vars: { count } }
-  }
+  if (phase === 'idle' || !day) return thirstyStatus(rows)
 
   const { dwells } = day.script
   // The result is in from the arrival at the depot, while its close-up still holds.
@@ -184,7 +188,10 @@ export function dayStatus(
     return { key: stop.arrivedWith > 0 ? 'day.status.topUp' : 'day.status.refill' }
   }
 
-  // Before the route draws, the probe at the first tree reports and its message travels.
+  // The message is in: the map says who needs water, as it did before the tour.
+  if (hold === 'map' && progress.served === 0 && !progress.routed) return thirstyStatus(rows)
+
+  // Before that, the probe at the first tree reports and its message travels.
   const first = dwells.find(({ stop }) => stop.kind === 'tree')
   if (progress.served === 0 && !progress.routed && first) {
     return { key: 'day.status.reporting', tree: townTrees[treeOfSite(first.stop.site)].id }
@@ -213,6 +220,10 @@ export const CARD_KEYS = [
   'day.info.gateway.label',
   'day.info.gateway.title',
   'day.info.gateway.text',
+  'day.info.map.label',
+  'day.info.map.title',
+  'day.info.map.text',
+  'day.info.map.next',
   'day.info.watering.label',
   'day.info.watering.title',
   'day.info.watering.text',
@@ -239,8 +250,8 @@ export interface CardCopy {
   announcesText: boolean
 }
 
-/** Catalog keys of the card that explains a close-up while it holds. */
-export function holdCopy(kind: CloseUpKind, day: PlannedDay | null): CardCopy {
+/** Catalog keys of the card that explains a hold. */
+export function holdCopy(kind: HoldKind, day: PlannedDay | null): CardCopy {
   const section = kind === 'result' ? 'done' : kind
   const keys = {
     label: `day.info.${section}.label`,
@@ -264,7 +275,12 @@ export function holdCopy(kind: CloseUpKind, day: PlannedDay | null): CardCopy {
     ...keys,
     text: { key: `day.info.${section}.text` as const },
     // The truck has not left yet, so it cannot drive on.
-    next: kind === 'probe' || kind === 'gateway' ? 'day.info.probe.next' : 'day.info.next',
+    next:
+      kind === 'map'
+        ? 'day.info.map.next'
+        : kind === 'probe' || kind === 'gateway'
+          ? 'day.info.probe.next'
+          : 'day.info.next',
     announcesText: true,
   }
 }

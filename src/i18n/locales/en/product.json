@@ -73,6 +73,12 @@
         "title": "The gateway passes the message on",
         "text": "The probe sends its reading by radio to the gateway. From there it goes on to the map at the depot. Nobody has to drive to the tree for it."
       },
+      "map": {
+        "label": "Understanding",
+        "title": "The map shows where it is dry",
+        "text": "Every probe reports like this. So the application shows you for each tree whether it needs water. Today's round is built from that.",
+        "next": "Plan the round"
+      },
       "watering": {
         "label": "Watering",
         "title": "Water only where it is missing",
