@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.21.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.20.0...v1.21.0) (2026-11-18)
+
+
+### Features
+
+* **product:** drive the planned tour with the tanker, water jet and refill ([c191cf6](https://github.com/green-ecolution/green-ecolution.de/commit/c191cf6bf21dd94ea3089daae35cd957d0d09380))
+* **product:** fly the probe's message over the antenna to the depot ([b81acd2](https://github.com/green-ecolution/green-ecolution.de/commit/b81acd276efb44d823d3e282a07eb662463f57d1))
+* **product:** fold the architecture into a block for IT under the town ([0272e64](https://github.com/green-ecolution/green-ecolution.de/commit/0272e64aab1adc3e4bedfb5dba1ddf30c3088e90))
+* **product:** follow the probe's message to the gateway and explain it there ([ff29b9b](https://github.com/green-ecolution/green-ecolution.de/commit/ff29b9b37abb974a3b2a8b7b3a242d428176aa7e))
+* **product:** follow the tour with a calmer camera and explained close-ups ([0a6776c](https://github.com/green-ecolution/green-ecolution.de/commit/0a6776c20c2075bd251c3efbf56dde13dad6d625))
+* **product:** gather the three steps in one panel beside the stage ([44adeb0](https://github.com/green-ecolution/green-ecolution.de/commit/44adeb094d11d2a4d08f563d528291260d983245))
+* **product:** give the technical details the FAQ accordion and a text for IT ([3e7c7d7](https://github.com/green-ecolution/green-ecolution.de/commit/3e7c7d719d5e3f25ce1d898d094b066e13d8ce77))
+* **product:** grow the roadmap as the rings of a tree disc ([878edae](https://github.com/green-ecolution/green-ecolution.de/commit/878edae97ae6067c0c0ccf1f9c91b7ddfd8fbaab))
+* **product:** let visitors plan a watering day in a 3d town ([bcdf2ae](https://github.com/green-ecolution/green-ecolution.de/commit/bcdf2ae900ca69dc7bc8b259f9cec113808b40c2))
+* **product:** list the further links compactly with the DiWiSH and state articles ([92869df](https://github.com/green-ecolution/green-ecolution.de/commit/92869df696d6a875aaac7ad83cc0a1050ca2dda3))
+* **product:** name a tree on hover, fly to it on click ([3f3264a](https://github.com/green-ecolution/green-ecolution.de/commit/3f3264abd05c4c780f41692cecfb52552f4fa349))
+* **product:** open the tour with the probe reporting and close it with the result ([aacc3cc](https://github.com/green-ecolution/green-ecolution.de/commit/aacc3cccdab6d8cd7267b770d8ad66fb0e22d349))
+* **product:** plan the tour without turning round at a stop ([b56d70b](https://github.com/green-ecolution/green-ecolution.de/commit/b56d70b93c242713724493881f522863ea1a27f9))
+* **product:** ride along on the tanker for a stretch of the tour ([7ef0c0c](https://github.com/green-ecolution/green-ecolution.de/commit/7ef0c0c341cebba7371010df9e717e10167b2f09))
+* **product:** say what a town can do without ([832db76](https://github.com/green-ecolution/green-ecolution.de/commit/832db76d14406a923cc0b3b3796a516091cb40c8))
+* **product:** show a poster of the town until the scene draws ([79e405f](https://github.com/green-ecolution/green-ecolution.de/commit/79e405f2fcd41d5233b158d92312b177652947f9))
+* **product:** show on the map who needs water before the route draws ([74b36b3](https://github.com/green-ecolution/green-ecolution.de/commit/74b36b36c215f933bca6eedae0ffa1928f8b60a9))
+* **product:** show the status and the tank over the stage and start the day by name ([2a95906](https://github.com/green-ecolution/green-ecolution.de/commit/2a959061bfb7382dd5e0dd5a947aed78344e5f39))
+* promote the Instagram channel on the home page, footer and contact page ([6b0b6e4](https://github.com/green-ecolution/green-ecolution.de/commit/6b0b6e4ed923b3671e97358004ce23e01473ea3b))
+
 ## [1.20.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.19.8...v1.20.0) (2026-11-15)
 
 
