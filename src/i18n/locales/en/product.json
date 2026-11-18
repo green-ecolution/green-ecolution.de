@@ -202,43 +202,42 @@
       "ctaAriaLabel": "To the contact page"
     }
   },
-  "vision": {
-    "sectionLabel": "Vision",
-    "title": "Made for every municipality",
-    "descriptionPart1": "The platform is deliberately designed to be usable in any municipality and for more than one task. Map areas, organisational structures and deployment areas are freely configurable, and new components connect through the plugin system and open interfaces.",
-    "descriptionPart2": "Only open standards and open-source components are used. A cloud-native architecture based on Kubernetes enables multi-tenant, highly available operation. Additional municipalities can easily be added."
-  },
   "roadmap": {
-    "title": "Roadmap",
+    "sectionLabel": "Outlook",
+    "title": "What grows next",
+    "lead": "A tree grows from the inside out. At Green Ecolution the core stands. Ring by ring we add what we are working on and what we plan.",
     "status": {
-      "completed": "Completed",
       "inProgress": "In progress",
       "planned": "Planned"
     },
-    "items": {
-      "mobileApp": {
-        "title": "Mobile app with QR scan",
-        "description": "Sensor setup via QR code and GPS directly on-site at the tree"
-      },
-      "firmware": {
-        "title": "In-house sensor firmware",
-        "description": "Fully self-developed firmware for maximum control and adaptability"
-      },
-      "userRoles": {
-        "title": "User and role concept",
-        "description": "Fine-grained permission management for staff, service providers, and partner municipalities"
-      },
-      "openData": {
-        "title": "Open data export",
-        "description": "Connection to the open data portal of the state of Schleswig-Holstein"
-      },
-      "greenSpaceTypes": {
-        "title": "Additional green space types",
-        "description": "Expansion to flower beds, perennials, and parks beyond trees"
+    "core": {
+      "label": "Today",
+      "status": "Already here",
+      "title": "Watering trees as needed",
+      "recent": "Added most recently",
+      "items": {
+        "mobileApp": "Set up a probe on site with a phone and a QR code",
+        "userRoles": "Separate access for staff and contractors"
       }
     },
-    "moreInPlanningLabel": "and much more in the pipeline",
-    "moreIdeasAriaLabel": "More ideas in the pipeline"
+    "items": {
+      "dataPlatforms": {
+        "title": "Connecting to urban data platforms",
+        "text": "The readings go to your city's data platform, for example Civora or CIVITAS/CORE. That also makes them available as open data."
+      },
+      "driverApp": {
+        "title": "The tour on the work phone",
+        "text": "An app for drivers: the tour arrives on the company phone or tablet. Stop by stop as a checklist to tick off."
+      },
+      "greenSpaceTypes": {
+        "title": "Flower beds, perennials and parks as well",
+        "text": "What holds for trees should hold for other green spaces too."
+      },
+      "modules": {
+        "title": "More modules",
+        "text": "The same principle for other tasks, for example waste or winter road maintenance."
+      }
+    }
   },
   "mediaFeature": {
     "sectionLabel": "Press",

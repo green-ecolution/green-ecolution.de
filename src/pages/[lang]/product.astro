@@ -6,8 +6,8 @@ import ContactSection from '../../components/sections/ContactSection.astro'
 import FurtherLinks from '../../components/sections/FurtherLinks.astro'
 import MediaFeature from '../../components/sections/MediaFeature.astro'
 import Requirements from '../../components/sections/product/Requirements.astro'
+import RoadmapRings from '../../components/sections/product/RoadmapRings.astro'
 import WateringDay from '../../components/sections/product/WateringDay.astro'
-import VisionRoadmap from '../../components/sections/VisionRoadmap.astro'
 import { getTranslations } from '../../i18n/t'
 import { languagePaths } from '../../lib/languagePaths'
 import { currentLanguage } from '../../i18n/languages'
@@ -46,7 +46,7 @@ const tc = getTranslations(language, 'common')
     />
     <WateringDay language={language} />
     <Requirements language={language} />
-    <VisionRoadmap language={language} />
+    <RoadmapRings language={language} />
     <MediaFeature language={language} />
     <FurtherLinks language={language} />
     <ContactSection language={language} />

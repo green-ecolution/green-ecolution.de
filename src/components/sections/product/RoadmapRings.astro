@@ -1,0 +1,275 @@
+---
+import { Check } from 'lucide-react'
+import { recentItems, roadmapItems } from '../../../data/roadmapItems'
+import type { Language } from '../../../i18n/languages'
+import { getTranslations } from '../../../i18n/t'
+import { DISC_SIZE, PITH, leaderLine, ringOutline } from '../../../lib/roadmapDisc'
+
+interface Props {
+  language: Language
+}
+
+const STATUS_KEYS = { 'in-progress': 'inProgress', planned: 'planned' } as const
+
+// Outer edge of the core and of every ring, in the disc's units.
+const CORE = 52
+const BOUNDS = [96, 136, 173, 206]
+// Height of an entry's row in the disc's units. The disc is 44/15 rows high
+// and stands centred beside the four rows, which the widths below repeat.
+const ROW = 150
+const rowY = (index: number) => DISC_SIZE / 2 + (index - (roadmapItems.length - 1) / 2) * ROW
+// The leaders end in the gap between the disc and the entries.
+const LEADER_END = DISC_SIZE + 32
+// What lies further out is further off and fades into the ground. The rings
+// lie on top of each other, so an inner one adds to those beneath it.
+const PLANNED_FILL = [0.2, 0.12, 0.1]
+const GRAIN = [1 / 3, 2 / 3]
+
+const rings = roadmapItems.map((item, index) => {
+  const inner = index === 0 ? CORE : BOUNDS[index - 1]
+  return {
+    ...item,
+    number: index + 1,
+    outline: ringOutline(BOUNDS[index]),
+    grain: GRAIN.map((share) => ringOutline(inner + (BOUNDS[index] - inner) * share)),
+    leader: leaderLine(inner, BOUNDS[index], rowY(index), LEADER_END),
+    // Share of the growth at which the ring starts, and the size it starts from:
+    // hidden under the ring before it.
+    at: (0.04 + index * 0.2).toFixed(2),
+    from: ((inner / BOUNDS[index]) * 0.96).toFixed(3),
+  }
+})
+
+const { language } = Astro.props
+const t = getTranslations(language, 'product')
+---
+
+<section class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 lg:max-w-screen-lg xl:my-36 xl:max-w-screen-xl">
+  <div class="rounded-2xl bg-green-light-100/50 p-6 md:p-10 lg:rounded-3xl lg:p-12 xl:p-16">
+    <div class="mb-10 lg:mb-14">
+      <div class="inline-block mb-4">
+        <span class="text-xs font-semibold tracking-widest text-green-dark-900 uppercase">
+          {t('roadmap.sectionLabel')}
+        </span>
+        <div class="label-rule"></div>
+      </div>
+
+      <div class="lg:flex lg:justify-between lg:gap-12 xl:gap-16">
+        <h2 class="font-lato font-bold text-2xl mb-4 text-grey-900 lg:mb-0 lg:shrink-0 lg:text-3xl xl:text-4xl">
+          {t('roadmap.title')}
+        </h2>
+        <p class="text-grey-900/70 leading-relaxed lg:max-w-xl lg:text-lg">{t('roadmap.lead')}</p>
+      </div>
+    </div>
+
+    <div class="rings [--pitch:9.25rem] xl:[--pitch:10.5rem]">
+      <div data-roadmap-rings class="md:flex md:items-center md:gap-10 lg:gap-0">
+        <div
+          data-roadmap-disc
+          class="mx-auto w-full max-w-[19rem] shrink-0 md:mx-0 md:w-[17rem] lg:w-[var(--disc)] lg:max-w-none"
+        >
+          <svg
+            viewBox={`0 0 ${DISC_SIZE} ${DISC_SIZE}`}
+            aria-hidden="true"
+            class="block w-full overflow-visible"
+          >
+            {rings.toReversed().map((ring) => (
+              <g data-ring={ring.number} style={`--at: ${ring.at}; --from: ${ring.from}`}>
+                <path
+                  d={ring.outline}
+                  class:list={[
+                    'band',
+                    'fill-green-light-900',
+                    ring.status === 'in-progress'
+                      ? 'stroke-green-dark-900/40'
+                      : 'stroke-green-dark-900/60',
+                  ]}
+                  fill-opacity={ring.status === 'planned' ? PLANNED_FILL[ring.number - 2] : 1}
+                  stroke-width="1.5"
+                  stroke-dasharray={ring.status === 'planned' ? '5 5' : undefined}
+                />
+                {ring.grain.map((line) => (
+                  <path
+                    d={line}
+                    fill="none"
+                    class="band stroke-green-dark-900/15"
+                    stroke-width="1"
+                  />
+                ))}
+              </g>
+            ))}
+
+            <path d={ringOutline(CORE)} class="fill-green-dark-900" />
+            <text
+              x={PITH.x}
+              y={PITH.y}
+              text-anchor="middle"
+              dominant-baseline="central"
+              class="font-lato uppercase fill-white"
+              font-size="14"
+              font-weight="700"
+              letter-spacing="1.6"
+            >
+              {t('roadmap.core.label')}
+            </text>
+
+            {rings.map((ring) => (
+              <g data-leader={ring.number} class="hidden lg:block" style={`--at: ${ring.at}`}>
+                <path
+                  d={ring.leader.path}
+                  pathLength="1"
+                  fill="none"
+                  class="leader stroke-green-dark-900"
+                  stroke-width="1.25"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx={ring.leader.start.x.toFixed(1)}
+                  cy={ring.leader.start.y.toFixed(1)}
+                  r="4"
+                  class="leader-start fill-white stroke-green-dark-900"
+                  stroke-width="2"
+                />
+              </g>
+            ))}
+          </svg>
+        </div>
+
+        <ol class="mt-10 space-y-8 md:mt-0 lg:ml-[var(--gutter)] lg:grid lg:auto-rows-[var(--pitch)] lg:space-y-0">
+          {rings.map((ring, index) => (
+            <li
+              data-entry={ring.number}
+              class="entry flex gap-4 lg:items-center"
+              style={`--at: ${ring.at}`}
+            >
+              <svg viewBox="0 0 44 44" aria-hidden="true" class="h-11 w-11 shrink-0 lg:hidden">
+                <circle cx="22" cy="22" r="4.5" class="fill-green-dark-900"></circle>
+                {rings.map((other, otherIndex) => (
+                  <circle
+                    cx="22"
+                    cy="22"
+                    r={8.5 + otherIndex * 4}
+                    fill="none"
+                    stroke-width="2.5"
+                    stroke-dasharray={
+                      otherIndex === index && other.status === 'planned' ? '3 2.5' : undefined
+                    }
+                    class={
+                      otherIndex !== index
+                        ? 'stroke-green-dark-900/15'
+                        : other.status === 'in-progress'
+                          ? 'stroke-green-light-900'
+                          : 'stroke-green-dark-900'
+                    }
+                  />
+                ))}
+              </svg>
+              <div class="lg:max-w-lg">
+                <p
+                  class:list={[
+                    'flex items-center gap-2 text-[11px] font-semibold tracking-wider uppercase',
+                    ring.status === 'in-progress' ? 'text-green-dark-900' : 'text-grey-900/60',
+                  ]}
+                >
+                  <span
+                    class:list={[
+                      'w-4',
+                      ring.status === 'in-progress'
+                        ? 'h-1 rounded-full bg-green-light-900 motion-safe:animate-pulse'
+                        : 'border-t-2 border-dashed border-green-dark-900/60',
+                    ]}
+                  />
+                  {t(`roadmap.status.${STATUS_KEYS[ring.status]}`)}
+                </p>
+                <h3 class="mt-1 font-lato font-bold text-xl leading-snug text-grey-900">
+                  {t(`roadmap.items.${ring.id}.title`)}
+                </h3>
+                <p class="mt-1 leading-relaxed text-grey-900/70 lg:text-base xl:text-lg">
+                  {t(`roadmap.items.${ring.id}.text`)}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="mt-10 border-t border-green-dark-900/15 pt-6 lg:mt-12 lg:flex lg:pt-8">
+        <div class="lg:w-[calc(var(--disc)+var(--gutter))] lg:shrink-0 lg:pr-8">
+          <p class="flex items-center gap-2 text-[11px] font-semibold tracking-wider text-green-dark-900 uppercase">
+            <span class="h-2 w-2 rounded-full bg-green-dark-900"></span>
+            {t('roadmap.core.status')}
+          </p>
+          <p class="mt-1 font-lato font-bold text-xl leading-snug text-grey-900">
+            {t('roadmap.core.title')}
+          </p>
+        </div>
+        <div class="mt-4 lg:mt-0">
+          <p class="text-sm text-grey-900/70">{t('roadmap.core.recent')}</p>
+          <ul class="mt-2 space-y-1.5">
+            {recentItems.map((id) => (
+              <li class="flex gap-2.5 leading-snug text-grey-900 lg:text-base xl:text-lg">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-dark-900" aria-hidden="true" />
+                {t(`roadmap.core.items.${id}`)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rings {
+    --disc: calc(var(--pitch) * 44 / 15);
+    --gutter: calc(var(--pitch) * 0.3);
+  }
+
+  /* --grow runs from 0 to 1 as the disc scrolls in. Without the script it is 1
+     and everything stands full-grown. */
+  .band {
+    transform-box: view-box;
+    transform-origin: 228px 214px;
+    scale: calc(var(--from) + (1 - var(--from)) * clamp(0, (var(--grow, 1) - var(--at)) * 5, 1));
+    /* Until its turn a ring would show its outline around the one before. */
+    opacity: clamp(0, (var(--grow, 1) - var(--at)) * 25, 1);
+  }
+
+  /* Firefox drops a unitless calc() here, hence the 1px, which pathLength
+     scales like a plain number. */
+  .leader {
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(clamp(0, 1 - (var(--grow, 1) - var(--at) - 0.12) * 8, 1) * 1px);
+  }
+
+  .leader-start {
+    opacity: clamp(0, (var(--grow, 1) - var(--at) - 0.1) * 20, 1);
+  }
+
+  [data-ring],
+  [data-leader],
+  .entry {
+    transition: opacity 0.2s ease;
+  }
+
+  @media (min-width: 64rem) {
+    .entry {
+      opacity: clamp(0, (var(--grow, 1) - var(--at) - 0.2) * 10, 1);
+    }
+
+    .rings:has([data-entry='1']:hover)
+      :is([data-ring], [data-leader]):not([data-ring='1'], [data-leader='1']),
+    .rings:has([data-entry='2']:hover)
+      :is([data-ring], [data-leader]):not([data-ring='2'], [data-leader='2']),
+    .rings:has([data-entry='3']:hover)
+      :is([data-ring], [data-leader]):not([data-ring='3'], [data-leader='3']),
+    .rings:has([data-entry='4']:hover)
+      :is([data-ring], [data-leader]):not([data-ring='4'], [data-leader='4']) {
+      opacity: 0.35;
+    }
+  }
+</style>
+
+<script>
+  import '../../../scripts/roadmapRings'
+</script>
