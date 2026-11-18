@@ -39,7 +39,7 @@ import {
   type DayPhase,
   type PlannedDay,
 } from './dayModel'
-import { afterHold, type CloseUpKind } from '../../../lib/wateringDay'
+import { afterHold, type HoldKind } from '../../../lib/wateringDay'
 import type { DayEvents, DayLive, TourProgress } from './shared'
 
 interface Poster {
@@ -120,9 +120,9 @@ function WateringDay({ poster }: { poster?: Poster }) {
   const [progress, setProgress] = useState<TourProgress>(NOT_STARTED)
   const [selected, setSelected] = useState<number | null>(null)
   const [highlighted, setHighlighted] = useState<number | null>(null)
-  const [hold, setHold] = useState<CloseUpKind | null>(null)
+  const [hold, setHold] = useState<HoldKind | null>(null)
   // What the card in the stage shows: the coming close-up's text, kept while it fades out.
-  const [lastHold, setLastHold] = useState<CloseUpKind>('watering')
+  const [lastHold, setLastHold] = useState<HoldKind>('watering')
   // The day the cards count, kept after a reset so a card fading out keeps its numbers.
   const [lastDay, setLastDay] = useState<PlannedDay | null>(null)
   const reading = useRef({ pointer: false, focus: false })
@@ -178,12 +178,13 @@ function WateringDay({ poster }: { poster?: Poster }) {
     () => (day ? wateredAfter(day.script, tour.served) : NOT_WATERED),
     [day, tour.served],
   )
-  const order = day?.order ?? NO_ORDER
+  // The stops get their numbers when the route draws, after the map has shown who needs water.
+  const order = day && tour.routed ? day.order : NO_ORDER
   const rows = useMemo(() => treeRows(days, watered, order), [days, watered, order])
   const isSceneShown = canRenderModel && isReady && !hasFailed
-  const status = dayStatus(phase, rows, day, tour)
   // A scene that went away mid-hold never reports its end; the tour state does.
   const shownHold = phase === 'touring' && !isUnplayed ? hold : null
+  const status = dayStatus(phase, rows, day, tour, shownHold)
 
   // The scene reads this ref every frame; a render must not sit in between.
   useEffect(() => {
@@ -312,7 +313,7 @@ function WateringDay({ poster }: { poster?: Poster }) {
   }
 
   // The result's card offers the day once more, as the tour button does at the end.
-  const onCardButton = (kind: CloseUpKind) => () => {
+  const onCardButton = (kind: HoldKind) => () => {
     if (kind !== 'result') {
       moveOn()
       return

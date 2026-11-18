@@ -73,6 +73,12 @@
         "title": "Das Gateway gibt die Meldung weiter",
         "text": "Die Sonde funkt ihren Messwert an das Gateway. Von dort geht er weiter auf die Karte im Bauhof. Niemand muss dafür zum Baum fahren."
       },
+      "map": {
+        "label": "Verstehen",
+        "title": "Die Karte zeigt, wo es trocken ist",
+        "text": "Jede Sonde meldet sich so. In der Anwendung siehst du deshalb für jeden Baum, ob er Wasser braucht. Daraus entsteht die Tour für heute.",
+        "next": "Tour planen"
+      },
       "watering": {
         "label": "Gießen",
         "title": "Wasser nur dort, wo es fehlt",

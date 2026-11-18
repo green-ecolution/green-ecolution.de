@@ -4,6 +4,7 @@ import type { Fog, PerspectiveCamera } from 'three'
 import { roadHeight } from '../../../data/streamletTour'
 import { blendPoses, geometric, matchedPose, type CameraPose } from '../../../lib/cameraPose'
 import type { TourScript, TourView } from '../../../lib/wateringDay'
+import { cardCover } from './covers'
 import type { DayLive } from './shared'
 import { glide, showpieceWeight, turned, type Stage, type TruckPose } from './stage'
 import {
@@ -16,7 +17,6 @@ import {
   resultView,
   showpieceStop,
   wateringView,
-  type CardCover,
   type CloseView,
 } from './closeView'
 
@@ -40,20 +40,6 @@ const MATCHED_FOV = 0.1
 const ISO_DIRECTION = [1, 1, 1] as const
 const NO_SHIFT = [0, 0] as const
 
-/**
- * Where the close-ups' card covers the stage: bottom left from lg on, nowhere
- * below, where it stands in the strip under the stage.
- */
-function cardCover(canvas: HTMLCanvasElement): CardCover | null {
-  const card = canvas.closest('[data-day-stage]')?.querySelector('[data-day-card]')
-  if (!card || card.getClientRects().length === 0) return null
-  const stage = canvas.getBoundingClientRect()
-  const box = card.getBoundingClientRect()
-  return {
-    right: (box.right - stage.left) / stage.width,
-    top: (stage.bottom - box.top) / stage.height,
-  }
-}
 // The view swings into a corner after the truck, not with it.
 const TURN_RATE = 5
 

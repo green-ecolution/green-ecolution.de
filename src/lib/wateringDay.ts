@@ -8,7 +8,7 @@ export const RIDE_CRUISE = 5.5
 export const PLAN_SECONDS = 1.6
 export const WATER_SECONDS = 2.2
 export const REFILL_SECONDS = 2.6
-export const MAX_TOUR_SECONDS = 98
+export const MAX_TOUR_SECONDS = 105
 export const CORNER_RADIUS = 3.5
 
 /** On a way too short to cruise first: how long after the truck pulls away the camera starts down. */
@@ -36,7 +36,9 @@ export const GATEWAY_HOLD_SECONDS = 7
 export const TO_GATEWAY_SECONDS = 3
 /** The message's way on from the gateway to the depot; the camera flies back up as it sets out. */
 export const TO_DEPOT_SECONDS = 3
-/** A beat of the slanted view after „Tour planen“ before the camera flies to the probe. */
+/** The slanted view holds this long once the message is in, before the route draws. */
+export const MAP_HOLD_SECONDS = 7
+/** A beat of the slanted view after the day starts before the camera flies to the probe. */
 const PROBE_DELAY = 0.3
 /** The slanted view between two close-ups lasts at least this long. */
 const CLOSE_UP_GAP = 1.5
@@ -126,7 +128,7 @@ export interface TourScript {
   legs: TourLeg[]
   dwells: TourDwell[]
   capacity: number
-  /** While the route draws itself, after the probe has reported. */
+  /** While the route draws itself, after the map has shown who needs water. */
   plan: TimeWindow
   /** When the first leg starts, the end of `plan`. */
   lead: number
@@ -135,6 +137,11 @@ export interface TourScript {
   probeShot: ProbeShot | null
   /** The probe's message on its way to the depot by the gateway; null on a tour without a probe. */
   gatewayShot: GatewayShot | null
+  /**
+   * The message is in and the map shows who needs water: the slanted view
+   * holds with a card before the route draws; null on a tour without a probe.
+   */
+  mapHold: TimeWindow | null
   showpiece: Showpiece | null
   refillShot: RefillShot | null
   /** The day's result at the depot; the tour is over when its fly-out ends. */
@@ -242,6 +249,7 @@ export function tourScript(
         GATEWAY_HOLD_SECONDS +
         TO_DEPOT_SECONDS
       : 0
+  const mapping = ridden >= 0 ? MAP_HOLD_SECONDS : 0
 
   // Every time in the tour is a multiple of `pace`, so the tour at pace 1 tells
   // how far it has to be slowed down to fit and which close-ups crowd each other.
@@ -272,9 +280,10 @@ export function tourScript(
         toDepot: { start: left, end: probing * pace },
       }
     }
+    const mapHold = ridden >= 0 ? { start: probing * pace, end: (probing + mapping) * pace } : null
     const planWindow = {
-      start: probing * pace,
-      end: (probing + PLAN_SECONDS) * pace,
+      start: (probing + mapping) * pace,
+      end: (probing + mapping + PLAN_SECONDS) * pace,
     }
 
     const legs: TourLeg[] = []
@@ -368,6 +377,7 @@ export function tourScript(
       duration: home.end,
       probeShot,
       gatewayShot,
+      mapHold,
       showpiece,
       refillShot,
       resultShot,
@@ -391,14 +401,24 @@ export function tourScript(
 }
 
 export type CloseUpKind = 'probe' | 'gateway' | 'watering' | 'refill' | 'result'
+/** What a card explains: a close-up, or the map, which holds in the slanted view. */
+export type HoldKind = CloseUpKind | 'map'
 
 export interface Hold {
-  kind: CloseUpKind
+  kind: HoldKind
   /** Share of the hold still to come, 1 to 0. */
   left: number
 }
 
-const holdWindows = ({ probeShot, gatewayShot, showpiece, refillShot, resultShot }: TourScript) =>
+const holdWindows = ({
+  probeShot,
+  gatewayShot,
+  mapHold,
+  plan,
+  showpiece,
+  refillShot,
+  resultShot,
+}: TourScript) =>
   [
     probeShot &&
       gatewayShot && { kind: 'probe' as const, during: probeShot.shot, next: gatewayShot.flyIn },
@@ -407,6 +427,7 @@ const holdWindows = ({ probeShot, gatewayShot, showpiece, refillShot, resultShot
       during: gatewayShot.shot,
       next: gatewayShot.flyOut,
     },
+    mapHold && { kind: 'map' as const, during: mapHold, next: plan },
     showpiece && { kind: 'watering' as const, during: showpiece.watering, next: showpiece.flyOut },
     refillShot && { kind: 'refill' as const, during: refillShot.shot, next: refillShot.flyOut },
     { kind: 'result' as const, during: resultShot.shot, next: resultShot.flyOut },
@@ -457,8 +478,8 @@ export function relayAt({ gatewayShot }: TourScript, seconds: number): RelayProg
   return { up: within(flyIn), over: within(toDepot) }
 }
 
-/** What the slanted camera aims at. */
-export type TourShot = 'plan' | 'follow' | 'home'
+/** What the slanted camera aims at; `map` is the whole town beside the map's card. */
+export type TourShot = 'plan' | 'map' | 'follow' | 'home'
 
 export type ViewMode =
   | 'iso'
@@ -580,7 +601,9 @@ export function tourFrame(script: TourScript, seconds: number): TourFrame {
       dwellShare: 0,
       served: 0,
       tank: script.capacity,
-      shot: 'plan',
+      // The slanted camera makes room for the map's card while the probe's
+      // close-up hides it, so the flight back from the gateway lands there.
+      shot: script.probeShot && time >= script.probeShot.shot.start ? 'map' : 'plan',
     }
   }
 

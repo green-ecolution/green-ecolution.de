@@ -106,6 +106,20 @@ describe('dayStatus', () => {
     })
   })
 
+  it('nennt mit der Karte, wie viele Bäume Wasser brauchen, bevor die Route steht', () => {
+    expect(dayStatus('touring', rows, day, NOT_STARTED, 'map')).toEqual({
+      key: 'day.status.thirstyMany',
+      vars: { count: 6 },
+    })
+    const one = planDay(5)
+    if (!one) throw new Error('nothing planned at five days')
+    const oneRows = treeRows(5, NOT_WATERED, NO_ORDER)
+    expect(dayStatus('touring', oneRows, one, NOT_STARTED, 'map')).toEqual({
+      key: 'day.status.thirstyOne',
+    })
+    expect(dayStatus('touring', rows, day, NOT_STARTED, 'gateway').key).toBe('day.status.reporting')
+  })
+
   it('kündigt die geplante Tour samt Nachfüllen an, sobald die Route sich zeichnet', () => {
     expect(dayStatus('touring', rows, day, { ...NOT_STARTED, routed: true })).toEqual({
       key: 'day.status.plannedRefill',
@@ -201,6 +215,16 @@ describe('holdCopy', () => {
     })
   })
 
+  it('führt von der Karte mit „Tour planen“ in die Planung', () => {
+    expect(holdCopy('map', day)).toEqual({
+      label: 'day.info.map.label',
+      title: 'day.info.map.title',
+      text: { key: 'day.info.map.text' },
+      next: 'day.info.map.next',
+      announcesText: true,
+    })
+  })
+
   it('zählt in der Bilanz die gegossenen und die übrigen Bäume und bietet „Noch einmal“', () => {
     expect(holdCopy('result', day)).toEqual({
       label: 'day.info.done.label',
@@ -223,7 +247,7 @@ describe('holdCopy', () => {
     expect(holdCopy('probe', null).text).toEqual({ key: 'day.info.probe.text' })
   })
 
-  it.each(['probe', 'gateway', 'watering', 'refill', 'result'] as const)(
+  it.each(['probe', 'gateway', 'map', 'watering', 'refill', 'result'] as const)(
     'gibt der Insel die Texte für %s mit',
     (kind) => {
       const { label, title, text, next } = holdCopy(kind, day)
