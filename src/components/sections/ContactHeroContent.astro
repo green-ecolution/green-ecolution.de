@@ -3,6 +3,8 @@ import { Mail, ExternalLink, ArrowRight, Phone, MessageCircle, CalendarDays } fr
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { company } from '../../data/company'
+import Github from '../icons/Github.astro'
+import Instagram from '../icons/Instagram.astro'
 
 interface Props {
   language: Language
@@ -42,9 +44,16 @@ const channels = [
   },
   {
     href: company.githubUrl,
-    icon: null,
+    brandIcon: Github,
     label: t('channels.github.label'),
     value: company.githubUrl.replace('https://', ''),
+    isExternal: true,
+  },
+  {
+    href: company.instagramUrl,
+    brandIcon: Instagram,
+    label: t('channels.instagram.label'),
+    value: company.instagramHandle,
     isExternal: true,
   },
 ]
@@ -87,11 +96,8 @@ const channels = [
                 class="w-11 h-11 shrink-0 rounded-xl bg-green-dark-900/10 text-green-dark-900 flex items-center justify-center transition-colors group-hover:bg-green-dark-900 group-hover:text-white"
                 aria-hidden="true"
               >
-                {channel.icon ? (
-                  <channel.icon className="w-5 h-5" />
-                ) : (
-                  <span class="github-icon w-5 h-5 bg-current" />
-                )}
+                {channel.icon && <channel.icon className="w-5 h-5" />}
+                {channel.brandIcon && <channel.brandIcon class="w-5 h-5" />}
               </span>
 
               <span class="min-w-0 flex-grow">
@@ -115,10 +121,3 @@ const channels = [
     </div>
   </div>
 </div>
-
-<style>
-  /* Masking lets the brand SVG follow currentColor on hover. */
-  .github-icon {
-    mask: url('/assets/svg/socials/github.svg') center / contain no-repeat;
-  }
-</style>
