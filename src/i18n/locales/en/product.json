@@ -226,38 +226,14 @@
     "sectionLabel": "Resources",
     "title": "Further links & mentions",
     "items": {
-      "flensburgSoftware": {
-        "label": "Software for the City of Flensburg",
-        "description": "This is the software that was developed and set up for the City of Flensburg. It is primarily used by the Technisches Betriebszentrum Flensburg (the city's technical operations center)."
-      },
-      "github": {
-        "label": "Organization on GitHub",
-        "description": "There you can find all code repositories associated with the project, such as the backend and frontend of the software"
-      },
-      "hsflBlog": {
-        "label": "Blog post by Hochschule Flensburg",
-        "description": "A post about the research project was also published on the Hochschule Flensburg website."
-      },
-      "hsflInstagram": {
-        "label": "Instagram post by Hochschule Flensburg",
-        "description": "Green Ecolution was mentioned not only on the website but also on Instagram."
-      },
-      "digitalHub": {
-        "label": "Part of DigitalHub.SH 2025",
-        "description": "Green Ecolution was presented and funded as one of the open-source projects as part of DigitalHub.SH 2025."
-      },
-      "ndrReport": {
-        "label": "NDR feature on Schleswig-Holstein Magazin",
-        "description": "NDR reported on urban trees that no longer withstand the dry summers and showed Green Ecolution in Flensburg as one approach to the problem."
-      },
-      "pressRelease": {
-        "label": "Press release by the City of Flensburg",
-        "description": "The City of Flensburg also reported on Green Ecolution and its significance for sustainable city management."
-      },
-      "liveDemo": {
-        "label": "Live demo",
-        "description": "The public demo instance, directly in the browser and without installation."
-      }
+      "github": "Organization on GitHub",
+      "hsflBlog": "Blog post by Hochschule Flensburg",
+      "hsflInstagram": "Instagram post by Hochschule Flensburg",
+      "digitalHub": "Part of DigitalHub.SH 2025",
+      "landShGreenIt": "Green IT feature by the State of Schleswig-Holstein",
+      "diwishArticle": "Blog article by DiWiSH",
+      "pressRelease": "Press release by the City of Flensburg",
+      "liveDemo": "Live demo"
     }
   }
 }
