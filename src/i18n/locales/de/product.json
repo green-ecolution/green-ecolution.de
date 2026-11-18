@@ -202,43 +202,42 @@
       "ctaAriaLabel": "Zur Kontaktseite"
     }
   },
-  "vision": {
-    "sectionLabel": "Vision",
-    "title": "Für jede Kommune gemacht",
-    "descriptionPart1": "Die Plattform ist bewusst so gestaltet, dass sie in jeder Kommune und für mehr als eine Aufgabe eingesetzt werden kann. Kartenbereiche, Organisationsstrukturen und Einsatzgebiete sind frei konfigurierbar, neue Bausteine docken über das Plugin-System und offene Schnittstellen an.",
-    "descriptionPart2": "Es werden ausschließlich offene Standards und Open-Source-Komponenten verwendet. Cloud-native Architektur mit Kubernetes ermöglicht einen mandantenfähigen, hochverfügbaren Betrieb. Weitere Kommunen können leicht hinzugefügt werden."
-  },
   "roadmap": {
-    "title": "Roadmap",
+    "sectionLabel": "Ausblick",
+    "title": "Was als Nächstes wächst",
+    "lead": "Ein Baum wächst von innen nach außen. Bei Green Ecolution steht der Kern, Ring für Ring kommt dazu, woran wir arbeiten und was wir planen.",
     "status": {
-      "completed": "Abgeschlossen",
       "inProgress": "In Arbeit",
       "planned": "Geplant"
     },
-    "items": {
-      "mobileApp": {
-        "title": "Mobile App mit QR-Scan",
-        "description": "Sensor-Setup per QR-Code und GPS direkt vor Ort am Baum"
-      },
-      "firmware": {
-        "title": "Eigene Sensor-Firmware",
-        "description": "Vollständig selbst entwickelte Firmware für maximale Kontrolle und Anpassbarkeit"
-      },
-      "userRoles": {
-        "title": "Benutzer- und Rollenkonzept",
-        "description": "Feingranulare Rechteverwaltung für Mitarbeitende, Dienstleister und Partnerkommunen"
-      },
-      "openData": {
-        "title": "Open-Data-Export",
-        "description": "Anbindung an das Open-Data-Portal des Landes Schleswig-Holstein"
-      },
-      "greenSpaceTypes": {
-        "title": "Weitere Grünflächentypen",
-        "description": "Erweiterung auf Beete, Stauden und Parks über Bäume hinaus"
+    "core": {
+      "label": "Heute",
+      "status": "Schon da",
+      "title": "Bäume gießen nach Bedarf",
+      "recent": "Zuletzt dazugekommen",
+      "items": {
+        "mobileApp": "Sonde vor Ort per Handy und QR-Code einrichten",
+        "userRoles": "Eigene Zugänge für Mitarbeitende und Dienstleister"
       }
     },
-    "moreInPlanningLabel": "und vieles mehr in Planung",
-    "moreIdeasAriaLabel": "Weitere Ideen in Planung"
+    "items": {
+      "dataPlatforms": {
+        "title": "Anschluss an urbane Datenplattformen",
+        "text": "Die Messwerte gehen an die Datenplattform eurer Stadt, zum Beispiel Civora oder CIVITAS/CORE. So stehen sie auch als offene Daten bereit."
+      },
+      "driverApp": {
+        "title": "Die Tour aufs Diensthandy",
+        "text": "Eine App für Fahrer: Die Tour kommt aufs Firmenhandy oder Tablet. Halt für Halt als Checkliste zum Abhaken."
+      },
+      "greenSpaceTypes": {
+        "title": "Auch Beete, Stauden und Parks",
+        "text": "Was für Bäume gilt, soll auch für andere Grünflächen gelten."
+      },
+      "modules": {
+        "title": "Weitere Module",
+        "text": "Dasselbe Prinzip für andere Aufgaben, zum Beispiel Abfall oder Winterdienst."
+      }
+    }
   },
   "mediaFeature": {
     "sectionLabel": "Presse",

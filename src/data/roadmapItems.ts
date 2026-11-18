@@ -1,29 +1,17 @@
-export type RoadmapItemId = 'mobileApp' | 'firmware' | 'userRoles' | 'openData' | 'greenSpaceTypes'
+export type RoadmapItemId = 'dataPlatforms' | 'driverApp' | 'greenSpaceTypes' | 'modules'
+export type RecentItemId = 'mobileApp' | 'userRoles'
 
 interface RoadmapItem {
   id: RoadmapItemId
-  status: 'planned' | 'in-progress' | 'completed'
+  status: 'planned' | 'in-progress'
 }
 
+// From the core outwards: the nearer a ring, the sooner it comes.
 export const roadmapItems: RoadmapItem[] = [
-  {
-    id: 'mobileApp',
-    status: 'completed',
-  },
-  {
-    id: 'userRoles',
-    status: 'completed',
-  },
-  {
-    id: 'firmware',
-    status: 'in-progress',
-  },
-  {
-    id: 'openData',
-    status: 'planned',
-  },
-  {
-    id: 'greenSpaceTypes',
-    status: 'planned',
-  },
+  { id: 'dataPlatforms', status: 'in-progress' },
+  { id: 'driverApp', status: 'planned' },
+  { id: 'greenSpaceTypes', status: 'planned' },
+  { id: 'modules', status: 'planned' },
 ]
+
+export const recentItems: RecentItemId[] = ['mobileApp', 'userRoles']
