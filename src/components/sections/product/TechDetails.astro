@@ -2,55 +2,47 @@
 import type { Language } from '../../../i18n/languages'
 import { getTranslations } from '../../../i18n/t'
 import { splitSlot } from '../../../lib/slotText'
+import Accordion from '../../Accordion.astro'
 
 interface Props {
   language: Language
 }
 
-// The way of a reading, in the page's plain words and in those of an IT department.
-const PARTS = ['probe', 'gateway', 'server', 'map'] as const
+const ROWS = ['radio', 'interfaces', 'routes', 'access', 'operation', 'licence'] as const
 
 const LINK =
   'font-semibold text-green-dark-900 underline decoration-green-dark-900 decoration-2 underline-offset-2 transition-all hover:decoration-4'
 
 const { language } = Astro.props
 const t = getTranslations(language, 'product')
-const streamlet = splitSlot(t('tech.streamletRich'), 'streamlet')
+const streamlet = splitSlot(t('tech.items.routes.textRich'), 'streamlet')
 ---
 
 <div id="architecture" class="mt-10 lg:mt-12">
-  <details
-    data-open-on-anchor
-    class="group rounded-2xl border border-green-dark-900/10 bg-white open:pb-2"
-  >
-    <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-lato font-semibold text-grey-900 lg:p-6 [&::-webkit-details-marker]:hidden">
-      {t('tech.summary')}
-      <span
-        aria-hidden="true"
-        class="h-2.5 w-2.5 shrink-0 rotate-45 border-b-2 border-r-2 border-green-dark-900 transition-transform duration-300 group-open:rotate-[225deg]"
-      ></span>
-    </summary>
-    <dl class="grid gap-x-8 gap-y-4 px-5 lg:grid-cols-[12rem_1fr] lg:px-6">
-      {PARTS.map((part) => (
+  <Accordion summary={t('tech.summary')} data-open-on-anchor>
+    <dl class="grid gap-x-8 gap-y-1 lg:grid-cols-[12rem_1fr] lg:gap-y-4">
+      {ROWS.map((row) => (
         <>
-          <dt class="font-lato font-semibold text-grey-900">
-            {t(`tech.items.${part}.term`)}
-            <span class="block text-xs font-semibold uppercase tracking-widest text-green-dark-900">
-              {t(`tech.items.${part}.name`)}
-            </span>
+          <dt class="font-lato font-semibold text-grey-900 not-first:mt-3 lg:not-first:mt-0">
+            {t(`tech.items.${row}.term`)}
           </dt>
-          <dd class="text-grey-900/70 leading-relaxed">{t(`tech.items.${part}.text`)}</dd>
+          <dd>
+            {row === 'routes' ? (
+              <>
+                {streamlet.before}
+                <a href={`/${language}/streamlet`} class={LINK}>
+                  {streamlet.inner}
+                </a>
+                {streamlet.after}
+              </>
+            ) : (
+              t(`tech.items.${row}.text`)
+            )}
+          </dd>
         </>
       ))}
     </dl>
-    <p class="px-5 py-4 text-grey-900/70 leading-relaxed lg:px-6">
-      {streamlet.before}
-      <a href={`/${language}/streamlet`} class={LINK}>
-        {streamlet.inner}
-      </a>
-      {streamlet.after}
-    </p>
-  </details>
+  </Accordion>
 </div>
 
 <script>

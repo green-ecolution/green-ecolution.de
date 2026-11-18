@@ -127,28 +127,31 @@
   "tech": {
     "summary": "For IT: the technical details",
     "items": {
-      "probe": {
-        "term": "Probe",
-        "name": "Sensor",
-        "text": "Measures soil moisture and soil temperature."
+      "radio": {
+        "term": "Probes and radio",
+        "text": "The soil probe measures soil moisture at variable depths and soil temperature. It transmits over LoRaWAN and the open The Things Network. Where coverage falls short, a gateway of your own or NB-IoT over the mobile network with a SIM card helps. From The Things Network the readings reach the platform via MQTT."
       },
-      "gateway": {
-        "term": "Gateway",
-        "name": "Radio",
-        "text": "Radio over LoRaWAN and the open The Things Network. Where the network is missing, a gateway of your own or NB-IoT with a SIM card helps."
+      "interfaces": {
+        "term": "Interfaces",
+        "text": "The platform has a documented REST interface. Tree data comes in through import plugins, for example from a tree registry or a CSV file. We connect further sensor types on request. The connection to urban data platforms is in progress."
       },
-      "server": {
-        "term": "Computer",
-        "name": "Backend",
-        "text": "Open interfaces for connecting existing systems, IoT hubs and open data portals. Tree data comes in through import plugins from tree registries, CSV or a database. The source code is open and free of licence fees. We run it, or your own IT does."
+      "routes": {
+        "term": "Routes",
+        "textRich": "The rounds are calculated by <streamlet>Streamlet</streamlet>, our own service for route optimisation. The finished round can be exported as a GPX file for the navigation device."
       },
-      "map": {
-        "term": "Map",
-        "name": "Dashboard",
-        "text": "Analysis and route planning in the browser."
+      "access": {
+        "term": "Access",
+        "text": "People work in the browser, on a computer as well as on a smartphone. Sign-in runs through Keycloak with OpenID Connect. You assign access rights through roles."
+      },
+      "operation": {
+        "term": "Operation",
+        "text": "We run the platform with updates, backups and support. On request it runs in your municipality's Kubernetes cluster. Your own IT can also take over operation."
+      },
+      "licence": {
+        "term": "Licence",
+        "text": "The source code is public on GitHub under the AGPL-3.0. There are no licence fees."
       }
     },
-    "streamletRich": "The rounds are calculated by <streamlet>Streamlet</streamlet>, our own service for route optimisation.",
     "beyondRich": "The platform can do more than irrigation. What we build and run for you is listed under <services>services</services>."
   },
   "requirements": {

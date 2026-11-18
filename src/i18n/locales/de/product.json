@@ -127,28 +127,31 @@
   "tech": {
     "summary": "Für die IT: die technischen Details",
     "items": {
-      "probe": {
-        "term": "Sonde",
-        "name": "Sensor",
-        "text": "Misst Bodenfeuchte und Bodentemperatur."
+      "radio": {
+        "term": "Sonden und Funk",
+        "text": "Die Bodensonde misst die Bodenfeuchte in variablen Tiefen und die Bodentemperatur. Sie funkt über LoRaWAN und das offene The Things Network. Wo das Netz nicht reicht, hilft ein eigenes Gateway oder NB-IoT über Mobilfunk mit SIM-Karte. Aus dem The Things Network kommen die Messwerte per MQTT zur Plattform."
       },
-      "gateway": {
-        "term": "Gateway",
-        "name": "Funk",
-        "text": "Funk über LoRaWAN und das offene The Things Network. Wo das Netz fehlt, hilft ein eigenes Gateway oder NB-IoT mit SIM-Karte."
+      "interfaces": {
+        "term": "Schnittstellen",
+        "text": "Die Plattform hat eine dokumentierte REST-Schnittstelle. Baumdaten kommen über Import-Plugins ins System, zum Beispiel aus einem Baumkataster oder einer CSV-Datei. Weitere Sensortypen binden wir bei Bedarf an. Der Anschluss an urbane Datenplattformen ist in Arbeit."
       },
-      "server": {
-        "term": "Rechner",
-        "name": "Backend",
-        "text": "Offene Schnittstellen für die Anbindung an vorhandene Systeme, IoT-Hubs und Open-Data-Portale. Baumdaten kommen über Import-Plugins aus Baumkataster, CSV oder Datenbank. Der Quellcode ist offen und lizenzkostenfrei. Den Betrieb übernehmen wir oder eure eigene IT."
+      "routes": {
+        "term": "Touren",
+        "textRich": "Die Touren rechnet <streamlet>Streamlet</streamlet>, unser eigener Dienst für die Tourenoptimierung. Die fertige Tour lässt sich als GPX-Datei für das Navigationsgerät ausgeben."
       },
-      "map": {
-        "term": "Karte",
-        "name": "Dashboard",
-        "text": "Auswertung und Tourenplanung im Browser."
+      "access": {
+        "term": "Zugang",
+        "text": "Gearbeitet wird im Browser, am Rechner wie am Smartphone. Die Anmeldung läuft über Keycloak mit OpenID Connect. Zugriffsrechte vergebt ihr über Rollen."
+      },
+      "operation": {
+        "term": "Betrieb",
+        "text": "Wir betreiben die Plattform mit Updates, Sicherungen und Support. Auf Wunsch läuft sie im Kubernetes-Cluster eurer Kommune. Eure IT kann den Betrieb auch selbst übernehmen."
+      },
+      "licence": {
+        "term": "Lizenz",
+        "text": "Der Quellcode liegt offen auf GitHub und steht unter der AGPL-3.0. Lizenzkosten fallen nicht an."
       }
     },
-    "streamletRich": "Die Touren rechnet <streamlet>Streamlet</streamlet>, unser eigener Dienst für die Tourenoptimierung.",
     "beyondRich": "Die Plattform kann mehr als Bewässerung. Was wir für euch bauen und betreiben, steht bei den <services>Leistungen</services>."
   },
   "requirements": {
