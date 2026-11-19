@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.21.1](https://github.com/green-ecolution/green-ecolution.de/compare/v1.21.0...v1.21.1) (2026-11-19)
+
+
+### Features
+
+* **analytics:** track link clicks, media starts and the planned watering tour as events ([#588](https://github.com/green-ecolution/green-ecolution.de/issues/588)) ([1063d2d](https://github.com/green-ecolution/green-ecolution.de/commit/1063d2da89afb75c46537d52036c384a2bf2c09f))
+
+
+### Bug Fixes
+
+* **services:** stop calling route optimisation a separate offer ([da10eb5](https://github.com/green-ecolution/green-ecolution.de/commit/da10eb5c1c94d83535a65accdd0f82f46fbffd71))
+
 ## [1.21.0](https://github.com/green-ecolution/green-ecolution.de/compare/v1.20.0...v1.21.0) (2026-11-18)
 
 
