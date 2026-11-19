@@ -36,7 +36,7 @@
       },
       "tourOptimization": {
         "label": "Route optimisation",
-        "description": "Route optimisation with refill stations comes via Streamlet and is agreed separately.",
+        "description": "Routes with refill stations are calculated by Streamlet, our own route optimisation service.",
         "linkLabel": "How the route optimisation calculates"
       }
     },
@@ -61,10 +61,6 @@
       "effort": {
         "label": "By effort",
         "description": "Adaptations to your processes, new sensor types, further use cases and interfaces."
-      },
-      "separate": {
-        "label": "Separate",
-        "description": "Route optimisation with Streamlet."
       }
     },
     "selfHosting": "Because the source code is open, you can also run the platform yourself. In that case you only pay for what you actually need from us.",

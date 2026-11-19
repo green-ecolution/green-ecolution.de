@@ -1,5 +1,5 @@
 ---
-import { Clock, Package, RefreshCw, Route } from 'lucide-react'
+import { Clock, Package, RefreshCw } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import Arrow from '../icons/Arrow.astro'
@@ -13,7 +13,6 @@ const PRICING_ITEMS = [
   { id: 'oneTime', icon: Package },
   { id: 'recurring', icon: RefreshCw },
   { id: 'effort', icon: Clock },
-  { id: 'separate', icon: Route },
 ] as const
 
 const { language } = Astro.props
@@ -38,7 +37,7 @@ const t = getTranslations(language, 'services')
     <p class="text-grey-900/70 leading-relaxed lg:max-w-2xl">{t('pricing.description')}</p>
   </div>
 
-  <dl class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+  <dl class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-5">
     {PRICING_ITEMS.map(({ id, icon: Icon }) => (
       <div class="h-full rounded-2xl border border-green-dark-900/10 bg-white p-5 lg:p-6">
         <dt class="font-lato font-semibold text-green-dark-900 mb-2">

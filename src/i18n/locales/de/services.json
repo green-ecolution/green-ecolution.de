@@ -36,7 +36,7 @@
       },
       "tourOptimization": {
         "label": "Tourenoptimierung",
-        "description": "Die Tourenoptimierung mit Nachfüllstationen kommt über Streamlet dazu und wird separat vereinbart.",
+        "description": "Die Touren mit Nachfüllstationen berechnet Streamlet, unser eigener Dienst für die Tourenoptimierung.",
         "linkLabel": "Wie die Tourenoptimierung rechnet"
       }
     },
@@ -61,10 +61,6 @@
       "effort": {
         "label": "Nach Aufwand",
         "description": "Anpassungen an deine Abläufe, neue Sensortypen, weitere Anwendungsfälle und Schnittstellen."
-      },
-      "separate": {
-        "label": "Separat",
-        "description": "Die Tourenoptimierung mit Streamlet."
       }
     },
     "selfHosting": "Weil der Quellcode offen ist, kannst du die Plattform auch selbst betreiben. Dann bezahlst du nur, was du von uns tatsächlich brauchst.",
