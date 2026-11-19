@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Play } from 'lucide-react'
+import { trackEvent } from '../../lib/track'
 
 interface Props {
   src: string
@@ -50,7 +51,10 @@ export default function ConsentEmbed({
           />
           <button
             type="button"
-            onClick={() => setIsAccepted(true)}
+            onClick={() => {
+              setIsAccepted(true)
+              trackEvent('embed_play', { provider: new URL(src).hostname.replace(/^www\./, '') })
+            }}
             className="group absolute inset-0 flex cursor-pointer flex-col items-center justify-center gap-3 bg-grey-900/40 transition-colors duration-300 hover:bg-grey-900/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-light-900"
           >
             <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-lg transition-transform duration-300 group-hover:scale-110">

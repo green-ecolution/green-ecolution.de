@@ -15,6 +15,7 @@ import { DEPOT_SITE, START_DAYS, townTrees, treeOfSite } from '../../../data/pro
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { TranslationProvider } from '../../../i18n/TranslationProvider'
 import { useT } from '../../../i18n/useT'
+import { trackEvent } from '../../../lib/track'
 import { supportsWebgl } from '../../../lib/webgl'
 import {
   HoldCard,
@@ -269,6 +270,12 @@ function WateringDay({ poster }: { poster?: Poster }) {
   const plan = () => {
     const planned = planDay(days)
     if (!planned) return
+    trackEvent('tour_plan', {
+      days,
+      trees: planned.treeStops,
+      refills: planned.refills,
+      animated: playsTour,
+    })
     stopReading()
     setSelected(null)
     setDay({ ...planned, played: playsTour })
@@ -289,7 +296,13 @@ function WateringDay({ poster }: { poster?: Poster }) {
   }
 
   const skip = () => {
-    if (day) finish(day)
+    if (!day) return
+    trackEvent('tour_skip', {
+      days,
+      served: Math.max(progress.served, 0),
+      stops: day.script.dwells.length,
+    })
+    finish(day)
   }
 
   const markReading = (via: 'pointer' | 'focus', isReading: boolean) => {

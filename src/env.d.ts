@@ -1,7 +1,9 @@
 // Injected by the analytics.progeek.de client script (a.js), see src/scripts/analytics.ts.
 interface Analytics {
   pageView(): void
-  trackEvent(eventName: string, data?: Record<string, unknown>): void
+  // At most 10 flat props, never personal data. The server drops values that look
+  // like e-mail addresses or phone numbers.
+  trackEvent(eventName: string, props?: Record<string, string | number | boolean>): void
 }
 
 interface Window {

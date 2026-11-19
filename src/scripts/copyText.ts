@@ -1,3 +1,5 @@
+import { trackEvent } from '../lib/track'
+
 const RESET_DELAY_MS = 2000
 
 let page: AbortController | null = null
@@ -29,6 +31,7 @@ export function setup() {
         // is honest: nothing landed in the clipboard.
         return
       }
+      trackEvent('text_copy', { text: button.dataset.copy ?? '' })
 
       if (label) {
         label.textContent = doneLabel
