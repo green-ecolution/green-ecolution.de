@@ -116,7 +116,10 @@ const answers = ITEMS.map((item) => {
 })
 ---
 
-<section class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 xl:my-36 xl:max-w-screen-lg">
+<section
+  data-track-area="faq"
+  class="px-4 max-w-208 mx-auto my-20 md:px-6 lg:my-28 xl:my-36 xl:max-w-screen-lg"
+>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)}></script>
   <h2 class="font-lato font-bold text-center text-2xl mb-8 text-grey-900 lg:mb-12 lg:text-3xl">
     {t('faq.title')}

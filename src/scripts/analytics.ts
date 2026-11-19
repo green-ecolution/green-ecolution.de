@@ -1,4 +1,8 @@
+import { classifyLink } from '../lib/linkEvent'
+import { trackEvent } from '../lib/track'
+
 const LOADER_SRC = 'https://analytics.progeek.de/a.js?id=O04QUGhRUjN3'
+const MIDDLE_BUTTON = 1
 
 // Only the public site is counted. localhost and preview deployments ship the
 // same build, so nothing but the runtime hostname can tell them apart.
@@ -38,7 +42,27 @@ if (isTrackedHost(window.location.hostname)) {
   loadTracker()
 }
 
+export function trackLinkClick(event: MouseEvent) {
+  if (event.type === 'auxclick' && event.button !== MIDDLE_BUTTON) return
+  if (!(event.target instanceof Element)) return
+  const link = event.target.closest('a[href]')
+  if (!link) return
+
+  const linkEvent = classifyLink(
+    link.getAttribute('href') ?? '',
+    window.location.href,
+    link.hasAttribute('download'),
+  )
+  if (!linkEvent) return
+
+  const area = link.closest<HTMLElement>('[data-track-area]')?.dataset.trackArea ?? 'content'
+  trackEvent(linkEvent.name, { ...linkEvent.props, area })
+}
+
 // astro:page-load, not DOMContentLoaded: the ClientRouter swaps the document
 // without a full navigation, so DOMContentLoaded would only ever count the
 // first page of a visit.
 document.addEventListener('astro:page-load', trackPageView)
+// On document, which the ClientRouter keeps, so links of every later page count too.
+document.addEventListener('click', trackLinkClick)
+document.addEventListener('auxclick', trackLinkClick)
