@@ -42,7 +42,6 @@ export function classifyLink(href: string, pageUrl: string, isDownload = false):
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return null
 
   const host = stripWww(url.hostname.toLowerCase())
-  if (host === 'wa.me') return { name: 'contact_click', props: { channel: 'whatsapp' } }
   if (host === 'calendly.com') {
     const type = BOOKING_TYPES[withoutTrailingSlash(url)] ?? 'other'
     return { name: 'booking_click', props: { type } }

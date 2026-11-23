@@ -53,7 +53,6 @@
       "photoAlt": "Portrait of {{name}}",
       "mailLabel": "Email",
       "phoneLabel": "Phone",
-      "mobileLabel": "Mobile",
       "bookingLabel": "Meeting",
       "bookingDisplay": "Book a meeting"
     },

@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-import { CalendarDays, Leaf, Mail, Phone, Smartphone } from 'lucide-react'
+import { CalendarDays, Leaf, Mail, Phone } from 'lucide-react'
 import type { Language } from '../../i18n/languages'
 import { getTranslations } from '../../i18n/t'
 import { company } from '../../data/company'
@@ -27,12 +27,6 @@ const contactChannels = [
     label: t('owners.contact.phoneLabel'),
     href: company.phone.href,
     display: company.phone.display,
-  },
-  {
-    icon: Smartphone,
-    label: t('owners.contact.mobileLabel'),
-    href: company.mobile.href,
-    display: company.mobile.display,
   },
   {
     icon: CalendarDays,

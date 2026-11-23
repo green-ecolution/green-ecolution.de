@@ -10,8 +10,7 @@ describe('classifyLink', () => {
       name: 'contact_click',
       props: { channel: 'email' },
     })
-    expect(classifyLink(company.mobile.href, PAGE)?.props).toEqual({ channel: 'phone' })
-    expect(classifyLink(company.whatsappUrl, PAGE)?.props).toEqual({ channel: 'whatsapp' })
+    expect(classifyLink(company.phone.href, PAGE)?.props).toEqual({ channel: 'phone' })
   })
 
   test('names the booked appointment', () => {
